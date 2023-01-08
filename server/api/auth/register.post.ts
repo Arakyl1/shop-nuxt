@@ -36,7 +36,7 @@ export default defineEventHandler(async(event: H3Event) => {
 
     // Generate Token
 
-    // const { accessToken } = await generateTokens(userData)
+    const { accessToken } = await generateTokens(userData)
 
     // await createRefrechToken({
     //     token: refrechToken,
@@ -47,8 +47,8 @@ export default defineEventHandler(async(event: H3Event) => {
 
 
     return {
-        //access_token: accessToken,
-        user: userData
+        access_token: accessToken,
+        // user: userData
     }
     // return true
 })

@@ -21,7 +21,6 @@
     "@heroicons/vue": "^2.0.13",
     "@pinia/nuxt": "^0.4.6",
     "@prisma/client": "^4.8.1",
-    "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^18.11.18",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.33.0",
