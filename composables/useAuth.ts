@@ -1,51 +1,52 @@
 // import jwtDecode from "jwt-decode";
-// import { userActive, accessToken, alertContent } from "~~/pinia/store";
+import { userActive, accessToken, alertContent } from "~~/pinia/store";
 
 export default () => {
 
-    // const updateUser = (data: object | null) => {
-    //     const user = userActive();
-    //     user.updateActiveUser(data)
-    // }
-    // const updateAccess = (data: string) => {
-    //     const access = accessToken();
-    //     access.updateAccessToken(data)
-    // }
+    const updateUser = (data: object | null) => {
+        const user = userActive();
+        user.updateActiveUser(data)
+    }
+    const updateAccess = (data: string) => {
+        const access = accessToken();
+        access.updateAccessToken(data)
+    }
 
-    // const register = (event: Event) => {
-    //     return new Promise<void>(async(resolve, reject) => {
-    //         try {
-    //             const data = await $fetch('/api/auth/register', {
-    //                 method: "POST",
-    //                 body: event
-    //             })
+    const register = (event: Event) => {
+        return new Promise<void>(async(resolve, reject) => {
+            try {
+                const data = await $fetch('/api/auth/register', {
+                    method: "POST",
+                    body: event
+                })
               
-    //             updateUser(data.user)
-    //             updateAccess(data.access_token)
-    //             resolve(true)
-    //         } catch (error) {
-    //             reject(error.statusMessage)
-    //         }
-    //     })
+                updateUser(data.user)
+                updateAccess(data.access_token)
+                resolve(true)
+            } catch (error) {
+                reject(error.statusMessage)
+            }
+        })
         
-    // }
+    }
 
-    // const login = async (event: Event) => {
-    //     return new Promise<void>(async(resolve, reject) => {
-    //         try {
-    //             const data= await $fetch('/api/auth/login', {
-    //                 method: 'POST',
-    //                 body: event
-    //             })
+    const login = async (event: Event) => {
+        // return new Promise<void>(async(resolve, reject) => {
+        //     try {
+        //         const data= await $fetch('/api/auth/login', {
+        //             method: 'POST',
+        //             body: event
+        //         })
 
-    //             updateUser(data.user)
-    //             updateAccess(data.access_token)
-    //             resolve(true)
-    //         } catch (error) {
-    //             reject(error.statusMessage)
-    //         }
-    //     })
-    // }
+        //         updateUser(data.user)
+        //         updateAccess(data.access_token)
+        //         resolve(true)
+        //     } catch (error) {
+        //         reject(error.statusMessage)
+        //     }
+        // })
+        return true
+    }
 
     // const logout = () => {
     //     return new Promise<void>(async(resolve, reject) => {
@@ -128,5 +129,5 @@ export default () => {
     // }
 
     // return { login, initAuth, logout, register, getUsetInfo }
-    return true
+    return { login, register }
 }

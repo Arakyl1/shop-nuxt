@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- <form class="text-center">
+        <form class="text-center">
             <input
             type="text"
             :class="style.input"
@@ -36,43 +36,43 @@
           @click="createUser">
             Зарегистрироватьца
           </ButtomStandart>
-        </form> -->
+        </form>
     </div>
 </template>
 <script setup lang="ts">
-// interface DataUser {
-//     username: string,
-//     email: string,
-//     password: string,
-//     repeartPassword: string
-// }
+interface DataUser {
+    username: string,
+    email: string,
+    password: string,
+    repeartPassword: string
+}
 
-// const props = withDefaults(defineProps<{ active: boolean}>(), { active: false })
+const props = withDefaults(defineProps<{ active: boolean}>(), { active: false })
 
-// const data = ref<DataUser>(createObject())
-// const { register } = useAuth()
+const data = ref<DataUser>(createObject())
+const { register } = useAuth()
 
-// const email = computed(() => {
-//     return !!data.value.username.match(/[-.\w]+@([\w-]+\.)+[\w-]+/g)
-// })
+const email = computed(() => {
+    return !!data.value.username.match(/[-.\w]+@([\w-]+\.)+[\w-]+/g)
+})
 
-// async function createUser() {
-//   await register(JSON.stringify(data.value))
-// }
+async function createUser() {
+  await register(JSON.stringify(data.value))
+}
 
-// watch(() => props.active, () => {
-//     data.value = createObject()
-// })
+watch(() => props.active, () => {
+    data.value = createObject()
+})
 
-// function createObject() {
-//     return {
-//       username: '',
-//         email: '',
-//         password: '',
-//         repeartPassword: ''
-//     }
-// }
-// const style = {
-//     input: 'text-lg w-full rounded-md border border-solid border-black-100 px-4 py-2 focus-visible:outline-yellow-500 transition'
-// }
+function createObject() {
+    return {
+      username: '',
+        email: '',
+        password: '',
+        repeartPassword: ''
+    }
+}
+const style = {
+    input: 'text-lg w-full rounded-md border border-solid border-black-100 px-4 py-2 focus-visible:outline-yellow-500 transition'
+}
 </script>
