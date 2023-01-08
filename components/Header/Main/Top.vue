@@ -6,7 +6,7 @@
                 <NuxtLink to="/delivery" class="text-black-500 mr-4">Доставка и оплата</NuxtLink>
                 <NuxtLink to="/contact" class="text-black-500">Контакты</NuxtLink>
             </div>
-            <!-- <div class="grow lg:hidden">
+            <div class="grow lg:hidden">
                 <div class="flex justify-center">
                     <p class="text-gray-300">Построй и обустрой</p>
                     <div class="flex items-center mx-8">
@@ -24,9 +24,9 @@
                     <IconAddItem/>
                 </NuxtLink>
                 <IconStatic class="mr-5"/>
-                <ButtomFavoriteShow class="mr-5"/>
-                <ButtomShowBasket/>
-            </div> -->
+                <!-- <ButtomFavoriteShow class="mr-5"/>
+                <ButtomShowBasket/> -->
+            </div>
         </div>
     </div>
 </div>
