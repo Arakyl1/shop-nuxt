@@ -29,10 +29,10 @@ export default defineEventHandler(async(event: H3Event) => {
         profileImage: "https://picsum/200/200"
     }
 
-    const user = await createUser(userData)
-    if (!user) {
-        createAndSendError(event, 404, "Error when creating")
-    }
+    // const user = await createUser(userData)
+    // if (!user) {
+    //     createAndSendError(event, 404, "Error when creating")
+    // }
 
     // Generate Token
 
@@ -48,7 +48,7 @@ export default defineEventHandler(async(event: H3Event) => {
 
     return {
         //access_token: accessToken,
-        user: user
+        user: userData
     }
     // return true
 })
