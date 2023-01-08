@@ -9,3 +9,90 @@ datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
 }
+
+model User {
+  id     Int @id @default(autoincrement())
+  email   String  
+  name    String?
+  username String @unique
+  password String
+  profileImage String?
+
+  createAt DateTime @default(now())
+
+  posts   Post[]
+  reviews Comment[]
+  refrechToken RefrechToken[]
+}
+
+model RefrechToken {
+  id Int @id @default(autoincrement())
+  token String @unique
+
+  createAt DateTime @default(now())
+  updateAta DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model ProductCard {
+  id             Int              @id @default(autoincrement())
+  name           String
+  art            String
+  maker          String
+  categor        String
+  subcategor     String?
+  price          Int
+  itemArt        String
+  itemMod        String
+  img            String
+  top            Boolean?         @default(false)
+  news           Boolean?         @default(false)
+  sale           Boolean?         @default(false)
+  availability   Boolean?         @default(false)
+  pickUp         Boolean?         @default(false)
+  underTheOrder  Boolean?         @default(false)
+  delivery       Boolean?         @default(false)
+  quantity       Int              @default(0)
+  ranting        Int              @default(0)
+  description    String?          @default("")
+  reviews        Comment[]
+  characteristic Characteristic[]
+}
+
+model Comment {
+  id          Int          @id @default(autoincrement())
+  ProductCard ProductCard @relation(fields: [cardId], references: [id])
+  cardId      Int
+  ranting     Int?
+  text        String?
+  user        User        @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+model Characteristic {
+  titleID       Int              @id @default(autoincrement())
+  title         String
+  ProductCard   ProductCard?         @relation(fields: [productCardId], references: [id])
+  productCardId Int?
+  content       CharacteristicItem[]
+
+}
+
+model CharacteristicItem {
+  itemId       Int              @id @default(autoincrement())
+  name                String
+  value               String
+  Characteristic      Characteristic? @relation(fields: [characteristicTitle], references: [titleID])
+  characteristicTitle Int?
+}
