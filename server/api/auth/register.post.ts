@@ -1,4 +1,4 @@
-// import { H3Event, sendError } from "h3"
+import { H3Event, sendError } from "h3"
 // import { createUser } from "~~/server/db/user"
 // import createAndSendError from "~~/server/utils/createAndSendError";
 // import { generateTokens, sendRefrechToken } from "../../utils/jwt";
