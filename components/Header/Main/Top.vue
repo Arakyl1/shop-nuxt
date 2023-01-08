@@ -24,7 +24,7 @@
                     <IconAddItem/>
                 </NuxtLink>
                 <IconStatic class="mr-5"/>
-                <!-- <ButtomFavoriteShow class="mr-5"/> -->
+                <ButtomFavoriteShow class="mr-5"/>
                 <ButtomShowBasket/>
             </div>
         </div>

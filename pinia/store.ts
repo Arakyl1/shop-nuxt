@@ -45,30 +45,30 @@ export const windowMask = defineStore('windowMask', () => {
 //     return { accessToken, updateAccessToken }
 // })
 
-// export const favoriteProduct = defineStore('favoriteProduct', () => {
+export const favoriteProduct = defineStore('favoriteProduct', () => {
 
-//     const favorite = reactive<any>({
-//         list: new Set([])
-//     })
+    const favorite = reactive<any>({
+        list: new Set([])
+    })
 
-//     onBeforeMount(() =>{
-//         const localStorage = myGetItem('favorite')
-//         if (localStorage) {
-//             favorite.list = new Set(JSON.parse(localStorage))
-//         }
-//     })
+    onBeforeMount(() =>{
+        const localStorage = myGetItem('favorite')
+        if (localStorage) {
+            favorite.list = new Set(JSON.parse(localStorage))
+        }
+    })
 
-//     function updateFavorite(id: number) {
-//         if (!favorite.list.has(id)) {
-//             favorite.list.add(id)
-//         } else {
-//             favorite.list.delete(id)
-//         }
-//         mySetItem('favorite', [...favorite.list])
-//     }
+    function updateFavorite(id: number) {
+        if (!favorite.list.has(id)) {
+            favorite.list.add(id)
+        } else {
+            favorite.list.delete(id)
+        }
+        mySetItem('favorite', [...favorite.list])
+    }
 
-//     return { favorite, updateFavorite }
-// })
+    return { favorite, updateFavorite }
+})
 
 export const basketProduct = defineStore('basketProduct', () => {
     

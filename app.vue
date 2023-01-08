@@ -1,11 +1,11 @@
 <template>
   <div>
-    <!-- <div
+    <div
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
-    <div v-if="size.width > 0">
-    -->
+    <!-- <div v-if="size.width > 0"> -->
+   
     <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
     <!--
       <HeaderMainMobaile v-else class="mb-4"/>
