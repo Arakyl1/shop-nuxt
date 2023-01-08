@@ -13,25 +13,25 @@ const generateRefrechToken = (user: any, config: any) => {
 
 }
 
-// export const decodeRefrechToken = (token) => {
-//     const config = useRuntimeConfig()
+export const decodeRefrechToken = (token) => {
+    const config = useRuntimeConfig()
 
-//     try {
-//         return jwt.verify(token, config.jwtRefrechSecret)
-//     } catch (error) {
-//         return null
-//     }
-// }
+    try {
+        return jwt.verify(token, config.jwtRefrechSecret)
+    } catch (error) {
+        return null
+    }
+}
 
-// export const decodeAccessToken = (token) => {
-//     const config = useRuntimeConfig()
+export const decodeAccessToken = (token) => {
+    const config = useRuntimeConfig()
 
-//     try {
-//         return jwt.verify(token, config.jwtAccessSecret)
-//     } catch (error) {
-//         return null
-//     }
-// }
+    try {
+        return jwt.verify(token, config.jwtAccessSecret)
+    } catch (error) {
+        return null
+    }
+}
 
 export const generateTokens = async(user: any) => {
     const config = useRuntimeConfig()

@@ -1,5 +1,5 @@
 import prisma from ".";
-// import bcryptjs from "bcryptjs";
+import bcryptjs from "bcryptjs";
 
 interface User {
     name?: string,
@@ -10,20 +10,14 @@ interface User {
 }
 
 export const createUser = (userData: User) => {
-    // const salt = bcryptjs.genSaltSync(10);
-    // const updateUserData = {
-    //     ...userData,
-    //     password: bcryptjs.hashSync(userData.password, salt)
-    // }
+    const salt = bcryptjs.genSaltSync(10);
+    const updateUserData = {
+        ...userData,
+        password: bcryptjs.hashSync(userData.password, salt)
+    }
       
     return prisma.user.create({
-        data: {
-            name: userData.name,
-            username: userData.username,
-            password: userData.password,
-            email: userData.email,
-            profileImage: userData.profileImage
-        }
+        data: updateUserData
     })
 }
 
