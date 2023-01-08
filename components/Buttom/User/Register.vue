@@ -57,7 +57,10 @@ const email = computed(() => {
 })
 
 async function createUser() {
-  await register(JSON.stringify(data.value))
+  const res = await register(JSON.stringify(data.value))
+  if (res) {
+    data.value = createObject()
+  }
 }
 
 watch(() => props.active, () => {
