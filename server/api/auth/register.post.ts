@@ -6,48 +6,49 @@ import { createRefrechToken } from "~~/server/db/refrechTokem";
 
 
 export default defineEventHandler(async(event: H3Event) => {
-    const body = await readBody(event)
+    // const body = await readBody(event)
 
-    const { username, email, password, repeartPassword } = body
+    // const { username, email, password, repeartPassword } = body
     
-    if (!username || !email || !password || !repeartPassword) {
-        return sendError(event, createError({
-            statusCode: 400,
-            statusMessage: "Invalid params"
-        }))
-    }
-    if (password !== repeartPassword) {
-        return sendError(event, createError({
-            statusCode: 400,
-            statusMessage: "Password do not match"
-        }))
-    }
-    const userData = {
-        username,
-        email,
-        password,
-        profileImage: "https://picsum/200/200"
-    }
-
-    // const user = await createUser(userData)
-    // if (!user) {
-    //     createAndSendError(event, 404, "Error when creating")
+    // if (!username || !email || !password || !repeartPassword) {
+    //     return sendError(event, createError({
+    //         statusCode: 400,
+    //         statusMessage: "Invalid params"
+    //     }))
+    // }
+    // if (password !== repeartPassword) {
+    //     return sendError(event, createError({
+    //         statusCode: 400,
+    //         statusMessage: "Password do not match"
+    //     }))
+    // }
+    // const userData = {
+    //     username,
+    //     email,
+    //     password,
+    //     profileImage: "https://picsum/200/200"
     // }
 
-    // Generate Token
+    // // const user = await createUser(userData)
+    // // if (!user) {
+    // //     createAndSendError(event, 404, "Error when creating")
+    // // }
 
-    const { accessToken } = await generateTokens(userData)
+    // // Generate Token
 
-    // await createRefrechToken({
-    //     token: refrechToken,
-    //     userId: user.id
-    // })
+    // const { accessToken } = await generateTokens(userData)
 
-    // sendRefrechToken(event, refrechToken)
+    // // await createRefrechToken({
+    // //     token: refrechToken,
+    // //     userId: user.id
+    // // })
+
+    // // sendRefrechToken(event, refrechToken)
 
 
-    return {
-        access_token: accessToken,
-        // user: user
-    }
+    // return {
+    //     access_token: accessToken,
+    //     // user: user
+    // }
+    return true
 })
