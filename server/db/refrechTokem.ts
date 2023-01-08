@@ -1,7 +1,7 @@
 import prisma from "."
 
 export const createRefrechToken = async(refrechToken: object) => {
-    return prisma.RefrechToken.create({
+    return prisma.refrechToken.create({
         data: refrechToken
     })
 }
@@ -22,7 +22,7 @@ export const createRefrechToken = async(refrechToken: object) => {
 // }
 
 export const getRefrechTokenByTpken = async(token: string) => {
-    return prisma.RefrechToken.findUnique({
+    return prisma.refrechToken.findUnique({
         where: {
             token
         }

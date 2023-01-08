@@ -10,7 +10,7 @@
     <OtherModalTransition class=" min-h-min w-[450px] sm:w-[calc(100vw-2rem)]" :active="stage">
         <div class="bg-white py-8 px-12 rounded-md w-full h-full
         sm:py-6 sm:px-6">
-            <template v-if="user.userData">
+            <!-- <template v-if="user.userData">
                 <ButtomUserMain/>
             </template>
             <template v-else>
@@ -22,7 +22,7 @@
                 <p class="text-center text-blue-500 cursor-pointer"
                 @click="modalLogin = !modalLogin"
                 >{{ modalLogin ? 'Создать аккаунт' : 'Войти в аккаунт' }}</p>
-            </template>
+            </template> -->
         </div>
     </OtherModalTransition>
 </template>
@@ -31,8 +31,6 @@ import { userActive } from "@/pinia/store"
 import ShowContent from "~~/utils/ShowContent";
 
 const { stage, updateStage } = ShowContent()
-
-const modalLogin = ref<boolean>(true)
 
 const user = userActive()
 
