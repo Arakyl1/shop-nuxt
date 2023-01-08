@@ -70,33 +70,33 @@ export const windowMask = defineStore('windowMask', () => {
 //     return { favorite, updateFavorite }
 // })
 
-// export const basketProduct = defineStore('basketProduct', () => {
+export const basketProduct = defineStore('basketProduct', () => {
     
-//     const basket = ref<any>([])
-//     const alertFun = alertContent()
+    const basket = ref<any>([])
+    const alertFun = alertContent()
 
-//     function addBasketProduct(item: {id: number, quantity: number }) { 
-//         if (basket.value.findIndex(el => el.id === item.id) === -1) {
-//             basket.value.push(item)
-//         } else {
-//             alertFun.updateContent('Этот товар уже есть в ващей корзине')
-//         }
-//         mySetItem('basket', basket.value)
-//     }
+    function addBasketProduct(item: {id: number, quantity: number }) { 
+        if (basket.value.findIndex(el => el.id === item.id) === -1) {
+            basket.value.push(item)
+        } else {
+            alertFun.updateContent('Этот товар уже есть в ващей корзине')
+        }
+        mySetItem('basket', basket.value)
+    }
 
-//     function removeBasketProduct(index: number) {
-//         basket.value.splice(index, 1)
-//         mySetItem('basket', basket.value)
-//     }
+    function removeBasketProduct(index: number) {
+        basket.value.splice(index, 1)
+        mySetItem('basket', basket.value)
+    }
 
-//     onBeforeMount(() => {
-//         const localStorage = myGetItem('basket')
-//         if (localStorage) {
-//             basket.value = JSON.parse(localStorage)
-//         }
-//     })
-//     return { basket, addBasketProduct, removeBasketProduct }
-// })
+    onBeforeMount(() => {
+        const localStorage = myGetItem('basket')
+        if (localStorage) {
+            basket.value = JSON.parse(localStorage)
+        }
+    })
+    return { basket, addBasketProduct, removeBasketProduct }
+})
 
 
 export const containerSize = defineStore('containerSize', () => {
