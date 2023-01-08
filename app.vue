@@ -6,7 +6,7 @@
     @click="store.updateActive(false)"></div>
     <div v-if="size.width > 0">
     -->
-    <LazyHeaderMain  v-if="size.width >= 768" class="mb-4"/>
+    <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
     <!--
       <HeaderMainMobaile v-else class="mb-4"/>
     </div>
@@ -37,12 +37,12 @@ const containerFunc = containerSize()
 const { size } = storeToRefs(containerFunc)
 // const { initAuth } = useAuth()
 
-// onBeforeMount(async() => {
-//   initAuth()
+onBeforeMount(async() => {
+  // initAuth()
 
-//   containerFunc.updateSize(window)
-//   window.addEventListener('resize', () => containerFunc.updateSize(window))
-// })
+  containerFunc.updateSize(window)
+  window.addEventListener('resize', () => containerFunc.updateSize(window))
+})
 
 </script>
 
