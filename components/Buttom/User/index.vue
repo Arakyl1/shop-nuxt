@@ -14,7 +14,7 @@
                 <ButtomUserMain/>
             </template>
             -->
-            <template >
+            
                 <h3 class="text-3xl text-center font-medium text-black-500 mb-7"
                 >{{ modalLogin ? 'Авторизация' : 'Регистрация' }}</h3>
                     <ButtomUserLogin v-if="modalLogin" :functionModal="updateStage" :active="stage"/>
@@ -23,7 +23,7 @@
                 <p class="text-center text-blue-500 cursor-pointer"
                 @click="modalLogin = !modalLogin"
                 >{{ modalLogin ? 'Создать аккаунт' : 'Войти в аккаунт' }}</p>
-            </template>
+            
         </div>
     </OtherModalTransition>
 </template>
