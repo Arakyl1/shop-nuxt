@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     // cloudinaryApiKey: process.env.CLOUDINARY__KEY,
     // cloudinaryApiSecret: process.env.CLOUDINARY__SECRET,
     
-    jwtAccessSecret: 'access_secter_token',
-    jwtRefrechSecret: 'refrech_secter_token',
+    jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
+    jwtRefrechSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
   }
 });
