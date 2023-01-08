@@ -1,8 +1,8 @@
 import { H3Event, sendError } from "h3"
-//import { createUser } from "~~/server/db/user"
-// import createAndSendError from "~~/server/utils/createAndSendError";
+import { createUser } from "~~/server/db/user"
+import createAndSendError from "~~/server/utils/createAndSendError";
 import { generateTokens } from "~~/server/utils/jwt";
-// import { createRefrechToken } from "~~/server/db/refrechTokem";
+import { createRefrechToken } from "~~/server/db/refrechTokem";
 
 
 export default defineEventHandler(async(event: H3Event) => {
@@ -29,10 +29,10 @@ export default defineEventHandler(async(event: H3Event) => {
         profileImage: "https://picsum/200/200"
     }
 
-    // const user = await createUser(userData)
-    // if (!user) {
-    //     createAndSendError(event, 404, "Error when creating")
-    // }
+    const user = await createUser(userData)
+    if (!user) {
+        createAndSendError(event, 404, "Error when creating")
+    }
 
     // Generate Token
 
@@ -48,7 +48,7 @@ export default defineEventHandler(async(event: H3Event) => {
 
     return {
         access_token: accessToken,
-        // user: userData
+        user: user
     }
     // return true
 })
