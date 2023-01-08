@@ -1,5 +1,5 @@
 import prisma from ".";
-import bcrypr from "bcrypt"
+import bcryptjs from "bcryptjs";
 
 interface User {
     name?: string | number,
@@ -12,7 +12,7 @@ interface User {
 export const createUser = (userData: User) => {
     const updateUserData = {
         ...userData,
-        password: bcrypr.hashSync(userData.password, 10)
+        password: bcryptjs.hashSync(userData.password, 10)
     }
       
     return prisma.user.create({

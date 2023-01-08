@@ -1,6 +1,6 @@
 import { getUserByUsername } from "../../db/user";
 import { generateTokens, sendRefrechToken } from "../../utils/jwt";
-import bcrypr from "bcrypt";
+import bcryptjs from "bcryptjs";
 import { createRefrechToken } from "~~/server/db/refrechTokem";
 
 export default defineEventHandler(async(event) => {
@@ -24,7 +24,7 @@ export default defineEventHandler(async(event) => {
         }))
     }
 
-    const doesThePaswordMatch = await bcrypr.compare(password, user.password)
+    const doesThePaswordMatch = await bcryptjs.compare(password, user.password)
 
 
     if (!doesThePaswordMatch) {
