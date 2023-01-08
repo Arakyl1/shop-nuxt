@@ -1,7 +1,7 @@
 <template>
 <header>
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
-        <div class="h-2"></div>
+        <!-- <div class="h-2"></div>
         <div class="flex items-center py-4 sm:justify-between">
             <NuxtLink to="/" class="sm:w-24">
                 <img src="@/assets/img/logo.png" alt="logo" >
@@ -52,15 +52,15 @@
                     </form>
                 </template> 
             </SearchForm>
-        </div>
+        </div> -->
     </div>
-    <HeaderSelectMobaile :class="[ stage ? 'translate-x-0' : 'translate-x-full']" :updateFun="updateStage"/>
+    <!-- <HeaderSelectMobaile :class="[ stage ? 'translate-x-0' : 'translate-x-full']" :updateFun="updateStage"/> -->
 </header>
 </template>
 <script setup lang="ts">
 import SearchForm from '../Other/SearchForm.vue';
-import { ShowContent } from '~~/components/Other/Modal/Show';
+// import { ShowContent } from '~~/components/Other/Modal/Show';
 
-const { stage, updateStage } = ShowContent()
+// const { stage, updateStage } = ShowContent()
 
 </script>
