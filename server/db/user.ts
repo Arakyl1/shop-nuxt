@@ -5,25 +5,19 @@ interface User {
     name?: string | number,
     email: string,
     username: string,
-    password: string | Buffer,
+    password: string,
     profileImage: string
 }
 
 export const createUser = (userData: User) => {
+    const salt = bcryptjs.genSaltSync(10);
     const updateUserData = {
         ...userData,
-        password: bcryptjs.hashSync(userData.password, 10)
+        password: bcryptjs.hashSync(userData.password, salt)
     }
       
     return prisma.user.create({
-        data: updateUserData,
-        select: {
-            id: true,
-            username: true,
-            name: true,
-            email: true,
-            profileImage: true
-        }
+        data: updateUserData
     })
 }
 
