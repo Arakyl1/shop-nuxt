@@ -1,8 +1,8 @@
 import { H3Event, sendError } from "h3"
-import { createUser } from "~~/server/db/user"
-import createAndSendError from "~~/server/utils/createAndSendError";
-import { generateTokens, sendRefrechToken } from "~~/server/utils/jwt";
-import { createRefrechToken } from "~~/server/db/refrechTokem";
+//import { createUser } from "~~/server/db/user"
+// import createAndSendError from "~~/server/utils/createAndSendError";
+import { generateTokens } from "~~/server/utils/jwt";
+// import { createRefrechToken } from "~~/server/db/refrechTokem";
 
 
 export default defineEventHandler(async(event: H3Event) => {
