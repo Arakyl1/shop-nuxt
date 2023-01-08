@@ -4,6 +4,10 @@
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
+
+    <div>
+      {{ userData }}
+    </div>
     <!-- <div v-if="size.width > 0"> -->
    
     <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
@@ -29,11 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import { windowMask, containerSize } from "@/pinia/store";
+import { windowMask, containerSize, userActive } from "@/pinia/store";
 import { storeToRefs } from "pinia";
 
 const store = windowMask()
 const containerFunc = containerSize()
+const userActiveFun = userActive()
+const { userData } = storeToRefs(userActiveFun)
 const { size } = storeToRefs(containerFunc)
 // const { initAuth } = useAuth()
 

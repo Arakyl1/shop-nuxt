@@ -45,9 +45,9 @@ export const generateTokens = async(user: any) => {
     }
 }
 
-// export const sendRefrechToken = async (event, token) => {
-//     setCookie(event, "refrech_token", token, {
-//         httpOnly: true,
-//         sameSite: true
-//     })
-// }
+export const sendRefrechToken = async (event, token) => {
+    setCookie(event, "refrech_token", token, {
+        httpOnly: true,
+        sameSite: true
+    })
+}
