@@ -11,5 +11,13 @@ export default defineNuxtConfig({
             autoImports: ['defineStore', 'acceptHMRUpdate'],
         }
     ], 
-],
+  ],
+  runtimeConfig: {
+    cloudinaryName: process.env.CLOUDINARY__NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY__KEY,
+    cloudinaryApiSecret: process.env.CLOUDINARY__SECRET,
+    
+    jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
+    jwtRefrechSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
+  }
 });
