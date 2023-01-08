@@ -58,7 +58,7 @@
 </header>
 </template>
 <script setup lang="ts">
-import SearchForm from '../Other/SearchForm.vue';
+// import SearchForm from '../Other/SearchForm.vue';
 // import { ShowContent } from '~~/components/Other/Modal/Show';
 
 // const { stage, updateStage } = ShowContent()
