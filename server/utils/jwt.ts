@@ -1,37 +1,37 @@
 import jwt from "jsonwebtoken";
 
-const generateAsccessToken = (user, config) => {
+const generateAsccessToken = (user: any, config: any) => {
 
     return jwt.sign({ userId: user.id}, config.jwtAccessSecret, {
         expiresIn: '1h'
     })
 }
-const generateRefrechToken = (user, config) => {
+const generateRefrechToken = (user: any, config: any) => {
     return jwt.sign({ userId: user.id}, config.jwtRefrechSecret, {
         expiresIn: '4h'
     })
 
 }
 
-export const decodeRefrechToken = (token) => {
-    const config = useRuntimeConfig()
+// export const decodeRefrechToken = (token) => {
+//     const config = useRuntimeConfig()
 
-    try {
-        return jwt.verify(token, config.jwtRefrechSecret)
-    } catch (error) {
-        return null
-    }
-}
+//     try {
+//         return jwt.verify(token, config.jwtRefrechSecret)
+//     } catch (error) {
+//         return null
+//     }
+// }
 
-export const decodeAccessToken = (token) => {
-    const config = useRuntimeConfig()
+// export const decodeAccessToken = (token) => {
+//     const config = useRuntimeConfig()
 
-    try {
-        return jwt.verify(token, config.jwtAccessSecret)
-    } catch (error) {
-        return null
-    }
-}
+//     try {
+//         return jwt.verify(token, config.jwtAccessSecret)
+//     } catch (error) {
+//         return null
+//     }
+// }
 
 export const generateTokens = async(user: any) => {
     const config = useRuntimeConfig()
@@ -45,9 +45,9 @@ export const generateTokens = async(user: any) => {
     }
 }
 
-export const sendRefrechToken = async (event, token) => {
-    setCookie(event, "refrech_token", token, {
-        httpOnly: true,
-        sameSite: true
-    })
-}
+// export const sendRefrechToken = async (event, token) => {
+//     setCookie(event, "refrech_token", token, {
+//         httpOnly: true,
+//         sameSite: true
+//     })
+// }
