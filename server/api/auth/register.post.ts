@@ -29,14 +29,14 @@ export default defineEventHandler(async(event: H3Event) => {
         profileImage: "https://picsum/200/200"
     }
 
-    const user = await createUser(userData)
-    if (!user) {
-        createAndSendError(event, 404, "Error when creating")
-    }
+    // const user = await createUser(userData)
+    // if (!user) {
+    //     createAndSendError(event, 404, "Error when creating")
+    // }
 
     // Generate Token
 
-    const { accessToken } = await generateTokens(user)
+    const { accessToken } = await generateTokens(userData)
 
     // await createRefrechToken({
     //     token: refrechToken,
@@ -48,6 +48,6 @@ export default defineEventHandler(async(event: H3Event) => {
 
     return {
         access_token: accessToken,
-        user: user
+        // user: user
     }
 })
