@@ -27,23 +27,23 @@ export const windowMask = defineStore('windowMask', () => {
     return { active, updateActive }
 })
 
-// export const userActive = defineStore('userActive', () => {
-//     const userData = ref<object | null>(null)
+export const userActive = defineStore('userActive', () => {
+    const userData = ref<object | null>(null)
 
-//     function updateActiveUser(user: object | null) {
-//         userData.value = user
-//     }
-//     return { userData, updateActiveUser }
-// })
+    function updateActiveUser(user: object | null) {
+        userData.value = user
+    }
+    return { userData, updateActiveUser }
+})
 
-// export const accessToken = defineStore('accesshToken', () => {
-//     const accessToken = ref<string>('')
+export const accessToken = defineStore('accesshToken', () => {
+    const accessToken = ref<string>('')
 
-//     function updateAccessToken(token: string) {
-//         accessToken.value = token        
-//     }
-//     return { accessToken, updateAccessToken }
-// })
+    function updateAccessToken(token: string) {
+        accessToken.value = token        
+    }
+    return { accessToken, updateAccessToken }
+})
 
 export const favoriteProduct = defineStore('favoriteProduct', () => {
 

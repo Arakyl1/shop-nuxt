@@ -9,7 +9,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ quantityStar?: number | string | undefined }>()
+withDefaults(defineProps<{
+    quantityStar?: number | string | undefined 
+}>(), { quantityStar: 0})
 const emit = defineEmits<{
     (e: 'numberStar', id: number): void
 }>()

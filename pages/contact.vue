@@ -44,11 +44,11 @@
                 </OtherModalContent>
             </OtherModalTransition>
         </template> -->
-        <iframe
+        <!-- <iframe
           class="w-full aspect-[2.3/1] rounded-md"
           src="https://yandex.ru/map-widget/v1/?um=constructor%3A7d6a1168fb8d16752cf83dd4cf2d8e58a4e0a3813fc21288224711925e8cb0ab&amp;source=constructor"
           frameborder="0"
-        ></iframe>
+        ></iframe> -->
     </section>
     <!-- <ClientOnly>
         <ContactMarket class="mb-12"/>

@@ -1,6 +1,6 @@
 <template>
 <div class="flex items-center justify-between py-5 lg:py-4">
-    <!-- <NuxtLink to="/" class="xl:w-28">
+    <NuxtLink to="/" class="xl:w-28">
         <img src="@/assets/img/logo.png" alt="logo" >
     </NuxtLink>
     <h3 class="xl:text-xl text-2xl ">+7 (499) 719-99-94</h3>
@@ -13,7 +13,7 @@
     </ButtomStandart>
     <button class="flex justify-between">
         <ButtomUser/>
-    </button> -->
+    </button>
 </div>
 </template>
 <script setup lang="ts">
