@@ -5,7 +5,9 @@
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
     <div v-if="size.width > 0">
+    -->
     <LazyHeaderMain  v-if="size.width >= 768" class="mb-4"/>
+    <!--
       <HeaderMainMobaile v-else class="mb-4"/>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3" >
@@ -27,12 +29,12 @@
 </template>
 
 <script setup lang="ts">
-// import { windowMask, containerSize } from "@/pinia/store";
-// import { storeToRefs } from "pinia";
+import { windowMask, containerSize } from "@/pinia/store";
+import { storeToRefs } from "pinia";
 
-// const store = windowMask()
-// const containerFunc = containerSize()
-// const { size } = storeToRefs(containerFunc)
+const store = windowMask()
+const containerFunc = containerSize()
+const { size } = storeToRefs(containerFunc)
 // const { initAuth } = useAuth()
 
 // onBeforeMount(async() => {
