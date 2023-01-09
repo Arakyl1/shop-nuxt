@@ -1,5 +1,5 @@
 <template>
-    <!-- <div v-if="data">
+    <div v-if="data">
         <LazyProductDetailedMain
         v-if="size.width ? size.width > 767 : null"
         :data="data"
@@ -16,7 +16,7 @@
         :refresh="refresh"
         class="mb-12"/>
     </div>
-     -->
+    
 </template>
 
 <script setup lang="ts">
@@ -33,7 +33,7 @@ const route = useRoute()
 const containerFunc = containerSize()
 const { size } = storeToRefs(containerFunc)
 
-// const { getProduct } = useProduct()
+const { getProduct } = useProduct()
 
 const option = ref({
     where: {
@@ -49,6 +49,6 @@ const option = ref({
     }
 })
 
-// const { data, refresh } = await getProduct(option.value, `data_full_info_${route.params.id}`)
+const { data, refresh } = await getProduct(option.value, `data_full_info_${route.params.id}`)
 
 </script>
