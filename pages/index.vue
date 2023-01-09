@@ -48,14 +48,14 @@ definePageMeta({
     pageTransition: { name: 'page-transition' }
 })
 
-// const { getProductForCategor } = useProduct()
+const { getProductForCategor } = useProduct()
 const containerFunc = containerSize()
 const { size } = storeToRefs(containerFunc)
 
 
-// const sale = await getProductForCategor({ where: { sale: true }, select: { id: true }})
-// const news = await getProductForCategor({ where: { news: true }, select: { id: true }})
-// const top = await getProductForCategor({ where: { top: true }, select: { id: true }})
+const sale = await getProductForCategor({ where: { sale: true }, select: { id: true }})
+const news = await getProductForCategor({ where: { news: true }, select: { id: true }})
+const top = await getProductForCategor({ where: { top: true }, select: { id: true }})
 
 
 const style = {
