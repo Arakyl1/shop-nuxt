@@ -1,8 +1,9 @@
-export default function userTransform(user: object) {
+export default function userTransform(user: any) {
     return {
-        user.username,
-        user.email,
-        user.id,
-        user.profileImage
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        profileImage: user.profileImage
     }
 }
