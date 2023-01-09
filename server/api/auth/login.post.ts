@@ -2,7 +2,7 @@ import { getUserByUsername } from "../../db/user";
 import { generateTokens, sendRefrechToken } from "../../utils/jwt";
 import bcryptjs from "bcryptjs";
 import { createRefrechToken } from "~~/server/db/refrechTokem";
-import userTransform from "~~/server/utils/userTransform";
+import { userTransform } from "~~/server/utils/userTransform";
 
 export default defineEventHandler(async(event) => {
     const body = await readBody(event)
