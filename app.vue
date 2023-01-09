@@ -4,9 +4,7 @@
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
-
     <div>
-      {{ userData }}
     </div>
     <!-- <div v-if="size.width > 0"> -->
    
@@ -29,6 +27,7 @@
     <OtherElseAlert/>
   </Transition> -->
   <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
+  {{ userData }}
   </div>
 </template>
 
@@ -44,7 +43,7 @@ const { size } = storeToRefs(containerFunc)
 // const { initAuth } = useAuth()
 
 onBeforeMount(async() => {
-  // initAuth()
+  initAuth()
 
   containerFunc.updateSize(window)
   window.addEventListener('resize', () => containerFunc.updateSize(window))

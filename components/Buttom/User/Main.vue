@@ -1,9 +1,11 @@
 <template>
 <div class="sm:-mx-2">
-    <!-- <div class="flex items-center mb-6 sm:mb-4">
-        <img class="w-12 aspect-square rounded-full mr-6" :src="userData.profileImage" alt="user_photo">
-        <h3 class="text-2xl">{{ userData.username }}</h3>
-    </div>
+    <template v-if="userData">
+        <div class="flex items-center mb-6 sm:mb-4">
+            <img class="w-12 aspect-square rounded-full mr-6" :src="userData.profileImage" alt="user_photo">
+            <h3 class="text-2xl">{{ userData.username }}</h3>
+        </div>
+    </template>
     <div class="decor-line"></div>
     <div>
         <div class="mb-4">
@@ -23,23 +25,23 @@
         @click="logout">
             Выйти
         </ButtomStandart>
-    </div> -->
+    </div>
 </div>
 </template>
 <script setup lang="ts">
-// import { userActive } from "@/pinia/store"
-// import { storeToRefs } from "pinia";
+import { userActive } from "@/pinia/store"
+import { storeToRefs } from "pinia";
 
-// const user = userActive()
-// const { userData } = storeToRefs(user)
+const user = userActive()
+const { userData } = storeToRefs(user)
 
-// const { logout } = useAuth()
+const { logout } = useAuth()
 
-// const list = [
-//   { data: ['Корзина'] },
-//   { decorLine: true },
-//   { data: ['Избранные товары', 'Просмотренные', 'Списки сравнения', 'Лист ожилания'] },
-//   { decorLine: true },
-//   { data: ['Бонусный счет', 'Личные данные', 'История покупок', 'Отзывы и вопросы'] }
-// ]
+const list = [
+  { data: ['Корзина'] },
+  { decorLine: true },
+  { data: ['Избранные товары', 'Просмотренные', 'Списки сравнения', 'Лист ожилания'] },
+  { decorLine: true },
+  { data: ['Бонусный счет', 'Личные данные', 'История покупок', 'Отзывы и вопросы'] }
+]
 </script>
