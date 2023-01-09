@@ -1,7 +1,7 @@
 <template>
     <section class="mb-12 -mx-4 md:mx-0">
         <div class="flex w-full flex-wrap ">
-            <!-- <div class="w-1/2 px-4 md:w-full md:px-0">
+            <div class="w-1/2 px-4 md:w-full md:px-0">
                 <div v-for="item in data?.slice(0, Math.ceil(data.length/2))" :key="item.title">
                     <div class="bg-gray-100 p-8 mb-8 xl:p-6 xl:mb-6 sm:p-4 sm:mb-4">
                         <ContentRenderer  :value="item" class="delivety"/>
@@ -14,7 +14,7 @@
                         <ContentRenderer  :value="item" class="delivety"/>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </section>
     <section class="hidden lg:gap-x-6"></section>
@@ -27,7 +27,7 @@ definePageMeta({
     pageTransition: { name: 'page-transition' }
 })
 
-// const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find())
+const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find())
 
 </script>
 
