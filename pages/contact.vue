@@ -2,7 +2,7 @@
     <h1 class="text-4xl mb-6 xl:text-3xl lg:text-2xl lg:mb-4">Контакты</h1>
     <p class="text-lg py-4 lg:text-base sm:text-sm">Часы работы и приёма звонков: Понедельник- суббота с 9:00 до 20:00 ,воскресенье-выходной</p>
     <section class="relative mb-12">
-        <!-- <template v-if="true">
+        <template v-if="true">
             <ButtomStandart
             class="top-4 left-4 bg-white text-2xl rounded-md px-6 py-4 text-gray-500
             filter-none hover:shadow absolute xl:text-xl lg:hidden"
@@ -43,27 +43,27 @@
                 </ContentDoc>
                 </OtherModalContent>
             </OtherModalTransition>
-        </template> -->
-        <!-- <iframe
+        </template>
+        <iframe
           class="w-full aspect-[2.3/1] rounded-md"
           src="https://yandex.ru/map-widget/v1/?um=constructor%3A7d6a1168fb8d16752cf83dd4cf2d8e58a4e0a3813fc21288224711925e8cb0ab&amp;source=constructor"
           frameborder="0"
-        ></iframe> -->
+        ></iframe>
     </section>
-    <!-- <ClientOnly>
+    <ClientOnly>
         <ContactMarket class="mb-12"/>
 
     </ClientOnly> -->
-    <!-- <ContactRequisites class="mb-12"/> -->
+    <ContactRequisites class="mb-12"/>
 </template>
 
 <script setup lang="ts">
-// import { ShowContent  } from "@/components/Other/Modal/Show";
+import ShowContent from "@/utils/ShowContent";
 
 definePageMeta({
     title: "Контакты",
     pageTransition: { name: 'page-transition' }
 })
 
-// const { stage, updateStage } = ShowContent()
+const { stage, updateStage } = ShowContent()
 </script>
