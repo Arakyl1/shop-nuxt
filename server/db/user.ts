@@ -36,7 +36,8 @@ export const getUserByUsername = (username: any) => {
             username: true,
             name: true,
             email: true,
-            profileImage: true
+            profileImage: true,
+            password: true
         }
     })
 }
