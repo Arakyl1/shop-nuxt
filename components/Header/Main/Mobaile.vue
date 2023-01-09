@@ -1,7 +1,7 @@
 <template>
 <header>
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
-        <!-- <div class="h-2"></div>
+        <div class="h-2"></div>
         <div class="flex items-center py-4 sm:justify-between">
             <NuxtLink to="/" class="sm:w-24">
                 <img src="@/assets/img/logo.png" alt="logo" >
@@ -18,10 +18,10 @@
             <ButtomFavoriteShow class="ml-6 sm:ml-0 sm:pr-2"/>
             <ButtomShowBasket class="ml-6 sm:ml-0 sm:pr-2"/>
             <ButtomUser >
-                <template #buttom="{ user, updateStage }">
+                <template #buttom="{ userData, updateStage }">
                     <ButtomStandart class="p-0 ml-4 sm:ml-0 sm:scale-90" @click="updateStage"
-                    :class="{ 'bg-yellow-500': user.userData }">
-                        <IconUser :class="[ user.userData ? 'group is-icon-white' : 'group is-icon-black']"/>
+                    :class="{ 'bg-yellow-500': userData }">
+                        <IconUser :class="[ userData ? 'group is-icon-white' : 'group is-icon-black']"/>
                     </ButtomStandart>
                 </template>
             </ButtomUser>
@@ -52,15 +52,15 @@
                     </form>
                 </template> 
             </SearchForm>
-        </div> -->
+        </div>
     </div>
-    <!-- <HeaderSelectMobaile :class="[ stage ? 'translate-x-0' : 'translate-x-full']" :updateFun="updateStage"/> -->
+    <HeaderSelectMobaile :class="[ stage ? 'translate-x-0' : 'translate-x-full']" :updateFun="updateStage"/>
 </header>
 </template>
 <script setup lang="ts">
-// import SearchForm from '../Other/SearchForm.vue';
-// import { ShowContent } from '~~/components/Other/Modal/Show';
+import SearchForm from '../Other/SearchForm.vue';
+import ShowContent from '@/utils/ShowContent';
 
-// const { stage, updateStage } = ShowContent()
+const { stage, updateStage } = ShowContent()
 
 </script>

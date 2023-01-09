@@ -4,13 +4,9 @@
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
-    <div>
-    <!-- <div v-if="size.width > 0"> -->
-   
+    <div v-if="size.width">
     <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
-      {{ userData }}
-    
-      <!-- <HeaderMainMobaile v-else class="mb-4"/> -->
+      <LazyHeaderMainMobaile v-else class="mb-4"/>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3" >
       <!-- <Transition name="path">
@@ -19,10 +15,10 @@
       <NuxtPage>
       </NuxtPage>
     </div>
-    <!-- <div v-if="size.width > 0">
+    <div v-if="size.width > 0">
     <LazyFooter v-if="size.width >= 768" />
     <LazyFooterMobaile v-else/>
-  </div> -->
+  </div>
   <Transition name="alert">
     <OtherElseAlert/>
   </Transition>
