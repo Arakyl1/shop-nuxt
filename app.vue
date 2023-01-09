@@ -9,6 +9,7 @@
     <!-- <div v-if="size.width > 0"> -->
    
     <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
+      {{ userData }}
     <!--
       <HeaderMainMobaile v-else class="mb-4"/>
     </div>
@@ -27,7 +28,6 @@
     <OtherElseAlert/>
   </Transition> -->
   <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
-  {{ userData }}
   </div>
 </template>
 
@@ -40,7 +40,7 @@ const containerFunc = containerSize()
 const userActiveFun = userActive()
 const { userData } = storeToRefs(userActiveFun)
 const { size } = storeToRefs(containerFunc)
-// const { initAuth } = useAuth()
+const { initAuth } = useAuth()
 
 onBeforeMount(async() => {
   initAuth()
