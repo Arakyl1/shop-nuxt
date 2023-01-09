@@ -5,28 +5,27 @@
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
     <div>
-    </div>
     <!-- <div v-if="size.width > 0"> -->
    
     <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
       {{ userData }}
-    <!--
-      <HeaderMainMobaile v-else class="mb-4"/>
+    
+      <!-- <HeaderMainMobaile v-else class="mb-4"/> -->
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3" >
-      <Transition name="path">
+      <!-- <Transition name="path">
         <OtherElsePath v-if="$route.path !== '/'"/>
-      </Transition>
+      </Transition> -->
       <NuxtPage>
       </NuxtPage>
     </div>
-    <div v-if="size.width > 0">
+    <!-- <div v-if="size.width > 0">
     <LazyFooter v-if="size.width >= 768" />
     <LazyFooterMobaile v-else/>
-  </div>
+  </div> -->
   <Transition name="alert">
     <OtherElseAlert/>
-  </Transition> -->
+  </Transition>
   <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
   </div>
 </template>
