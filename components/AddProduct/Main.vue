@@ -88,7 +88,7 @@ async function changeImage(event: any) {
   }
   reader.readAsDataURL(file)
 
-  const image = await useFetch("/api/upload",
+  const image = await useFetch("/api/cloudinari/upload",
     {
       method: 'post',
       body: file,
