@@ -9,9 +9,9 @@
       <LazyHeaderMainMobaile v-else class="mb-4"/>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3" >
-      <!-- <Transition name="path">
+      <Transition name="path">
         <OtherElsePath v-if="$route.path !== '/'"/>
-      </Transition> -->
+      </Transition>
       <NuxtPage>
       </NuxtPage>
     </div>
