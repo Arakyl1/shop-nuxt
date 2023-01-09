@@ -1,6 +1,7 @@
 import { getUserById } from "@/server/db/user"
 import createAndSendError from "@/server/utils/createAndSendError"
 import { decodeAccessToken } from "@/server/utils/jwt"
+import { userTransform } from "~~/server/utils/userTransform"
 
 
 export default defineEventHandler(async(event) => {
@@ -14,7 +15,7 @@ export default defineEventHandler(async(event) => {
     try {
         const userId = decoded.userId
         const user = await getUserById(userId)
-        return user
+        return userTransform(user)
     } catch (error) {
         return Error
     }
