@@ -1,6 +1,6 @@
 <template>
     <ul v-if="data" ref="categor">
-        <!-- <li v-for="item in data.body" :key="item"
+        <li v-for="item in data.body" :key="item"
         class=" py-3 border-t border-blue-100">
         <div class="flex items-center justify-between">
             <NuxtLink :to="{ path: '/catalog', query: { ...route.query, categor: item.name } }"
@@ -11,7 +11,7 @@
                 <IconArround />
             </div>
         </div>
-        </li> -->
+        </li>
     </ul>
 </template>
 

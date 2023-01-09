@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <!-- <div class="bg-blue-500 absolute  rounded-md
+        <div class="bg-blue-500 absolute  rounded-md
         min-w-min max-h-min "
         :class="[ stage ? 'z-50' : 'z-20 delay-200']"
         @mouseenter="showModalCategor" @mouseleave="hudeModalCategor">
@@ -39,15 +39,15 @@
                     <IconArround :class="{ 'rotate-180': !active }" class="header__aditional-icon transition-all"/>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 <script setup lang="ts">
-// import { ShowContent } from '~~/components/Other/Modal/Show';
+import ShowContent  from "@/utils/ShowContent"
 
 const listCategor = ref<{ name: string; children: [] }>({ name: '', children: [] })
 
-// const { stage, updateStage } = ShowContent()
+const { stage, updateStage } = ShowContent()
 const heightSelectAditional = ref<number>(0)
 const list = ref<HTMLElement | null>(null)
 const active = ref(true)

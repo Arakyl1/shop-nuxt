@@ -1,6 +1,6 @@
 <template>
 <li class="mb-5 cursor-pointer"> 
-    <!-- <div class="flex">
+    <div class="flex">
         <ButtomStandart class="bg-black-500 mr-3 rounded p-1"
         @click="active = !active">
             <IconAdd class="group is-icon-white"/>
@@ -14,7 +14,7 @@
                 {{ elem.name }}
             </li>
         </ul>
-    </div> -->
+    </div>
 </li>
 
 
