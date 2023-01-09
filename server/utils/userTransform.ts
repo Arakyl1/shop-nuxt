@@ -1,4 +1,4 @@
-export default function userTransform(user: any) {
+export const userTransform = (user: any) => {
     return {
         id: user.id,
         name: user.name,
