@@ -4,7 +4,7 @@
       class="mr-2 last:mr-0"
       :key="item">
         <img
-        :src="`../_nuxt/assets/img/iconSocials/${item}.png`"
+        :src="`@/assets/img/iconSocials/${item}.png`"
         :alt="item"
         />
       </li>

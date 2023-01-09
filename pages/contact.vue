@@ -53,7 +53,7 @@
     <ClientOnly>
         <ContactMarket class="mb-12"/>
 
-    </ClientOnly> -->
+    </ClientOnly>
     <ContactRequisites class="mb-12"/>
 </template>
 
