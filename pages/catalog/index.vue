@@ -51,8 +51,8 @@ import ShowContent from "@/utils/ShowContent"
 definePageMeta({
     middleware: ['catalog'],
     title: 'Каталог товаров',
-    pageTransition: { name: 'page-transition' },
-    keepalive: { include: 'Filter'}
+    // pageTransition: { name: 'page-transition' },
+    // keepalive: { include: 'Filter'}
 })
 
 const { getProductForCategor, getMakerlist } = useProduct()

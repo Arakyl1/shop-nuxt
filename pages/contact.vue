@@ -62,7 +62,7 @@ import ShowContent from "@/utils/ShowContent";
 
 definePageMeta({
     title: "Контакты",
-    pageTransition: { name: 'page-transition' }
+    // pageTransition: { name: 'page-transition' }
 })
 
 const { stage, updateStage } = ShowContent()

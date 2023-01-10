@@ -12,7 +12,10 @@
       <Transition name="path">
         <OtherElsePath v-if="$route.path !== '/'"/>
       </Transition>
-      <NuxtPage>
+      <NuxtPage :transition="{
+        name: 'page-transition',
+        mode: 'in-out',
+      }" >
       </NuxtPage>
     </div>
     <div v-if="size.width > 0">

@@ -44,9 +44,9 @@
 import { containerSize } from "@/pinia/store";
 import { storeToRefs } from "pinia";
 
-definePageMeta({
-    pageTransition: { name: 'page-transition' }
-})
+// definePageMeta({
+//     pageTransition: { name: 'page-transition' }
+// })
 
 const { getProductForCategor } = useProduct()
 const containerFunc = containerSize()

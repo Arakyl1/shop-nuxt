@@ -25,7 +25,7 @@ import { storeToRefs } from "pinia";
 
 definePageMeta({
     title: 'Информация о товаре',
-    pageTransition: { name: 'page-transition' }
+    // pageTransition: { name: 'page-transition' }
 })
 
 

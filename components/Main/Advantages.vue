@@ -10,7 +10,7 @@
                         <div class="bg-gray-100 py-8 px-6 flex flex-col items-center h-full xl:py-6 xl:px-3">
                             <div class="w-20 h-20 relative rounded-full overflow-hidden flex p-6 items-center justify-center mb-4
                             after:content-[' '] after:absolute after:w-full after:h-full after:bg-yellow-500 after:top-0 after:left-0 z-10 after:opacity-30">
-                                <img :src="`_nuxt/assets/img/svg/${elem.link_img}.svg`" alt=""
+                                <img :src="`/img/svg/${elem.link_img}.svg`" alt=""
                                 class="relative z-20">
                             </div>
                             <h4 class="text-lg text-black-500 mb-3 text-center xl:mb-1 xl:text-base">{{  elem.title }}</h4>

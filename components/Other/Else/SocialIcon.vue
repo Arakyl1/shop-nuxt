@@ -4,7 +4,7 @@
       class="mr-2 last:mr-0"
       :key="item">
         <img
-        :src="`@/public/img/iconSocials/${item}.png`"
+        :src="`/img/iconSocials/${item}.png`"
         :alt="item"
         />
       </li>

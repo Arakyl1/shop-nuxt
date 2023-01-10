@@ -4,8 +4,7 @@ import { prismaGetProduct } from "~~/server/db/product"
 export default defineEventHandler(async(event: any) => {
     const body = await readBody(event)
     try {
-        const data = await prismaGetProduct(body)
-        return data
+        return await prismaGetProduct(body)
     } catch (error) {
         return Error
     }

@@ -20,7 +20,7 @@ import useProduct from "~~/composables/useProduct";
 
 definePageMeta({
     title: "Добавить товар",
-    pageTransition: { name: 'page-transition' }
+    // pageTransition: { name: 'page-transition' }
     
 })
 
