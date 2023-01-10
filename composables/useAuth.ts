@@ -30,7 +30,7 @@ export default () => {
                 updateAlertText('Пользователь зарегистрирован')
                 resolve(true)
             } catch (error) {
-                reject(error.statusMessage)
+                reject(error)
             }
         })
         
@@ -47,9 +47,10 @@ export default () => {
                 updateAccess(data.access_token)
                 updateAlertText('Вы успешно вошли в свой акаунт')
                 resolve(true)
-            } catch (error) {
-                updateAlertText(error.statusMessage)
-                reject(error.statusMessage)
+            } catch (error: any) {
+                const message:string = error.statusMessage
+                updateAlertText(message)
+                reject(error)
             }
         })
     }
