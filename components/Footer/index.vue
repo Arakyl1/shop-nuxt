@@ -63,7 +63,7 @@
                             <div class="flex justify-between lg:justify-start">
                                 <div v-for="item in card" :key="item" class="xl:mr-2 xl:last:mr-0">
                                     <img class=" object-contain"
-                                    :src="`../_nuxt/assets/img/card/${item}.png`"
+                                    :src="`/img/card/${item}.png`"
                                     :alt="item">
                                 </div>
                             </div>

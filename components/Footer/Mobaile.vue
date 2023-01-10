@@ -32,7 +32,7 @@
                     <div class="flex justify-left mb-6">
                         <div v-for="item in card" :key="item" class="mr-3">
                             <img class=" object-contain"
-                            :src="`../_nuxt/assets/img/card/${item}.png`"
+                            :src="`/img/card/${item}.png`"
                             :alt="item">
                         </div>
                     </div>

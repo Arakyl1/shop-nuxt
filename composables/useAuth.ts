@@ -49,7 +49,7 @@ export default () => {
                 resolve(true)
             } catch (error) {
                 updateAlertText(error.statusMessage)
-                return error
+                reject(error.statusMessage)
             }
         })
     }
