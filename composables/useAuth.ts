@@ -47,8 +47,8 @@ export default () => {
             updateAlertText('Вы успешно вошли в свой акаунт')
             return true
         } catch (error) {
-            console.log(error);
-            
+            updateAlertText(error.statusMessage)
+            // console.log(error);
         }
         // return new Promise<boolean | Error>(async(resolve, reject) => {
         //     try {

@@ -54,7 +54,7 @@ async function loginUser() {
         if (res) {
             props.functionModal()
         }
-
+        return
         // try {
         //    alertFun.updateContent('Вы успешно вошли в свой акаунт')
         // } catch(error: any) {
