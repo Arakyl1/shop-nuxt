@@ -49,6 +49,8 @@ export default () => {
                 resolve(true)
             } catch (error: any) {
                 const message:string = error.statusMessage
+                console.log(message);
+                
                 updateAlertText(message)
                 reject(error)
             }
