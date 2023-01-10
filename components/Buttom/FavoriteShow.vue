@@ -11,9 +11,9 @@
   </button>
     <OtherModalTransition :active="stage" class="model-style">
         <OtherModalContent :title="'Ваши избранный'" :text-default="'Ваши избраны пусты'" :hude-window="updateStage">
-          <!-- <div class="grid grid-cols-3 md:grid-cols-2 -mx-4 sm:-mx-2" v-if="favorite.list.size">
+          <div class="grid grid-cols-3 md:grid-cols-2 -mx-4 sm:-mx-2" v-if="favorite.list.size">
             <ProductCard v-for="item in favorite.list" :key="item" :id="item" class="mb-4 slader__item"/>
-          </div> -->
+          </div>
         </OtherModalContent>
     </OtherModalTransition>
   </div>

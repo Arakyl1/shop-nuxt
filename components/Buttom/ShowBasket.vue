@@ -11,7 +11,7 @@
 <OtherModalTransition :active="stage" class="model-style">
     <OtherModalContent :title="'Ваша корзина'" :text-default="'Ваша корзина пуста'" :hude-window="updateStage">
         <ul v-if="basket.length">
-            <!-- <ProductCardBasket v-for="(item, index) in basket" :key="item.id" :item="item" :index="index"/> -->
+            <ProductCardBasket v-for="(item, index) in basket" :key="item.id" :item="item" :index="index"/>
         </ul>
     </OtherModalContent>
 </OtherModalTransition>

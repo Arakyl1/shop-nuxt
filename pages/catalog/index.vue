@@ -1,6 +1,6 @@
 <template>
     <section>
-        <!-- <ClientOnly>
+        <ClientOnly>
             <CatalogSelectingNumberDisplayedItems/>
         </ClientOnly>
         <div class="flex -mx-4 md:relative mb-8 min-h-[90vh] sm:-mx-2">
@@ -40,13 +40,13 @@
             </div>
         </div>
         <CatalogPageControlButtoms :activeButtomNext="activeButtomNext"
-        class="mb-20"/> -->
+        class="mb-20"/>
     </section>
 </template>
 
 
-<!-- <script setup lang="ts">
-import { ShowContent } from "@/components/Other/Modal/Show";
+<script setup lang="ts">
+import ShowContent from "@/utils/ShowContent"
 
 definePageMeta({
     middleware: ['catalog'],
@@ -98,5 +98,5 @@ watch(() => toucheData.vector, (newVector) => {
         updateStage(event)
     }
 })
-</script> -->
+</script>
 
