@@ -53,7 +53,10 @@ async function loginUser() {
         try {
            await login(data.value)
            props.functionModal()
-        } catch {}
+           alertFun.updateContent('Вы успешно вошли в свой акаунт')
+        } catch(error: any) {
+            alertFun.updateContent(error.statusMessage)
+        }
         return
     }
     alertFun.updateContent('Проверьте введеные данные')

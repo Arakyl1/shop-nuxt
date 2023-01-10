@@ -45,13 +45,8 @@ export default () => {
                 })
                 updateUser(data.user)
                 updateAccess(data.access_token)
-                updateAlertText('Вы успешно вошли в свой акаунт')
                 resolve(true)
             } catch (error: any) {
-                const message:string = error.statusMessage
-                console.log(message);
-                
-                updateAlertText(message)
                 reject(error)
             }
         })
