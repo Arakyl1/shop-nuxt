@@ -20,13 +20,14 @@
                 </div>
             </template>
             <template #bottom="{ prevItem, nextItem }" >
-                <div class="relative" v-if="(data.body.length / quantitySladerItem) - 1 && size.width > 640">
-                    <ButtomArround class="-scale-x-100 absolute -top-32 -left-1"
-                    @click="prevItem"/>
-                    <ButtomArround class="absolute -top-32 -right-1"
-                    @click="nextItem"/>
-                </div>
-                <div v-else-if="size.width > 640"></div>
+                <template  v-if="size.width > 640">
+                    <div class="relative" v-if="(data.body.length / quantitySladerItem) - 1">
+                        <ButtomArround class="-scale-x-100 absolute -top-32 -left-1"
+                        @click="prevItem"/>
+                        <ButtomArround class="absolute -top-32 -right-1"
+                        @click="nextItem"/>
+                    </div>
+                </template>
             </template>
         </Slader>
     </section>
