@@ -1,6 +1,6 @@
 <template>
-<section v-if="data && size.width">
-    <Slader :data="data.body">
+<section>
+    <Slader :data="data ? data.body : []">
         <template #header>
             <div></div>
         </template>
