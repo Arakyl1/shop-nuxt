@@ -50,15 +50,18 @@ function createObject() {
 async function loginUser() {
     if (data.value.username && data.value.password) {
         const { login } = useAuth();
-        try {
-           await login(data.value)
-           props.functionModal()
-           alertFun.updateContent('Вы успешно вошли в свой акаунт')
-        } catch(error: any) {
-            alert(error)
-            alertFun.updateContent(error.statusMessage)
+        const res = await login(data.value)
+        if (res) {
+            props.functionModal()
         }
-        return
+
+        // try {
+        //    alertFun.updateContent('Вы успешно вошли в свой акаунт')
+        // } catch(error: any) {
+        //     alert(error)
+        //     alertFun.updateContent(error.statusMessage)
+        // }
+        // return
     }
     alertFun.updateContent('Проверьте введеные данные')
 }

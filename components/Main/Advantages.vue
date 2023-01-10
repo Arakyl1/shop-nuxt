@@ -27,6 +27,7 @@
                         <ButtomArround class="absolute -top-32 -right-1"
                         @click="nextItem"/>
                     </div>
+                    <div v-else></div>
                 </template>
             </template>
         </Slader>
