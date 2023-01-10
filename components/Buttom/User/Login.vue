@@ -55,6 +55,7 @@ async function loginUser() {
            props.functionModal()
            alertFun.updateContent('Вы успешно вошли в свой акаунт')
         } catch(error: any) {
+            alert(error)
             alertFun.updateContent(error.statusMessage)
         }
         return
