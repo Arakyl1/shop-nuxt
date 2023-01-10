@@ -53,9 +53,7 @@ async function loginUser() {
         try {
            await login(data.value)
            props.functionModal()
-        } catch (error: string) {
-            alertFun.updateContent(error)
-        }
+        } catch {}
         return
     }
     alertFun.updateContent('Проверьте введеные данные')

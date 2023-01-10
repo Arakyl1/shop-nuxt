@@ -12,8 +12,13 @@ export default () => {
         access.updateAccessToken(data)
     }
 
+    const updateAlertText = (text: string) => {
+        const alert = alertContent()
+        alert.updateContent(text)
+    }
+
     const register = (event: Event) => {
-        return new Promise<void>(async(resolve, reject) => {
+        return new Promise<boolean | Error>(async(resolve, reject) => {
             try {
                 const data = await $fetch('/api/auth/register', {
                     method: "POST",
@@ -22,6 +27,7 @@ export default () => {
               
                 updateUser(data.user)
                 updateAccess(data.access_token)
+                updateAlertText('Пользователь зарегистрирован')
                 resolve(true)
             } catch (error) {
                 reject(error.statusMessage)
@@ -31,24 +37,25 @@ export default () => {
     }
 
     const login = async (event: Event) => {
-        return new Promise<void>(async(resolve, reject) => {
+        return new Promise<boolean | Error>(async(resolve, reject) => {
             try {
-                const data= await $fetch('/api/auth/login', {
+                const data = await $fetch('/api/auth/login', {
                     method: 'POST',
                     body: event
                 })
-
                 updateUser(data.user)
                 updateAccess(data.access_token)
+                updateAlertText('Вы успешно вошли в свой акаунт')
                 resolve(true)
             } catch (error) {
-                reject(error.statusMessage)
+                updateAlertText(error.statusMessage)
+                return error
             }
         })
     }
 
     const logout = () => {
-        return new Promise<void>(async(resolve, reject) => {
+        return new Promise<boolean | Error>(async(resolve, reject) => {
             try {
                 await $fetch('/api/auth/logout', {method: "POST"})
                 updateUser(null)
@@ -71,7 +78,7 @@ export default () => {
     }
 
     const initRefrechToken = () => {
-        return new Promise<void>(async(resolve, reject) => {
+        return new Promise<boolean | Error>(async(resolve, reject) => {
             try {
                 const data = await $fetch('/api/auth/refrech')
                 updateAccess(data)
