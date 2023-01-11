@@ -37,30 +37,21 @@ export default () => {
     }
 
     const login = async (event: Event) => {
-        try {
-            const data = await $fetch('/api/auth/login', {
-                method: 'POST',
-                body: event
-            })
-            console.log(data);
-            
-            updateUser(data.user)
-            updateAccess(data.access_token)
-            updateAlertText('Вы успешно вошли в свой акаунт')
-            return true
-        } catch (error) {
-            updateAlertText(error.message)
-            // console.log(error);
-        }
-        // return new Promise<boolean | Error>(async(resolve, reject) => {
-        //     try {
-                
-                
-        //         resolve(true)
-        //     } catch (error: any) {
-        //         reject(error)
-        //     }
-        // })
+        return new Promise<boolean | Error>(async(resolve, reject) => {
+            try {
+                const data = await $fetch('/api/auth/login', {
+                    method: 'POST',
+                    body: event
+                })
+                updateUser(data.user)
+                updateAccess(data.access_token)
+                updateAlertText('Вы успешно вошли в свой акаунт')
+                resolve(true)
+            } catch (error: any) {
+                updateAlertText(error.statusMessage)
+                reject(error)
+            }
+        })
     }
 
     const logout = () => {
