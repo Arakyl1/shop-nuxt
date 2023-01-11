@@ -1,6 +1,6 @@
 <template>
     <div>
-<!--         
+        
             <LazyMainStocks class="mb-16 xl:mb-12"/>
 
             <LazySlader :data="sale" :containerClass="style.container" :defaultTitle="'Акции недели'" class="mb-16 xl:mb-12">
@@ -34,7 +34,7 @@
             </LazySlader>
         
             <LazyMainAdvantages class="mb-20 xl:mb-16"/>
-             -->
+            
     
     </div>
 </template>
