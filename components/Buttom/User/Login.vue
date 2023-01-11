@@ -55,10 +55,10 @@ async function loginUser() {
             if (res) {
                 props.functionModal()
             }
-            return
         } catch (error) {
             console.error(error);
         }
+        return
     }
     alertFun.updateContent('Проверьте введеные данные')
 }
