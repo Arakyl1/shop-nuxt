@@ -11,9 +11,8 @@
                 <ButtomAddFavorite :id="data.id" class="p-0.5"/>
             </div>
             <div class="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full p-8 flex items-center justify-center z-0">
-                <NuxtLink :to="`/catalog/${id}`">
-                    <img :src="data.img" alt="product_image"
-                    class="max-w-full max-h-full">
+                <NuxtLink :to="`/catalog/${id}`" class="w-full h-full">
+                    <img :src="data.img" alt="product_image" class="object-contain max-w-full max-h-full">
                 </NuxtLink>
             </div>
         </div>

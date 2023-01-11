@@ -1,10 +1,10 @@
 <template>
     <div v-if="data">
-        <LazyProductDetailedMain
-        v-if="size.width ? size.width > 767 : null"
+        <ProductDetailedMain
+        v-if="isDesktopOrTablet"
         :data="data"
         class="mb-8 xl:mb-6" />
-        <LazyProductDetailedMainMobaile v-else-if="size.width" :data="data" class="mb-12"/>
+        <ProductDetailedMainMobaile v-else :data="data" class="mb-12"/>
         <ProductDetailedCharacteristic :data="data.characteristic"
         class="mb-8 xl:mb-6"/>
         <ProductDetailedDescription 
@@ -20,18 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import { containerSize } from "@/pinia/store";
-import { storeToRefs } from "pinia";
-
 definePageMeta({
     title: 'Информация о товаре',
-    // pageTransition: { name: 'page-transition' }
 })
 
 
 const route = useRoute()
-const containerFunc = containerSize()
-const { size } = storeToRefs(containerFunc)
+const { isDesktopOrTablet } = useDevice()
 
 const { getProduct } = useProduct()
 

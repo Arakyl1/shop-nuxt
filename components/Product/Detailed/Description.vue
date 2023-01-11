@@ -7,7 +7,6 @@
             <p class="text-gray-500 sm:text-sm">{{ description }}</p>
         </div>
         <div class="p-8 bg-gray-100 xl:p-6 sm:p-4">
-            <ClientOnly>
                 <Slader :data="reviewsUpdate">
                     <template #header="{ prevItem, nextItem }">
                         <div class="flex mb-4 xl:mb-3">
@@ -35,7 +34,6 @@
                        <div></div>
                     </template>
                 </Slader>
-            </ClientOnly>
         </div>
     </div>
 </section>

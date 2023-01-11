@@ -13,7 +13,7 @@
                 </div>
             </div>
         </template>
-        <template #bottom="{ prevItem, nextItem, }" v-if="quantityItemCatelog !== 1">
+        <template #bottom="{ prevItem, nextItem, }" v-if="isDesktopOrTablet">
             <div class="absolute top-[42%] left-0 flex items-center
             -translate-y-1/2 -translate-x-1/2 hover:-left-0.5 -scale-100 transition-all xl:-translate-x-1/4 lg:top-[35%]">
                 <ButtomArround class="filter-none"
@@ -32,14 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { containerSize } from "@/pinia/store";
-import { storeToRefs } from "pinia";
-
-const containerFunc = containerSize()
-const { size } = storeToRefs(containerFunc)
-
-const quantityItemCatelog = computed(() => size.value.width ? (size.value.width <= 640 ? 1 : size.value.width <= 767 ? 2 : 3) : 3)
-
+const { isDesktopOrTablet } = useDevice()
 
 const style = {
     container: '[grid-auto-columns:calc(100%/3)] md:[grid-auto-columns:calc(100%/2)] sm:[grid-auto-columns:calc(100%)]'

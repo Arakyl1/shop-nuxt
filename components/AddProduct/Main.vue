@@ -80,11 +80,10 @@ function openModal() {
 async function changeImage(event: any) {
   const file = event.target.files[0]
   if (!file) return
-
   const reader = new FileReader()
   
   reader.onload = (event) => {
-    inputImageUrl.value = event.target?.result
+    inputImageUrl.value = event.target?.result 
   }
   reader.readAsDataURL(file)
 
@@ -94,9 +93,8 @@ async function changeImage(event: any) {
       body: file,
       headers: { "Content-Type": "application/octet-stream" }
     })
-  data.value.img = image.data.value[0].url
+  data.value.img = image.data.value[0].secretUrl
 }
-
 //watch
 watch(() => props.create, () => {
     data.value = new CreateItemMainInfo()

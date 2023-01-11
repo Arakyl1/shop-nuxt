@@ -1,51 +1,51 @@
 <template>
     <div>
         
-            <LazyMainStocks class="mb-16 xl:mb-12"/>
+            <MainStocks class="mb-16 xl:mb-12"/>
 
-            <LazySlader :data="sale" :containerClass="style.container" :defaultTitle="'Акции недели'" class="mb-16 xl:mb-12">
+            <Slader :data="sale" :containerClass="style.container" :defaultTitle="'Акции недели'" class="mb-16 xl:mb-12">
             <template #item="{ elem }">
                 <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
             </template>
             <template #bottom>
                 <div></div>
             </template>
-            </LazySlader>
+            </Slader>
         
-            <LazySlader :data="news" :containerClass="style.container" :defaultTitle="'Новинки'" class="mb-16 xl:mb-12">
+            <Slader :data="news" :containerClass="style.container" :defaultTitle="'Новинки'" class="mb-16 xl:mb-12">
                 <template #item="{ elem }">
                     <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
                 </template>
                 <template #bottom>
                     <div></div>
                 </template>
-            </LazySlader>
+            </Slader>
 
-            <LazyMainAdvertisement class="mb-16 xl:mb-12"/>
+            <MainAdvertisement class="mb-16 xl:mb-12"/>
         
         
-            <LazySlader :data="top" :containerClass="style.container" :defaultTitle="'Товары месяца'" class="mb-16 xl:mb-12">
+            <Slader :data="top" :containerClass="style.container" :defaultTitle="'Товары месяца'" class="mb-16 xl:mb-12">
                 <template #item="{ elem }">
                     <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
                 </template>
                 <template #bottom>
                     <div></div>
                 </template>
-            </LazySlader>
+            </Slader>
         
-            <LazyMainAdvantages class="mb-20 xl:mb-16"/>
+            <MainAdvantages class="mb-20 xl:mb-16"/>
             
     
     </div>
 </template>
 
 <script setup lang="ts">
-import { containerSize } from "@/pinia/store";
-import { storeToRefs } from "pinia";
+// import { containerSize } from "@/pinia/store";
+// import { storeToRefs } from "pinia";
 
 const { getProductForCategor } = useProduct()
-const containerFunc = containerSize()
-const { size } = storeToRefs(containerFunc)
+// const containerFunc = containerSize()
+// const { size } = storeToRefs(containerFunc)
 
 
 const sale = await getProductForCategor({ where: { sale: true }, select: { id: true }})

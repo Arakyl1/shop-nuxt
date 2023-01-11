@@ -24,7 +24,6 @@
 
 definePageMeta({
     title: "Доставка",
-    // pageTransition: { name: 'page-transition' }
 })
 
 const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find())

@@ -15,7 +15,7 @@ export const uploadImageCloudinary = async (image: any) => {
     return await cloudinaryPost().uploader.upload(image, {
         height: 800,
         width: 800,
-        crop: "fill",
+        crop: "fit",
         fetch_format: "webp",
         folder: 'upload-examples',
         uploadPreset: 'your-upload-preset',
