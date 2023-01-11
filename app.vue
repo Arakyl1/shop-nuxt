@@ -18,10 +18,10 @@
       }" >
       </NuxtPage>
     </div>
-    <!-- <div>
+    <div>
     <Footer v-if="isDesktopOrTablet" />
     <FooterMobaile v-else/>
-  </div> -->
+  </div>
   <Transition name="alert">
     <OtherElseAlert/>
   </Transition>
