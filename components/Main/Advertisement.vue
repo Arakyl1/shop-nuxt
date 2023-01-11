@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="rounded-md overflow-hidden relative md:-mx-4 sm:-mx-2">
-            <img :src="'/img/info/' + (size.width > 768 ? 'info-for-catalog' : 'info-for-catalog-mobaile') + '.jpg'" alt=""
+            <img :src="'/img/info/' + (isDesktopOrTablet ? 'info-for-catalog' : 'info-for-catalog-mobaile') + '.jpg'" alt=""
             class="w-full">
             <div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-1/3 xl:w-5/12
             md:w-3/4 sm:w-10/12">
@@ -19,9 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { containerSize } from "@/pinia/store";
-import { storeToRefs } from "pinia";
+// import { containerSize } from "@/pinia/store";
+// import { storeToRefs } from "pinia";
 
-const containerFun = containerSize()
-const { size} = storeToRefs(containerFun)
+// const containerFun = containerSize()
+// const { size} = storeToRefs(containerFun)
+const { isDesktopOrTablet } = useDevice()
 </script>

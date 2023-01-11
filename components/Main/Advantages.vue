@@ -1,7 +1,7 @@
 <template>
-    <section v-if="data">
+    <section>
         <h2 class="text-3xl text-black-500 mb-16 xl:mb-12 lg:text-2xl lg:mb-8 sm:text-xl sm:mb-6">Наши преимущества</h2>
-        <Slader :data="data.body" :container-class="style.container"
+        <Slader :data="data ? data.body : null" :container-class="style.container"
         class="relative">
             <template #header><div></div></template>
             <template #item="{ elem }">

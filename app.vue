@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { windowMask, containerSize } from "@/pinia/store";
 // import { nuxtCtx } from "@nuxt/kit";
-import { storeToRefs } from "pinia";
+// import { storeToRefs } from "pinia";
 
 const store = windowMask()
 const containerFunc = containerSize()

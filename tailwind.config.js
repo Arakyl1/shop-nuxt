@@ -69,7 +69,7 @@ module.exports = {
 
       'lg': { 'max' :'1024px'},
 
-      'md': { 'max' :'768px'},
+      'md': { 'max' :'767px'},
 
       'sm': { 'max' : '640px'},
     }
