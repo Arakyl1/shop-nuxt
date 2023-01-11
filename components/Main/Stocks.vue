@@ -1,6 +1,6 @@
 <template>
 <section class="aspect-[228/101] w-full">
-    <Slader :data="data ? data.body : []">
+    <Slader :data="data ? data.body : null">
         <template #header>
             <div></div>
         </template>
@@ -51,11 +51,6 @@
 </section>
 </template>
 <script setup lang="ts">
-// import { containerSize } from "@/pinia/store";
-// import { storeToRefs } from "pinia";
-
-// const containerFun = containerSize()
-// const { size } = storeToRefs(containerFun)
 const { isDesktopOrTablet, isMobile } = useDevice()
 
 const data  = await queryContent('/main/slader').findOne()
