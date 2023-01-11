@@ -20,7 +20,7 @@
                 </div>
             </template>
             <template #bottom="{ prevItem, nextItem }" >
-                <template  v-if="size.width > 640">
+                <template  v-if="isDesktopOrTablet">
                     <div class="relative" v-if="(data.body.length / quantitySladerItem) - 1">
                         <ButtomArround class="-scale-x-100 absolute -top-32 -left-1"
                         @click="prevItem"/>
@@ -40,6 +40,7 @@ import { storeToRefs } from "pinia";
 
 const containerFunc = containerSize()
 const { size } = storeToRefs(containerFunc)
+const { isDesktopOrTablet } = useDevice()
 const { data } = useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
 
 

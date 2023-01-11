@@ -4,9 +4,9 @@
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
-    <div v-if="size.width">
-    <LazyHeaderMain v-if="size.width > 768"  class="mb-4"/>
-      <LazyHeaderMainMobaile v-else class="mb-4"/>
+    <div >
+      <HeaderMain v-if="isDesktopOrTablet"  class="mb-4"/>
+      <HeaderMainMobaile v-else class="mb-4"/>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3" >
       <Transition name="path">
@@ -14,13 +14,13 @@
       </Transition>
       <NuxtPage :transition="{
         name: 'page-transition',
-        mode: 'in-out',
+       mode: 'in-out'
       }" >
       </NuxtPage>
     </div>
-    <div v-if="size.width > 0">
-    <LazyFooter v-if="size.width >= 768" />
-    <LazyFooterMobaile v-else/>
+    <div>
+    <Footer v-if="isDesktopOrTablet" />
+    <FooterMobaile v-else/>
   </div>
   <Transition name="alert">
     <OtherElseAlert/>
@@ -30,15 +30,18 @@
 </template>
 
 <script setup lang="ts">
-import { windowMask, containerSize, userActive } from "@/pinia/store";
+import { windowMask, containerSize } from "@/pinia/store";
+// import { nuxtCtx } from "@nuxt/kit";
 import { storeToRefs } from "pinia";
 
 const store = windowMask()
 const containerFunc = containerSize()
-const userActiveFun = userActive()
-const { userData } = storeToRefs(userActiveFun)
-const { size } = storeToRefs(containerFunc)
+// const userActiveFun = userActive()
+// const { userData } = storeToRefs(userActiveFun)
+// const { size } = storeToRefs(containerFunc)
 const { initAuth } = useAuth()
+
+const { isDesktopOrTablet } = useDevice();
 
 onBeforeMount(async() => {
   initAuth()

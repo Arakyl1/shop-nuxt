@@ -52,7 +52,7 @@
 <script setup lang="ts">
 interface Props {
     data: [] | null,
-    containerClass: string,
+    containerClass?: string,
     defaultTitle?: string,
 }
 withDefaults(defineProps<Props>(), {

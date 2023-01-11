@@ -1,5 +1,5 @@
 <template>
-<section>
+<section class="aspect-[228/101] w-full">
     <Slader :data="data ? data.body : []">
         <template #header>
             <div></div>
@@ -7,7 +7,8 @@
         <template #item="{ elem, prevItem, nextItem }">
             <div class="slader__item">
                 <div class="relative">
-                    <img :src="size.width > 768 ? elem.link_img_big : elem.link_img_small" alt="" class="object-cover min-w-full rounded">
+                    <img :src="isDesktopOrTablet ? elem.link_img_big : elem.link_img_small" alt=""
+                    class="object-cover min-w-full rounded">
                     <div class="absolute w-[40%] min-h-min top-1/2 left-[10%]
                     -translate-y-1/2 text-black-300
                     lg:w-1/2
@@ -31,7 +32,7 @@
             </div>
         </template>
         <template #bottom="{ nextItem, prevItem }" >
-            <template v-if="size.width < 767">
+            <template v-if="isMobile">
                     <div class="py-4">
                         <div class="flex justify-end">
                             <ButtomStandart
@@ -50,12 +51,13 @@
 </section>
 </template>
 <script setup lang="ts">
-import { containerSize } from "@/pinia/store";
-import { storeToRefs } from "pinia";
+// import { containerSize } from "@/pinia/store";
+// import { storeToRefs } from "pinia";
 
-const containerFun = containerSize()
-const { size } = storeToRefs(containerFun)
+// const containerFun = containerSize()
+// const { size } = storeToRefs(containerFun)
+const { isDesktopOrTablet, isMobile } = useDevice()
 
-const { data } = await useAsyncData('main_index', () => queryContent('/main/slader').findOne())
+const data  = await queryContent('/main/slader').findOne()
 
 </script>

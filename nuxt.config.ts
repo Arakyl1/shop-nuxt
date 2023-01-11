@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/content',
+    '@nuxtjs/device',
     ['@pinia/nuxt', {
             autoImports: ['defineStore', 'acceptHMRUpdate'],
         }
