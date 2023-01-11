@@ -20,15 +20,13 @@
                 </div>
             </template>
             <template #bottom="{ prevItem, nextItem }" >
-                <template  v-if="isDesktopOrTablet">
-                    <div class="relative" v-if="(data.body.length / quantitySladerItem) - 1">
-                        <ButtomArround class="-scale-x-100 absolute -top-32 -left-1"
-                        @click="prevItem"/>
-                        <ButtomArround class="absolute -top-32 -right-1"
-                        @click="nextItem"/>
-                    </div>
-                    <div v-else></div>
-                </template>
+                <div class="relative" v-if="isDesktopOrTablet && (data.body.length / quantitySladerItem) - 1">
+                    <ButtomArround class="-scale-x-100 absolute -top-32 -left-1"
+                    @click="prevItem"/>
+                    <ButtomArround class="absolute -top-32 -right-1"
+                    @click="nextItem"/>
+                </div>
+                <div v-else></div>
             </template>
         </Slader>
     </section>
