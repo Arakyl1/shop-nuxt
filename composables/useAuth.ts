@@ -42,6 +42,8 @@ export default () => {
                 method: 'POST',
                 body: event
             })
+            console.log(data);
+            
             updateUser(data.user)
             updateAccess(data.access_token)
             updateAlertText('Вы успешно вошли в свой акаунт')
