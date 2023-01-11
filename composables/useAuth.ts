@@ -43,12 +43,14 @@ export default () => {
                     method: 'POST',
                     body: event
                 })
+                alert('dfdf')
                 updateUser(data.user)
                 updateAccess(data.access_token)
                 updateAlertText('Вы успешно вошли в свой акаунт')
                 resolve(true)
             } catch (error: any) {
-                updateAlertText(error.statusMessage)
+                alert(error)
+                updateAlertText(error)
                 reject(error)
             }
         })
