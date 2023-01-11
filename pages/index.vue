@@ -3,35 +3,35 @@
         
             <MainStocks class="mb-16 xl:mb-12"/>
 
-            <Slader :data="sale" :containerClass="style.container" :defaultTitle="'Акции недели'" class="mb-16 xl:mb-12">
+            <LazySlader :data="sale" :containerClass="style.container" :defaultTitle="'Акции недели'" class="mb-16 xl:mb-12">
             <template #item="{ elem }">
                 <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
             </template>
             <template #bottom>
                 <div></div>
             </template>
-            </Slader>
+            </LazySlader>
         
-            <Slader :data="news" :containerClass="style.container" :defaultTitle="'Новинки'" class="mb-16 xl:mb-12">
+            <LazySlader :data="news" :containerClass="style.container" :defaultTitle="'Новинки'" class="mb-16 xl:mb-12">
                 <template #item="{ elem }">
                     <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
                 </template>
                 <template #bottom>
                     <div></div>
                 </template>
-            </Slader>
+            </LazySlader>
 
             <MainAdvertisement class="mb-16 xl:mb-12"/>
         
         
-            <Slader :data="top" :containerClass="style.container" :defaultTitle="'Товары месяца'" class="mb-16 xl:mb-12">
+            <LazySlader :data="top" :containerClass="style.container" :defaultTitle="'Товары месяца'" class="mb-16 xl:mb-12">
                 <template #item="{ elem }">
                     <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
                 </template>
                 <template #bottom>
                     <div></div>
                 </template>
-            </Slader>
+            </LazySlader>
         
             <MainAdvantages class="mb-20 xl:mb-16"/>
             

@@ -49,7 +49,7 @@ export default () => {
             updateAlertText('Вы успешно вошли в свой акаунт')
             return true
         } catch (error) {
-            updateAlertText(error.statusMessage)
+            updateAlertText(error.message)
             // console.log(error);
         }
         // return new Promise<boolean | Error>(async(resolve, reject) => {
