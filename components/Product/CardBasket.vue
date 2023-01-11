@@ -27,7 +27,9 @@
 
             <button type="button">
                 <ClientOnly>
-                    <XMarkIcon  @click="basketProd.removeBasketProduct(index)" class=" h-6 w-6 cursor-pointer"/>
+                    <div class="float-right h-6 w-6 cursor-pointer rounded-full bg-blue-500"
+                    @click="basketProd.removeBasketProduct(index)"></div>
+                    <!-- <XMarkIcon  @click="basketProd.removeBasketProduct(index)" class=" h-6 w-6 cursor-pointer"/> -->
                 </ClientOnly>
             </button>
         </div>  
@@ -36,7 +38,7 @@
 </template>
 <script setup lang="ts">
 import { basketProduct } from "@/pinia/store";
-import { XMarkIcon } from "@heroicons/vue/24/solid";
+// import { XMarkIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps<{
     item: { id: number, quantity: number},
