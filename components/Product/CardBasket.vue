@@ -27,9 +27,8 @@
 
             <button type="button">
                 <ClientOnly>
-                    <div class="float-right h-6 w-6 cursor-pointer rounded-full bg-blue-500"
-                    @click="basketProd.removeBasketProduct(index)"></div>
-                    <!-- <XMarkIcon  @click="basketProd.removeBasketProduct(index)" class=" h-6 w-6 cursor-pointer"/> -->
+                    <IconClose class="group is-icon-black h-6 w-6 cursor-pointer float-right "
+                    @click="basketProd.removeBasketProduct(index)"/>
                 </ClientOnly>
             </button>
         </div>  
