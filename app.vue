@@ -4,10 +4,10 @@
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
     :class="[{ active: store.active }]"
     @click="store.updateActive(false)"></div>
-    <!-- <div >
+    <div >
       <HeaderMain v-if="isDesktopOrTablet"  class="mb-4"/>
       <HeaderMainMobaile v-else class="mb-4"/>
-    </div> -->
+    </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3" >
       <Transition name="path">
         <OtherElsePath v-if="$route.path !== '/'"/>
