@@ -24,17 +24,21 @@ export default () => {
                 method: "POST",
                 body: event
             })
-            if (data.statusMessage) {
-                updateAlertText(data.statusMessage)
-                throw new Error
+
+            if (data.statusCode ? data.statusCode >= 400 : false) {
+                throw createError({
+                    statusCode: data.statusCode,
+                    statusMessage:data.statusMessage
+                })
             }
+
             updateUser(data.user ? data.user : {})
             updateAccess(data.access_token ? data.access_token : '')
             updateAlertText('Пользователь зарегистрирован')
             return true
         } catch (error: any) {
             console.log(error);
-            
+            updateAlertText(error.statusMessage)
             // updateAlertText('Возникла ощибка, повторите попытку позже')
         }
     }
@@ -45,12 +49,21 @@ export default () => {
                 method: 'POST',
                 body: event
             })
-            updateUser(data.user)
-            updateAccess(data.access_token)
+        
+            if (data.statusCode ? data.statusCode >= 400 : false) {
+                throw createError({
+                    statusCode: data.statusCode,
+                    statusMessage:data.statusMessage
+                })
+            }
+
+            updateUser(data.user ? data.user : {})
+            updateAccess(data.access_token ? data.access_token : '')
             updateAlertText('Вы успешно вошли в свой акаунт')
             return true
         } catch (error) {
-            updateAlertText('Проверьте введенные данные')
+            updateAlertText(error.statusMessage)
+           // updateAlertText('Проверьте введенные данные')
         }
     }
 
@@ -77,9 +90,17 @@ export default () => {
     const initRefrechToken = async() => {
         try {
             const data = await $fetch('/api/auth/refrech')
-            updateAccess(data)
+            if (data.statusCode && data.statusCode > 400) {
+                throw createError({
+                    statusCode: data.statusCode,
+                    statusMessage: data.statusMessage
+                })
+            }
+            updateAccess(data.accessToken ? data.accessToken : '')
         } catch (error) {
-            throw error
+            console.log(error);
+            
+            // updateAlertText(error.statusMessage)
         }
     }
 

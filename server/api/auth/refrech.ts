@@ -6,20 +6,25 @@ import { decodeRefrechToken, generateTokens } from "~~/server/utils/jwt"
 export default defineEventHandler(async(event) => {
     const refrechToken: string | undefined = getCookie(event, 'refrech_token')
     if (!refrechToken) {
-        throw createError({
+        return {
             statusCode: 401,
             statusMessage: "Refrech token is invalid one"
-        })
+        }
+        // throw createError()
     }
 
     const rToken = await getRefrechTokenByTpken(refrechToken)
     
     
     if (!rToken) {
-        throw createError({
+        return {
             statusCode: 401,
-            statusMessage: "Refrech token is invalid"
-        })
+            statusMessage: "Refrech token is invalid" 
+        }
+        // throw createError({
+        //     statusCode: 401,
+        //     statusMessage: "Refrech token is invalid"
+        // })
     }
     
     const token: string | JwtPayload | null = decodeRefrechToken(refrechToken)
@@ -28,13 +33,17 @@ export default defineEventHandler(async(event) => {
         const user = await getUserById(token.userId)
         const { accessToken } = await generateTokens(user)
         
-        return (accessToken)
+        return { accessToken }
     } catch (error) {
-        throw createError({
+        return {
             statusCode: 401,
             statusMessage: "Something went wrong"
-        })
+        }
+        // throw createError({
+        //     statusCode: 401,
+        //     statusMessage: "Something went wrong"
+        // })
     }
     
-    return token
+    return { token }
 })

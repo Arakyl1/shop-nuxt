@@ -12,20 +12,22 @@ export default defineEventHandler(async(event) => {
     const user = await getUserByUsername(username)
 
     if (!user) {
-        throw createError({
-            statusCode: 400,
-            statusMessage: 'A user with this name is not registered'
-        })
+        return { statusCode: 400, statusMessage: 'Такой пользователь на зарегистрирован' }
+        // throw createError({
+        //     statusCode: 400,
+        //     statusMessage: 'A user with this name is not registered'
+        // })
     }
 
     const doesThePaswordMatch = await bcryptjs.compare(password, user.password)
 
 
     if (!doesThePaswordMatch) {
-        throw createError({
-            statusCode: 400,
-            statusMessage: 'The password is not correct'
-        })
+        return { statusCode: 400, statusMessage: 'Некорректный пароль' }
+        // throw createError({
+        //     statusCode: 400,
+        //     statusMessage: 'The password is not correct'
+        // })
     }
     // Generate Token
 
