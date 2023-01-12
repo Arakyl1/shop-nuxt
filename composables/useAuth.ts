@@ -1,3 +1,4 @@
+import { error } from "console";
 import jwtDecode from "jwt-decode";
 import { userActive, accessToken, alertContent } from "~~/pinia/store";
 
@@ -22,15 +23,16 @@ export default () => {
             const data = await $fetch('/api/auth/register', {
                 method: "POST",
                 body: event
+            }).catch(error => {
+                updateAlertText(error.statusMessage)
             })
           
             updateUser(data.user)
             updateAccess(data.access_token)
             updateAlertText('Пользователь зарегистрирован')
             return true
-        } catch (error) {
-            const err = readRawBody(error)
-            console.log(err);
+        } catch (error: any) {
+            // console.log(error);
             
             // updateAlertText()
         }
