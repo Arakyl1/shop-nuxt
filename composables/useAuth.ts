@@ -46,17 +46,14 @@ export default () => {
         }
     }
 
-    const logout = () => {
-        return new Promise<boolean | Error>(async(resolve, reject) => {
-            try {
-                await $fetch('/api/auth/logout', {method: "POST"})
-                updateUser(null)
-                updateAccess('')
-                resolve(true)
-            } catch (error) {
-                reject(error.statusMessage)
-            }
-        })
+    const logout = async() => {
+        try {
+            await $fetch('/api/auth/logout', {method: "POST"})
+            updateUser(null)
+            updateAccess('')
+        } catch (error) {
+            console.log(error);   
+        }
     }
 
     const initAuth = async() => {
@@ -65,20 +62,17 @@ export default () => {
             await getUset()
             reRefrechAccessToken()
         } catch (error) {
-            return error
+            console.log(error);
         }
     }
 
-    const initRefrechToken = () => {
-        return new Promise<boolean | Error>(async(resolve, reject) => {
-            try {
-                const data = await $fetch('/api/auth/refrech')
-                updateAccess(data)
-                resolve(true)
-            } catch (error) {
-                reject(error.statusMessage)
-            }
-        })
+    const initRefrechToken = async() => {
+        try {
+            const data = await $fetch('/api/auth/refrech')
+            updateAccess(data)
+        } catch (error) {
+            throw error
+        }
     }
 
     const reRefrechAccessToken = () => {
@@ -96,22 +90,19 @@ export default () => {
         
     }
 
-    const getUset = () => {
-        return new Promise<void>(async(resolve, reject) => {
-            try {
-                const access = accessToken();
-                const data = await $fetch('/api/auth/user', {
-                    headers: {
-                        method: "GET",
-                        Authorization: `Bearer ${access.accessToken}`
-                    }
-                })
-                updateUser(data)   
-                resolve(true)
-            } catch (error) {
-                reject(error.statusMessage)
-            }
-        })
+    const getUset = async() => {
+        try {
+            const access = accessToken();
+            const data = await $fetch('/api/auth/user', {
+                headers: {
+                    method: "GET",
+                    Authorization: `Bearer ${access.accessToken}`
+                }
+            })
+            updateUser(data)   
+        } catch (error) {
+            throw error
+        }
     }
 
     const getUsetInfo = async(event) => {
