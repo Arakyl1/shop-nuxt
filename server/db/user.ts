@@ -28,49 +28,6 @@ export const createUser = (userData: User) => {
     })
 }
 
-// export const getUserByUsername = (username: any) => {
-//     return prisma.user.findUnique({
-//         where: {
-//             username
-//         },
-//         select: {
-//             id: true,
-//             username: true,
-//             name: true,
-//             email: true,
-//             profileImage: true,
-//             password: true
-//         }
-//     })
-// }
-
-// export const getUserById = (userId: number) =>{
-//     return prisma.user.findUnique({
-//         where: {
-//             id: userId
-//         },
-//         select: {
-//             id: true,
-//             username: true,
-//             name: true,
-//             email: true,
-//             profileImage: true
-//         }
-//     })
-// }
-
-// export const getInfoUserById = (userId: number) => {
-//     return prisma.user.findUnique({
-//         where: {
-//             id: userId
-//         },
-//         select: {
-//             username: true,
-//             profileImage: true
-//         }
-//     })
-// }
-
 export const getUser = (params: { where: object, select: object}) => {
     return prisma.user.findUnique(params)
 }

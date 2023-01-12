@@ -1,53 +1,37 @@
 <template>
     <div>
         
-            <MainStocks class="mb-16 xl:mb-12"/>
+        <MainStocks class="mb-16 xl:mb-12"/>
 
-            <Slader :data="sale" :containerClass="style.container" :defaultTitle="'Акции недели'" class="mb-16 xl:mb-12">
-            <template #item="{ elem }">
-                <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
-            </template>
-            <template #bottom>
-                <div></div>
-            </template>
-            </Slader>
-        
-            <Slader :data="news" :containerClass="style.container" :defaultTitle="'Новинки'" class="mb-16 xl:mb-12">
-                <template #item="{ elem }">
-                    <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
-                </template>
-                <template #bottom>
-                    <div></div>
-                </template>
-            </Slader>
+        <MainCarusel :searchCategor="'sale'"/>
+        <MainCarusel :searchCategor="'news'"/>
 
-            <MainAdvertisement class="mb-16 xl:mb-12"/>
         
+
+        <MainAdvertisement class="mb-16 xl:mb-12"/>
         
-            <Slader :data="top" :containerClass="style.container" :defaultTitle="'Товары месяца'" class="mb-16 xl:mb-12">
-                <template #item="{ elem }">
-                    <ProductCard :id="elem.id" class="slader__item group is-pos-info-for-stock"/>
-                </template>
-                <template #bottom>
-                    <div></div>
-                </template>
-            </Slader>
-        
-            <MainAdvantages class="mb-20 xl:mb-16"/>
-            
+        <MainCarusel :searchCategor="'top'"/>
     
+        <MainAdvantages class="mb-20 xl:mb-16"/>
+        
     </div>
 </template>
 
 <script setup lang="ts">
-const { getProductForCategor } = useProduct()
+// import { selectForCard } from "@/utils/prismaSelect";
+definePageMeta({
+   keepalive: true
+})
+// const { getProductForCategor } = useProduct()
 
-const sale = await getProductForCategor({ where: { sale: true }, select: { id: true }})
-const news = await getProductForCategor({ where: { news: true }, select: { id: true }})
-const top = await getProductForCategor({ where: { top: true }, select: { id: true }})
+useHead({
+    title: 'Главная страница'
+})
+
+// const sale = await getProductForCategor({ where: { sale: true }, ...selectForCard()})
+// const news = await getProductForCategor({ where: { news: true }, ...selectForCard()})
+// const top = await getProductForCategor({ where: { top: true }, ...selectForCard()})
 
 
-const style = {
-    container: '[grid-auto-columns:calc(100%/4)] lg:[grid-auto-columns:calc(100%/3)] sm:[grid-auto-columns:calc(100%/2)]'
-}
+
 </script>

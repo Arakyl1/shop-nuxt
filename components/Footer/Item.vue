@@ -2,7 +2,7 @@
 <div>
     <div class="decor-line"></div>
     <div class="py-5 sm:py-4">
-        <div class="flex">
+        <div class="flex items-center">
             <h3 class="grow text-white text-xl sm:text-lg">{{ title  }}</h3>
             <IconAdd class="group is-icon-white h-5 w-5"
             @click="() => active = !active"/>

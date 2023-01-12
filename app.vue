@@ -2,8 +2,8 @@
   <div>
     <div
     class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
-    :class="[{ active: store.active }]"
-    @click="store.updateActive(false)"></div>
+    :class="[{ active: active }]"
+    @click="windowMaskFun.updateActive(false)"></div>
     <div >
       <HeaderMain v-if="isDesktopOrTablet"  class="mb-4"/>
       <HeaderMainMobaile v-else class="mb-4"/>
@@ -14,11 +14,10 @@
       </Transition>
       <NuxtPage :transition="{
         name: 'page-transition',
-       mode: 'out-in',
-       appear: false
-      }" >
+        mode: 'in-out'
+      }">
       </NuxtPage>
-    </div>
+      </div>
     <div>
     <Footer v-if="isDesktopOrTablet" />
     <FooterMobaile v-else/>
@@ -31,21 +30,21 @@
 </template>
 
 <script setup lang="ts">
-import { windowMask, containerSize } from "@/pinia/store";
-// import { nuxtCtx } from "@nuxt/kit";
-// import { storeToRefs } from "pinia";
+import { windowMask, containerSize, userActive } from "@/pinia/store";
+import { storeToRefs } from "pinia";
 
-const store = windowMask()
+const windowMaskFun = windowMask()
+const userActiveFun = userActive()
 const containerFunc = containerSize()
-// const userActiveFun = userActive()
-// const { userData } = storeToRefs(userActiveFun)
-// const { size } = storeToRefs(containerFunc)
+const { active } = storeToRefs(windowMaskFun)
+const { userData} = storeToRefs(userActiveFun)
+const { isDesktopOrTablet } = useDevice();
 const { initAuth } = useAuth()
 
-const { isDesktopOrTablet } = useDevice();
-
 onBeforeMount(async() => {
-  initAuth()
+  if (userData.value ? !('id' in userData.value) : false) {
+    initAuth()
+  }
 
   containerFunc.updateSize(window)
   window.addEventListener('resize', () => containerFunc.updateSize(window))

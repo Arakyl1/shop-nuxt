@@ -23,6 +23,7 @@ import { favoriteProduct } from "@/pinia/store";
 import { storeToRefs } from "pinia";
 import ShowContent from "~~/utils/ShowContent";
 
+const { getProductForCategor } = useProduct()
 const { stage, updateStage } = ShowContent();
 const favoriteProd = favoriteProduct()
 const { favorite } = storeToRefs(favoriteProd)

@@ -28,7 +28,7 @@
                 </div>
                 <div class="flex flex-wrap" v-else-if="!loader && Array.isArray(listIdProduct) ? listIdProduct.length : null">
                     <ProductCard v-for="item in listIdProduct"
-                    :key="item.id" :id="item.id"
+                    :key="item.id" :data="item"
                     class="w-1/3 mb-10 lg:w-1/2 md:w-1/3 sm:w-1/2
                     slader__item
                     group is-pos-info-for-stock"/>
@@ -72,7 +72,7 @@ async function getIdProduct(optionSeacrh: object = {}) {
         skip: ((route.query.page - 1) * route.query.limit),
         take: +route.query.limit,
         where: optionSeacrh,
-        select: { id: true}
+        ...selectForCard()
     })
 
     makerList.value = await getMakerlist({
@@ -84,11 +84,11 @@ async function getIdProduct(optionSeacrh: object = {}) {
         skip: (+route.query.page * route.query.limit),
         take: +route.query.limit,
         where: optionSeacrh,
-        select: { id: true}
+        select: { id: true }
     })
     
-    listIdProduct.value = res?.value
-    activeButtomNext.value = dataOfNextPage?.value.length
+    listIdProduct.value = res?.value ? res.value : []
+    activeButtomNext.value = dataOfNextPage?.value ?  dataOfNextPage.value.length : 0
     loader.value = false
 }
 
