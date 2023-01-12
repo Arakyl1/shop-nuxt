@@ -41,6 +41,7 @@ export default () => {
             updateUser(data.user)
             updateAccess(data.access_token)
             updateAlertText('Вы успешно вошли в свой акаунт')
+            return true
         } catch (error) {
             updateAlertText('Проверьте введенные данные')
         }
