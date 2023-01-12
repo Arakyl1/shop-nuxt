@@ -28,7 +28,7 @@
                     <li v-for="item in arrayLink"
                     :key="item"
                     class="p-4 lg:p-3">
-                    <NuxtLink :to="{ path: '/catalog', query: { ...$route.query, categor: item, page: 1 } }" class="whitespace-nowrap">
+                    <NuxtLink :to="{ path: '/catalog', query: { ...$route.query, categor: item } }" class="whitespace-nowrap">
                         {{ item }}
                     </NuxtLink>
                     </li>
