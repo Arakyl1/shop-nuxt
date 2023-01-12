@@ -1,7 +1,7 @@
-import { getUserById } from "@/server/db/user"
-import createAndSendError from "@/server/utils/createAndSendError"
+import { getUser } from "@/server/db/user"
 import { decodeAccessToken } from "@/server/utils/jwt"
 import { userTransform } from "~~/server/utils/userTransform"
+import { searchByid } from "@/server/utils/searchParams";
 
 
 export default defineEventHandler(async(event) => {
@@ -9,14 +9,14 @@ export default defineEventHandler(async(event) => {
     const decoded = decodeAccessToken(token)
     
     if (!decoded) {
-        createAndSendError(event, 401, 'Unauthorized')
+        return {statusCode: 401, statusMessage: 'Unauthorized' }
     }
 
     try {
         const userId = decoded.userId
-        const user = await getUserById(userId)
-        return userTransform(user)
+        const user = await getUser(searchByid(userId))
+        return { user: userTransform(user)}
     } catch (error) {
-        return Error
+        return { statusCode: 404, statusMessage: '' }
     }
 })

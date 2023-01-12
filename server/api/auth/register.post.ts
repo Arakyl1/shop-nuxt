@@ -1,5 +1,5 @@
-import { H3Event, sendError } from "h3"
-import { createUser, getUserByUsername } from "~~/server/db/user"
+import { H3Event } from "h3"
+import { createUser } from "~~/server/db/user"
 import { generateTokens, sendRefrechToken } from "~~/server/utils/jwt";
 import { createRefrechToken } from "~~/server/db/refrechTokem";
 import { userTransform } from "~~/server/utils/userTransform";

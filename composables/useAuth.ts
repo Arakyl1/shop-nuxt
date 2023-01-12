@@ -128,6 +128,12 @@ export default () => {
                     Authorization: `Bearer ${access.accessToken}`
                 }
             })
+            if ( data.statusCode ? data.statusCode >= 400 : false) {
+                throw createError({
+                    statusCode: data.statusCode,
+                    statusMessage: data.statusMessage
+                })
+            }
             updateUser(data)   
         } catch (error) {
             throw error

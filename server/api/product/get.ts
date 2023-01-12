@@ -1,4 +1,4 @@
-import { ProductCard } from "@prisma/client"
+// import { ProductCard } from "@prisma/client"
 import { prismaGetProduct } from "~~/server/db/product"
 
 export default defineEventHandler(async(event: any) => {
