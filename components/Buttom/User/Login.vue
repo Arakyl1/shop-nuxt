@@ -55,7 +55,9 @@ async function loginUser() {
             if (res) {
                 props.functionModal()
             }
-        } catch (error) {}
+        } catch (error) {
+            alert(error)
+        }
         return
     }
     alertFun.updateContent('Проверьте введеные данные')
