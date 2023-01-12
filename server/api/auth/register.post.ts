@@ -14,7 +14,7 @@ export default defineEventHandler(async(event: H3Event) => {
         throw createError({ statusCode: 400, statusMessage: "Invalid params" })
     }
     if (password !== repeartPassword) {
-        throw createError({ statusCode: 400, statusMessage: "Password do not match" })
+        return sendError(event, createError({ statusCode: 400, statusMessage: "Password do not match" }))
     }
     const userData = {
         username,
