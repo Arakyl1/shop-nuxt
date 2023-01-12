@@ -21,7 +21,7 @@ export default defineEventHandler(async(event) => {
     if (!user) {
         return sendError(event, createError({
             statusCode: 400,
-            statusMessage: 'A user with this name is not registered'
+            message: 'A user with this name is not registered'
         }))
     }
 
@@ -31,7 +31,7 @@ export default defineEventHandler(async(event) => {
     if (!doesThePaswordMatch) {
         return sendError(event, createError({
             statusCode: 400,
-            statusMessage: 'The password is not correct'
+            message: 'The password is not correct'
         }))
     }
     // Generate Token
