@@ -14,7 +14,8 @@
       </Transition>
       <NuxtPage :transition="{
         name: 'page-transition',
-       mode: 'in-out'
+       mode: 'out-in',
+       appear: false
       }" >
       </NuxtPage>
     </div>
