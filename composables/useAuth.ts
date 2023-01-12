@@ -38,15 +38,19 @@ export default () => {
 
     const login = async (event: Event) => {
             try {
-                const data = await $fetch('/api/auth/login', {
+                const { data, error } = await $fetch('/api/auth/login', {
                     method: 'POST',
                     body: event
                 })
+                if (error) {
+                    updateAlertText(error.value) 
+                }
                 updateUser(data.user)
                 updateAccess(data.access_token)
                 updateAlertText('Вы успешно вошли в свой акаунт')
             } catch (error) {
-                throw error
+                console.log(error);
+                
             }
     }
 
