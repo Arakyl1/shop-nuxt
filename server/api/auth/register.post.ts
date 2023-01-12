@@ -11,10 +11,12 @@ export default defineEventHandler(async(event: H3Event) => {
     const { username, email, password, repeartPassword } = body
     
     if (!username || !email || !password || !repeartPassword) {
-        return sendError(event, createError({ statusCode: 400, statusMessage: "Invalid params" }))
+        return { statusMessage: "Invalid params" }
+        // return sendError(event, createError({ statusCode: 400, statusMessage: "Invalid params" }))
     }
     if (password !== repeartPassword) {
-        return sendError(event, createError({ statusCode: 400, statusMessage: "Password do not match" }))
+        return { statusMessage: "Password do not match" }
+        // return sendError(event, createError({ statusCode: 400, statusMessage: "Password do not match" }))
     }
     const userData = {
         username,
@@ -47,6 +49,7 @@ export default defineEventHandler(async(event: H3Event) => {
         }
 
     } catch (error) {
-       return sendError(event, createError({ statusCode: 400, statusMessage: "Такой пользователь уже существует" }))
+        return { statusMessage: "Такой пользователь уже существует" }
+       // return sendError(event, createError({ statusCode: 400, statusMessage: "Такой пользователь уже существует" }))
     }
 })

@@ -24,13 +24,17 @@ export default () => {
                 method: "POST",
                 body: event
             })
-          
-            updateUser(data.user)
-            updateAccess(data.access_token)
+            if (data.statusMessage) {
+                updateAlertText(data.statusMessage)
+                throw new Error
+            }
+            updateUser(data.user ? data.user : {})
+            updateAccess(data.access_token ? data.access_token : '')
             updateAlertText('Пользователь зарегистрирован')
             return true
         } catch (error: any) {
-            updateAlertText(await error.statusMessage)
+            console.log(error);
+            
             // updateAlertText('Возникла ощибка, повторите попытку позже')
         }
     }
