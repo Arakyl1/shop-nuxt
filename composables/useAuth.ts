@@ -30,7 +30,7 @@ export default () => {
             updateAlertText('Пользователь зарегистрирован')
             return true
         } catch (error: any) {
-            updateAlertText(error.statusMessage)
+            updateAlertText(await error.statusMessage)
             // updateAlertText('Возникла ощибка, повторите попытку позже')
         }
     }
