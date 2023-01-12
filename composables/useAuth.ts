@@ -23,8 +23,6 @@ export default () => {
             const data = await $fetch('/api/auth/register', {
                 method: "POST",
                 body: event
-            }).catch(error => {
-                updateAlertText(error.statusMessage)
             })
           
             updateUser(data.user)
@@ -32,9 +30,8 @@ export default () => {
             updateAlertText('Пользователь зарегистрирован')
             return true
         } catch (error: any) {
-            // console.log(error);
-            
-            // updateAlertText()
+            updateAlertText(error.statusMessage)
+            // updateAlertText('Возникла ощибка, повторите попытку позже')
         }
     }
 
