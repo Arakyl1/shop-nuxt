@@ -4,13 +4,6 @@ import bcryptjs from "bcryptjs";
 import { createRefrechToken } from "~~/server/db/refrechTokem";
 import { userTransform } from "~~/server/utils/userTransform";
 
-class HttpError extends Error {
-    constructor(status: number, message: string) {
-      super(`${status} for ${message}`);
-      this.name = 'HttpError';
-    }
-  }
-
 export default defineEventHandler(async(event) => {
     const body = await readBody(event)
 
@@ -26,12 +19,10 @@ export default defineEventHandler(async(event) => {
     const user = await getUserByUsername(username)
 
     if (!user) {
-        throw new HttpError(400, 'A user with this name is not registered')
-        
-        // return sendError(event, createError({
-        //     statusCode: 400,
-        //     message: 'A user with this name is not registered'
-        // }))
+        return sendError(event, createError({
+            statusCode: 400,
+            message: 'A user with this name is not registered'
+        }))
     }
 
     const doesThePaswordMatch = await bcryptjs.compare(password, user.password)
