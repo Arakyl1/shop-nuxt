@@ -56,7 +56,8 @@ async function loginUser() {
                 props.functionModal()
             }
         } catch (error) {
-            alert(error)
+            console.log(error);
+            
         }
         return
     }

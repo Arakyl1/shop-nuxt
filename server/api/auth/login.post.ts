@@ -8,17 +8,14 @@ export default defineEventHandler(async(event) => {
     const body = await readBody(event)
 
     const { username, password } = body
-    const error = ref<string>('')
 
     const user = await getUserByUsername(username)
 
     if (!user) {
-        error.value = 'A user with this name is not registered'
-        return { error }
-        // throw createError({
-        //     statusCode: 400,
-        //     statusMessage: 'A user with this name is not registered'
-        // })
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'A user with this name is not registered'
+        })
     }
 
     const doesThePaswordMatch = await bcryptjs.compare(password, user.password)
@@ -45,9 +42,8 @@ export default defineEventHandler(async(event) => {
 
     sendRefrechToken(event, refrechToken)
 
-    return { error, data: {
+    return  {
         access_token: accessToken,
         user: userTransform(user)
-        }
     }
 })
