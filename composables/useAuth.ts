@@ -42,13 +42,11 @@ export default () => {
                     method: 'POST',
                     body: event
                 })
-                console.log(data);
-                // alert(data)
                 updateUser(data.user)
                 updateAccess(data.access_token)
                 updateAlertText('Вы успешно вошли в свой акаунт')
-            } catch (error: any) {
-                alert(error);
+            } catch (error) {
+                alert(error );
             }
     }
 
