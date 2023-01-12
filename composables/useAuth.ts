@@ -49,8 +49,6 @@ export default () => {
                 updateAlertText('Вы успешно вошли в свой акаунт')
                 resolve(true)
             } catch (error: any) {
-                alert(error)
-                updateAlertText(error)
                 reject(error)
             }
         })
