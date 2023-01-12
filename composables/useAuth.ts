@@ -27,8 +27,12 @@ export default () => {
             updateUser(data.user)
             updateAccess(data.access_token)
             updateAlertText('Пользователь зарегистрирован')
+            return true
         } catch (error) {
-            updateAlertText('Возникла ощибка, повторите попытку посже')
+            const err = readRawBody(error)
+            console.log(err);
+            
+            // updateAlertText()
         }
     }
 

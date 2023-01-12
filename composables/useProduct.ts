@@ -1,14 +1,22 @@
+import { alertContent } from "@/pinia/store";
+
 
 export default () => {
+    const updateAlertText = (text: string) => {
+        const alert = alertContent()
+        alert.updateContent(text)
+    }
+
     const addProduct = async(event: string) => {
         try {
             const result = await $fetch('/api/product/create', {
                 method: "POST",
                 body: event
              })
+             updateAlertText('Товар добавлен')
              return result
         } catch (error) {
-            alert(error.statusMessage)
+            updateAlertText('Произошла ощибка, повторите потытку позже')
         }
     }
     const getProduct = async(searchOption: object = {}, name: string = `data${searchOption.where.id}`) => {

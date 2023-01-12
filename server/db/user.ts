@@ -19,7 +19,9 @@ export const createUser = (userData: User) => {
     return prisma.user.create({
         data: updateUserData,
         select: {
+            id: true,
             email: true,
+            name: true,
             username: true,
             profileImage: true,
         }

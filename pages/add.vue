@@ -15,7 +15,6 @@
     </div>
 </template>
 <script setup lang="ts">
-import { alertContent } from "@/pinia/store";
 import useProduct from "~~/composables/useProduct";
 
 definePageMeta({
@@ -30,7 +29,6 @@ const characteristic = ref<object>({})
 const additionalParameter = ref<object>({})
 const { addProduct } = useProduct()
 const create = ref(false)
-const alertFun = alertContent()
 
 // methods 
 async function createItem() {
@@ -38,7 +36,6 @@ async function createItem() {
     const result = await addProduct(JSON.stringify({main: data.value, characteristic: characteristic.value }))
     if (result) {
         create.value = !create.value
-        alertFun.updateContent('Товар добавлен')
     }
 }
 </script>
