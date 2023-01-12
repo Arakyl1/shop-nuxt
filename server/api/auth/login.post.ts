@@ -9,19 +9,12 @@ export default defineEventHandler(async(event) => {
 
     const { username, password } = body
 
-    if (!username || !password) {
-        return sendError(event, createError({
-            statusCode: 400,
-            statusMessage: 'Invalid params'
-        }))
-    }
-
     const user = await getUserByUsername(username)
 
     if (!user) {
         return sendError(event, createError({
             statusCode: 400,
-            message: 'A user with this name is not registered'
+            statusMessage: 'A user with this name is not registered'
         }))
     }
 
@@ -31,7 +24,7 @@ export default defineEventHandler(async(event) => {
     if (!doesThePaswordMatch) {
         return sendError(event, createError({
             statusCode: 400,
-            message: 'The password is not correct'
+            statusMessage: 'The password is not correct'
         }))
     }
     // Generate Token
