@@ -90,6 +90,7 @@ export default () => {
     const initRefrechToken = async() => {
         try {
             const data = await $fetch('/api/auth/refrech')
+           
             if (data.statusCode && data.statusCode > 400) {
                 throw createError({
                     statusCode: data.statusCode,
@@ -134,6 +135,7 @@ export default () => {
                     statusMessage: data.statusMessage
                 })
             }
+            
             updateUser(data)   
         } catch (error) {
             throw error

@@ -13,7 +13,7 @@ const generateRefrechToken = (user: any, config: any) => {
 
 }
 
-export const decodeRefrechToken = (token) => {
+export const decodeRefrechToken = (token: string) => {
     const config = useRuntimeConfig()
 
     try {
@@ -23,7 +23,7 @@ export const decodeRefrechToken = (token) => {
     }
 }
 
-export const decodeAccessToken = (token) => {
+export const decodeAccessToken = (token: string) => {
     const config = useRuntimeConfig()
 
     try {
