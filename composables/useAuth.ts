@@ -37,7 +37,6 @@ export default () => {
     }
 
     const login = async (event: Event) => {
-        return new Promise<boolean | Error>(async(resolve, reject) => {
             try {
                 const data = await $fetch('/api/auth/login', {
                     method: 'POST',
@@ -47,11 +46,10 @@ export default () => {
                 updateUser(data.user)
                 updateAccess(data.access_token)
                 updateAlertText('Вы успешно вошли в свой акаунт')
-                resolve(true)
             } catch (error: any) {
-                reject(error)
+                console.log(error);
+                throw error
             }
-        })
     }
 
     const logout = () => {
