@@ -6,7 +6,7 @@ ref="modalMenu">
 
         <template v-if="data && !('children' in subcategorList)">
             <ul ref="categor">
-                <li v-for="item in data.body" :key="item"
+                <li v-for="item in data.select" :key="item"
                 class=" py-3 border-b border-blue-100">
                 <div class="flex items-center justify-between">
                     <NuxtLink :to="{ path: '/catalog', query: { ...route.query, categor: item.name } }"
@@ -30,7 +30,6 @@ ref="modalMenu">
 <script setup lang="ts">
 import { ParsedContent } from '@nuxt/content/dist/runtime/types';
 import { _AsyncData } from 'nuxt/dist/app/composables/asyncData';
-import { ArrowFunction, FunctionExpression } from 'typescript';
 
 interface ToucheData {
     x: number | null,
@@ -43,7 +42,7 @@ const props = defineProps<{
     updateFun: Function
 }>()
 
-const { data }: _AsyncData<Pick<ParsedContent, string>, Error | null> = await useAsyncData('select', () => queryContent('/select').findOne())
+const { data }: _AsyncData<Pick<ParsedContent, string>, Error | null> = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
 const route = useRoute()
 
 const subcategorName = ref<string | null>(null)
@@ -51,7 +50,7 @@ const modalMenu = ref<HTMLElement | null>(null)
 const toucheData: ToucheData = toucheElemPosition(modalMenu)
 
 const subcategorList = computed(() => data.value &&
-    subcategorName.value ? data.value.body.find(el => el.name === subcategorName.value) :
+    subcategorName.value ? data.value.select.find(el => el.name === subcategorName.value) :
     {}
 )
 
