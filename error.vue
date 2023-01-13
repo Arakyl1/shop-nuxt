@@ -12,6 +12,6 @@ const props = defineProps({
   error: Object
 })
 
-const handleError = () => clearError({ redirect: '/catalog' })
+const handleError = () => clearError({ redirect: '/' })
 handleError()
 </script>
