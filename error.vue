@@ -1,9 +1,9 @@
 <template>
     <div class="h-screen flex justify-center items-center">
-        <ButtomStandart class="bg-blue-500 text-xl text-white"
+        <!-- <ButtomStandart class="bg-blue-500 text-xl text-white"
         @click="handleError">
             Перейти на главную
-        </ButtomStandart>
+        </ButtomStandart> -->
     </div>
 </template>
 
@@ -11,5 +11,7 @@
 const props = defineProps({
   error: Object
 })
-const handleError = () => clearError({ redirect: '/' })
+
+const handleError = () => clearError({ redirect: '/catalog' })
+handleError()
 </script>
