@@ -1,4 +1,3 @@
-import { error } from "console";
 import jwtDecode from "jwt-decode";
 import { userActive, accessToken, alertContent } from "~~/pinia/store";
 

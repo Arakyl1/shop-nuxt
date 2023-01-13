@@ -12,11 +12,13 @@
       <Transition name="path">
         <OtherElsePath v-if="$route.path !== '/'"/>
       </Transition>
-      <NuxtPage :transition="{
-        name: 'page-transition',
-        mode: 'in-out'
-      }">
-      </NuxtPage>
+      <div class="min-h-screen">
+        <NuxtPage :transition="{
+          name: 'page-transition'
+        }" >
+        </NuxtPage>
+      </div>
+      
       </div>
     <div>
     <Footer v-if="isDesktopOrTablet" />
@@ -42,7 +44,7 @@ const { isDesktopOrTablet } = useDevice();
 const { initAuth } = useAuth()
 
 onBeforeMount(async() => {
-  if (userData.value ? !('id' in userData.value) : false) {
+  if (!userData.value) {
     initAuth()
   }
 

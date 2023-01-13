@@ -3,7 +3,7 @@
 <button type="button"
     class="cursor-pointer focus-visible:outline-0 relative"
     @click="updateStage($event)">
-    <ClientOnly>
+    <ClientOnly>    
         <IconBasket :update-class="!!basket.length"/>
         <OtherProductLengthArray :quanity="basket.length"/>
     </ClientOnly>

@@ -21,11 +21,12 @@ export default () => {
     }
     const getProduct = async(searchOption: object = {}, name: string = `data${searchOption.where.id}`) => {
         try {
-            const { data, refresh } = await useAsyncData(name, () => $fetch('/api/product/get', {
+            return await useAsyncData(name, () => $fetch('/api/product/get', {
                 method: "POST",
                 body: searchOption
             })) 
-            return { data, refresh}
+           
+            // return { data, refresh }
         } catch (error) {
             return error 
         }
