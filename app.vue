@@ -40,6 +40,7 @@ const userActiveFun = userActive()
 const containerFunc = containerSize()
 const { active } = storeToRefs(windowMaskFun)
 const { userData} = storeToRefs(userActiveFun)
+const route = useRoute()
 const { isDesktopOrTablet } = useDevice();
 const { initAuth } = useAuth()
 
@@ -52,6 +53,9 @@ onBeforeMount(async() => {
   window.addEventListener('resize', () => containerFunc.updateSize(window))
 })
 
+useHead({
+  titleTemplate: () => route.matched[0].meta.title
+})
 </script>
 
 <style lang="css">

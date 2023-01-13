@@ -31,7 +31,6 @@ const { isDesktopOrTablet } = useDevice()
 const { getProduct } = useProduct()
 
 
-
 const option = ref({
     where: {
         id: +route.params.id
@@ -50,7 +49,7 @@ const { data, refresh } = await getProduct(option.value, `data_full_info_${route
 
 onMounted(() => {
     useHead({
-        title: data ? data.value.name : ''
+        titleTemplate: () =>  data ? data.value.name : ''
     })
 })
 </script>

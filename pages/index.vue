@@ -4,7 +4,7 @@
         <MainStocks class="mb-16 xl:mb-12"/>
 
         <MainCarusel :searchCategor="'sale'"/>
-        
+
         <MainCarusel :searchCategor="'news'"/>
 
         <MainAdvertisement class="mb-16 xl:mb-12"/>
@@ -21,8 +21,5 @@ definePageMeta({
    keepalive: true
 })
 
-useHead({
-    title: 'Главная страница'
-})
 
 </script>

@@ -107,7 +107,7 @@ const emit = defineEmits<{
 
 const route = useRoute()
 const router = useRouter()
-const { data } = await useAsyncData('select', () => queryContent('/select').only(['body']).findOne())
+const { data } = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
 
 const filterList = ref(new CreateFilterList(route))
 
@@ -118,8 +118,8 @@ const style = {
   input: 'p-2 rounded-md focus-visible:outline-none text-gray-500'
 }
 
-const categor = computed(() => data.value ? data.value.body.map(el => el.name) : "")
-const subcategor = computed(() => data.value ? data.value.body.find(el => el.name === route.query.categor) : "")
+const categor = computed(() => data.value ? data.value.select.map(el => el.name) : "")
+const subcategor = computed(() => data.value ? data.value.select.find(el => el.name === route.query.categor) : "")
 const checkValidPrice = computed(() => {
   return {
     from: +filterList.value.price.from < 0 ||
