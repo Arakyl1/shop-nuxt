@@ -71,7 +71,6 @@ async function getIdProduct(optionSeacrh: object = {}) {
     if (isMobile) {
         updateStage(event, false)
     }
-    
     loader.value = true
     const res = await getProductForCategor({
         skip: ((route.query.page - 1) * route.query.limit),
