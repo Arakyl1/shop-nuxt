@@ -134,8 +134,10 @@ export default () => {
                     statusMessage: data.statusMessage
                 })
             }
+
+            console.log();
             
-            updateUser(data)   
+            updateUser(data.user)   
         } catch (error) {
             throw error
         }
