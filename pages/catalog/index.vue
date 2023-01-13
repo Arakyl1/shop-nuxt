@@ -64,9 +64,13 @@ const toucheData = toucheElemPosition(filter)
 const makerList = ref<{ name: string; value: string; }[] | undefined>(null)
 const activeButtomNext = ref<number>(0)
 const { stage, updateStage } = ShowContent()
+const { isMobile } = useDevice()
 
 
 async function getIdProduct(optionSeacrh: object = {}) {
+     if (isMobile) {
+        updateStage(event, false)
+    }
     loader.value = true
     const res = await getProductForCategor({
         skip: ((route.query.page - 1) * route.query.limit),
