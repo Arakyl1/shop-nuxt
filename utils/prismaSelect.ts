@@ -12,3 +12,15 @@ export function selectForCard():object {
         }
     }
 }
+
+export function selectCardBySearch():object {
+    return {
+        select: {
+            id: true,
+            name: true,
+            art: true,
+            price: true,
+            img: true
+        }
+    }
+}

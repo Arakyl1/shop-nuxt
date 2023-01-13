@@ -77,6 +77,20 @@ export default () => {
             console.log(error);
         }
     }
+
+    const searchProduct = async(params: object) => {
+        try {
+            const data = ref<object | null>(null)
+            const res = await $fetch('/api/product/search', {
+                method: 'POST',
+                body: params
+            })
+            data.value = res
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
-    return { addProduct, getProduct, getProductForCategor, putProductData, getMakerlist }
+    return { addProduct, getProduct, getProductForCategor, putProductData, getMakerlist, searchProduct }
 }
