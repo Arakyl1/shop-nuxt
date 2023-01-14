@@ -3,10 +3,10 @@
     <div class="flex md:flex-wrap">
         <div :class="style.container" class="pl-0 lg:w-5/12 md:w-full md:mb-8">
             <form>
-              <div @click="openModal" class="w-3/4 lg:w-full px-12">
+              <div @click="openModal" class="w-3/4 lg:w-full px-12 lg:px-4">
                 <div v-if="!inputImageUrl"
                 class="flex justify-center items-center h-full aspect-square bg-blue-100 opacity-30 rounded-md border-dashed border-2 cursor-pointer">
-                  <p class=" text-black-900"
+                  <p class=" text-black-900 text-center"
                     >Кликните, чтобы добавить фото</p>
                     
                 </div>
