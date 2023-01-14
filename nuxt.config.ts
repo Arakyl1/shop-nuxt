@@ -8,6 +8,17 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/content',
     '@nuxtjs/device',
+    ['@kevinmarrec/nuxt-pwa', {
+      workbox: {
+        enabled: true
+      },
+      icon: {
+        source: 'assets/logo.png'
+      },
+      meta: {
+        theme_color: '#685e6f'
+      }
+    }],
     ['@pinia/nuxt', {
             autoImports: ['defineStore', 'acceptHMRUpdate'],
         }
@@ -20,5 +31,5 @@ export default defineNuxtConfig({
     
     jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
     jwtRefrechSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
-  }
+  },
 });
