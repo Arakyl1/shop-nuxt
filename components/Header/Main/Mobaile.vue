@@ -49,7 +49,6 @@
                         <input type="text" placeholder="Что ищем?."
                         v-model="inputText"
                         @keyup.enter="getSearch(inputText)"
-                        @blur="clearDataSearch"
                         class="focus-visible:outline-none grow bg-gray-100 ">
                         <ButtomStandart class="p-0"
                         @click="getSearch(inputText)">

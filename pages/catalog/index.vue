@@ -51,7 +51,7 @@ import ShowContent from "@/utils/ShowContent"
 definePageMeta({
     middleware: ['catalog'],
     title: 'Каталог товаров',
-    // keepalive: { include: 'Filter'}
+    keepalive: { include: 'Filter'}
 })
 
 
