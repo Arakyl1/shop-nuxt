@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    if (!to.query.page) {
+    if (!to.query.page || !to.query.limit) {
         return navigateTo({
             path: to.path, query: {
                 ...to.query,
@@ -9,4 +9,4 @@ export default defineNuxtRouteMiddleware((to, from) => {
         })
     }
     return
-})
+}) 
