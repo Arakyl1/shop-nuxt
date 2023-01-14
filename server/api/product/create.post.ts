@@ -18,7 +18,7 @@ export default defineEventHandler(async(event) => {
     const characteristicItem = async(id: any, array: object[]) => {
         for (let i = 0; i < array.length; i++) {
             const item = array[i]; 
-            await prismaCreate('characteristicItem', { data: {
+            prismaCreate('characteristicItem', { data: {
                 name: item.name,
                 value: item.value,
                 characteristicTitle: id
