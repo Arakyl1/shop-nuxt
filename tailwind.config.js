@@ -72,6 +72,8 @@ module.exports = {
       'md': { 'max' :'767px'},
 
       'sm': { 'max' : '640px'},
+      
+      'xs': { 'max' : '360px'},
     }
   },
   plugins: [],
