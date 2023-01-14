@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <div class="bg-blue-500 absolute  rounded-md
-        min-w-min max-h-min "
+        w-min h-min "
         :class="[ stage ? 'z-50' : 'z-20 delay-200']"
         @mouseenter="showModalCategor" @mouseleave="hudeModalCategor">
             <div >

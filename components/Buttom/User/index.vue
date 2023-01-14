@@ -7,7 +7,7 @@
             <IconUser class="group is-icon-white"/>
         </ButtomStandart>
     </slot>
-    <OtherModalTransition class=" min-h-min w-[450px] sm:w-[calc(100vw-2rem)]" :active="stage">
+    <OtherModalTransition class=" h-min w-[450px] sm:w-[calc(100vw-2rem)]" :active="stage">
         <div class="bg-white py-8 px-12 rounded-md w-full h-full
         sm:py-6 sm:px-6">
             <template v-if="userData">

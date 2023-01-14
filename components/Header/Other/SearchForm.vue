@@ -14,7 +14,7 @@
                 >Поиск</ButtomStandart>
             </form>
         </slot>
-        <div class="absolute top-[105%] left-0 w-full min-h-min z-30">
+        <div class="absolute top-[105%] left-0 w-full h-min z-30">
             <div v-show="dataSearch" >
                 <Transition name="modal_search">
                 <div class=" bg-white shadow-lg border rounded-md border-gray-100">

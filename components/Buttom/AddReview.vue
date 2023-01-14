@@ -4,7 +4,7 @@
         Добавить отзыв
     </ButtomStandart>
     <OtherModalTransition :active="stage"
-    class="min-h-min w-96 sm:w-[calc(100vw-2rem)]">
+    class="h-min w-96 sm:w-[calc(100vw-2rem)]">
        <div class="bg-white rounded-md py-8 px-6 sm:py-6 sm:px-4"
        v-if="data.userData">
         <div class="flex items-center mb-4">

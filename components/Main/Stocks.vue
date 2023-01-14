@@ -9,7 +9,7 @@
                 <div class="relative">
                     <img :src="isDesktopOrTablet ? elem.link_img_big : elem.link_img_small" alt=""
                     class="object-cover min-w-full rounded">
-                    <div class="absolute w-[40%] min-h-min top-1/2 left-[10%]
+                    <div class="absolute w-[40%] h-min top-1/2 left-[10%]
                     -translate-y-1/2 text-black-300
                     lg:w-1/2
                     md:w-10/12 md:top-[20%] md:-translate-x-1/2 md:left-1/2 md:text-center

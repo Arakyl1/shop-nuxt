@@ -9,7 +9,7 @@
             @click="updateStage">
                 Адреса для самовывоза
             </ButtomStandart>
-            <OtherModalTransition :active="stage" class="w-[64rem] min-h-min xl:max-w-4xl lg:hidden">
+            <OtherModalTransition :active="stage" class="w-[64rem] h-min xl:max-w-4xl lg:hidden">
                 <OtherModalContent :hude-window="updateStage"
                 :title="'Адреса для самовывоза'"
                 :decor-line="false"
