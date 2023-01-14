@@ -1,5 +1,5 @@
 <template>
-<Slader :data="data" :containerClass="style.container" :defaultTitle="'Товары месяца'" class="mb-16 xl:mb-12">
+<Slader :data="data" :containerClass="style.container" :defaultTitle="title" class="mb-16 xl:mb-12">
     <template #item="{ elem }">
         <ProductCard :data="elem" class="slader__item group is-pos-info-for-stock"/>
     </template>
@@ -9,9 +9,10 @@
 </Slader>
 </template>
 <script setup lang="ts">
-const props = defineProps<{
-    searchCategor: string
-}>()
+const props = withDefaults(defineProps<{
+    searchCategor: string,
+    title: string
+}>(), { title: 'Базовый заголовок'})
 
 const { getProductForCategor } = useProduct()
 

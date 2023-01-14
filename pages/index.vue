@@ -3,13 +3,13 @@
         
         <MainStocks class="mb-16 xl:mb-12"/>
 
-        <MainCarusel :searchCategor="'sale'"/>
+        <MainCarusel :searchCategor="'sale'" :title="'Товары на акции'"/>
 
-        <MainCarusel :searchCategor="'news'"/>
+        <MainCarusel :searchCategor="'news'" :title="'Новинки'"/>
 
         <MainAdvertisement class="mb-16 xl:mb-12"/>
         
-        <MainCarusel :searchCategor="'top'"/>
+        <MainCarusel :searchCategor="'top'" :title="'Товары месяца'"/>
     
         <MainAdvantages class="mb-20 xl:mb-16"/>
         
