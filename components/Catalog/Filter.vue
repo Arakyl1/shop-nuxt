@@ -208,6 +208,7 @@ function resetSearchData() {
 
 function sendParams() {
   if (parseInt(route.query.page) > 1) {
+   
     return navigateTo({
       path: route.path,
       query: { ...route.query, page: 1 }
