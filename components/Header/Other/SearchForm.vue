@@ -46,13 +46,13 @@
 <script setup lang="ts">
 
 const inputText = ref<string>('')
-const { searchProduct } = useProduct()
-const dataSearch = ref<object | null >()
+const { getProductForCategor } = useProduct()
+const dataSearch = ref<any>()
 const route = useRoute()
 const props = defineProps<{ input?: string }>()
 
 async function getSearch(searchText: string) {
-    const data =  await searchProduct({
+    dataSearch.value = await getProductForCategor({
         where: {
             OR: [
                 { name: { contains: searchText, mode: 'insensitive' } },
@@ -64,8 +64,6 @@ async function getSearch(searchText: string) {
         take: 15,
         ...selectCardBySearch()
     })
-    dataSearch.value = data?.value
-
 }
 
 function clearDataSearch() {

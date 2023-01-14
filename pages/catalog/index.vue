@@ -92,8 +92,8 @@ async function getIdProduct(optionSeacrh: object = {}) {
         select: { id: true }
     })
     
-    listIdProduct.value = res?.value ? res.value : []
-    activeButtomNext.value = dataOfNextPage?.value ?  dataOfNextPage.value.length : 0
+    listIdProduct.value = res ? res : []
+    activeButtomNext.value = dataOfNextPage ?  dataOfNextPage.length : 0
     loader.value = false
 }
 

@@ -33,7 +33,3 @@ export const prismaAddProductCharacteristicItem = (item: any) => {
         data: item
     })
 }
-
-export const prismaSearchProduct = (params: object) => {
-    return prisma.productCard.findMany(params)
-}

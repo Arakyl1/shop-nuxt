@@ -15,8 +15,9 @@ const props = withDefaults(defineProps<{
 }>(), { title: 'Базовый заголовок'})
 
 const { getProductForCategor } = useProduct()
+const data = ref<any>(null)
 
-const data = await getProductForCategor({ where: { [props.searchCategor]: true }, ...selectForCard()})
+data.value = await getProductForCategor({ where: { [props.searchCategor]: true }, ...selectForCard()})
 
 const style = {
     container: '[grid-auto-columns:calc(100%/4)] lg:[grid-auto-columns:calc(100%/3)] sm:[grid-auto-columns:calc(100%/2)]'
