@@ -42,7 +42,7 @@
             </div>
         </div>
         <div>
-            <SearchForm>
+            <SearchForm :input="inputText">
                 <template #form="{ getSearch, clearDataSearch }">
                     <form class="flex bg-gray-100 px-4 py-3 rounded"
                     @submit.prevent>

@@ -20,8 +20,8 @@
                 </div>
             </template>
             <template #bottom="{ prevItem, nextItem }" >
-                <template v-if="isDesktopOrTablet">
-                    <div class="relative" v-if="(data ? data.body.length : 4 / quantitySladerItem) - 1">
+                <template v-if="isDesktopOrTablet && data && size.width">
+                    <div class="relative" v-if="(data.body.length / quantitySladerItem) > 1">
                         <ButtomArround class="-scale-x-100 absolute -top-32 -left-1"
                         @click="prevItem"/>
                         <ButtomArround class="absolute -top-32 -right-1"

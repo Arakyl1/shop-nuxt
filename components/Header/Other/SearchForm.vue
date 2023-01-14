@@ -16,8 +16,10 @@
             </form>
         </slot>
         <Transition name="modal_search">
-            <div class="absolute top-full left-0 w-full min-h-min  z-30" v-show="dataSearch">
-                <div class="p-1 bg-white shadow-lg border rounded-md border-gray-100">
+            <div class="absolute top-[105%] left-0 w-full min-h-min z-30"
+            v-show="dataSearch">
+                <div class="p-1 bg-white shadow-lg border rounded-md border-gray-100
+                max-h-[270px] overflow-y-scroll [scrollbar-width:none] modal_search-container">
                     <ul>
                         <li v-for="item in dataSearch" :key="item.id" class="py-1">
                             <div class="flex items-center">
@@ -48,6 +50,7 @@ const inputText = ref<string>('')
 const { searchProduct } = useProduct()
 const dataSearch = ref<object | null >()
 const route = useRoute()
+const props = defineProps<{ input?: string }>()
 
 async function getSearch(searchText: string) {
     const data =  await searchProduct({
@@ -59,6 +62,7 @@ async function getSearch(searchText: string) {
                 { subcategor: { contains: searchText, mode: 'insensitive' } }
             ]
         },
+        take: 15,
         ...selectCardBySearch()
     })
     dataSearch.value = data?.value
@@ -68,6 +72,12 @@ async function getSearch(searchText: string) {
 function clearDataSearch() {
     dataSearch.value = null
 }
+
+watch(() => props.input ? props.input : inputText.value, (newData) => {
+    if (newData) {
+        getSearch(newData)
+    }
+})
 
 watch(() => route.fullPath, () =>{
     clearDataSearch()
@@ -85,5 +95,8 @@ watch(() => route.fullPath, () =>{
 .modal_search-enter-from,
 .modal_search-leave-to{
   transform: translateY(-10px) scaleY(0);
+}
+.modal_search-container::-webkit-scrollbar {
+    display: none;
 }
 </style>
