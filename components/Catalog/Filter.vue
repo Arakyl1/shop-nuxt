@@ -82,7 +82,7 @@
     </div>
     <div class="flex mt-4">
       <ButtomStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2"
-      @click="searchProduct">
+      @click="sendParams">
         Показать
       </ButtomStandart>
       <ButtomStandart class="bg-blue-500 aspect-square p-3.5 "
@@ -206,8 +206,20 @@ function resetSearchData() {
   searchProduct()
 }
 
+function sendParams() {
+  if (parseInt(route.query.page) > 1) {
+    return navigateTo({
+      path: route.path,
+      query: { ...route.query, page: 1 }
+    })
+  } else {
+    searchProduct()
+  }
+}
+
 function searchProduct() {
   emit('option-seacrh', optionSearch.value)
+  // emit('option-seacrh', optionSearch.value)
 }
 
 searchProduct()
