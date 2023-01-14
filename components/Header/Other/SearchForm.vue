@@ -2,13 +2,13 @@
     <div class="relative">
         <slot name="form" v-bind="{ getSearch, clearDataSearch }">
             <form @submit.prevent
-            class="rounded-md border border-gray-300 pl-3 pr-1 py-1" >
+            class="rounded-md border border-gray-300 pl-3 pr-1 py-1 flex" >
                 <input type="text"
                 v-model="inputText"
                 placeholder="Что ищем?."
                 @keyup.enter="getSearch(inputText)"
                 @blur="clearDataSearch"
-                class="mr-4 focus-visible:outline-none group-[.header-main]:xl:w-36">
+                class="mr-4 focus-visible:outline-none group-[.header-main]:xl:w-36 grow">
                 <ButtomStandart
                 @click="getSearch(inputText)"
                 class="bg-blue-500 py-1.5 text-white xl:py-1.5"
@@ -32,9 +32,8 @@
                                         <p class="text-xs">{{ item.art }}</p>
                                     </div>
                                 </NuxtLink>
-                                <div>
-                                    <p class="text-xs">{{ item.price }}</p>
-                                </div>
+                               <OtherTransformPrice :style="'text-xs sm:mr-0 mr-0'" :sale="item.sale" :price="item.price"
+                               class="flex-col"/>
                             </div>
                         </li>
                     </ul>

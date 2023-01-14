@@ -20,6 +20,7 @@ export function selectCardBySearch():object {
             name: true,
             art: true,
             price: true,
+            sale: true,
             img: true
         }
     }
