@@ -1,4 +1,4 @@
-import { getUser } from "@/server/db/user"
+import { prismaFindUnique } from "@/server/db/methods"
 import { decodeAccessToken } from "@/server/utils/jwt"
 import { userTransform } from "~~/server/utils/userTransform"
 import { searchByid } from "@/server/utils/searchParams";
@@ -14,7 +14,7 @@ export default defineEventHandler(async(event) => {
 
     try {
         const userId = decoded.userId
-        const user = await getUser(searchByid(userId))
+        const user = await prismaFindUnique('user',searchByid(userId))
         return { user: userTransform(user)}
     } catch (error) {
         return { statusCode: 404, statusMessage: '' }

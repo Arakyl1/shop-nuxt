@@ -1,12 +1,11 @@
-import { prismaUpdateProductRanting } from "~~/server/db/product"
+import { prismaUpdate } from "~~/server/db/methods"
 
 
 export default defineEventHandler(async(event) => {
     const data = await readBody(event)
 
     try {
-        const res = await prismaUpdateProductRanting({ paramSearch: {id: data.paramSearch}, newContent: { ranting: data.data }})
-        return true
+        return await prismaUpdate('productCard', data)
     } catch (error) {
         return error
     }

@@ -1,11 +1,11 @@
-import { removeRefrechToken } from "~~/server/db/refrechTokem"
+import { prismaDelete } from "~~/server/db/methods"
 import { sendRefrechToken } from "~~/server/utils/jwt"
 
 export default defineEventHandler(async(event) => {
     try {
         const cookiesRefrech = getCookie(event, 'refrech_token')
         if (cookiesRefrech) {
-            removeRefrechToken(cookiesRefrech)
+            prismaDelete('refrechToken', { where: { token: cookiesRefrech } })
         }
     } catch (error) {
         return error

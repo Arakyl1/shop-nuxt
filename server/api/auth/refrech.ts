@@ -1,6 +1,5 @@
 import { JwtPayload } from "jsonwebtoken"
-import { getRefrechTokenByTpken } from "~~/server/db/refrechTokem"
-import { getUser } from "~~/server/db/user"
+import { prismaFindUnique } from "~~/server/db/methods"
 import { decodeRefrechToken, generateTokens } from "~~/server/utils/jwt"
 import { searchByid } from "@/server/utils/searchParams";
 
@@ -16,24 +15,20 @@ export default defineEventHandler(async(event) => {
         // throw createError()
     }
     
-    const rToken = await getRefrechTokenByTpken(refrechToken)
+    const rToken = await prismaFindUnique('refrechToken', { where: { token: refrechToken }})
     
     if (!rToken) {
         return {
             statusCode: 401,
             statusMessage: "Refrech token is invalid" 
         }
-        // throw createError({
-        //     statusCode: 401,
-        //     statusMessage: "Refrech token is invalid"
-        // })
     }
 
     const token: string | JwtPayload | null = decodeRefrechToken(refrechToken)
     
     try {
     
-        const user = await getUser(searchByid(token.userId))
+        const user = await prismaFindUnique('user', searchByid(token.userId))
         
         const { accessToken } = await generateTokens(user)
         
@@ -43,9 +38,5 @@ export default defineEventHandler(async(event) => {
             statusCode: 401,
             statusMessage: "Something went wrong"
         }
-        // throw createError({
-        //     statusCode: 401,
-        //     statusMessage: "Something went wrong"
-        // })
     }
 })

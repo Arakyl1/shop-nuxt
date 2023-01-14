@@ -1,10 +1,9 @@
-import { prismaGetProductForCatagor } from "~~/server/db/product"
+import { prismafindMany } from "~~/server/db/methods"
 
 export default defineEventHandler(async(event)=> {
     const body = await readBody(event)
     try {
-        const data = await prismaGetProductForCatagor(body)
-        return data
+        return await prismafindMany('productCard',body)
     } catch (error) {
         return error
     }

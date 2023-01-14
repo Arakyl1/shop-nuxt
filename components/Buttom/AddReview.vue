@@ -82,7 +82,10 @@ async function createReview() {
             const calculationRanting = Math.round(
                 (props.reduceRanting.value + userReview.value.ranting) /
                 (props.reduceRanting.length + 1))
-           const res = await putProductData({ paramSearch: props.data.id, data: calculationRanting })
+            const res = await putProductData({ 
+                where: { id: props.data.id },
+                data: { ranting: calculationRanting } 
+            })
         }
         if (res) {
             hudeModal()

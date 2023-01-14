@@ -55,14 +55,14 @@ definePageMeta({
 })
 
 
-const { getProductForCategor, getMakerlist } = useProduct()
+const { getProductForCategor } = useProduct()
 const route = useRoute()
 
 const listIdProduct = ref<object[]>([])
 const loader = ref<boolean>(true)
 const filter = ref<HTMLElement | null>(null)
 const toucheData = toucheElemPosition(filter)
-const makerList = ref<{ name: string; value: string; }[] | undefined>(null)
+const makerList = ref<{ name: string; value: string; }[] | null>(null)
 const activeButtomNext = ref<number>(0)
 const { stage, updateStage } = ShowContent()
 const { isMobile } = useDevice()
@@ -80,9 +80,9 @@ async function getIdProduct(optionSeacrh: object = {}) {
         ...selectForCard()
     })
 
-    makerList.value = await getMakerlist({
+    await getMakerlist({
         where: optionSeacrh.categor ? { categor: optionSeacrh.categor } : { NOT: optionSeacrh.NOT },
-        select: { maker: true }
+        select: { maker: true } 
     })
 
     const dataOfNextPage = await getProductForCategor({
@@ -97,10 +97,25 @@ async function getIdProduct(optionSeacrh: object = {}) {
     loader.value = false
 }
 
+async function getMakerlist(params:object) {
+
+    const list = new Set([])
+    const listModifi = () => [...list].map(el => Object.assign({}, { name: el, value: el}))
+
+    try {
+        const res = await getProductForCategor(params)
+        
+        res.forEach(el => list.add(el.maker));
+
+        makerList.value = listModifi()
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 watch(() => toucheData.vector, (newVector) => {
     if (newVector === 3) {
         updateStage(event)
     }
 })
 </script>
-
