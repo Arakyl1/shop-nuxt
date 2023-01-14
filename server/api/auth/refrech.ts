@@ -16,9 +16,8 @@ export default defineEventHandler(async(event) => {
         // throw createError()
     }
     
-    
     const rToken = await getRefrechTokenByTpken(refrechToken)
-  
+    
     if (!rToken) {
         return {
             statusCode: 401,
@@ -34,8 +33,8 @@ export default defineEventHandler(async(event) => {
     
     try {
     
-        const user = await getUser(searchByid(token ? token.userId : 0))
-
+        const user = await getUser(searchByid(token.userId))
+        
         const { accessToken } = await generateTokens(user)
         
         return { accessToken }

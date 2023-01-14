@@ -46,6 +46,7 @@ const { initAuth } = useAuth()
 
 onBeforeMount(async() => {
   if (!userData.value) {
+   
     initAuth()
   }
 

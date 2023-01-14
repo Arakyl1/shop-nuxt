@@ -30,8 +30,9 @@ export default defineEventHandler(async(event: H3Event) => {
 
         // Generate Token
         try {
-            const { accessToken, refrechToken } = await generateTokens(userData)
-            console.log(user);
+            const { accessToken, refrechToken } = await generateTokens(user)
+            
+            await createRefrechToken({ token: refrechToken, userId: user.id })
             
             sendRefrechToken(event, refrechToken)
 

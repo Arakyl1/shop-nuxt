@@ -9,9 +9,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxtjs/device',
     ['@kevinmarrec/nuxt-pwa', {
-      workbox: {
-        enabled: true
-      },
       icon: {
         source: 'assets/logo.png'
       },

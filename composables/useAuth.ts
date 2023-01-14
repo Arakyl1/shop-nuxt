@@ -52,7 +52,7 @@ export default () => {
             if (data.statusCode ? data.statusCode >= 400 : false) {
                 throw createError({
                     statusCode: data.statusCode,
-                    statusMessage:data.statusMessage
+                    statusMessage: data.statusMessage
                 })
             }
 
@@ -96,7 +96,9 @@ export default () => {
                     statusMessage: data.statusMessage
                 })
             }
+         
             updateAccess(data.accessToken ? data.accessToken : '')
+            
         } catch (error) {
             console.log(error);
             
