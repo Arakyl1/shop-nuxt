@@ -43,12 +43,13 @@
         </div>
         <div>
             <SearchForm>
-                <template #form="{ getSearch}">
+                <template #form="{ getSearch, clearDataSearch }">
                     <form class="flex bg-gray-100 px-4 py-3 rounded"
                     @submit.prevent>
                         <input type="text" placeholder="Что ищем?."
                         v-model="inputText"
                         @keyup.enter="getSearch(inputText)"
+                        @blur="clearDataSearch"
                         class="focus-visible:outline-none grow bg-gray-100 ">
                         <ButtomStandart class="p-0"
                         @click="getSearch(inputText)">

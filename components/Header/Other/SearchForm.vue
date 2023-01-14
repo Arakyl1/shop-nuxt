@@ -1,12 +1,13 @@
 <template>
     <div class="relative">
-        <slot name="form" v-bind="{ getSearch }">
+        <slot name="form" v-bind="{ getSearch, clearDataSearch }">
             <form @submit.prevent
             class="rounded-md border border-gray-300 pl-3 pr-1 py-1" >
                 <input type="text"
                 v-model="inputText"
                 placeholder="Что ищем?."
                 @keyup.enter="getSearch(inputText)"
+                @blur="clearDataSearch"
                 class="mr-4 focus-visible:outline-none group-[.header-main]:xl:w-36">
                 <ButtomStandart
                 @click="getSearch(inputText)"
@@ -16,9 +17,9 @@
         </slot>
         <Transition name="modal_search">
             <div class="absolute top-full left-0 w-full min-h-min  z-30" v-show="dataSearch">
-                <div class="py-2 px-1 bg-white shadow-lg border rounded-md border-gray-300">
+                <div class="p-1 bg-white shadow-lg border rounded-md border-gray-100">
                     <ul>
-                        <li v-for="item in dataSearch" :key="item.id">
+                        <li v-for="item in dataSearch" :key="item.id" class="py-1">
                             <div class="flex items-center">
                                 <div class="h-7 w-7">
                                     <img :src="item.img" :alt="item.name" class="object-contain max-h-full max-w-full">
@@ -64,8 +65,12 @@ async function getSearch(searchText: string) {
 
 }
 
-watch(() => route.fullPath, () =>{
+function clearDataSearch() {
     dataSearch.value = null
+}
+
+watch(() => route.fullPath, () =>{
+    clearDataSearch()
 })
 </script>
 

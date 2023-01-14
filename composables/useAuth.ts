@@ -135,8 +135,6 @@ export default () => {
                 })
             }
 
-            console.log();
-            
             updateUser(data.user)   
         } catch (error) {
             throw error
