@@ -49,7 +49,7 @@ export default () => {
                 body: event
             })
         
-            if (data.statusCode ? data.statusCode >= 400 : false) {
+            if ('statusCode' in data ? data.statusCode >= 400 : false) {
                 throw createError({
                     statusCode: data.statusCode,
                     statusMessage: data.statusMessage
