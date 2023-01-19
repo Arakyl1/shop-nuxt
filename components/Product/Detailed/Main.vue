@@ -63,15 +63,13 @@ import { alertContent } from "@/pinia/store";
 
 const props = defineProps<{ data: object }>()
 
-const route = useRoute()
 const alertContentFun = alertContent()
 const numberOfProduct = ref<number>(1)
 
 async function copyLink() {
     const permissionToUseClipboard = await navigator.permissions.query({ name: "clipboard-write" })
     if (permissionToUseClipboard.state === "granted" || permissionToUseClipboard.state === "prompt") {
-        const link = route.fullPath
-        navigator.clipboard.writeText(link)
+        navigator.clipboard.writeText(window.location.href)
         alertContentFun.updateContent('Ссылка скопирована')
     }
 }
