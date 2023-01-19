@@ -49,9 +49,7 @@
             class="bg-blue-500 px-4 ml-3 aspect-square sm:px-3">
                 <IconLike :update-style="favorite.list.has(data.id)" class="h-6" :style="'stroke-white'"/>
             </ButtomAddFavorite>
-            <ButtomStandart  class="bg-blue-500 px-4 ml-3 aspect-square sm:px-3">
-                <IconIconsShare class="group is-icon-white"/>
-            </ButtomStandart>
+            <ButtomShare class="bg-blue-500 px-4 ml-3 aspect-square sm:px-3 group is-icon-white"/>
         </div>
     </div>
 </section>

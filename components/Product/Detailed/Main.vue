@@ -22,9 +22,7 @@
                         <OtherElseStar :quantity-star="data.ranting"
                         class="grow justify-between"/>
                         <p class="ml-4 grow text-gray-500">Отзывы ({{ data.reviews.length }})</p>
-                        <ButtomStandart class="p-0" @click="copyLink">
-                            <IconsShare class="group is-icon-blue"/>
-                        </ButtomStandart>
+                        <ButtomShare class="p-0 group is-icon-blue"/>
                     </div>
                     <div class="decor-line"></div>
                     <div class="flex py-8 xl:py-6">
@@ -58,19 +56,7 @@
     </section>
 </template>
 <script setup lang="ts">
-import IconsShare from '~~/components/Icon/IconsShare.vue';
-import { alertContent } from "@/pinia/store";
-
 const props = defineProps<{ data: object }>()
 
-const alertContentFun = alertContent()
 const numberOfProduct = ref<number>(1)
-
-async function copyLink() {
-    const permissionToUseClipboard = await navigator.permissions.query({ name: "clipboard-write" })
-    if (permissionToUseClipboard.state === "granted" || permissionToUseClipboard.state === "prompt") {
-        navigator.clipboard.writeText(window.location.href)
-        alertContentFun.updateContent('Ссылка скопирована')
-    }
-}
 </script>
