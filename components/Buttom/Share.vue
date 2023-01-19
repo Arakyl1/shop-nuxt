@@ -17,5 +17,4 @@ async function copyLink() {
         alertContentFun.updateContent('Ссылка скопирована')
     }
 }
-addEventListener('')
 </script>
