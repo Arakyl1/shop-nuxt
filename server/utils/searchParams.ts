@@ -1,42 +1,20 @@
-export function searchByid(id: number) {
-    return {
-        where: {
-            id: id
-        },
-        select: {
-            id: true,
-            username: true,
-            name: true,
-            email: true,
-            profileImage: true
-        }
-    }
-}
 
-export function searchByIdSecondary(userId: number) {
+export function returnParamsMain(where: object, select?: object) {
     return {
-        where: {
-            id: userId
-        },
+        where: where,
         select: {
             username: true,
-            profileImage: true
-        }
-    }
-}
-
-export function searchByidUsername(username: string) {
-    return {
-        where: {
-            username: username
-        },
-        select: {
-            id: true,
-            username: true,
-            name: true,
-            email: true,
             profileImage: true,
-            password: true
+            ...select
         }
+    }
+}
+
+export function returnParamsAditional(select?: object){
+    return {
+        id: true,
+        name: true,
+        email: true,
+        ...select
     }
 }

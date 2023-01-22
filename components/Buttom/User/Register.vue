@@ -11,7 +11,9 @@
           />
           <input
             type="email"
-            :class="style.input"
+            :class="[style.input,
+               { 'focus-visible:outline-red-500 outline-red-500' : !emailValid }
+            ]"
             class="mb-6"
             placeholder="Email"
             v-model="data.email"
@@ -40,6 +42,7 @@
     </div>
 </template>
 <script setup lang="ts">
+import { alertContent } from "@/pinia/store";
 interface DataUser {
     username: string,
     email: string,
@@ -51,16 +54,22 @@ const props = withDefaults(defineProps<{ active: boolean}>(), { active: false })
 
 const data = ref<DataUser>(createObject())
 const { register } = useAuth()
+const alertContentFun = alertContent()
 
-const email = computed(() => {
-    return !!data.value.username.match(/[-.\w]+@([\w-]+\.)+[\w-]+/g)
+const emailValid = computed(() => {
+    return !!data.value.email.match(/[-.\w]+@([\w-]+\.)+[\w-]+/g)
 })
 
 async function createUser() {
-  const res = await register(JSON.stringify(data.value))
-  if (res) {
-    data.value = createObject()
+  if (emailValid.value) {
+    const res = await register(JSON.stringify(data.value))
+    if (res) {
+      data.value = createObject()
+    }
+  } else {
+    alertContentFun.updateContent('Проверьте введенные параметры')
   }
+  
 }
 
 watch(() => props.active, () => {
