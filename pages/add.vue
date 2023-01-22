@@ -5,13 +5,14 @@
         @characteristic="(e) => characteristic = { characteristic: e }"
         :create="create"/>
         <AddProductParameters class="mb-8" @parameter="(e) => additionalParameter = e"
-            :create="create"/>
-            <div class="mb-10 text-right">
-                <ButtomStandart @click="createItem"
-                class="bg-blue-700 text-white">
-                    Добавить товар
-                </ButtomStandart>
-            </div>
+        :create="create"/>
+        <div class="mb-10 text-right">
+            <ButtomStandart @click="createItem"
+            class="bg-blue-700 text-white">
+                Добавить товар
+            </ButtomStandart>
+        </div>
+        <!-- <div @click="chect" class="bg-blue-100 h-8 w-8">asdsadad</div> -->
     </div>
 </template>
 <script setup lang="ts">
@@ -22,6 +23,7 @@ definePageMeta({
     // pageTransition: { name: 'page-transition' }
     
 })
+
 
 const data = ref({})
 const mainParams = ref<object>({})
@@ -38,4 +40,9 @@ async function createItem() {
         create.value = !create.value
     }
 }
+
+// function chect() {
+//     const arr = Array(42)
+//     console.log(arr)
+// }
 </script>

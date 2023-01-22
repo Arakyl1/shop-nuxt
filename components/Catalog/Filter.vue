@@ -203,7 +203,7 @@ function addOption(data: string[], option: object){
 function resetSearchData() {
   filterList.value = new CreateFilterList(route)
   reset.value = !reset.value
-  searchProduct()
+  sendParams()
 }
 
 function sendParams() {

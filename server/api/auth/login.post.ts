@@ -3,14 +3,16 @@ import { generateTokens, sendRefrechToken } from "../../utils/jwt";
 import bcryptjs from "bcryptjs";
 import { prismaCreate } from "~~/server/db/methods";
 import { userTransform } from "~~/server/utils/userTransform";
-import { searchByidUsername } from "@/server/utils/searchParams";
+import { returnParamsMain, returnParamsAditional } from "@/server/utils/searchParams";
 
 export default defineEventHandler(async(event) => {
     const body = await readBody(event)
 
     const { username, password } = body 
 
-    const user = await prismaFindUnique('user', searchByidUsername(username))
+    const searchParams = returnParamsMain({ username: username }, returnParamsAditional({ password: true }))
+  
+    const user = await prismaFindUnique('user', searchParams)
 
     if (!user) {
         return { statusCode: 400, statusMessage: 'Такой пользователь на зарегистрирован' }

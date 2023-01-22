@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { prismaFindUnique } from "~~/server/db/methods"
 import { decodeRefrechToken, generateTokens } from "~~/server/utils/jwt"
-import { searchByid } from "@/server/utils/searchParams";
+import { returnParamsMain, returnParamsAditional } from "@/server/utils/searchParams";
 
 export default defineEventHandler(async(event) => {
 
@@ -27,8 +27,8 @@ export default defineEventHandler(async(event) => {
     const token: string | JwtPayload | null = decodeRefrechToken(refrechToken)
     
     try {
-    
-        const user = await prismaFindUnique('user', searchByid(token.userId))
+        const searchParams = returnParamsMain({ id: token.userId}, returnParamsAditional())
+        const user = await prismaFindUnique('user', searchParams)
         
         const { accessToken } = await generateTokens(user)
         

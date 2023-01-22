@@ -1,7 +1,7 @@
 import { prismaFindUnique } from "@/server/db/methods"
 import { decodeAccessToken } from "@/server/utils/jwt"
 import { userTransform } from "~~/server/utils/userTransform"
-import { searchByid } from "@/server/utils/searchParams";
+import { returnParamsMain, returnParamsAditional } from "@/server/utils/searchParams";
 
 
 export default defineEventHandler(async(event) => {
@@ -13,8 +13,8 @@ export default defineEventHandler(async(event) => {
     }
 
     try {
-        const userId = decoded.userId
-        const user = await prismaFindUnique('user',searchByid(userId))
+        const searchParams = returnParamsMain({ id: decoded.userId }, returnParamsAditional())
+        const user = await prismaFindUnique('user', searchParams)
         return { user: userTransform(user)}
     } catch (error) {
         return { statusCode: 404, statusMessage: '' }
