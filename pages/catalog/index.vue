@@ -18,7 +18,7 @@
             sm:w-full sm:p-0 sm:overflow-y-scroll sm:h-screen"
             :class="[ stage ? 'md:-left-4 sm:left-0' : 'md:-left-full' ]">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6">
-                    <CatalogFilter :makerList="makerList"
+                    <CatalogFilter :makerList="makerList ? makerList : []"
                     @option-seacrh="(e) => getIdProduct(e)"/>
                 </div>
             </div>
@@ -51,7 +51,7 @@ import ShowContent from "@/utils/ShowContent"
 definePageMeta({
     middleware: ['catalog'],
     title: 'Каталог товаров',
-    keepalive: { include: 'Filter'}
+    keepalive: true
 })
 
 
@@ -74,8 +74,11 @@ async function getIdProduct(optionSeacrh: object = {}) {
     }
     loader.value = true
     const res = await getProductForCategor({
-        skip: ((route.query.page - 1) * route.query.limit),
-        take: +route.query.limit,
+        skip: (((
+            route.query.page ? +route.query.page : 1) - 1) * (
+            route.query.limit ? +route.query.limit : 12
+        )),
+        take: route.query.limit ? +route.query.limit : 12,
         where: optionSeacrh,
         ...selectForCard()
     })
@@ -86,8 +89,11 @@ async function getIdProduct(optionSeacrh: object = {}) {
     })
 
     const dataOfNextPage = await getProductForCategor({
-        skip: (+route.query.page * route.query.limit),
-        take: +route.query.limit,
+        skip: ((
+            route.query.page ? +route.query.page : 1) * (
+            route.query.limit ? +route.query.limit : 12
+        )),
+        take: route.query.limit ? +route.query.limit : 12,
         where: optionSeacrh,
         select: { id: true }
     })
@@ -100,10 +106,10 @@ async function getIdProduct(optionSeacrh: object = {}) {
 async function getMakerlist(params:object) {
 
     const list = new Set([])
-    const listModifi = () => [...list].map(el => Object.assign({}, { name: el, value: el}))
+    const listModifi = () => [...list].map(el => Object.create({ name: el, value: el}))
 
     try {
-        const res = await getProductForCategor(params)
+        const res: object[] = await getProductForCategor(params)
         
         res.forEach(el => list.add(el.maker));
 
