@@ -24,6 +24,7 @@
 
 definePageMeta({
     title: "Доставка",
+    keepalive: true
 })
 
 const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find())
