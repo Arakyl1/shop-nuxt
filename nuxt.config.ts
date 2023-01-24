@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         }
     ], 
   ],
+  plugins: [{ src: '~/plugins/vercel.js', mode: 'client' }],
   runtimeConfig: {
     cloudinaryName: process.env.CLOUDINARY__NAME,
     cloudinaryApiKey: process.env.CLOUDINARY__KEY,
