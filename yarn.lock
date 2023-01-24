@@ -864,6 +864,11 @@
     "@unhead/schema" "1.0.2"
     hookable "^5.4.1"
 
+"@vercel/analytics@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@vercel/analytics/-/analytics-0.1.8.tgz#71f1f8c7bb98ac0c5c47eb3fb8ccbe8141b9fe47"
+  integrity sha512-PQrOI8BJ9qUiVJuQfnKiJd15eDjDJH9TBKsNeMrtelT4NAk7d9mBVz1CoZkvoFnHQ0OW7Xnqmr1F2nScfAnznQ==
+
 "@vercel/nft@^0.22.1":
   version "0.22.1"
   resolved "https://registry.npmjs.org/@vercel/nft/-/nft-0.22.1.tgz"
