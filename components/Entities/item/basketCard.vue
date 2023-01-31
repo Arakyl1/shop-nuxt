@@ -42,7 +42,7 @@ const option = {
     ...selectCardBySearch({ quantity: true })
 }
 
-const { data } = await getInfoProduct(option, `data_basket_${props.item.id}`)
+const data: DataProduct = await getInfoProduct(option)
 
 interface DataProduct {
     id: number,
