@@ -48,13 +48,12 @@ const { createAlert } = useAlert()
 const userReview = ref({
     cardId: props.data.id,
     ranting: 0,
-    text: '',
-    userId: props.userData?.id
+    text: ''
 })
 
 async function createCommit(functionCreate: any) {
-    if (userReview.value.ranting || userReview.value.text) {
-        const res = await functionCreate(userReview.value, props.reviewsRantingValue, userReview.value.cardId)
+    if ((userReview.value.ranting || userReview.value.text) && props.userData) {
+        const res = await functionCreate({ ...userReview.value, userId: props.userData.id}, props.reviewsRantingValue, userReview.value.cardId)
         if (res) hudeModal()
     } else {
         createAlert('Не заполнены поля')
