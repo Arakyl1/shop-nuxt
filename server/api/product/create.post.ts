@@ -32,6 +32,5 @@ export default defineEventHandler(async(event) => {
         return true
     } catch (error) {
         return error
-        // return createAndSendError(event, 404, "Something went wrong try again later")
     }
 })

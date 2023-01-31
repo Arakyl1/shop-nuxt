@@ -1,48 +1,41 @@
 <template>
     <div>
-        <AddProductMain class="mb-8" @main-data="(e) => mainParams = e " :create="create"/>
-        <AddProductCharacteristic class="mb-8"
+        <WidgetsAddMain class="mb-8" @main-data="(e) => mainParams = e " :create="create"/>
+        <WidgetsAddCharacteristic class="mb-8"
         @characteristic="(e) => characteristic = { characteristic: e }"
         :create="create"/>
-        <AddProductParameters class="mb-8" @parameter="(e) => additionalParameter = e"
+        <WidgetsAddParameters class="mb-8" @parameter="(e) => additionalParameter = e"
         :create="create"/>
         <div class="mb-10 text-right">
-            <ButtomStandart @click="createItem"
+            <UIStandart @click="createItem"
             class="bg-blue-700 text-white">
                 Добавить товар
-            </ButtomStandart>
+            </UIStandart>
         </div>
-        <!-- <div @click="chect" class="bg-blue-100 h-8 w-8">asdsadad</div> -->
     </div>
 </template>
 <script setup lang="ts">
-import useProduct from "~~/composables/useProduct";
-
 definePageMeta({
-    title: "Добавить товар",
-    // pageTransition: { name: 'page-transition' }
-    
+    title: "Добавить товар", 
 })
-
 
 const data = ref({})
 const mainParams = ref<object>({})
 const characteristic = ref<object>({})
 const additionalParameter = ref<object>({})
-const { addProduct } = useProduct()
 const create = ref(false)
+const { createAlert } = useAlert()
 
 // methods 
 async function createItem() {
     Object.assign(data.value, mainParams.value, additionalParameter.value)
-    const result = await addProduct(JSON.stringify({main: data.value, characteristic: characteristic.value }))
-    if (result) {
+    try {
+        await createProduct(JSON.stringify({main: data.value, characteristic: characteristic.value }))
         create.value = !create.value
+        createAlert('Товар добавлен')
+    } catch (error) {
+        createAlert('Произошла ощибка, повторите потытку позже')
     }
 }
 
-// function chect() {
-//     const arr = Array(42)
-//     console.log(arr)
-// }
 </script>

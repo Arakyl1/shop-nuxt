@@ -1,90 +1,80 @@
 <template>
   <div>
-    <div
-    class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask"
-    :class="[{ active: active }]"
-    @click="windowMaskFun.updateActive(false)"></div>
-    <div >
-      <HeaderMain v-if="isDesktopOrTablet"  class="mb-4"/>
-      <HeaderMainMobaile v-else class="mb-4"/>
+    <div class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask" :class="[{ active: active }]"
+      @click="updateMask(false)"></div>
+    <div>
+      <WidgetsHeader v-if="isDesktopOrTablet" class="mb-4" />
+      <WidgetsHeaderMobaile v-else class="mb-4" />
     </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-3" >
+    <div class="max-w-7xl mx-auto px-4 sm:px-3">
       <Transition name="path">
-        <OtherElsePath v-if="$route.path !== '/'"/>
+        <EntitiesOtherPath v-if="route.path !== '/'" />
       </Transition>
       <div class="min-h-screen">
-        <NuxtPage :transition="{
-          name: 'page-transition'
-        }" >
-        </NuxtPage>
+        <NuxtPage :transition="{ name: 'page-transition' }"></NuxtPage>
       </div>
-      
-      </div>
+    </div>
     <div>
-    <Footer v-if="isDesktopOrTablet" />
-    <FooterMobaile v-else/>
-  </div>
-  <Transition name="alert">
-    <OtherElseAlert/>
-  </Transition>
-  <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
+      <WidgetsFooter v-if="isDesktopOrTablet" />
+      <WidgetsFooterMobaile v-else />
+    </div>
+    <Transition name="alert">
+      <EntitiesOtherAlert />
+    </Transition>
+    <WidgetsModalFavorite/>
+    <WidgetsModalBasket/>
+    <FeaturesUseAuth />
+    <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { windowMask, containerSize, userActive } from "@/pinia/store";
-import { storeToRefs } from "pinia";
-
-const windowMaskFun = windowMask()
-const userActiveFun = userActive()
-const containerFunc = containerSize()
-const { active } = storeToRefs(windowMaskFun)
-const { userData} = storeToRefs(userActiveFun)
+const { updateMask, active } = useWindowMask()
+const { userData } = useStoreUser()
+const { updateSize } = useWindowContainer()
 const route = useRoute()
 const { isDesktopOrTablet } = useDevice();
 const { initAuth } = useAuth()
 
-onBeforeMount(async() => {
+onBeforeMount(async () => {
   if (!userData.value) {
-   
     initAuth()
   }
 
-  containerFunc.updateSize(window)
-  window.addEventListener('resize', () => containerFunc.updateSize(window))
+  updateSize(window)
+  window.addEventListener('resize', () => updateSize(window))
 })
 
-useHead({
-  titleTemplate: () => route.matched[0].meta.title
-})
 </script>
 
 <style lang="css">
 @import './assets/Stylesheets/main.css';
-.ap0__mask{
+
+.ap0__mask {
   transition-delay: 0.22s;
   height: 0;
   opacity: 0;
 }
-.ap0__mask.active{
+
+.ap0__mask.active {
   height: 100vh;
   transition-delay: 0s;
   opacity: 0.8;
 }
 
-.path-enter-active ,
+.path-enter-active,
 .path-leave-active {
   transition: all 0.3s ease-in-out;
 }
 
 
 .path-enter-from,
-.path-leave-to{
+.path-leave-to {
   transform: translateX(30px);
   opacity: 0;
 }
 
-.page-transition-enter-active{
+.page-transition-enter-active {
   transition: all 0.15s ease-out;
 }
 
@@ -93,7 +83,7 @@ useHead({
 }
 
 .page-transition-enter-from,
-.page-transition-leave-to{
+.page-transition-leave-to {
   transform: translateX(20px);
   opacity: 0;
 }
@@ -104,7 +94,7 @@ useHead({
 }
 
 .alert-enter-from,
-.alert-leave-to{
+.alert-leave-to {
   opacity: 0;
   transform: translateY(-20px);
 }

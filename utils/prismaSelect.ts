@@ -1,4 +1,4 @@
-export function selectForCard():object {
+export function selectForCard(select?:object):object {
     return {
         select: {
             id: true,
@@ -8,12 +8,13 @@ export function selectForCard():object {
             img: true,
             news: true,
             sale: true,
-            quantity: true
+            quantity: true,
+            ...select
         }
     }
 }
 
-export function selectCardBySearch():object {
+export function selectCardBySearch(select?:object):object {
     return {
         select: {
             id: true,
@@ -21,7 +22,8 @@ export function selectCardBySearch():object {
             art: true,
             price: true,
             sale: true,
-            img: true
+            img: true,
+            ...select
         }
     }
 }

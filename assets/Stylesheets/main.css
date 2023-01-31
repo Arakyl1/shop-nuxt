@@ -31,4 +31,7 @@
     .slader__item {
         @apply snap-start px-4 xl:px-3 sm:px-2
     }
+    .slader__container{
+        @apply -mx-4  xl:-mx-3 sm:-mx-2 mb-4
+    }
 }

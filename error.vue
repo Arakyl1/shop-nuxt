@@ -1,9 +1,9 @@
 <template>
     <div class="h-screen flex justify-center items-center">
-        <ButtomStandart class="bg-blue-500 text-xl text-white"
+        <UIStandart class="bg-blue-500 text-xl text-white"
         @click="handleError">
             Перейти на главную
-        </ButtomStandart>
+        </UIStandart>
     </div>
 </template>
 

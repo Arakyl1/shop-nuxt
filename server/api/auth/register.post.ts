@@ -15,22 +15,13 @@ interface User {
 
 export default defineEventHandler(async(event: H3Event) => {
     const body = await readBody(event)
-
     const { username, email, password, repeartPassword } = body
-    
-    if (!username || !email || !password || !repeartPassword) {
-        return { statusCode: 400, statusMessage: "Невалидные параметры" }
-        // return sendError(event, createError({ statusCode: 400, statusMessage: "Invalid params" }))
-    }
-    if (password !== repeartPassword) {
-        return { statusCode: 400, statusMessage: "Пароли не совпадают" }
-        // return sendError(event, createError({ statusCode: 400, statusMessage: "Password do not match" }))
-    }
+
     const userData = {
         username,
         email,
         password,
-        profileImage: "https://ie.wampi.ru/2022/08/02/Ivan_Abramov.png"
+        profileImage: "https://ie.wampi.ru/2023/01/26/avatar.jpg"
     }
 
     try {
@@ -40,6 +31,7 @@ export default defineEventHandler(async(event: H3Event) => {
             password: bcryptjs.hashSync(userData.password, salt)
         }
         
+        
         const user = await prismaCreate('user', { data: updateUserData , select: {
                 id: true,
                 email: true,
@@ -48,7 +40,7 @@ export default defineEventHandler(async(event: H3Event) => {
                 profileImage: true,
             }
         })
-
+        
         // Generate Token
         try {
             const { accessToken, refrechToken } = await generateTokens(user)
@@ -69,7 +61,7 @@ export default defineEventHandler(async(event: H3Event) => {
         }
 
     } catch (error) {
-        return { statusCode: 400, statusMessage: "Такой пользователь уже существует" }
+        return { message: "Такой пользователь уже существует" }
        // return sendError(event, createError({ statusCode: 400, statusMessage: "Такой пользователь уже существует" }))
     }
 })

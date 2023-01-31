@@ -1,17 +1,29 @@
 <template>
     <div>
+         
+        <WidgetsMainStocks class="mb-16 xl:mb-12"/>
+
+        <WidgetsMainCarusel :searchCategor="'sale'">
+            <template #title>
+                Товары на акции
+            </template>
+        </WidgetsMainCarusel>
+
+        <WidgetsMainCarusel :searchCategor="'news'">
+            <template #title>
+                Новинки
+            </template>
+        </WidgetsMainCarusel>
+
+        <WidgetsMainAdvertisement class="mb-16 xl:mb-12"/>
         
-        <MainStocks class="mb-16 xl:mb-12"/>
-
-        <MainCarusel :searchCategor="'sale'" :title="'Товары на акции'"/>
-
-        <MainCarusel :searchCategor="'news'" :title="'Новинки'"/>
-
-        <MainAdvertisement class="mb-16 xl:mb-12"/>
-        
-        <MainCarusel :searchCategor="'top'" :title="'Товары месяца'"/>
+        <WidgetsMainCarusel :searchCategor="'top'">
+            <template #title>
+                Товары месяца
+            </template>
+        </WidgetsMainCarusel>
     
-        <MainAdvantages class="mb-20 xl:mb-16"/>
+        <WidgetsMainAdvantages class="mb-20 xl:mb-16"/>
         
     </div>
 </template>

@@ -1,0 +1,56 @@
+<template>
+    <li class=" py-4 sm:py-2 sm:mb-2" v-if="data">
+        <div class="flex items-center sm:flex-wrap">
+            <img :src="data.img" alt="image product" class="w-14 sm:w-10">
+            <div class="pl-6 grow sm:pl-3">
+                <NuxtLink :to="`/catalog/${item.id}`"
+                    class="text-black-500 mb-1 inline-block text-lg sm:text-base sm:mb-0">
+                    {{ data.name }}
+                </NuxtLink>
+                <p class="text-gray-500 text-lg sm:text-base">
+                    {{ data.art }}
+                </p>
+            </div>
+            <div class="mr-6 sm:order-last
+            sm:w-full sm:mr-0 sm:text-end ">
+                <div class="inline-block">
+                    <SharedUIOtherQuantitySelection class="md:py-1 md:px-2 grow-0" :quantity-number="item.quantity"
+                        :data-quantity="data.quantity" />
+                </div>
+            </div>
+            <button type="button">
+                <ClientOnly>
+                    <UIIconClose class="group is-icon-black h-6 w-6 cursor-pointer float-right "
+                        @click="basketProd.removeBasketProduct(index)" />
+                </ClientOnly>
+            </button>
+        </div>
+    </li>
+</template>
+<script setup lang="ts">
+import { basketProduct } from "~~/pinia/basket";;
+
+const props = defineProps<{
+    item: { id: number, quantity: number },
+    index: number
+}>()
+
+const basketProd = basketProduct()
+
+const option = {
+    where: { id: props.item.id },
+    ...selectCardBySearch({ quantity: true })
+}
+
+const { data } = await getInfoProduct(option, `data_basket_${props.item.id}`)
+
+interface DataProduct {
+    id: number,
+    name: string,
+    art: string,
+    maker: string,
+    price: number,
+    img: string,
+    quantity: number
+}
+</script>

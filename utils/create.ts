@@ -1,40 +1,29 @@
- export  class CreateItemMainInfo {
-    name: string;
-    art: string;
-    maker: string;
-    categor: string;
-    subcategor: string;
-    price: number;
-    itemArt: string; 
-    itemMod: string;
-    quantity: number;
-    constructor() 
-        {
-            this.name = ''
-            this.art = ''
-            this.maker = ''
-            this.categor = ''
-            this.subcategor = ''
-            this.price = 0
-            this.itemArt = ''
-            this.itemMod = ''
-            this.quantity = 0
-      }
-  }
+import { RouteLocationNormalizedLoaded } from "vue-router";
+import { FilterList, ListProduct } from "./type";
 
-export class CreateFilterList {
-    cat: string;
-    price: { from: string, upTo: string };
-    maker: string[];
-    ranting: number;
-    actual: string[];
-    other: string[];
-    constructor(route) {
-        this.cat = route.query.categor ? route.query.categor : 'Категория'
-        this.price = { from: '', upTo: '' },
-        this.ranting = 0
-        this.maker = []
-        this.actual = []
-        this.other = []
+export function filterList(route: RouteLocationNormalizedLoaded): FilterList {
+    return {
+        cat: route.query.categor ? route.query.categor : 'Категория',
+        price: { from: 0, upTo: 0 },
+        ranting: 0,
+        maker: [],
+        actual: [],
+        other: [],
+    }
+}
+
+export function ListProduct(select?: object):ListProduct {
+    return {
+        name: '',
+        art: '',
+        maker: '',
+        categor: '',
+        img: '',
+        subcategor: '',
+        price: 0,
+        itemArt: '',
+        itemMod: '',
+        quantity: 0,
+        ...select
     }
 }

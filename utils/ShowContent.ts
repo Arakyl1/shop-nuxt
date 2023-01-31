@@ -1,19 +1,17 @@
-import { windowMask } from "@/pinia/store";
-
 export default function () {
     const stage = ref(false)
-    const mask = windowMask()
+    const { updateMask, active } = useWindowMask()
 
     function updateStage(e: MouseEventInit | undefined , active: boolean = !stage.value ) { 
-
         stage.value = active
-        mask.updateActive(active)  
+        updateMask(active)  
     }
 
     watch(() => useRoute().fullPath, async () => {
         if (stage.value) updateStage(event, false)
     })
-    watch(() => mask.active, (newActive) => {
+    watch(() => active.value, (newActive) => {
+ 
         if (stage.value && !newActive) {
             stage.value = false
         }
