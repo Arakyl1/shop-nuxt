@@ -54,8 +54,8 @@ const userReview = ref({
 
 async function createCommit(functionCreate: any) {
     if (userReview.value.ranting || userReview.value.text) {
-        const res = functionCreate(userReview.value, props.reviewsRantingValue, userReview.value.cardId)
-        res ? hudeModal() : null
+        const res = await functionCreate(userReview.value, props.reviewsRantingValue, userReview.value.cardId)
+        if (res) hudeModal()
     } else {
         createAlert('Не заполнены поля')
     }
@@ -66,5 +66,6 @@ function hudeModal() {
         props.hudeFunction(event),
         userReview.value.ranting = 0,
         userReview.value.text = ''
+        createAlert('Ваш отзыв добавлен')
 }
 </script>
