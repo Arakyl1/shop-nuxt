@@ -22,15 +22,18 @@
                 </template>
                 <EntitiesItemBase v-else/>
             </template>
-            <template #bottom="{ prevItem, nextItem }" >
-                <template v-if="isDesktopOrTablet && data && size.width">
-                    <div class="relative" v-if="(data.body.length / quantitySladerItem) > 1">
+            <template #bottom="{ prevItem, nextItem, indexActiveButton, updateScrolLeftSlader }" >
+                <template v-if="data && size.width">
+                    <div class="relative" v-if="(data.body.length / quantitySladerItem) > 1 && isDesktopOrTablet">
                         <SharedUIButtomArround class="-scale-x-100 absolute -top-32 -left-1"
                         @click="prevItem"/>
                         <SharedUIButtomArround class="absolute -top-32 -right-1"
                         @click="nextItem"/>
                     </div>
-                    <div v-else></div>
+                    <div v-else-if="isMobile">
+                        <EntitiesOtherSladerControlItem :data="data.body"
+                        :indexActiveButton="indexActiveButton" :updateScrolLeftSlader="updateScrolLeftSlader"/>
+                    </div>
                 </template>
             </template>
         </EntitiesOtherSladerBase>
@@ -39,7 +42,7 @@
 
 <script setup lang="ts">
 const { size } = useWindowContainer()
-const { isDesktopOrTablet } = useDevice()
+const { isDesktopOrTablet, isMobile } = useDevice()
 const { data } = useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
 
 const quantitySladerItem = computed(() => size.value.width <= 640 ? 1 : size.value.width <= 768 ? 2 : size.value.width < 1028 ? 3 : 4)
