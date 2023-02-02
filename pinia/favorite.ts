@@ -1,4 +1,3 @@
-import { Set } from "typescript"
 export const favoriteProduct = defineStore('favoriteProduct', () => {
 
     const favorite = ref(new Set([]))
