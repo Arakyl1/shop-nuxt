@@ -12,7 +12,7 @@
                 <NuxtLink to="/add" class="ml-6 sm:ml-0">
                     <UIIconAddItem />
                 </NuxtLink>
-                <UIStandart class="p-0 rounded-none ml-6 sm:ml-0">
+                <UIStandart class="p-0 rounded-none ml-6 sm:hidden">
                     <UIIconStatic class="group is-icon-black" />
                 </UIStandart>
                 <ClientOnly>
@@ -20,7 +20,7 @@
                         <SharedUIButtomShowFavorite />
                         <SharedUILengthArray>{{ favorite.size }}</SharedUILengthArray>
                     </div>
-                    <div class="relative ml-4">
+                    <div class="relative ml-4 sm:ml-1">
                         <SharedUIButtomShowbasket />
                         <SharedUILengthArray>{{ basket.length }}</SharedUILengthArray>
                     </div>

@@ -14,10 +14,14 @@
                         </template>
                     </FeaturesAddFavorite>
                 </template>
-                <template #bt-basket>
-                    <FeaturesAddBasket :id="item">
+                <template #bt-basket="{ content }">
+                    <FeaturesAddBasket >
                         <template #default="{ addBasketProduct }">
-                            <UIStandart @click="addBasketProduct" class="flex bg-blue-500  justify-center items-center">
+                            <UIStandart class="flex bg-blue-500  justify-center items-center" @click="addBasketProduct({
+                                id: item,
+                                quantity: 1,
+                                price: content.sale ? Math.floor(content.price * 0.9) : content.price
+                            })">
                                 <UIIconBasketSmall class="group icon-white" />
                                 <p class="text-white ml-2">В корзину</p>
                             </UIStandart>

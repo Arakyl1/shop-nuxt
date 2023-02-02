@@ -46,9 +46,13 @@
                     </div>
                     <div class="decor-line"></div>
                     <div class="pt-8 flex items-center justify-between xl:pt-6">
-                        <FeaturesAddBasket :id="data.id" :quantity="numberOfProduct">
+                        <FeaturesAddBasket>
                             <template #default="{ addBasketProduct }">
-                                <UIStandart @click="addBasketProduct"
+                                <UIStandart @click="addBasketProduct({
+                                    id: data.id,
+                                    quantity: numberOfProduct,
+                                    price: data.sale ? Math.floor(data.price * 0.9) : data.price
+                                })"
                                     class="flex bg-blue-500  justify-center items-center px-16 lg:px-10">
                                     <UIIconBasketSmall class="group icon-white" />
                                     <p class="text-white ml-2">В корзину</p>
@@ -65,7 +69,14 @@
     </section>
 </template>
 <script setup lang="ts">
-const props = defineProps<{ data: object }>()
+import { ListProduct } from '~~/utils/type';
+
+interface FullInfoProduct extends ListProduct{
+    ranting: number,
+    reviews: object[]
+}
+
+const props = defineProps<{ data: FullInfoProduct }>()
 
 const numberOfProduct = ref<number>(1)
 </script>

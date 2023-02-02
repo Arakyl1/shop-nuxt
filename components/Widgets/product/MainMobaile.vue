@@ -35,10 +35,14 @@
                     @number-of-products="(e) => numberOfProducts = e" class="sm:px-2 sm:py-1" />
             </div>
             <div class="flex">
-                <FeaturesAddBasket :id="data.id">
+                <FeaturesAddBasket>
                     <template #default="{ addBasketProduct }">
-                        <UIStandart @click="addBasketProduct"
-                            class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow">
+                        <UIStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow"
+                         @click="addBasketProduct({
+                            id: data.id,
+                            quantity: numberOfProducts,
+                            price: data.sale ? Math.floor(data.price * 0.9) : data.price
+                        })">
                             <UIIconBasketSmall class="group icon-white" />
                             <p class="text-white ml-2">В корзину</p>
                         </UIStandart>
@@ -54,22 +58,17 @@
                         </ClientOnly>
                     </template>
                 </FeaturesAddFavorite>
-                <!-- <ButtomAddBasket
-            :id="data.id"
-            :quantity="numberOfProducts"
-            class="px-16 lg:px-10 grow "/> -->
-                <!-- <ButtomAddFavorite #bt-data="{ favorite }" :id="data.id"
-            class="bg-blue-500 px-4 ml-3 aspect-square sm:px-3">
-                <IconLike :update-style="favorite.list.has(data.id)" class="h-6" :style="'stroke-white'"/>
-            </ButtomAddFavorite> -->
                 <SharedUIButtomShare class="bg-blue-500 px-4 ml-3 aspect-square sm:px-3 group is-icon-white" />
             </div>
         </div>
     </section>
 </template>
 <script setup lang="ts">
-
-defineProps<{ data: object }>()
-
+import { ListProduct } from '~~/utils/type';
+interface FullInfoProduct extends ListProduct {
+    ranting: number,
+    reviews: object[]
+}
+defineProps<{ data: FullInfoProduct }>()
 const numberOfProducts = ref<number>(1)
 </script>

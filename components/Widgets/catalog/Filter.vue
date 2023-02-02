@@ -77,7 +77,7 @@ import { filterList as CreateFilterList } from "@/utils/create";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 
 const props = defineProps<{
-    makerList?: {
+    makerList: {
         name: string,
         value: string
     }[]

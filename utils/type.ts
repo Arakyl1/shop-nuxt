@@ -22,15 +22,21 @@ export interface FilterOption{
     categor: string,
 }
 
-export interface ListProduct {
-    name: string;
-    art: string;
-    maker: string;
+export interface MainInfoCard {
+    id: number,
+    name: string,
+    art: string,
+    maker: string,
     img: string,
+    price: number,
+    sale: boolean,
+    news: boolean,
+    quantity: number
+}
+
+export interface ListProduct extends MainInfoCard {
     categor: string;
     subcategor: string;
-    price: number;
     itemArt: string;
     itemMod: string;
-    quantity: number;
 }

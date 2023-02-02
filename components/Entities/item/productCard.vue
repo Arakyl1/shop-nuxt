@@ -5,7 +5,7 @@
                 <SharedUIOtherInfoForStock :sell="content.sale" :news="content.news" class="top-4 left-4 z-10 sm:text-xs sm:py-0 sm:px-2
                 group-[.is-pos-info-for-stock]:left-0 " />
                 <div class="absolute z-20 right-3 top-3 sm:scale-75 sm:top-1.5 sm:right-1.5">
-                    <slot name="bt-favorite"></slot>
+                    <slot name="bt-favorite" v-bind="{ content }"></slot>
                 </div>
                 <div
                     class="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full p-8 flex items-center justify-center z-0">
@@ -22,19 +22,19 @@
                     <UIIconStatic class="sm:hidden" />
                 </div>
             </div>
-            <slot name="bt-basket"></slot>
+            <slot name="bt-basket" v-bind="{ content }"></slot>
         </div>
     </div>
 </template>
 <script setup lang="ts">
-import { User } from '~~/utils/type';
+import { ListProduct } from '~~/utils/type';
 
 const props = withDefaults(defineProps<{
-    data?: User | null
+    data?: ListProduct | null
     id?: number
 }>(), { data: null })
 
-const content = ref<object | null>(props.data)
+const content = ref<ListProduct | null>(props.data)
 
 async function getCardData() {
     const data = await getInfoProduct({ where: { id: props.id }, ...selectForCard() })

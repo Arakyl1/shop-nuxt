@@ -27,7 +27,7 @@
                 <div class="flex mb-20">
                     <div class="w-1/4 md:hidden"></div>
                     <div class="w-3/4 flex justify-center md:w-full">
-                        <SharedUIButtomArround @click="prevPage" :disabled="+route.query.page === 1"
+                        <SharedUIButtomArround @click="prevPage" :disabled="route.query.page ? (+route.query.page === 1) : false"
                             class="-scale-x-100 mr-32" />
                         <SharedUIButtomArround @click="nextPage" :disabled="!activeButtomNext" />
                     </div>
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 //group is-pos-info-for-stock
-import { User } from "~~/utils/type";
+import { ListProduct } from "~~/utils/type";
 import ShowContent from "@/utils/ShowContent"
 
 definePageMeta({
@@ -53,7 +53,7 @@ const filter = ref<HTMLElement | null>(null)
 const toucheData = toucheElemPosition(filter)
 const { stage, updateStage } = ShowContent()
 const route = useRoute()
-const listIdProduct = ref<User[]>([])
+const listIdProduct = ref<ListProduct[]>([])
 const loader = ref<boolean>(true)
 const makerList = ref<{ name: string; value: string; }[] | null>(null)
 const activeButtomNext = ref<number>(0)
