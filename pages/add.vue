@@ -15,6 +15,7 @@
     </div>
 </template>
 <script setup lang="ts">
+
 definePageMeta({
     title: "Добавить товар", 
 })
