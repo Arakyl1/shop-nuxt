@@ -32,5 +32,5 @@ onBeforeMount(() => {
     window.addEventListener('showModalBasketProduct', updateStage)
 })
 
-const totalOrderAmount = computed(() => basket.value ? basket.value.reduce((s, i) => s + i.price, 0) : 0)
+const totalOrderAmount = computed(() => basket.value ? basket.value.reduce((s, i) => s + (i.price * i.quantity), 0) : 0)
 </script>

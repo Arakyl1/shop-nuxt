@@ -8,42 +8,53 @@
       <label class="text-xs text-white mb-2 block">Используйте цифры, буквы малые и прописные, спец. сим.</label>
       <input type="password" class="mb-8 " :class="style.input" placeholder="Повторите пароль" autocomplete="on"
         v-model="data.repeartPassword" />
-      <SharedApiRegister>
-        <template #default="{ createUser }">
-          <UIStandart @click="checkValidData(createUser)" class="bg-blue-500 rounded-md text-lg text-white w-full">
-            Зарегистрироватьца
-          </UIStandart>
-        </template>
-      </SharedApiRegister>
+
+      <UIStandart @click="userRegister()" class="bg-blue-500 rounded-md text-lg text-white w-full">
+        Зарегистрироватьца
+      </UIStandart>
     </form>
   </div>
 </template>
 <script setup lang="ts">
-interface DataUser {
-  username: string,
-  email: string,
-  password: string,
-  repeartPassword: string
-}
+import { UserRegisterData } from "@/type/intex";
 
 const props = withDefaults(defineProps<{ active: boolean }>(), { active: false })
-const data = ref<DataUser>(createObject())
-const { createAlert } = useAlert()
 
-function checkValidData(functionCreate: any) {
+type PartialNull<T> = { [P in keyof T]: T[P] | null; }
+
+const data = ref<PartialNull<UserRegisterData>>(createObject())
+const { createAlert } = useAlert()
+const { register } = useUser()
+
+async function userRegister() {
+  const resValidData = checkValidData(unref(data.value))
+  
+  if (resValidData) {
+      const res = await register(data.value as UserRegisterData) || false
+    if (res) {
+      createAlert('Пользователь зарегистрирован')
+      data.value = createObject()
+    }
+  }
+}
+
+function checkValidData(data: PartialNull<UserRegisterData>): true | void {
   switch (true) {
-    case data.value.username === '':
+    case !data.username:
       return createAlert('Некорретное имя')
-    case data.value.email === '':
+    case !data.email:
       return createAlert('Некорректный адрес почты')
-    case data.value.password === '':
-      return createAlert('Пароль слишком прост')
-    case data.value.password !== data.value.repeartPassword:
+    case !data.password:
+      return createAlert('Введите пароль')
+    case !data.repeartPassword:
+      return createAlert('Повторите пароль')
+    case data.password !== data.repeartPassword:
       return createAlert('Пароли не совпадают')
     default:
-      functionCreate(data.value)
-      break;
+      break
+    
   }
+  return true
 }
 
 watch(() => props.active, () => {
@@ -52,10 +63,10 @@ watch(() => props.active, () => {
 
 function createObject() {
   return {
-    username: '',
-    email: '',
-    password: '',
-    repeartPassword: ''
+    username: null,
+    email: null,
+    password: null,
+    repeartPassword: null
   }
 }
 const style = {

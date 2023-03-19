@@ -12,9 +12,9 @@ const password = ref<string>('')
 const passwordValid = computed(() => {
     return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/g.test(password.value)
 })
-watch(() => passwordValid.value, (newValue) => {
-    if (newValue) {
-        emit('password', password.value)
+watch(() => password.value, (newValue) => {
+    if (passwordValid.value) {
+        emit('password', newValue)
     }
 })
 </script>

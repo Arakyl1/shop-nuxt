@@ -1,6 +1,3 @@
-export { register as userRegister } from "./user/register";
-export { login as userLogin } from "./user/login";
-export { logout as userLogout } from "./user/logout";
 export { getData as userGetData } from "./user/data";
 export { createAccess as initAccessToken } from "./token/createAccess";
 export { reRefrechAccess as reRefrechAccessToken } from "./token/reRefrechAccess";

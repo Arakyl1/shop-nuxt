@@ -45,6 +45,12 @@ onBeforeMount(async () => {
   window.addEventListener('resize', () => updateSize(window))
 })
 
+
+
+// user data
+// name PPPPPPPP
+// password vTyJWA5X
+// email qwe3@mail.r
 </script>
 
 <style lang="css">

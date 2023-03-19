@@ -12,5 +12,5 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ prevItem: any, nextItem: any }>()
+defineProps<{ prevItem: () => void, nextItem: () => void }>()
 </script>

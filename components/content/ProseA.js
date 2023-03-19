@@ -1,7 +1,7 @@
-export default (props, cont) => {
+export default (props, { slots }) => {
     return h(
       "a",
       props,
-      cont.slots.default()
+      slots.default()
     );
   };

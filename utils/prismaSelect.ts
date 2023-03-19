@@ -1,4 +1,7 @@
-export function selectForCard(select?:object):object {
+import { SelectProductCard } from "@/type/intex";
+
+
+export function selectForCard<T, U = {}>(select?: U): T {
     return {
         select: {
             id: true,
@@ -14,7 +17,10 @@ export function selectForCard(select?:object):object {
     }
 }
 
-export function selectCardBySearch(select?:object):object {
+
+const ff = selectForCard<SelectProductCard>()
+ff.select.art
+export function selectCardBySearch(select?: object): object {
     return {
         select: {
             id: true,

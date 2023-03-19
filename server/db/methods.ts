@@ -1,6 +1,9 @@
 import prisma from "."
+import { Request } from "@/type/intex";
 
-export const prismaCreate = async(key: string, body: object) => {
+export const prismaCreate = async<T extends Request>(
+    key: T['key'], body: object
+):Promise<T['data']> => {
     return await prisma[key].create(body)
 }
 

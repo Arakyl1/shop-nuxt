@@ -16,10 +16,18 @@ const emit = defineEmits<{
     (e: 'numberStar', id: number): void
 }>()
 
-function addNumberStar(event: Event) {
-    const numderStar = +event.target.closest('.item__star')?.dataset.star;
-    if (numderStar) {
-        emit('numberStar', numderStar)
+function addNumberStar({ target }: MouseEvent) {
+    
+    
+    interface MyHTMLElement extends HTMLElement {
+        dataset: DOMStringMap & { star: string }
+    }
+    const elementTarget = target as HTMLElement
+    const element = elementTarget.closest('.item__star') as MyHTMLElement
+    const number: number = +element.dataset.star
+    console.log(element.dataset.star);
+    if (number) {
+        emit('numberStar', number)
     }
 }
 </script>

@@ -66,7 +66,7 @@
             </UIStandart>
             <UIStandart class="bg-blue-500 aspect-square p-3.5"
             @click="resetSearchData">
-                <UIIconReload class="w-6 h-6 xl:w-5 xl:h-5" :addClass="'fill-white'" />
+                <UIIconReload class="w-6 h-6 xl:w-5 xl:h-5 group icon-white"  />
             </UIStandart>
         </div>
     </div>
