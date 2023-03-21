@@ -29,9 +29,10 @@
 </template>
 
 <script setup lang="ts">
-const { updateMask, active } = useWindowMask()
-const { userData } = useStoreUser()
-const { updateSize } = useWindowContainer()
+const { windowMask: _windowMask, windowSize: _windowSize, user: _user } = useStore()
+const { updateMask, active } = _windowMask()
+const { userData } = _user()
+const { updateSize } = _windowSize()
 const route = useRoute()
 const { isDesktopOrTablet } = useDevice();
 const { initAuth } = useAuth()

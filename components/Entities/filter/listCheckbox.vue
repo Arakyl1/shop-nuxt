@@ -18,10 +18,10 @@ const emit = defineEmits<{
   (e: 'maker-data', id: object): void
 }>()
 const props = defineProps<{
-  content: ({ name: string, value: string })[],
+  content: { name: string, value: string }[],
   reset?: boolean,
 }>()
-const data = ref([])
+const data = ref<string[]>([])
 
 // before Update
 onBeforeUpdate(() => {

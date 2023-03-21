@@ -55,7 +55,8 @@ interface ReviewsInfo {
 
 const props = defineProps<ReviewsInfo>()
 const { stage, updateStage } = ShowContent();
-const { userData } = useStoreUser()
+const { user: _user} = useStore()
+const { userData } = _user()
 
 const data = ref({
     id: props.id,

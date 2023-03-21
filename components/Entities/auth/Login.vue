@@ -13,12 +13,12 @@
 import { UserLoginData } from "@/type/intex";
 
 const props = defineProps<{
-    functionModal?: Function,
+    functionModal?: () => void,
     active?: boolean
 }>()
 
 const { createAlert } = useAlert()
-const { login: userLogin } = useUser()
+const { login: userLogin } = useAuth()
 
 const data = ref<UserLoginData>(createObject())
 

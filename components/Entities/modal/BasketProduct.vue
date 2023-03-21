@@ -26,7 +26,8 @@
 import ShowContent from "~~/utils/ShowContent";
 
 const { stage, updateStage } = ShowContent();
-const { basket } = useBasket()
+const { basket: _basketSore } = useStore()
+const { basket } = _basketSore()
 
 onBeforeMount(() => {
     window.addEventListener('showModalBasketProduct', updateStage)

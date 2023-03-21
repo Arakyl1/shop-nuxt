@@ -14,7 +14,8 @@
 import ShowContent from "~~/utils/ShowContent";
 
 const { stage, updateStage } = ShowContent();
-const { favorite} = useFavorite()
+const { favorite: _favoriteStore } = useStore()
+const { favorite } = _favoriteStore()
 
 onBeforeMount(() => {
   window.addEventListener('showModalFavoriteProduct', updateStage)

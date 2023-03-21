@@ -51,13 +51,14 @@
 
 <script setup lang="ts">
 
+const props = defineProps<{ input?: string }>()
 const inputText = ref<string>('')
 const dataSearch = ref<any>()
 const route = useRoute()
-const props = defineProps<{ input?: string }>()
+const { getInfo: getInfoProduct } = useProduct()
 
 async function getSearch(searchText: string) {
-    dataSearch.value = await getByCategorProduct({
+    dataSearch.value = await getInfoProduct({
         where: {
             OR: [
                 { name: { contains: searchText, mode: 'insensitive' } },
@@ -67,8 +68,8 @@ async function getSearch(searchText: string) {
             ]
         },
         take: 15,
-        ...selectCardBySearch()
-    })
+        ...selectCardBySearch({})
+    }, 'many=true')
 }
 
 function clearDataSearch() {

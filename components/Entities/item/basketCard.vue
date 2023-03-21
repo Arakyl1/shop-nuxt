@@ -33,6 +33,8 @@
 <script setup lang="ts">
 import { basketProduct } from "~~/pinia/basket";
 import { MainInfoCard } from "~~/utils/type";
+import { Prisma } from '@prisma/client'
+
 
 const props = defineProps<{
     item: { id: number, quantity: number, price: number },
@@ -40,11 +42,12 @@ const props = defineProps<{
 }>()
 
 const basketProd = basketProduct()
+const { getInfo: getInfoProduct } = useProduct()
 
 const option = {
     where: { id: props.item.id },
     ...selectCardBySearch({ quantity: true })
 }
 
-const data: MainInfoCard = await getInfoProduct(option)
+const data = await getInfoProduct<MainInfoCard>(option)
 </script>

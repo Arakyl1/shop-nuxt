@@ -17,7 +17,7 @@ model User {
   name    String?
   username String @unique
   password String
-  profileImage String?
+  profileImage String
 
   createAt DateTime @default(now())
 
@@ -52,21 +52,21 @@ model ProductCard {
   art            String
   maker          String
   categor        String
-  subcategor     String?
+  subcategor     String          @default("")
   price          Int
   itemArt        String
   itemMod        String
   img            String
-  top            Boolean?         @default(false)
-  news           Boolean?         @default(false)
-  sale           Boolean?         @default(false)
-  availability   Boolean?         @default(false)
-  pickUp         Boolean?         @default(false)
-  underTheOrder  Boolean?         @default(false)
-  delivery       Boolean?         @default(false)
-  quantity       Int              @default(0)
-  ranting        Int              @default(0)
-  description    String?          @default("")
+  top            Boolean         @default(false)
+  news           Boolean         @default(false)
+  sale           Boolean         @default(false)
+  availability   Boolean         @default(false)
+  pickUp         Boolean         @default(false)
+  underTheOrder  Boolean         @default(false)
+  delivery       Boolean         @default(false)
+  quantity       Int             @default(0)
+  ranting        Int             @default(0)
+  description    String          @default("")
   reviews        Comment[]
   characteristic Characteristic[]
 }
@@ -84,8 +84,8 @@ model Comment {
 model Characteristic {
   titleID       Int              @id @default(autoincrement())
   title         String
-  ProductCard   ProductCard?         @relation(fields: [productCardId], references: [id])
-  productCardId Int?
+  ProductCard   ProductCard         @relation(fields: [productCardId], references: [id])
+  productCardId Int
   content       CharacteristicItem[]
 
 }
@@ -94,6 +94,6 @@ model CharacteristicItem {
   itemId       Int              @id @default(autoincrement())
   name                String
   value               String
-  Characteristic      Characteristic? @relation(fields: [characteristicTitle], references: [titleID])
-  characteristicTitle Int?
+  Characteristic      Characteristic @relation(fields: [characteristicTitle], references: [titleID])
+  characteristicTitle Int
 }

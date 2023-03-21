@@ -25,8 +25,9 @@
     </div>
 </template>
 <script setup lang="ts">
-const { userData } = useStoreUser()
-const { logout: userLogOut } = useUser()
+const { user: _user } = useStore()
+const { userData } = _user()
+const { logout: userLogOut } = useAuth()
 
 const list = [
     { data: ['Корзина'] },

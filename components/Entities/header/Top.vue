@@ -38,7 +38,8 @@
     </div>
 </template>
 <script setup lang="ts">
-const { basket } = useBasket()
-const { favorite} = useFavorite()
+const { basket: basketStore, favorite: favoriteStore } = useStore()
+const { basket } = basketStore()
+const { favorite } = favoriteStore()
 </script>
 

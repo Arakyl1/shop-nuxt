@@ -17,18 +17,15 @@
         <textarea rows="10" class="w-full border border-yellow-500 rounded-md
         p-4 mb-6 focus-visible:outline-0 sm:p-2" v-model="userReview.text"></textarea>
         <div class="text-right">
-            <SharedApiCommitPost>
-                <template #default="{ createReview }">
-                    <UIStandart @click="createCommit(createReview)" class="bg-yellow-500 text-white sm:py-2">
-                        Опубликовать
-                    </UIStandart>
-                </template>
-            </SharedApiCommitPost>
+            <UIStandart @click="createCommit()" class="bg-yellow-500 text-white sm:py-2">
+                Опубликовать
+            </UIStandart>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import { User } from '~~/utils/type';
+import { UserCommit } from "@/type/intex";
 
 const props = defineProps<{
     data: {
@@ -43,6 +40,8 @@ const props = defineProps<{
 }>()
 
 const { createAlert } = useAlert()
+const { create } = useCommit()
+const { update: updateProduct } = useProduct()
 
 
 const userReview = ref({
@@ -51,10 +50,27 @@ const userReview = ref({
     text: ''
 })
 
-async function createCommit(functionCreate: any) {
+async function createCommit() {
     if ((userReview.value.ranting || userReview.value.text) && props.userData) {
-        const res = await functionCreate({ ...userReview.value, userId: props.userData.id}, props.reviewsRantingValue, userReview.value.cardId)
-        if (res) hudeModal()
+            function returnUserData(...arg: object[]):UserCommit {
+                return Object.assign({}, ...arg)
+            }
+            returnUserData(userReview.value, { userId: props.userData.id })
+        try {
+            await create(returnUserData(userReview.value,{ userId: props.userData.id }))
+
+            const averageValue = Math.round([userReview.value.ranting, ...props.reviewsRantingValue]
+                .reduce((s, m) => s + m, 0) / (props.reviewsRantingValue.length + 1))
+
+            await updateProduct({
+                where: { id: userReview.value.cardId },
+                data: { ranting: averageValue },
+                select: { id: true }    
+            })
+            hudeModal()
+        } catch (error) {
+           console.error(error);
+        }
     } else {
         createAlert('Не заполнены поля')
     }

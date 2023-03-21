@@ -7,7 +7,8 @@
     </slot>
 </template>
 <script setup lang="ts">
-const { userData } = useStoreUser()
+const { user: _user} = useStore()
+const { userData } = _user()
 
 function showModalUser() {
     window.dispatchEvent(new CustomEvent('createUser'))

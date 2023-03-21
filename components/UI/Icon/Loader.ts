@@ -13,7 +13,7 @@ export default (_props?: Props) => {
         h('circle', {
             class: 'path',
             cx: '25',
-            cy: '20',
+            cy: '25',
             r: '20',
             'stroke-width': '5',
             fill: 'none'

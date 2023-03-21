@@ -3,18 +3,12 @@ import { ProductCard } from "@prisma/client";
 export type Request = 
 | { key: 'ProductCard', data: ProductCard }
 
-export interface SelectProductCard {
-    select: {
-        id: boolean,
-        name: boolean,
-        art: boolean,
-        price: boolean,
-        img: boolean,
-        news: boolean,
-        sale: boolean,
-        quantity: boolean,
-    }
-}
+
+export type ProductCardSearchOption = 'id'|'name'|'art'|'price'|'img'|'sale'
+export type ProductCardBaseOption = 'id'|'name'|'art'|'price'|'img'|'news'|'sale'|'quantity'
+ 
+export type RecordOption<T extends PropertyKey, U> =  { [K in T]: U}
+
 
 export interface UserCommit {
     cardID: number
@@ -23,9 +17,11 @@ export interface UserCommit {
     userId: number
 }
 
-export interface User {
+export interface CreateUser {
     
 }
 
 export type UserLoginData = { username: string, password: string }
 export type UserRegisterData = UserLoginData & { email: string, repeartPassword: string }
+
+export type BasketItem = { id: number, price: number, quantity: number }

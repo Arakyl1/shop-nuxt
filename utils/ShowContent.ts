@@ -1,6 +1,7 @@
 export default function () {
     const stage = ref(false)
-    const { updateMask, active } = useWindowMask()
+    const { windowMask: _windowMask } = useStore()
+    const { updateMask, active } = _windowMask()
 
     function updateStage(e: MouseEventInit | undefined , active: boolean = !stage.value ) { 
         stage.value = active

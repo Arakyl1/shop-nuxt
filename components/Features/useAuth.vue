@@ -25,7 +25,8 @@ import ShowContent from '~~/utils/ShowContent';
 
 const { stage, updateStage } = ShowContent()
 const modalLogin = ref<boolean>(true)
-const { userData } = useStoreUser()
+const { user: _user} = useStore()
+const { userData } = _user()
 
 onBeforeMount(() => {
     window.addEventListener('createUser', updateStage)

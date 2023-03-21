@@ -24,13 +24,13 @@ type PartialNull<T> = { [P in keyof T]: T[P] | null; }
 
 const data = ref<PartialNull<UserRegisterData>>(createObject())
 const { createAlert } = useAlert()
-const { register } = useUser()
+const { register: _userRegister } = useAuth()
 
 async function userRegister() {
   const resValidData = checkValidData(unref(data.value))
   
   if (resValidData) {
-      const res = await register(data.value as UserRegisterData) || false
+      const res = await _userRegister(data.value as UserRegisterData) || false
     if (res) {
       createAlert('Пользователь зарегистрирован')
       data.value = createObject()
@@ -52,7 +52,6 @@ function checkValidData(data: PartialNull<UserRegisterData>): true | void {
       return createAlert('Пароли не совпадают')
     default:
       break
-    
   }
   return true
 }

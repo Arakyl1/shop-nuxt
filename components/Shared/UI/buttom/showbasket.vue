@@ -7,7 +7,9 @@
 </template>
 
 <script setup lang="ts">
-const { basket } = useBasket()
+const { basket: _basketSore } = useStore()
+const { basket } = _basketSore()
+
 
 function showModalBasket() {
     window.dispatchEvent(new CustomEvent('showModalBasketProduct'))

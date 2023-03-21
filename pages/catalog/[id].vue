@@ -17,6 +17,7 @@ definePageMeta({
 
 const route = useRoute()
 const { isDesktopOrTablet } = useDevice()
+const { getInfo: getInfoProduct } = useProduct()
 
 const option = () => {
     return {

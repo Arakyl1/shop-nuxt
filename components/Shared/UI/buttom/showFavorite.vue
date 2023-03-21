@@ -7,7 +7,8 @@
     </slot>
 </template>
 <script setup lang="ts">
-const { favorite } = useFavorite()
+const { favorite: _favoriteStore } = useStore()
+const { favorite } = _favoriteStore()
 
 function showModalFavorite() {
     window.dispatchEvent(new CustomEvent('showModalFavoriteProduct'))

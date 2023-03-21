@@ -1,6 +1,6 @@
 import { LocationQueryValue } from "vue-router";
 export interface User {
-    id?: number,
+    id: number,
     profileImage: string,
     name?: string,
     username: string,

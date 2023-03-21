@@ -1,7 +1,7 @@
 <template>
     <div>
          
-        <WidgetsMainStocks class="mb-16 xl:mb-12"/>
+        <!-- <WidgetsMainStocks class="mb-16 xl:mb-12"/> -->
 
         <WidgetsMainCarusel :searchCategor="'sale'">
             <template #title>
@@ -9,7 +9,7 @@
             </template>
         </WidgetsMainCarusel>
 
-        <WidgetsMainCarusel :searchCategor="'news'">
+        <!-- <WidgetsMainCarusel :searchCategor="'news'">
             <template #title>
                 Новинки
             </template>
@@ -23,7 +23,7 @@
             </template>
         </WidgetsMainCarusel>
     
-        <WidgetsMainAdvantages class="mb-20 xl:mb-16"/>
+        <WidgetsMainAdvantages class="mb-20 xl:mb-16"/> -->
         
     </div>
 </template>

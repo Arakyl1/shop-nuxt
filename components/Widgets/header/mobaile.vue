@@ -70,7 +70,8 @@
 import ShowContent from '@/utils/ShowContent';
 
 const { stage, updateStage } = ShowContent()
-const { basket } = useBasket()
-const { favorite } = useFavorite()
+const { favorite: _favoriteStore, basket: _basketSore } = useStore()
+const { favorite } = _favoriteStore()
+const { basket } = _basketSore()
 const inputText = ref<string>('')
 </script>

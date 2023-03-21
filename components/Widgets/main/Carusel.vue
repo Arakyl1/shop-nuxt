@@ -41,8 +41,9 @@
 <script setup lang="ts">
 const props = defineProps<{ searchCategor: string }>()
 const data = ref<any>(null)
+const { getInfo: getInfoProduct } = useProduct()
 
-data.value = await getByCategorProduct({ where: { [props.searchCategor]: true }, ...selectForCard() })
+data.value = await getInfoProduct({ where: { [props.searchCategor]: true }, ...selectForCard({}) }, 'many=true')
 
 const style = {
     container: '[grid-auto-columns:calc(100%/4)] lg:[grid-auto-columns:calc(100%/3)] sm:[grid-auto-columns:calc(100%/2)]'

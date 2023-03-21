@@ -1,12 +1,16 @@
-// import { ProductCard } from "@prisma/client"
-import { prismaFindUnique } from "~~/server/db/methods"
+import { prismaFindUnique, prismafindMany } from "~~/server/db/methods"
 
-export default defineEventHandler(async(event: any) => {
+export default defineEventHandler(async(event) => {
     const body = await readBody(event)
+    const query = getQuery(event)
     
     try {
-        return await prismaFindUnique('productCard', body)
+        if (Boolean(query.many)) {
+            return await prismafindMany('productCard',body)
+        } else {
+            return await prismaFindUnique('productCard', body)
+        }
     } catch (error) {
-        return Error
+        return new Error('Error')
     }
 })

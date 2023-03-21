@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<{
     id?: number
 }>(), { data: null })
 
+const { getInfo: getInfoProduct } = useProduct()
 const content = ref<ListProduct | null>(props.data)
 
 async function getCardData() {

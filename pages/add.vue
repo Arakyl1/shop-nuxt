@@ -26,12 +26,13 @@ const characteristic = ref<object>({})
 const additionalParameter = ref<object>({})
 const create = ref(false)
 const { createAlert } = useAlert()
+const { create: createProduct } = useProduct()
 
 // methods 
 async function createItem() {
     Object.assign(data.value, mainParams.value, additionalParameter.value)
     try {
-        await createProduct(JSON.stringify({main: data.value, characteristic: characteristic.value }))
+        await createProduct({main: data.value, characteristic: characteristic.value })
         create.value = !create.value
         createAlert('Товар добавлен')
     } catch (error) {

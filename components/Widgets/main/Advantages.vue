@@ -41,7 +41,8 @@
 </template>
 
 <script setup lang="ts">
-const { size } = useWindowContainer()
+const { windowSize: _windowSize} = useStore()
+const { size } = _windowSize()
 const { isDesktopOrTablet, isMobile } = useDevice()
 const { data } = useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
 

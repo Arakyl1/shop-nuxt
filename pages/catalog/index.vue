@@ -57,6 +57,7 @@ const listIdProduct = ref<ListProduct[]>([])
 const loader = ref<boolean>(true)
 const makerList = ref<{ name: string; value: string; }[] | null>(null)
 const activeButtomNext = ref<number>(0)
+const { getInfo: getInfoProduct } = useProduct()
 const { isMobile } = useDevice()
 
 watch(() => toucheData.vector, (newVector) => {
@@ -73,12 +74,12 @@ async function getIdProduct(optionSeacrh: object = {}) {
     const page = route.query.page ? +route.query.page : 1
     const limit = route.query.limit ? +route.query.limit : 12
 
-    const res = await getByCategorProduct({
+    const res = await getInfoProduct({
         skip: ((page - 1) * limit),
         take: limit,
         where: optionSeacrh,
         ...selectForCard()
-    })
+    }, 'many=true')
 
     await getMakerlist({
         where: optionSeacrh.categor ? { categor: optionSeacrh.categor } : { NOT: optionSeacrh.NOT },
@@ -87,12 +88,12 @@ async function getIdProduct(optionSeacrh: object = {}) {
 
     listIdProduct.value = res ? res : []
 
-    const dataOfNextPage = await getByCategorProduct({
+    const dataOfNextPage = await getInfoProduct({
         skip: (page * limit),
         take: limit,
         where: optionSeacrh,
         select: { id: true }
-    })
+    }, 'many=true')
 
     activeButtomNext.value = dataOfNextPage ? dataOfNextPage.length : 0
     loader.value = false
@@ -102,7 +103,7 @@ async function getMakerlist(params: object) {
     try {
         const listModifi = (list: object[]) => list.map(el => Object.create({ name: el, value: el }))
 
-        const res: object[] = await getByCategorProduct(params)
+        const res: object[] = await getInfoProduct(params, 'many=true')
         const list = new Set(res.map(el => el.maker))
         makerList.value = listModifi([...list])
     } catch (error) {
