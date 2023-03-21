@@ -1,7 +1,11 @@
-import { SelectProductCard } from "@/type/intex";
+import type { RecordOption, ProductCardBaseOption, ProductCardSearchOption } from "@/type/intex";
 
+export type ProductCardSelect<T extends PropertyKey, U extends PropertyKey> = {
+    select: RecordOption<T | U, true>
+}
 
-export function selectForCard<T, U = {}>(select?: U): T {
+export const selectForCard = <T extends object>(select: T)
+    : ProductCardSelect<ProductCardBaseOption, keyof T> => {
     return {
         select: {
             id: true,
@@ -16,11 +20,8 @@ export function selectForCard<T, U = {}>(select?: U): T {
         }
     }
 }
-
-
-const ff = selectForCard<SelectProductCard>()
-ff.select.art
-export function selectCardBySearch(select?: object): object {
+export const selectCardBySearch = <T extends object>(select: T)
+    : ProductCardSelect<ProductCardSearchOption, keyof T> => {
     return {
         select: {
             id: true,
@@ -33,3 +34,5 @@ export function selectCardBySearch(select?: object): object {
         }
     }
 }
+
+
