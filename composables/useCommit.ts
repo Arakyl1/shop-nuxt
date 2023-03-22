@@ -1,7 +1,7 @@
-import { UserCommit } from "@/type/intex"
+import { UserCreateCommit } from "@/type/intex"
 
 export default () => {
-    const create = async(body: UserCommit) => {
+    const create = async(body: UserCreateCommit) => {
         try {
             return await $fetch('/api/review/create', {
                 method: 'POST',

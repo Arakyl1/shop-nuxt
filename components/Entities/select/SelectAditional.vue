@@ -9,5 +9,6 @@
 </div>
 </template>
 <script setup lang="ts">
-defineProps<{ subcategor: { name: string, children: []} }>()
+import { CategorSelect } from "@/type/intex";
+defineProps<{ subcategor: CategorSelect['select'][0] }>()
 </script>

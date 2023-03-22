@@ -4,7 +4,7 @@ import { userActive } from "@/pinia/userActive";
 import { accessToken as storeToken } from "@/pinia/accessToken";
 import { containerSize } from "@/pinia/windowSize";
 import { windowMask as _windowMask } from "@/pinia/windowMask";
-import { BasketItem } from "@/type/intex";
+import { BasketItem, UserBase } from "@/type/intex";
 import { User } from "~~/utils/type";
 
 export default () => {
@@ -30,7 +30,7 @@ export default () => {
         const user = userActive();
         const { userData } = storeToRefs(user)
 
-        const updateUser = (data: User | null) => { 
+        const updateUser = (data: UserBase | null) => { 
             user.updateActiveUser(data)
         }
         return { updateUser, userData }

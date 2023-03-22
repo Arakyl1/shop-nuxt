@@ -1,4 +1,6 @@
-export const userTransform = (user: any) => {
+import { UserBase } from "~~/type/intex"
+
+export const userTransform = <T extends UserBase>(user: T): UserBase => {
     return {
         id: user.id,
         name: user.name,

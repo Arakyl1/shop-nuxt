@@ -12,13 +12,14 @@ const numders = [
     6, 12, 18, 24, 30, 36, 42, 48, 54, 60
 ]
 
-function paramsLimitUpdate(e: any) {
+function paramsLimitUpdate({ target }: Event) {
+   const _target = target as HTMLSelectElement
     return navigateTo({
         path: route.path,
         query: {
             ...route.query,
             page: 1,
-            limit: e.target.value,
+            limit: _target.value,
         }
     })
 }

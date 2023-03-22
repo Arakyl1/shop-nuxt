@@ -39,10 +39,11 @@ interface ToucheData {
 }
 
 const props = defineProps<{
-    updateFun: Function
+    updateFun: () => void
 }>()
 
-const { data }: _AsyncData<Pick<ParsedContent, string>, Error | null> = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
+const { data }: _AsyncData<Pick<ParsedContent, string>, Error | null> = await useAsyncData(
+    'select', () => queryContent('/select').only(['select']).findOne())
 const route = useRoute()
 
 const subcategorName = ref<string | null>(null)
@@ -50,7 +51,7 @@ const modalMenu = ref<HTMLElement | null>(null)
 const toucheData: ToucheData = toucheElemPosition(modalMenu)
 
 const subcategorList = computed(() => data.value &&
-    subcategorName.value ? data.value.select.find(el => el.name === subcategorName.value) :
+    subcategorName.value ? data.value.select.find((el: any) => el.name === subcategorName.value) :
     {}
 )
 

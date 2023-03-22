@@ -3,7 +3,7 @@
          
         <!-- <WidgetsMainStocks class="mb-16 xl:mb-12"/> -->
 
-        <WidgetsMainCarusel :searchCategor="'sale'">
+        <WidgetsMainCarusel :searchCategor="{ sale: true }">
             <template #title>
                 Товары на акции
             </template>

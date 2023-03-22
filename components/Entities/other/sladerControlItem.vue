@@ -8,5 +8,9 @@
     </div>
 </template>
 <script setup lang="ts">
-defineProps<{ indexActiveButton: number, updateScrolLeftSlader: Function, data: (number | object)[] }>()
+defineProps<{
+    indexActiveButton: number,
+    updateScrolLeftSlader: (index: number) => void, 
+    data: (number | object)[]
+}>()
 </script>

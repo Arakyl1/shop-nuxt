@@ -17,30 +17,26 @@
             sm:w-full sm:p-0 sm:overflow-y-scroll sm:h-screen"
                 :class="[stage ? 'md:-left-4 sm:left-0' : 'md:-left-full']">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6">
-                    <WidgetsCatalogFilter @option-seacrh="(e) => getIdProduct(e)" :maker-list="makerList"/>
+                    <WidgetsCatalogFilter @option-seacrh="(e) => getIdProduct(e)"/>
                 </div>
             </div>
             <WidgetsCatalogGalletyItems :list-id-product="listIdProduct" :loader="loader" />
         </div>
-        <FeaturesCatalogControlButtoms>
-            <template #default="{ prevPage, nextPage}">
-                <div class="flex mb-20">
-                    <div class="w-1/4 md:hidden"></div>
-                    <div class="w-3/4 flex justify-center md:w-full">
-                        <SharedUIButtomArround @click="prevPage" :disabled="route.query.page ? (+route.query.page === 1) : false"
-                            class="-scale-x-100 mr-32" />
-                        <SharedUIButtomArround @click="nextPage" :disabled="!activeButtomNext" />
-                    </div>
+            <div class="flex mb-20">
+                <div class="w-1/4 md:hidden"></div>
+                <div class="w-3/4 flex justify-center md:w-full">
+                    <SharedUIButtomArround @click="prevPage(route)" :disabled="route.query.page ? (+route.query.page === 1) : false"
+                        class="-scale-x-100 mr-32" />
+                    <SharedUIButtomArround @click="nextPage(route)" :disabled="!activeButtomNext" />
                 </div>
-            </template>
-        </FeaturesCatalogControlButtoms >
+            </div>
     </section>
 </template>
 
 <script setup lang="ts">
-//group is-pos-info-for-stock
-import { ListProduct } from "~~/utils/type";
 import ShowContent from "@/utils/ShowContent"
+import { prevPage, nextPage } from "@/components/Features/catalog/FunctionControl";
+import { Prisma } from "@prisma/client";
 
 definePageMeta({
     middleware: ['catalog'],
@@ -48,17 +44,20 @@ definePageMeta({
     keepalive: true
 })
 
-
 const filter = ref<HTMLElement | null>(null)
 const toucheData = toucheElemPosition(filter)
 const { stage, updateStage } = ShowContent()
 const route = useRoute()
-const listIdProduct = ref<ListProduct[]>([])
+const listIdProduct = ref<ProductCard[]>([])
 const loader = ref<boolean>(true)
 const makerList = ref<{ name: string; value: string; }[] | null>(null)
 const activeButtomNext = ref<number>(0)
 const { getInfo: getInfoProduct } = useProduct()
 const { isMobile } = useDevice()
+
+
+const selectOption = Prisma.validator<Prisma.ProductCardArgs>()(selectForCard({}))
+type ProductCard = Prisma.ProductCardGetPayload<typeof selectOption>
 
 watch(() => toucheData.vector, (newVector) => {
     if (newVector === 3) {
@@ -74,40 +73,40 @@ async function getIdProduct(optionSeacrh: object = {}) {
     const page = route.query.page ? +route.query.page : 1
     const limit = route.query.limit ? +route.query.limit : 12
 
-    const res = await getInfoProduct({
+    const res = await getInfoProduct<ProductCard[]>({
         skip: ((page - 1) * limit),
         take: limit,
         where: optionSeacrh,
-        ...selectForCard()
+        ...selectOption
     }, 'many=true')
 
-    await getMakerlist({
-        where: optionSeacrh.categor ? { categor: optionSeacrh.categor } : { NOT: optionSeacrh.NOT },
-        select: { maker: true }
-    })
+    // await getMakerlist({
+    //     where: optionSeacrh.categor ? { categor: optionSeacrh.categor } : { NOT: optionSeacrh.NOT },
+    //     select: { maker: true }
+    // })
 
     listIdProduct.value = res ? res : []
 
-    const dataOfNextPage = await getInfoProduct({
+    const dataOfNextPage = await getInfoProduct<ProductCard[]>({
         skip: (page * limit),
         take: limit,
         where: optionSeacrh,
         select: { id: true }
-    }, 'many=true')
+    }, 'many=true') || []
 
     activeButtomNext.value = dataOfNextPage ? dataOfNextPage.length : 0
     loader.value = false
 }
 
-async function getMakerlist(params: object) {
-    try {
-        const listModifi = (list: object[]) => list.map(el => Object.create({ name: el, value: el }))
+// async function getMakerlist(params: object) {
+//     try {
+//         const listModifi = (list: object[]) => list.map(el => Object.create({ name: el, value: el }))
 
-        const res: object[] = await getInfoProduct(params, 'many=true')
-        const list = new Set(res.map(el => el.maker))
-        makerList.value = listModifi([...list])
-    } catch (error) {
-        console.log(error);
-    }
-}
+//         const res: object[] = await getInfoProduct(params, 'many=true')
+//         const list = new Set(res.map(el => el.maker))
+//         makerList.value = listModifi([...list])
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 </script>

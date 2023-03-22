@@ -14,7 +14,7 @@
       </div>
       <div :class="style.container" class="bg-gray-100 w-7/12 md:w-full">
         <form>
-          <template v-for="(item, index) in dataInput" :key="index">
+          <template v-for="item in dataInput" :key="item">
             <template v-if="Array.isArray(item)">
               <div class="flex -mx-2">
                 <input v-for="elem in item" :key="elem.placeholder" :type="elem.type" :placeholder="elem.placeholder"
@@ -22,7 +22,7 @@
                   v-model="data[elem.mobel]" class="w-1/2 mx-2" />
               </div>
             </template>
-            <div v-else-if="item.name === 'decor-line'" class="decor-line mb-4"></div>
+            <div v-else-if="'name' in item" class="decor-line mb-4"></div>
             <template v-else-if="item.placeholder">
               <input :type="item.type"
                 :class="[style.input, (data[item.mobel] === 0 || data[item.mobel] === '') ? 'border-red-300' : '']"
@@ -69,13 +69,12 @@ const style = {
 }
 
 interface Model {
-  name?: string,
-  type?: string,
-  placeholder?: string,
-  mobel?: string
+  type: string,
+  placeholder: string,
+  mobel: string
 }
 
-const dataInput: (Model | Model[])[] = [
+const dataInput: (Model | Model[] | { name: string})[] = [
   {
     type: 'text',
     placeholder: 'Название товара',

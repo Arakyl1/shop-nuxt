@@ -1,5 +1,6 @@
 import { RouteLocationNormalizedLoaded } from "vue-router";
-import { FilterList, ListProduct } from "./type";
+import { FilterList } from "./type";
+
 
 export function filterList(route: RouteLocationNormalizedLoaded): FilterList {
     return {
@@ -12,7 +13,7 @@ export function filterList(route: RouteLocationNormalizedLoaded): FilterList {
     }
 }
 
-export function ListProduct(select?: object):ListProduct {
+export function ListProduct(select?: object) {
     return {
         name: '',
         art: '',

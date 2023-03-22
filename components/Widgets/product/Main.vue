@@ -5,7 +5,7 @@
                 <div class="p-16 flex items-center justify-center xl:p-12">
                     <img :src="data.img" :alt="data.name" class="max-w-[80%] max-h-[80%]">
                 </div>
-                <SharedUIOtherInfoForStock :news="data.news" :sell="data.sale" class="left-0 top-24" />
+                <SharedUIOtherInfoForStock :news="data.news!" :sell="data.sale!" class="left-0 top-24" />
             </div>
             <div class="w-1/2 bg-gray-100 p-12 xl:p-8 lg:w-7/12">
                 <div class="relative">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="decor-line"></div>
                     <div class="py-8 flex justify-between xl:py-6">
-                        <SharedUITransformPrice :price="data.price" :sale="data.sale"
+                        <SharedUITransformPrice :price="data.price" :sale="data.sale!"
                             :style="'text-4xl xl:text-3xl lg:text-2xl'" />
                         <SharedUIOtherQuantitySelection :data-quantity="data.quantity"
                             @number-of-products="(e) => numberOfProduct = e" class="lg:py-1.5 lg:px-3" />
@@ -69,14 +69,9 @@
     </section>
 </template>
 <script setup lang="ts">
-import { ListProduct } from '~~/utils/type';
+import { ProductCardFull } from '~~/type/intex';
 
-interface FullInfoProduct extends ListProduct{
-    ranting: number,
-    reviews: object[]
-}
-
-const props = defineProps<{ data: FullInfoProduct }>()
+const props = defineProps<{ data: ProductCardFull }>()
 
 const numberOfProduct = ref<number>(1)
 </script>

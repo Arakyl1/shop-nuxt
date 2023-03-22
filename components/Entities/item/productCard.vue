@@ -2,7 +2,7 @@
     <div v-if="content" class="flex">
         <div class="w-full flex flex-col">
             <div class="w-full aspect-square bg-gray-100 rounded-md relative">
-                <SharedUIOtherInfoForStock :sell="content.sale" :news="content.news" class="top-4 left-4 z-10 sm:text-xs sm:py-0 sm:px-2
+                <SharedUIOtherInfoForStock :sell="content.sale!" :news="content.news!" class="top-4 left-4 z-10 sm:text-xs sm:py-0 sm:px-2
                 group-[.is-pos-info-for-stock]:left-0 " />
                 <div class="absolute z-20 right-3 top-3 sm:scale-75 sm:top-1.5 sm:right-1.5">
                     <slot name="bt-favorite" v-bind="{ content }"></slot>
@@ -18,7 +18,7 @@
                 <p class="text-gray-500 text-lg truncate sm:text-sm">{{ content.art }}</p>
                 <p class="text-lg text-black-700 mb-2 grow xl:text-base sm:text-sm sm:mb-1">{{ content.name }}</p>
                 <div class="flex items-center justify-between">
-                    <SharedUITransformPrice :price="content.price" :sale="content.sale" :style="style" class="grow" />
+                    <SharedUITransformPrice :price="content.price" :sale="content.sale!" :style="style" class="grow" />
                     <UIIconStatic class="sm:hidden" />
                 </div>
             </div>
@@ -27,18 +27,21 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ListProduct } from '~~/utils/type';
+import { Prisma } from '@prisma/client'
 
 const props = withDefaults(defineProps<{
-    data?: ListProduct | null
+    data: ProductCard | null
     id?: number
 }>(), { data: null })
 
 const { getInfo: getInfoProduct } = useProduct()
-const content = ref<ListProduct | null>(props.data)
+const content = ref<ProductCard | null>(props.data)
+
+const selectOption = Prisma.validator<Prisma.ProductCardArgs>()(selectForCard({}))
+type ProductCard = Prisma.ProductCardGetPayload<typeof selectOption>
 
 async function getCardData() {
-    const data = await getInfoProduct({ where: { id: props.id }, ...selectForCard() })
+    const data = await getInfoProduct<ProductCard>({ where: { id: props.id }, ...selectOption })
     if (data) content.value = data
 }
 

@@ -14,10 +14,10 @@ export default () => {
                 body: event
             })
     
-            if ('message' in data && data.message) return createAlert(data.message)
+            if (data.message) return createAlert(data.message)
     
-            updateUser(data.user)
-            updateAccessToken(data.access_token)
+            updateUser(data.user || null)
+            updateAccessToken(data.access_token || "")
             createAlert('Пользователь зарегистрирован')
             return true
         } catch (error: any) {
@@ -75,9 +75,9 @@ export default () => {
                     Authorization: `Bearer ${accessToken.value}`
                 }
             })
-            if ('message' in data && data.message) return new Error('Error')
+            if (data.message) return new Error('Error')
     
-            updateUser(data.user ? data.user : null)   
+            updateUser(data.user || null)   
         } catch (error) {
             throw new Error('Error')
         }

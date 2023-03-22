@@ -17,7 +17,7 @@
                 <div class="flex origin-top-left " v-show="stage" >
                     <EntitiesSelect class=" px-4 " @categor="(e) => updateCategor(e)" ref="categor"/>
                     <EntitiesSelectAditional v-show="listCategor.children.length"
-                    :subcategor="listCategor" :style="{ 'height': heightSelectAditional + 'px'}"/>
+                        :subcategor="listCategor" :style="{ 'height': heightSelectAditional + 'px'}"/>
                 </div>
             </Transition>
         </div>
@@ -44,8 +44,9 @@
 </template>
 <script setup lang="ts">
 import ShowContent  from "@/utils/ShowContent"
+import { CategorItem } from "~~/type/intex";
 
-const listCategor = ref<{ name: string; children: [] }>({ name: '', children: [] })
+const listCategor = ref<CategorItem>({ name: '', children: [] })
 
 const { stage, updateStage } = ShowContent()
 const heightSelectAditional = ref<number>(0)
@@ -65,24 +66,27 @@ const arrayLink = [
     "Инструмент"
 ]
 
-function updateCategor(event: object) {
+function updateCategor(event: {
+    obj: CategorItem;
+    heigth: 0;
+}):void {
     heightSelectAditional.value = event.heigth
     listCategor.value = event.obj
 }
 
-function showModalCategor() {
+function showModalCategor(): void {
     updateStage(event, true)
 }
 
-function hudeModalCategor() {
+function hudeModalCategor(): void {
     listCategor.value = { name: '', children: [] }
     updateStage(event, false)
 }
 
-function listOffset() {
+function listOffset(): void {
+    if (!list.value) return
     active.value = !active.value
-    const width = list.value?.scrollWidth
-    
+    const width = list.value.scrollWidth
     list.value?.scrollBy(active.value ? { left: -width } : { left: width }) 
 }
 

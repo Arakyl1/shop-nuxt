@@ -44,6 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import { ListProduct } from "~~/utils/type";
-defineProps<{ listIdProduct: ListProduct[], loader: boolean }>()
+import type { _ProductCardBaseOption } from "@/type/intex";
+defineProps<{ listIdProduct: _ProductCardBaseOption[], loader: boolean }>()
 </script>

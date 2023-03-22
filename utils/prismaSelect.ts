@@ -1,11 +1,7 @@
-import type { RecordOption, ProductCardBaseOption, ProductCardSearchOption } from "@/type/intex";
+import { Prisma } from '@prisma/client'
 
-export type ProductCardSelect<T extends PropertyKey, U extends PropertyKey> = {
-    select: RecordOption<T | U, true>
-}
 
-export const selectForCard = <T extends object>(select: T)
-    : ProductCardSelect<ProductCardBaseOption, keyof T> => {
+export const selectForCard = <T extends object>(select: T) => {
     return {
         select: {
             id: true,
@@ -20,8 +16,7 @@ export const selectForCard = <T extends object>(select: T)
         }
     }
 }
-export const selectCardBySearch = <T extends object>(select: T)
-    : ProductCardSelect<ProductCardSearchOption, keyof T> => {
+export const selectCardBySearch = <T extends object>(select: T) => {
     return {
         select: {
             id: true,
@@ -35,4 +30,11 @@ export const selectCardBySearch = <T extends object>(select: T)
     }
 }
 
+// Prisma.validator<Prisma.ProductCardArgs>()(..arg)
+
+// Prisma.ProductCardGetPayload<typeof selectOption>
+
+type DeepKeys<T> = T extends string ? never : {
+    [K in keyof T & string]: T[K] extends boolean ? true : DeepKeys<T[K]>;
+}[keyof T & string];
 

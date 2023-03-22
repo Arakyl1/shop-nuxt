@@ -1,5 +1,5 @@
 
-export function returnParamsMain(where: object, select?: object) {
+export function returnParamsMain<T extends object = {}>(where: object, select: T) {
     return {
         where: where,
         select: {
@@ -10,7 +10,7 @@ export function returnParamsMain(where: object, select?: object) {
     }
 }
 
-export function returnParamsAditional(select?: object){
+export function returnParamsAditional<T extends object = {}>(select: T){
     return {
         id: true,
         name: true,

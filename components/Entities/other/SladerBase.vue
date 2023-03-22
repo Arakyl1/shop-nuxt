@@ -5,7 +5,7 @@
                 <slot name="header" v-bind="{ prevItem, nextItem }"></slot>
             </div>
             <div ref="slader" class="basic__slader slader__container" :class="[containerClass]" @scroll="logItem">
-                <template v-for="(elem, index) in sladerData" :key="index">
+                <template v-for="elem in sladerData" :key="elem">
                     <div class="slader__item ">
                         <slot name="item" v-bind="{
                             elem,
@@ -26,7 +26,7 @@
 </template>
 <script setup lang="ts">
 interface Props {
-    data: object[] | null,
+    data: any[] | null,
     containerClass?: string
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -37,23 +37,23 @@ const slader = ref<HTMLElement | null>(null)
 const indexActiveButton = ref<number>(0)
 const sladerData = computed(() => props.data ? props.data : [...Array(8)])
 
-function prevItem() {
-    slader.value?.scrollBy({ left: -slader.value?.clientWidth })
+function prevItem(): void {
+    if (!slader.value) return
+    slader.value.scrollBy({ left: -slader.value.clientWidth })
 }
-function nextItem() {
-    slader.value?.scrollBy({ left: slader.value?.clientWidth })
-}
-
-function updateScrolLeftSlader(index: number) {
-    if (slader.value) {
-        slader.value.scrollLeft = slader.value.clientWidth * index
-    }
+function nextItem(): void {
+    if (!slader.value) return
+    slader.value.scrollBy({ left: slader.value.clientWidth })
 }
 
-function logItem() {
-    if (slader.value) {
-        indexActiveButton.value = Math.round(+(slader.value.scrollLeft / slader.value?.clientWidth).toFixed(1))
-    }
+function updateScrolLeftSlader(index: number): void {
+    if (!slader.value) return
+    slader.value.scrollLeft = slader.value.clientWidth * index
+}
+
+function logItem(): void {
+    if (!slader.value) return
+    indexActiveButton.value = Math.round(+(slader.value.scrollLeft / slader.value.clientWidth).toFixed(1))
 }
 </script>
 

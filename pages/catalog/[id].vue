@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { selectOption, ProductCardFull } from '~~/type/intex';
+
 definePageMeta({
     title: 'Информация о товаре',
 })
@@ -19,37 +21,12 @@ const route = useRoute()
 const { isDesktopOrTablet } = useDevice()
 const { getInfo: getInfoProduct } = useProduct()
 
-const option = () => {
-    return {
-        where: { id: +route.params.id },
-        ...selectForCard({
-            ranting: true,
-            itemArt: true,
-            itemMod: true,
-            description: true,
-            characteristic: {
-                select: {
-                    content: true
-                }
-            },
-            reviews: {
-                select: {
-                    ranting: true,
-                    text: true,
-                    user: {
-                        select: {
-                            username: true,
-                            profileImage: true
-                        }
-                    }
+const option = { where: { id: +route.params.id }, ...selectOption }
 
-                }
-            }
-        })
-    }
-}
-
-const { data, refresh, error } = await useAsyncData(`data_full_info_${Date.now()}`, () => getInfoProduct(option()))
+const { data, refresh, error } = await useAsyncData(
+    `data_full_info_${Date.now()}`,
+    () => getInfoProduct<ProductCardFull>(option)
+)
 
 onMounted(() => {
     useHead({

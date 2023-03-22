@@ -31,7 +31,7 @@
                 </form>
             </div>
             <template v-if="makerList">
-                <EntitiesFilterListCheckbox :content="makerList" :reset="reset" @maker-data="addData($event, 'maker')">
+                <EntitiesFilterListCheckbox :content="makerList" :reset="reset" @maker-data="addData($event as any[], 'maker')">
                     <template #title>
                         <h4 class="text-lg mb-1">Бренд</h4>
                     </template>
@@ -45,14 +45,14 @@
             </div>
 
             <ContentDoc path="/filter-list/other" v-slot="{ doc }">
-                <EntitiesFilterListCheckbox :content="doc.body" :reset="reset" @maker-data="addData($event, 'actual')">
+                <EntitiesFilterListCheckbox :content="doc.body" :reset="reset" @maker-data="addData($event as any[], 'actual')">
                     <template #title>
                         <h4 class="text-lg mb-1">Другое</h4>
                     </template>
                 </EntitiesFilterListCheckbox>
             </ContentDoc>
             <ContentDoc path="/filter-list/other-service" v-slot="{ doc }">
-                <EntitiesFilterListCheckbox :content="doc.body" :reset="reset" @maker-data="addData($event, 'other')">
+                <EntitiesFilterListCheckbox :content="doc.body" :reset="reset" @maker-data="addData($event as any[], 'other')">
                     <template #title>
                         <h4 class="text-lg mb-1">Доставка и наличие'</h4>
                     </template>
@@ -74,36 +74,38 @@
 
 <script setup lang="ts">
 import { filterList as CreateFilterList } from "@/utils/create";
+import { Prisma } from "@prisma/client";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 
-const props = defineProps<{
-    makerList: {
-        name: string,
-        value: string
-    }[]
-}>()
+
+type MakerItem = { name: string, value : string }
+type optionSearch = {
+    categor?: string,
+    NOT?: [{ categor: '' }],
+    price: { gte?: number, lte?: number },
+    ranting: { gte: number },
+    maker?: { in: string[]}
+}
 
 const emit = defineEmits<{
     (e: 'option-seacrh', id: object): void
 }>()
 
+
+const { getInfo: getInfoProduct } = useProduct()
 const route: RouteLocationNormalizedLoaded = useRoute()
 const router = useRouter()
+const filterList = ref(CreateFilterList(route))
+const makerList = ref<MakerItem[]>([])
+const reset = ref(false)
 const { data } = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
 
-const filterList = ref(CreateFilterList(route))
 
-const reset = ref(false)
+const searchParameters = computed(() => Object.values(route.query).map((el: any) => el.trim()).join('_'))
 
-const style = {
-    title: 'text-lg mb-1',
-    input: 'p-2 rounded-md focus-visible:outline-none text-gray-500'
-}
-
-const searchParameters = computed(() => Object.values(route.query).map(el => el.trim()).join('_'))
-const categor = computed(() => data.value ? data.value.select.map(el => el.name) : [])
+const categor = computed(() => data.value ? data.value.select.map((el: any) => el.name) : [])
 const subcategor = computed(() => data.value && route.query.categor ?
-    data.value.select.find(el => el.name === route.query.categor).children.map(el => el.name) :
+    data.value.select.find((el: any) => el.name === route.query.categor).children.map((el: any) => el.name) :
     [])
 
 const checkValidPrice = computed(() => {
@@ -113,13 +115,13 @@ const checkValidPrice = computed(() => {
 })
 
 const optionSearch = computed(() => {
-    const option = {
+    const option: optionSearch = {
         price: {},
         ranting: { gte: 0 },
     }
 
     if (route.query.categor) {
-        option.categor = route.query.categor
+        option.categor = route.query.categor as unknown as string
     } else {
         option.NOT = [{ categor: '' }]
     }
@@ -134,17 +136,21 @@ const optionSearch = computed(() => {
 })
 
 // methods
-function routePushQueryCategor(event: Event) {
-    const params = { ...route.query, page: 1, categor: event.target ? event.target.value : "Категория" }
-    if (params.categor === "Категория") {
-        delete params.categor
-    }
+function routePushQueryCategor({ target }: Event) {
+    const _target = target as HTMLSelectElement
+    type params = { page: number, categor?: string }
+    const params: params = { ...route.query, page: 1, categor: _target ? _target.value : "Категория" }
+    if (params.categor === "Категория") delete params.categor
 
     route.query.categor !== params.categor ? router.push({ query: params }) : ''
 }
 
-const addData = (el: any, way: any) => { filterList.value[way] = el }
-const addOption = (data: string[], option: object) => Object.assign(option, ...data.map(el => { return { [el]: true } }));
+type filterListKey = 'maker'|'other'|'actual'
+const addData = (el: any[], way: string) => {
+    filterList.value[way as unknown as filterListKey] = el
+}
+const addOption = (data: string[], option: object) => Object.assign(
+    option, ...data.map(el => { return { [el]: true } }));
 
 function resetSearchData() {
     filterList.value = CreateFilterList(route)
@@ -152,8 +158,32 @@ function resetSearchData() {
     sendParams()
 }
 
+type SearchParams = { where: { categor: string } | { NOT: [{categor: ''}] }, select: { maker: true } }
+
+async function getMakerlist(params: SearchParams): Promise<void> {
+    const selectOption = Prisma.validator<Prisma.ProductCardArgs>()({ select: params.select })
+    type MakerNameList = Prisma.ProductCardGetPayload<typeof selectOption>
+    const listModifi = (list: string[]) => list.map(el => Object.create({ name: el, value: el }))
+        
+    try {
+        const res = await getInfoProduct<MakerNameList[]>(params, 'many=true')
+        if (!res) return
+        const list = new Set(res.map(el => el.maker))
+        listModifi([...list])
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function SearchParams():SearchParams {
+   return {
+        where: typeof route.query.categor === 'string' ? { categor: route.query.categor } : { NOT: [{ categor: '' }] },
+        select: { maker: true }
+    }
+}
+
 function sendParams() {
-    if (+route.query.page > 1) {
+    if (+route.query.page! > 1) {
         return navigateTo({
             path: route.path,
             query: { ...route.query, page: 1 }
@@ -167,10 +197,26 @@ function searchProduct() {
     emit('option-seacrh', optionSearch.value)
 }
 
-searchProduct()
+async function initFilter() {
+    searchProduct()
+    await getMakerlist(SearchParams())
+}
 
+    
 watch(() => searchParameters.value, () => {
     searchProduct()
 })
+
+watch(() => route.query.categor!, async(newValue, oldValue) => {
+    if (newValue === oldValue) return
+    await getMakerlist(SearchParams())
+})
+
+initFilter()
+
+const style = {
+    title: 'text-lg mb-1',
+    input: 'p-2 rounded-md focus-visible:outline-none text-gray-500'
+}
 </script>
 

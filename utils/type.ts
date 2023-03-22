@@ -8,7 +8,7 @@ export interface User {
 }
 
 export interface FilterList {
-    cat: string | LocationQueryValue[],
+    cat?: string | LocationQueryValue[],
     price: { from: number, upTo: number },
     maker: string[],
     ranting: number,
@@ -34,9 +34,3 @@ export interface MainInfoCard {
     quantity: number
 }
 
-export interface ListProduct extends MainInfoCard {
-    categor: string;
-    subcategor: string;
-    itemArt: string;
-    itemMod: string;
-}

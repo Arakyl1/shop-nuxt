@@ -44,16 +44,19 @@
 </template>
 <script setup lang="ts">
 import ShowContent from "@/utils/ShowContent";
-interface ReviewsInfo {
-    description: string,
-    reviews: object[],
-    id: number,
-    art: string,
-    name: string,
-    refresh: any
+import { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
+import { ProductCardFull } from '~~/type/intex';
+
+interface Props {
+    description: ProductCardFull['description'],
+    reviews: ProductCardFull['reviews'],
+    id: ProductCardFull['id'],
+    art: ProductCardFull['art'],
+    name: ProductCardFull['name'],
+    refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>
 }
 
-const props = defineProps<ReviewsInfo>()
+const props = defineProps<Props>()
 const { stage, updateStage } = ShowContent();
 const { user: _user} = useStore()
 const { userData } = _user()
@@ -65,5 +68,7 @@ const data = ref({
 })
 
 const reviewsUpdate = computed(() => props.reviews.filter(el => el.text))
-const reviewsRantingValue = computed(() => props.reviews.map(el => el.ranting) || null)
+const reviewsRantingValue = computed(() => props.reviews.map(
+    <T extends ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
+
 </script>

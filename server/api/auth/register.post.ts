@@ -3,15 +3,7 @@ import bcryptjs from "bcryptjs";
 import { generateTokens, sendRefrechToken } from "~~/server/utils/jwt";
 import { prismaCreate } from "~~/server/db/methods";
 import { userTransform } from "~~/server/utils/userTransform";
-
-interface User {
-    name?: string,
-    email: string,
-    username: string,
-    password: string,
-    profileImage: string
-}
-
+import { Prisma } from "@prisma/client";
 
 export default defineEventHandler(async(event: H3Event) => {
     const body = await readBody(event)
@@ -31,15 +23,18 @@ export default defineEventHandler(async(event: H3Event) => {
             password: bcryptjs.hashSync(userData.password, salt)
         }
         
-        
-        const user = await prismaCreate('user', { data: updateUserData , select: {
+        const UserSelect =  {
                 id: true,
                 email: true,
                 name: true,
                 username: true,
                 profileImage: true,
             }
-        })
+        
+        const select = Prisma.validator<Prisma.UserArgs>()({select: UserSelect })
+        type UserBase = Prisma.UserGetPayload<typeof select>
+        
+        const user: UserBase = await prismaCreate('user', { data: updateUserData , select: UserSelect })
         
         // Generate Token
         try {
@@ -51,17 +46,16 @@ export default defineEventHandler(async(event: H3Event) => {
 
             return {
                 access_token: accessToken,
-                user: user
+                user: userTransform<UserBase>(user)
             }
         } catch (error) {
             return {
                 access_token: '',
-                user: userTransform(user)
+                user: userTransform<UserBase>(user)
             }
         }
 
     } catch (error) {
         return { message: "Такой пользователь уже существует" }
-       // return sendError(event, createError({ statusCode: 400, statusMessage: "Такой пользователь уже существует" }))
     }
 })

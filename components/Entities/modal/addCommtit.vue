@@ -24,8 +24,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import { User } from '~~/utils/type';
-import { UserCommit } from "@/type/intex";
+import { UserBase } from '@/type/intex';
+import { UserCreateCommit } from "@/type/intex";
+import { AsyncDataExecuteOptions } from 'nuxt/dist/app/composables/asyncData';
 
 const props = defineProps<{
     data: {
@@ -33,10 +34,10 @@ const props = defineProps<{
         art: string,
         name: string,
     },
-    userData: User | null,
-    refresh: any,
+    userData: UserBase | null,
+    refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>,
     reviewsRantingValue: number[],
-    hudeFunction: Function,
+    hudeFunction: (e: MouseEventInit | undefined, active?: boolean) => void,
 }>()
 
 const { createAlert } = useAlert()
@@ -52,7 +53,7 @@ const userReview = ref({
 
 async function createCommit() {
     if ((userReview.value.ranting || userReview.value.text) && props.userData) {
-            function returnUserData(...arg: object[]):UserCommit {
+            function returnUserData(...arg: object[]):UserCreateCommit {
                 return Object.assign({}, ...arg)
             }
             returnUserData(userReview.value, { userId: props.userData.id })

@@ -16,7 +16,7 @@ interface Props {
     title?: string,
     textDefault?: string,
     decorLine?: boolean,
-    hudeWindow: any
+    hudeWindow: () => void
 }
 
 const props = withDefaults(defineProps<Props>(), {

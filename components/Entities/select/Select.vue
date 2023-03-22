@@ -10,18 +10,21 @@
             @click="$emit('categor', { obj: item, heigth: categor?.clientHeight })">
                 <UIIconArround />
             </div>
+            {{  route.query }}
         </div>
         </li>
     </ul>
 </template>
 
 <script setup lang="ts">
+import { CategorItem } from "@/type/intex";
+
 const { data } = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
 const categor = ref<HTMLElement | null>(null)
 
 const route = useRoute()
 
 defineEmits<{
-  (e: 'categor', id: { obj: { name: string; children: []; }, heigth: 0 }): void
+  (e: 'categor', id: { obj: CategorItem, heigth: 0 }): void
 }>()
 </script>

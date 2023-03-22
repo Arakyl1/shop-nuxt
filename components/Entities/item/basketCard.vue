@@ -12,7 +12,7 @@
                 </p>
             </div>
             <div class="mx-4 sm:grow sm:order-last">
-                <SharedUITransformPrice :price="data.price" :sale="data.sale"
+                <SharedUITransformPrice :price="data.price" :sale="data.sale!"
                 :style="'text-xl ld:text-lg md:text-base sm:text-sm'" class="block sm:justify-end"/>
             </div>
             <div class="mr-6 sm:order-last block sm:mx-2">
@@ -32,9 +32,7 @@
 </template>
 <script setup lang="ts">
 import { basketProduct } from "~~/pinia/basket";
-import { MainInfoCard } from "~~/utils/type";
 import { Prisma } from '@prisma/client'
-
 
 const props = defineProps<{
     item: { id: number, quantity: number, price: number },
@@ -44,10 +42,9 @@ const props = defineProps<{
 const basketProd = basketProduct()
 const { getInfo: getInfoProduct } = useProduct()
 
-const option = {
-    where: { id: props.item.id },
-    ...selectCardBySearch({ quantity: true })
-}
+const selectOption = Prisma.validator<Prisma.ProductCardArgs>()(selectCardBySearch({ quantity: true }))
+type ProductCardForSearch = Prisma.ProductCardGetPayload<typeof selectOption>
 
-const data = await getInfoProduct<MainInfoCard>(option)
+
+const data = await getInfoProduct<ProductCardForSearch>({ where: { id: props.item.id }, ...selectOption})
 </script>

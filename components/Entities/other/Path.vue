@@ -3,7 +3,7 @@
     <div class="flex">
         <nuxt-link to="/" class="text-gray-500">Главная</nuxt-link>
         <nuxt-link v-for="item in route.matched"
-        :key="item.meta.title" :to="item.path.split('/')"
+        :key="item.meta.title" :to="(item.path.split('/') as RouteLocationRaw)"
         class="flex items-center ml-3">
         <UIIconArround class="path__icon mr-1"/>
         {{ item.meta.title }}</nuxt-link>
@@ -12,6 +12,8 @@
 </template>
 
 <script setup lang="ts">
+import { RouteLocationRaw } from 'vue-router';
+
 const route = useRoute()
 </script>
 
