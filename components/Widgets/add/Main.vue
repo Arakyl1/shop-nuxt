@@ -18,7 +18,7 @@
             <template v-if="Array.isArray(item)">
               <div class="flex -mx-2">
                 <input v-for="elem in item" :key="elem.placeholder" :type="elem.type" :placeholder="elem.placeholder"
-                  :class="[style.input, (data[elem.mobel] === 0 || data[elem.mobel] === '') ? 'border-red-300' : '']"
+                  :class="[style.input, (data[elem.mobel ] === 0 || data[elem.mobel] === '') ? 'border-red-300' : '']"
                   v-model="data[elem.mobel]" class="w-1/2 mx-2" />
               </div>
             </template>
@@ -35,25 +35,26 @@
   </section>
 </template>
 <script setup lang="ts">
-import { ListProduct } from "@/utils/create";
+import { createBaseProductCard  } from "@/utils/create";
+import { BaseOptionProductCard, CreateBaseProductCard } from "~~/type/intex";
 
 const props = defineProps<{ create?: boolean }>()
 const emit = defineEmits<{
   (e: 'main-data', id: {}): void
 }>()
 
-const data = ref<any>(ListProduct())
+const data = ref<CreateBaseProductCard & {}>(createBaseProductCard({}))
 
 const validateDate = computed(() => checkNotValidAlem(data.value))
 
 // methods
-function checkNotValidAlem(object: {}): unknown {
-  return Object.values(object).findIndex((el: any) => typeof el === object ? checkNotValidAlem(el) : (el === '' || el <= 0))
+function checkNotValidAlem(object: object): number {
+  return Object.values(object).findIndex((el: any) => typeof el === 'object' ? checkNotValidAlem(el) : (el === '' || el <= 0))
 }
 
 //watch
 watch(() => props.create, () => {
-  data.value = ListProduct()
+  data.value = createBaseProductCard({})
 })
 
 watch(() => validateDate.value, (number) => {
@@ -71,7 +72,7 @@ const style = {
 interface Model {
   type: string,
   placeholder: string,
-  mobel: string
+  mobel: BaseOptionProductCard
 }
 
 const dataInput: (Model | Model[] | { name: string})[] = [

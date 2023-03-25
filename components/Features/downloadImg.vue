@@ -2,13 +2,13 @@
     <div>
 
         <form @click="input?.click()">
-            <input type="file" accept="image/png, image/jpeg" ref="input" hidden @change="imageChange">
+            <input type="file" accept="image/png, image/jpeg" ref="input" hidden @change="imageChange($event)">
             <div v-if="!inputImage">
                 <slot>
                 </slot>
             </div>
             <div v-else class="aspect-square">
-                <img :src="inputImage" alt="" class="min-w-full min-h-full object-cover aspect-square">
+                <img :src="inputImage.toString()" alt="" class="min-w-full min-h-full object-cover aspect-square">
             </div>
         </form>
     </div>
@@ -20,28 +20,38 @@ const emit = defineEmits<{
     (e: 'linkImg', value: string): void
 }>()
 
-const input = ref<HTMLElement | null>(null)
-const inputImage = ref<string | ArrayBuffer | null | undefined>(null)
+const input = ref<HTMLInputElement | null>(null)
+const inputImage = ref<string | ArrayBuffer | null>(null)
 
-async function imageChange(event: any) {
-    const file = event.target.files[0]
-    if (!file) return
+async function imageChange({ target }: Event) {
+    const _target = target as unknown as HTMLInputElement
+    
+    if (!_target.files) return
+    const file = _target.files[0]
 
-    const reader = new FileReader()
-    reader.onload = (event) => {
-        inputImage.value = event.target?.result
+    const reader = new FileReader()    
+    reader.onload = ({ target }: ProgressEvent<FileReader>) => {
+        if (!target) return
+        inputImage.value = target.result
     }
     reader.readAsDataURL(file)
 
-    const image = await useFetch('/api/cloudinari/upload', {
+    type ResponseDownloadImage = ({ url: string; secretUrl: string; } | "Error")[]
+
+    const { data } = await useFetch<ResponseDownloadImage>('/api/cloudinari/upload', {
         method: "POST",
         body: file,
         headers: {
             "Content-Type": "application/octet-stream"
         }
     })
-    if (image.data.value) {
-        emit('linkImg', image.data.value[0].secretUrl)
+    if (data.value) {
+        for (let i = 0; i < data.value.length; i++) {
+            const el = data.value[i];
+            if (el !== 'Error') {
+                emit('linkImg', el.secretUrl)   
+            }
+        }
     }
 }
 

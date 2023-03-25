@@ -27,21 +27,18 @@
     </div>
 </template>
 <script setup lang="ts">
-import { Prisma } from '@prisma/client'
+import { _ProductCardBase, selectOptionBase } from '~~/type/intex';
 
 const props = withDefaults(defineProps<{
-    data: ProductCard | null
+    data: _ProductCardBase | null
     id?: number
 }>(), { data: null })
 
 const { getInfo: getInfoProduct } = useProduct()
-const content = ref<ProductCard | null>(props.data)
-
-const selectOption = Prisma.validator<Prisma.ProductCardArgs>()(selectForCard({}))
-type ProductCard = Prisma.ProductCardGetPayload<typeof selectOption>
+const content = ref<_ProductCardBase | null>(props.data)
 
 async function getCardData() {
-    const data = await getInfoProduct<ProductCard>({ where: { id: props.id }, ...selectOption })
+    const data = await getInfoProduct<_ProductCardBase>({ where: { id: props.id }, ...selectOptionBase })
     if (data) content.value = data
 }
 

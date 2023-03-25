@@ -29,8 +29,8 @@
                         <ul class="text-black-300">
                             <li v-for="item in doc.body" :key="item.name"
                             class="flex justify-between py-2 sm:flex-wrap">
-                                <p class="text-lg xl:text-base sm:w-full sm:mb-1">{{  item.name  }}</p>
-                                <p class="text-lg text-gray-500 xl:text-base sm:w-full">{{  item.value  }}</p>
+                                <p class="text-lg xl:text-base sm:w-full sm:mb-1">{{ item.name }}</p>
+                                <p class="text-lg text-gray-500 xl:text-base sm:w-full">{{ item.value }}</p>
                             </li>
                         </ul>
                     </ContentDoc>

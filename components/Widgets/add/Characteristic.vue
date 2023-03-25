@@ -51,10 +51,10 @@
             </template>
             <template v-if="data.length">
                 <div class="pt-4">
-                    <div class="mb-2" v-for="item in data" :key="item">
+                    <div class="mb-2" v-for="item in data" :key="item.name">
                       <h2 class="text-2xl mb-2 xl:text-xl">{{ item.name }}</h2>
                       <div class="decor-line mb-2"></div>
-                      <div class="flex mb-0" v-for="el in item.content" :key="el">
+                      <div class="flex mb-0" v-for="el in item.content" :key="el.name">
                         <p class="text-lg grow xl:text-base">{{ el.name }}</p>
                         <p class="text-lg grow text-right xl:text-base">{{ el.value }}</p>
                       </div>
@@ -66,14 +66,10 @@
 </template>
 
 <script setup lang="ts">
-interface blockChar {
-    name: string,
-    content: itemChar[]
-}
-interface itemChar {
-    name: string,
-    value: string
-}
+
+type itemChar = { name: string, value: string }
+type blockChar = { name: string, content: itemChar[] }
+
 const props = defineProps<{ create?: boolean}>()
 const emit = defineEmits<{
     (e: 'characteristic', id: blockChar[]): void

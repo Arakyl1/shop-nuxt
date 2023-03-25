@@ -69,9 +69,9 @@
     </section>
 </template>
 <script setup lang="ts">
-import { ProductCardFull } from '~~/type/intex';
+import { _ProductCardFull } from '~~/type/intex';
 
-const props = defineProps<{ data: ProductCardFull }>()
+const props = defineProps<{ data: _ProductCardFull }>()
 
 const numberOfProduct = ref<number>(1)
 </script>

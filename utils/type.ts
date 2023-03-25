@@ -1,11 +1,4 @@
 import { LocationQueryValue } from "vue-router";
-export interface User {
-    id: number,
-    profileImage: string,
-    name?: string,
-    username: string,
-    ranting?: number
-}
 
 export interface FilterList {
     cat?: string | LocationQueryValue[],
@@ -16,21 +9,4 @@ export interface FilterList {
     other: string[],
 }
 
-export interface FilterOption{
-    price?:{ gte?: number, lte?: number },
-    ranting?: { gte: number },
-    categor: string,
-}
-
-export interface MainInfoCard {
-    id: number,
-    name: string,
-    art: string,
-    maker: string,
-    img: string,
-    price: number,
-    sale: boolean,
-    news: boolean,
-    quantity: number
-}
 

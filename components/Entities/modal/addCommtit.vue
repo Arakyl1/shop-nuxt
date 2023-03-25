@@ -27,6 +27,7 @@
 import { UserBase } from '@/type/intex';
 import { UserCreateCommit } from "@/type/intex";
 import { AsyncDataExecuteOptions } from 'nuxt/dist/app/composables/asyncData';
+import { updateStage } from '~~/utils/ShowContent';
 
 const props = defineProps<{
     data: {
@@ -37,7 +38,7 @@ const props = defineProps<{
     userData: UserBase | null,
     refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>,
     reviewsRantingValue: number[],
-    hudeFunction: (e: MouseEventInit | undefined, active?: boolean) => void,
+    hudeFunction: updateStage,
 }>()
 
 const { createAlert } = useAlert()

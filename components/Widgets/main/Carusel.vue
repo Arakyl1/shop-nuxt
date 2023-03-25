@@ -39,18 +39,14 @@
     </EntitiesOtherSladerBase>
 </template>
 <script setup lang="ts">
-import { Prisma } from '@prisma/client'
+import { _ProductCardBase, selectOptionBase } from '~~/type/intex';
 
 const props = defineProps<{ searchCategor: object }>()
-const data = ref<ProductCard[] | null>(null)
-
+const data = ref<_ProductCardBase[] | null>(null)
 const { getInfo: getInfoProduct } = useProduct()
 
-const selectOption = Prisma.validator<Prisma.ProductCardArgs>()(selectForCard({}))
-type ProductCard = Prisma.ProductCardGetPayload<typeof selectOption>
-
 async function getDataByCategor() {
-    const res = await getInfoProduct<ProductCard[]>({ where: props.searchCategor, ...selectOption }, 'many=true')
+    const res = await getInfoProduct<_ProductCardBase[]>({ where: props.searchCategor, ...selectOptionBase }, 'many=true')
     if (res) data.value = res
 }
 

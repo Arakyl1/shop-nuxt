@@ -35,27 +35,22 @@
 </section>
 </template>
 <script setup lang="ts">
+import { RecordOption } from "@/type/intex";
 
-interface Params {
-    top?: boolean,
-    sale?: boolean,
-    news?: boolean,
-    delivery?: boolean,
-    pickUp?: boolean,
-    underTheOrder?: boolean,
-    description?: string
-}
+type keyParams = 'top'|'sale'|'news'|'delivery'|'pickUp'|'underTheOrder'
+type Params = Partial<RecordOption<keyParams, boolean>> & { 'description'?: string }
 
 const props = defineProps<{create?: boolean}>()
 const emit = defineEmits<{
-    (e: 'parameter', id: Params[]):void
+    (e: 'parameter', id: Params):void
 }>()
 
-const data = ref<string[]>([])
+const data = ref<keyParams[]>([])
 const validData = ref<Params>({})
 const description = ref<string>()
 
-const dataOption = [
+type DataOption = { id: keyParams, name: string }
+const dataOption: DataOption[] = [
   { id: 'top', name: 'Топ' },
   { id: 'sale', name: 'Скидка' },
   { id: 'news', name: 'Новый' },
@@ -67,7 +62,7 @@ const dataOption = [
 // methods
 function createData () {
   validData.value = {}
-  data.value.forEach((el) => {
+  data.value.forEach((el: keyParams) => {
       validData.value[el] = true
   })
   validData.value.description = description.value

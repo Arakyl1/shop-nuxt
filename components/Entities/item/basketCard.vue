@@ -32,7 +32,7 @@
 </template>
 <script setup lang="ts">
 import { basketProduct } from "~~/pinia/basket";
-import { Prisma } from '@prisma/client'
+import { ProductCardForSearch, selectOptionSearch } from "@/type/intex";
 
 const props = defineProps<{
     item: { id: number, quantity: number, price: number },
@@ -42,9 +42,5 @@ const props = defineProps<{
 const basketProd = basketProduct()
 const { getInfo: getInfoProduct } = useProduct()
 
-const selectOption = Prisma.validator<Prisma.ProductCardArgs>()(selectCardBySearch({ quantity: true }))
-type ProductCardForSearch = Prisma.ProductCardGetPayload<typeof selectOption>
-
-
-const data = await getInfoProduct<ProductCardForSearch>({ where: { id: props.item.id }, ...selectOption})
+const data = await getInfoProduct<ProductCardForSearch>({ where: { id: props.item.id }, ...selectOptionSearch})
 </script>

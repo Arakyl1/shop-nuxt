@@ -26,7 +26,6 @@
                         <div class="pl-6 xl:pl-2 ">
                             <div>
                                 <h3 :class="style.title">Служба поддержки</h3>
-                            
                                 <ContentDoc path="/footer/link-services" v-slot="{ doc }">
                                     <ul v-if="doc.body">
                                         <li v-for="item in doc.body" class="mb-2 xl:mb-1.5">
@@ -78,10 +77,12 @@
 </template>
 
 <script setup lang="ts">
+
 const card = ['maestro', 'master', 'mir', 'visa']
 
 const style = {
     title: 'text-lg text-white mb-5 xl:text-base xl:mb-4',
     text: '',
 }
+
 </script>

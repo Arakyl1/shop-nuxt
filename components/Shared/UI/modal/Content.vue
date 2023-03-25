@@ -12,18 +12,20 @@
     </div>
 </template>
 <script setup lang="ts">
+import { updateStage } from '~~/utils/ShowContent';
+
 interface Props {
     title?: string,
     textDefault?: string,
     decorLine?: boolean,
-    hudeWindow: () => void
+    hudeWindow: updateStage
 }
 
 const props = withDefaults(defineProps<Props>(), {
     title: 'Categor',
     textDefault: 'Text',
     decorLine: true,
-    hudeWindow: () => false
+    hudeWindow: (e: Event | undefined, active?: boolean) => { false }
 })
 </script>
 

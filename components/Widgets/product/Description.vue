@@ -45,14 +45,14 @@
 <script setup lang="ts">
 import ShowContent from "@/utils/ShowContent";
 import { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
-import { ProductCardFull } from '~~/type/intex';
+import { _ProductCardFull } from '~~/type/intex';
 
 interface Props {
-    description: ProductCardFull['description'],
-    reviews: ProductCardFull['reviews'],
-    id: ProductCardFull['id'],
-    art: ProductCardFull['art'],
-    name: ProductCardFull['name'],
+    description: _ProductCardFull['description'],
+    reviews: _ProductCardFull['reviews'],
+    id: _ProductCardFull['id'],
+    art: _ProductCardFull['art'],
+    name: _ProductCardFull['name'],
     refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>
 }
 
@@ -69,6 +69,6 @@ const data = ref({
 
 const reviewsUpdate = computed(() => props.reviews.filter(el => el.text))
 const reviewsRantingValue = computed(() => props.reviews.map(
-    <T extends ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
+    <T extends _ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
 
 </script>

@@ -30,6 +30,7 @@ ref="modalMenu">
 <script setup lang="ts">
 import { ParsedContent } from '@nuxt/content/dist/runtime/types';
 import { _AsyncData } from 'nuxt/dist/app/composables/asyncData';
+import { updateStage } from '~~/utils/ShowContent';
 
 interface ToucheData {
     x: number | null,
@@ -39,7 +40,7 @@ interface ToucheData {
 }
 
 const props = defineProps<{
-    updateFun: () => void
+    updateFun: updateStage
 }>()
 
 const { data }: _AsyncData<Pick<ParsedContent, string>, Error | null> = await useAsyncData(
@@ -61,6 +62,4 @@ watch(() => toucheData.vector, (newVector) => {
         subcategorName.value = null
     }
 })
-
-
 </script>

@@ -30,9 +30,6 @@ export const selectCardBySearch = <T extends object>(select: T) => {
     }
 }
 
-// Prisma.validator<Prisma.ProductCardArgs>()(..arg)
-
-// Prisma.ProductCardGetPayload<typeof selectOption>
 
 type DeepKeys<T> = T extends string ? never : {
     [K in keyof T & string]: T[K] extends boolean ? true : DeepKeys<T[K]>;

@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { selectOption, ProductCardFull } from '~~/type/intex';
+import { selectOptionFull, _ProductCardFull } from '~~/type/intex';
 
 definePageMeta({
     title: 'Информация о товаре',
@@ -20,12 +20,11 @@ definePageMeta({
 const route = useRoute()
 const { isDesktopOrTablet } = useDevice()
 const { getInfo: getInfoProduct } = useProduct()
-
-const option = { where: { id: +route.params.id }, ...selectOption }
+const option = { where: { id: +route.params.id }, ...selectOptionFull }
 
 const { data, refresh, error } = await useAsyncData(
     `data_full_info_${Date.now()}`,
-    () => getInfoProduct<ProductCardFull>(option)
+    () => getInfoProduct<_ProductCardFull>(option)
 )
 
 onMounted(() => {

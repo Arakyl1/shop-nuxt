@@ -9,7 +9,7 @@
 
 <script setup>
 const props = defineProps({
-  error: Object
+  error: Error
 })
 
 const handleError = () => clearError({ redirect: '/' })

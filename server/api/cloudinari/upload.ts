@@ -1,8 +1,8 @@
 import { uploadImageCloudinary } from "@/server/utils/cloudibary";
 import formidable from 'formidable';
+import IncomingForm from "formidable/Formidable";
 
 const addImageCloud = async (key: string, obj: any) => {
-    
     const file = obj[key].filepath
     const uploadImage = await uploadImageCloudinary(file)
     const data = {
@@ -13,27 +13,16 @@ const addImageCloud = async (key: string, obj: any) => {
 }
 
 export default defineEventHandler(async(event) => {
-    
     const form = formidable({})
     
-    const response  = await new Promise((resolse, reject) => {
-        
+    const { field, files } = await new Promise((resolse, reject) => {  
         form.parse(event.req, (err, fields, files) => {
-            if (err) {
-                reject(err)
-            }
+            if (err) reject(err)
             resolse({ fields, files })
         })
     })
-    
-    const { field, files } = response
 
-    
-
-    let addFiles: Promise<{
-        url: string;
-        secretUrl: string;
-    } | "Error">[] = Object.keys(files).map(async(key)=> {
+    let addFiles = Object.keys(files).map(async(key)=> {
             try {
               return await addImageCloud(key, files)
             } catch {

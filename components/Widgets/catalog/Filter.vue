@@ -93,7 +93,7 @@ const emit = defineEmits<{
 
 
 const { getInfo: getInfoProduct } = useProduct()
-const route: RouteLocationNormalizedLoaded = useRoute()
+const route = useRoute()
 const router = useRouter()
 const filterList = ref(CreateFilterList(route))
 const makerList = ref<MakerItem[]>([])
@@ -163,16 +163,17 @@ type SearchParams = { where: { categor: string } | { NOT: [{categor: ''}] }, sel
 async function getMakerlist(params: SearchParams): Promise<void> {
     const selectOption = Prisma.validator<Prisma.ProductCardArgs>()({ select: params.select })
     type MakerNameList = Prisma.ProductCardGetPayload<typeof selectOption>
-    const listModifi = (list: string[]) => list.map(el => Object.create({ name: el, value: el }))
+
+    const listModifi = <T extends any,>(list: string[]):T[] => list.map(el => Object.create({ name: el, value: el }))
         
     try {
         const res = await getInfoProduct<MakerNameList[]>(params, 'many=true')
         if (!res) return
         const list = new Set(res.map(el => el.maker))
-        listModifi([...list])
+        makerList.value = listModifi<MakerItem>([...list])
     } catch (error) {
         console.log(error);
-    }
+    } 
 }
 
 function SearchParams():SearchParams {
@@ -208,6 +209,7 @@ watch(() => searchParameters.value, () => {
 })
 
 watch(() => route.query.categor!, async(newValue, oldValue) => {
+
     if (newValue === oldValue) return
     await getMakerlist(SearchParams())
 })

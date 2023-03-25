@@ -1,9 +1,11 @@
+export type updateStage = (e?: Event | undefined, active?: boolean) => void
 export default function () {
     const stage = ref(false)
     const { windowMask: _windowMask } = useStore()
     const { updateMask, active } = _windowMask()
 
-    function updateStage(e: MouseEventInit | undefined , active: boolean = !stage.value ) { 
+   
+    const updateStage: updateStage = (e = undefined, active = !stage.value) => { 
         stage.value = active
         updateMask(active)  
     }

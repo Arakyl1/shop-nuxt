@@ -1,5 +1,7 @@
 import { Prisma, ProductCard } from "@prisma/client";
 import { returnParamsAditional, returnParamsMain } from "~~/server/utils/searchParams";
+import { LocationQueryValue } from "vue-router";
+import { type } from "os";
 
 export type Request = 
 | { key: 'ProductCard', data: ProductCard }
@@ -40,7 +42,7 @@ const searchParams = returnParamsMain({ id: -1 }, returnParamsAditional({}))
 const UserSelect = Prisma.validator<Prisma.UserArgs>()({select: searchParams.select })
 export type UserBase = Prisma.UserGetPayload<typeof UserSelect>
 
-export const selectOption = selectForCard({
+export const selectOptionFull = selectForCard({
     ranting: true,
     itemArt: true,
     itemMod: true,
@@ -65,13 +67,43 @@ export const selectOption = selectForCard({
         }
     }
 })
+export const selectOptionBase = selectForCard({})
+export const selectOptionSearch = selectCardBySearch({ quantity: true })
 
-const baseOption = selectForCard({})
-const _baseOption = Prisma.validator<Prisma.ProductCardArgs>()(baseOption)
-export type _ProductCardBaseOption = Prisma.ProductCardGetPayload<typeof _baseOption>
 
-const select = Prisma.validator<Prisma.ProductCardArgs>()(selectOption)
-export type ProductCardFull = Prisma.ProductCardGetPayload<typeof select>
+const _selectOptionSearch = Prisma.validator<Prisma.ProductCardArgs>()(selectOptionSearch)
+export type ProductCardForSearch = Prisma.ProductCardGetPayload<typeof _selectOptionSearch>
+
+const _selectOptionBase = Prisma.validator<Prisma.ProductCardArgs>()(selectOptionBase)
+export type _ProductCardBase = Prisma.ProductCardGetPayload<typeof _selectOptionBase>
+
+const _selectOptionFull = Prisma.validator<Prisma.ProductCardArgs>()(selectOptionFull)
+export type _ProductCardFull = Prisma.ProductCardGetPayload<typeof _selectOptionFull>
+
 
 export type CategorItem = { name: string,  children: (CategorItem |{ name: string })[] } 
 export type CategorSelect = { select : CategorItem[]}
+
+
+export interface FilterList {
+    cat?: string | LocationQueryValue[],
+    price: { from: number, upTo: number },
+    maker: string[],
+    ranting: number,
+    actual: string[],
+    other: string[],
+}
+
+export type BaseOptionProductCard = 'name'|'art'|'maker'|'categor'|'img'|'subcategor'|'price'|'itemArt'|'itemMod'|'quantity'
+export interface CreateBaseProductCard {
+    name: string,
+    art: string,
+    maker: string,
+    categor: string,
+    img: string,
+    subcategor: string,
+    price: number,
+    itemArt: string,
+    itemMod: string,
+    quantity: number,
+}

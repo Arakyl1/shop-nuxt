@@ -2,7 +2,7 @@ import { RouteLocationNormalizedLoaded } from "vue-router";
 import { FilterList } from "./type";
 
 
-export function filterList(route: RouteLocationNormalizedLoaded): FilterList {
+export const filterList = <T extends RouteLocationNormalizedLoaded>(route: T): FilterList => {
     return {
         cat: route.query.categor ? route.query.categor : 'Категория',
         price: { from: 0, upTo: 0 },
@@ -13,7 +13,7 @@ export function filterList(route: RouteLocationNormalizedLoaded): FilterList {
     }
 }
 
-export function ListProduct(select?: object) {
+export const createBaseProductCard = <T extends object = {}>(select: T) => {
     return {
         name: '',
         art: '',
