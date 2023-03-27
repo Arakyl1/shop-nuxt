@@ -8,30 +8,22 @@
         <template #item="{ elem }">
             <EntitiesItemProductCard v-if="elem" :data="elem" class="group is-pos-info-for-stock">
                 <template #bt-favorite>
-                    <FeaturesAddFavorite :id="elem.id">
-                        <template #default="{ addProducFavorite, checkIdInFavorites }">
-                            <ClientOnly>
-                                <UIStandart class="group p-1" @click="addProducFavorite"
-                                    :class="[checkIdInFavorites ? 'icon-red' : 'icon-black']">
-                                    <UIIconLike class="h-7" />
-                                </UIStandart>
-                            </ClientOnly>
-                        </template>
-                    </FeaturesAddFavorite>
+                    <ClientOnly>
+                        <UIStandart class="group p-1" @click="addFatoriteItem(elem.id)"
+                            :class="[checkIdInFavorites(elem.id).value ? 'icon-red' : 'icon-black']">
+                            <UIIconLike class="h-7" />
+                        </UIStandart>
+                    </ClientOnly>
                 </template>
                 <template #bt-basket>
-                    <FeaturesAddBasket>
-                        <template #default="{ addBasketProduct }">
-                            <UIStandart class="flex bg-blue-500  justify-center items-center" @click="addBasketProduct({
-                                id: elem.id,
-                                quantity: 1,
-                                price: elem.sale ? Math.floor(elem.price * 0.9) : elem.price
-                            })">
-                                <UIIconBasketSmall class="group icon-white" />
-                                <p class="text-white ml-2">В корзину</p>
-                            </UIStandart>
-                        </template>
-                    </FeaturesAddBasket>
+                    <UIStandart class="flex bg-blue-500  justify-center items-center" @click="addBasket({
+                        id: elem.id,
+                        quantity: 1,
+                        price: elem.sale ? Math.floor(elem.price * 0.9) : elem.price
+                    })">
+                        <UIIconBasketSmall class="group icon-white" />
+                        <p class="text-white ml-2">В корзину</p>
+                    </UIStandart>
                 </template>
             </EntitiesItemProductCard>
             <EntitiesItemBase v-else />
@@ -44,6 +36,8 @@ import { _ProductCardBase, selectOptionBase } from '~~/type/intex';
 const props = defineProps<{ searchCategor: object }>()
 const data = ref<_ProductCardBase[] | null>(null)
 const { getInfo: getInfoProduct } = useProduct()
+const { addBasket } = useBasket()
+const { checkIdInFavorites, addFatoriteItem } = useFavorite()
 
 async function getDataByCategor() {
     const res = await getInfoProduct<_ProductCardBase[]>({ where: props.searchCategor, ...selectOptionBase }, 'many=true')

@@ -40,16 +40,22 @@ import { BaseOptionProductCard, CreateBaseProductCard } from "~~/type/intex";
 
 const props = defineProps<{ create?: boolean }>()
 const emit = defineEmits<{
-  (e: 'main-data', id: {}): void
+  (e: 'main-data', data: CreateBaseProductCard): void
 }>()
 
 const data = ref<CreateBaseProductCard & {}>(createBaseProductCard({}))
 
-const validateDate = computed(() => checkNotValidAlem(data.value))
+const validateDate = computed(() => checkValidDate(data.value))
 
 // methods
-function checkNotValidAlem(object: object): number {
-  return Object.values(object).findIndex((el: any) => typeof el === 'object' ? checkNotValidAlem(el) : (el === '' || el <= 0))
+type checkValidDate = { [K in PropertyKey]: string | number | object | any[]}
+function checkValidDate(data: checkValidDate | any[]): number {
+  if (Array.isArray(data)) {
+    return data.findIndex((el) => typeof el === 'object' && Array.isArray(el) ?
+    checkValidDate(el) : (el === '' || el <= 0))
+  } else {
+    return checkValidDate(Object.values(data))
+  }
 }
 
 //watch

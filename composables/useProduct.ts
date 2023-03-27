@@ -1,8 +1,8 @@
 import { ProductCard } from "@prisma/client";
-import { CreateUser } from "~~/type/intex";
+import { CharacteristicBlock } from "~~/type/intex";
 
 export default () => {
-    const create = async(data: CreateUser) => {
+    const create = async<T = ProductCard>(data: { main: T, characteristic?: CharacteristicBlock[]}) => {
         try {
             return await $fetch('/api/product/create', {
                 method: "POST",

@@ -1,6 +1,3 @@
-import { Prisma } from '@prisma/client'
-
-
 export const selectForCard = <T extends object>(select: T) => {
     return {
         select: {

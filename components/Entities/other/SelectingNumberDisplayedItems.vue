@@ -8,7 +8,7 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const numders = [
+const numders: readonly number[] = [
     6, 12, 18, 24, 30, 36, 42, 48, 54, 60
 ]
 

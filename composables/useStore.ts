@@ -5,7 +5,6 @@ import { accessToken as storeToken } from "@/pinia/accessToken";
 import { containerSize } from "@/pinia/windowSize";
 import { windowMask as _windowMask } from "@/pinia/windowMask";
 import { BasketItem, UserBase } from "@/type/intex";
-import { User } from "~~/utils/type";
 
 export default () => {
     const basket = () => {

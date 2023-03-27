@@ -1,12 +1,15 @@
-import { h } from 'vue'
+import { h, defineComponent } from 'vue'
 
 interface Props {
     
 }
-export default (_props?: Props , { slots }) => {
-    return h('button', {
-        ..._props,
-        type: 'button',
-        class: 'bt-base after:content-[" "]'
-    }, slots.default())
-}
+
+export default defineComponent ({
+    setup(props: any, { slots, attrs }: any) {
+        return () => h('button', {
+            ...attrs,
+            type: 'button',
+            class: 'bt-base after:content-[" "]'
+        }, slots.default())
+    }
+})

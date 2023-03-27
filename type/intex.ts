@@ -1,7 +1,6 @@
 import { Prisma, ProductCard } from "@prisma/client";
 import { returnParamsAditional, returnParamsMain } from "~~/server/utils/searchParams";
 import { LocationQueryValue } from "vue-router";
-import { type } from "os";
 
 export type Request = 
 | { key: 'ProductCard', data: ProductCard }
@@ -106,4 +105,16 @@ export interface CreateBaseProductCard {
     itemArt: string,
     itemMod: string,
     quantity: number,
+}
+
+export type CharacteristicItem = { name: string, value: string }
+export type CharacteristicBlock = { name: string, content: CharacteristicItem[] }
+
+export type ProductCardKeyParams = 'top'|'sale'|'news'|'delivery'|'pickUp'|'underTheOrder'
+export type ProductCardParams = Partial<RecordOption<ProductCardKeyParams, boolean>> & { 'description'?: string }
+
+export type ItemBasket = {
+    id: number,
+    quantity: number,
+    price: number,
 }

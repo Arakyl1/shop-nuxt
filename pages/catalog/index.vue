@@ -14,7 +14,7 @@
             md:fixed md:top-0 md:-left-full md:w-[360px] md:z-40
             sm:w-full sm:p-0 sm:overflow-y-scroll sm:h-screen"
                 :class="[stage ? 'md:-left-4 sm:left-0' : 'md:-left-full']">
-                <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6">
+                <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md">
                     <WidgetsCatalogFilter @option-seacrh="(e) => getIdProduct(e)"/>
                 </div>
             </div>
@@ -25,10 +25,10 @@
                 <div class="w-3/4 flex justify-center md:w-full">
                     <SharedUIButtomArround @click="prevPage(route)" :disabled="route.query.page ? (+route.query.page === 1) : false"
                         class="-scale-x-100 mr-32" />
-                    <SharedUIButtomArround @click="nextPage(route)" :disabled="!activeButtomNext" />
+                    <SharedUIButtomArround @click="nextPage(route)" :disabled="activeButtomNext === 0" />
                 </div>
             </div>
-    </section>
+        </section>
 </template>
 
 <script setup lang="ts">

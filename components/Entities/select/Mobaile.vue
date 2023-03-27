@@ -28,7 +28,6 @@ ref="modalMenu">
 </div>
 </template>
 <script setup lang="ts">
-import { ParsedContent } from '@nuxt/content/dist/runtime/types';
 import { _AsyncData } from 'nuxt/dist/app/composables/asyncData';
 import { updateStage } from '~~/utils/ShowContent';
 
@@ -43,7 +42,7 @@ const props = defineProps<{
     updateFun: updateStage
 }>()
 
-const { data }: _AsyncData<Pick<ParsedContent, string>, Error | null> = await useAsyncData(
+const { data } = await useAsyncData(
     'select', () => queryContent('/select').only(['select']).findOne())
 const route = useRoute()
 

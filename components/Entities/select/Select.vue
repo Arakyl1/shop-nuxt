@@ -10,7 +10,6 @@
             @click="$emit('categor', { obj: item, heigth: categor?.clientHeight })">
                 <UIIconArround />
             </div>
-            {{  route.query }}
         </div>
         </li>
     </ul>

@@ -1,4 +1,5 @@
 import { prismaCreate } from "~~/server/db/methods";
+import { CharacteristicItem } from "~~/type/intex";
 
 
 export default defineEventHandler(async(event) => {
@@ -15,7 +16,7 @@ export default defineEventHandler(async(event) => {
         }
     }
 
-    const characteristicItem = async(id: any, array: object[]) => {
+    const characteristicItem = async(id: number, array: CharacteristicItem[]) => {
         for (let i = 0; i < array.length; i++) {
             const item = array[i]; 
             prismaCreate('characteristicItem', { data: {

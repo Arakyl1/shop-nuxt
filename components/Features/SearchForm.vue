@@ -50,15 +50,16 @@
 </template>
 
 <script setup lang="ts">
+import { selectOptionSearch, ProductCardForSearch } from "@/type/intex";
 
 const props = defineProps<{ input?: string }>()
 const inputText = ref<string>('')
 const dataSearch = ref<any>()
 const route = useRoute()
-const { getInfo: getInfoProduct } = useProduct()
+const { getInfo: getInfoProduct } = useProduct() 
 
 async function getSearch(searchText: string) {
-    dataSearch.value = await getInfoProduct({
+    dataSearch.value = await getInfoProduct<ProductCardForSearch>({
         where: {
             OR: [
                 { name: { contains: searchText, mode: 'insensitive' } },
@@ -68,7 +69,7 @@ async function getSearch(searchText: string) {
             ]
         },
         take: 15,
-        ...selectCardBySearch({})
+        ...selectOptionSearch
     }, 'many=true')
 }
 

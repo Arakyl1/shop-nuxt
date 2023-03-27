@@ -10,17 +10,12 @@
             <div class="w-1/2 bg-gray-100 p-12 xl:p-8 lg:w-7/12">
                 <div class="relative">
                     <div class="absolute z-20 -right-1 top-1 sm:scale-75 sm:top-1.5 sm:right-1.5">
-
-                        <FeaturesAddFavorite :id="data.id">
-                            <template #default="{ addProducFavorite, checkIdInFavorites }">
-                                <ClientOnly>
-                                    <UIStandart class="group p-1" @click="addProducFavorite"
-                                        :class="[checkIdInFavorites ? 'icon-red' : 'icon-black']">
-                                        <UIIconLike class="h-7" />
-                                    </UIStandart>
-                                </ClientOnly>
-                            </template>
-                        </FeaturesAddFavorite>
+                        <ClientOnly>
+                            <UIStandart class="group p-1" @click="addFatoriteItem(data.id)"
+                                :class="[checkIdInFavorites(data.id).value ? 'icon-red' : 'icon-black']">
+                                <UIIconLike class="h-7" />
+                            </UIStandart>
+                        </ClientOnly>
                     </div>
 
                     <h3 class="text-4xl pr-12 text-black-500 mb-8 xl:text-3xl xl:mb-6 lg:text-2xl">{{ data.name }}
@@ -30,7 +25,7 @@
                     <div class="flex py-8 justify-between xl:py-6">
                         <SharedUIStar :quantity-star="data.ranting" class="grow justify-between" />
                         <p class="ml-4 grow text-gray-500">Отзывы ({{ data.reviews.length }})</p>
-                        <SharedUIButtomShare class="p-0 group is-icon-blue" />
+                        <SharedUIButtomShare @click="copyLink" class="p-0 group is-icon-blue" />
                     </div>
                     <div class="decor-line"></div>
                     <div class="flex py-8 xl:py-6">
@@ -46,22 +41,16 @@
                     </div>
                     <div class="decor-line"></div>
                     <div class="pt-8 flex items-center justify-between xl:pt-6">
-                        <FeaturesAddBasket>
-                            <template #default="{ addBasketProduct }">
-                                <UIStandart @click="addBasketProduct({
-                                    id: data.id,
-                                    quantity: numberOfProduct,
-                                    price: data.sale ? Math.floor(data.price * 0.9) : data.price
-                                })"
-                                    class="flex bg-blue-500  justify-center items-center px-16 lg:px-10">
-                                    <UIIconBasketSmall class="group icon-white" />
-                                    <p class="text-white ml-2">В корзину</p>
-                                </UIStandart>
-                            </template>
-                        </FeaturesAddBasket>
-                        <p class="text-lg font-medium"
-                            :class="[data.quantity === 0 ? 'text-red-500' : 'text-yellow-500 ']"
-                            >{{ data.quantity > 0 ? 'В наличии' : 'Нет в наличии'}}</p>
+                        <UIStandart @click="addBasket({
+                            id: data.id,
+                            quantity: numberOfProduct,
+                            price: data.sale ? Math.floor(data.price * 0.9) : data.price
+                        })" class="flex bg-blue-500  justify-center items-center px-16 lg:px-10">
+                            <UIIconBasketSmall class="group icon-white" />
+                            <p class="text-white ml-2">В корзину</p>
+                        </UIStandart>
+                        <p class="text-lg font-medium" :class="[data.quantity === 0 ? 'text-red-500' : 'text-yellow-500 ']">
+                            {{ data.quantity > 0 ? 'В наличии' : 'Нет в наличии' }}</p>
                     </div>
                 </div>
             </div>
@@ -72,6 +61,9 @@
 import { _ProductCardFull } from '~~/type/intex';
 
 const props = defineProps<{ data: _ProductCardFull }>()
+const { addBasket } = useBasket()
+const { addFatoriteItem, checkIdInFavorites } = useFavorite()
+const { copyLink } = useShare()
 
 const numberOfProduct = ref<number>(1)
 </script>

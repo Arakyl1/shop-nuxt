@@ -66,17 +66,15 @@
 </template>
 
 <script setup lang="ts">
-
-type itemChar = { name: string, value: string }
-type blockChar = { name: string, content: itemChar[] }
+import { CharacteristicBlock } from '~~/type/intex';
 
 const props = defineProps<{ create?: boolean}>()
 const emit = defineEmits<{
-    (e: 'characteristic', id: blockChar[]): void
+    (e: 'characteristic', id: CharacteristicBlock[]): void
 }>()
 
-const data = ref<blockChar[]>([])
-const dataChare = ref<blockChar | null>(null)
+const data = ref<CharacteristicBlock[]>([])
+const dataChare = ref<CharacteristicBlock | null>(null)
 
 
 const arrayButtom = {
@@ -91,7 +89,6 @@ const arrayButtom = {
   ]
 }
 
-computed
 const checkDataChare = computed(() => (dataChare.value
   ? (dataChare.value.name !== '' && dataChare.value.content.length > 0)
   ? dataChare.value.content.findIndex((el) => el.name === '' || el.value === '')
