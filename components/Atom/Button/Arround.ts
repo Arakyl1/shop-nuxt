@@ -1,5 +1,5 @@
 import { h, defineComponent } from 'vue'
-import { default as _BT_BASE } from "@/components/Atom/Button/Standart";
+import { default as _BT_BASE } from "~~/components/Atom/Button/Standart.vue";
 import IconArround  from '@/components/Icon/Arround';
 
 export default defineComponent ({

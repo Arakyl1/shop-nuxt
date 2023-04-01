@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import AtomButtonStandart from "~~/components/Atom/Button/Standart";
+import AtomButtonStandart from "@/components/Atom/Button/Standart.vue"
 import IconShare from '@/components/Icon/Share';
 
 export default (props: any ) => {

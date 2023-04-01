@@ -6,7 +6,7 @@
                 <p class="text-gray-300 mr-1 sm:text-sm">Показывать:
                     <span class="text-blue-500 ml-1 sm:text-sm">по</span>
                 </p>
-            <AtomOtherQuantitySelection 
+            <AtomOtherSelectingNumberDisplayedItems
             class="p-0 px-1 focus-visible:outline-none text-blue-500 cursor-pointer sm:text-sm"/>
             </div>
         </div>
