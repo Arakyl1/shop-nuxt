@@ -36,7 +36,7 @@
 </template>
 <script setup lang="ts">
 import { createBaseProductCard  } from "@/utils/create";
-import { BaseOptionProductCard, CreateBaseProductCard } from "~~/type/intex";
+import type { BaseOptionProductCard, CreateBaseProductCard } from "@/type/intex";
 
 const props = defineProps<{ create?: boolean }>()
 const emit = defineEmits<{

@@ -1,4 +1,4 @@
-import { UserCreateCommit } from "@/type/intex"
+import type { UserCreateCommit } from "@/type/intex"
 
 export default () => {
     const create = async(body: UserCreateCommit) => {

@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { productCardBaseParamsSelectFull, _ProductCardFull } from '~~/type/intex';
+import { productCardBaseParamsSelectFull, type _ProductCardFull } from '~~/type/intex';
 
 definePageMeta({
     title: 'Информация о товаре',

@@ -1,9 +1,6 @@
 import { h } from "vue";
 
-interface Props {
-
-}
-export default (_props?: Props) => {
+export default (_props: any) => {
     return h('svg', {
         ..._props,
         width: '14',

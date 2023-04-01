@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { productCardParamsForSearchSelect, ProductCardForSearch } from "@/type/intex";
+import { productCardParamsForSearchSelect, type ProductCardForSearch } from "@/type/intex";
 
 const props = defineProps<{ input?: string }>()
 const inputText = ref<string>('')

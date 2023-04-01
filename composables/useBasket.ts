@@ -1,5 +1,5 @@
 import { basketProduct } from "@/pinia/basket";
-import { ItemBasket } from "~~/type/intex";
+import type { ItemBasket } from "~~/type/intex";
 
 export default () => {
     const addBasket = (item:ItemBasket) => {    

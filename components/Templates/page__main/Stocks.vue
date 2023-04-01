@@ -52,5 +52,4 @@
 const { isDesktopOrTablet, isMobile } = useDevice()
 
 const data = await queryContent('/main/slader').findOne()
-
 </script>

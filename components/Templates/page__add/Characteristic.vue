@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { CharacteristicBlock } from '~~/type/intex';
+import type { CharacteristicBlock } from '~~/type/intex';
 
 const props = defineProps<{ create?: boolean}>()
 const emit = defineEmits<{

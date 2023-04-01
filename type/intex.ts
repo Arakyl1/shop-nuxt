@@ -1,4 +1,4 @@
-import { Prisma, ProductCard } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
 import { LocationQueryValue } from "vue-router";
 import { productCardBaseParams, productCardParamsForSearch } from "@/utils/prismaSelect"

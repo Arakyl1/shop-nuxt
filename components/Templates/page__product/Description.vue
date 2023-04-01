@@ -41,9 +41,9 @@
     </section>
 </template>
 <script setup lang="ts">
-import ShowContent from "@/utils/ShowContent";
-import { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
-import { _ProductCardFull } from '~~/type/intex';
+import { showContent } from "@/utils/ShowContent";
+import type { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
+import type { _ProductCardFull } from '~~/type/intex';
 
 interface Props {
     description: _ProductCardFull['description'],
@@ -55,7 +55,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { stage, updateStage } = ShowContent();
+const { stage, updateStage } = showContent();
 const { user: _user } = useStore()
 const { userData } = _user()
 

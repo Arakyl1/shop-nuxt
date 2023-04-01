@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { CategorItem } from "@/type/intex";
+import type { CategorItem } from "@/type/intex";
 
 const { data } = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
 const categor = ref<HTMLElement | null>(null)

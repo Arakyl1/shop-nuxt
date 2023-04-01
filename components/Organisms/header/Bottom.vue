@@ -43,12 +43,12 @@
     </div>
 </template>
 <script setup lang="ts">
-import ShowContent  from "@/utils/ShowContent"
-import { CategorItem } from "~~/type/intex";
+import { showContent }  from "@/utils/ShowContent"
+import type { CategorItem } from "~~/type/intex";
 
 const listCategor = ref<CategorItem>({ name: '', children: [] })
 
-const { stage, updateStage } = ShowContent()
+const { stage, updateStage } = showContent()
 const heightSelectAditional = ref<number>(0)
 const list = ref<HTMLElement | null>(null)
 const active = ref(true)

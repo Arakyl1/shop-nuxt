@@ -58,7 +58,7 @@
     </section>
 </template>
 <script setup lang="ts">
-import { _ProductCardFull } from '~~/type/intex';
+import type { _ProductCardFull } from '~~/type/intex';
 
 const props = defineProps<{ data: _ProductCardFull }>()
 const { addBasket } = useBasket()

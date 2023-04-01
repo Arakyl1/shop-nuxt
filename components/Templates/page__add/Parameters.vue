@@ -35,7 +35,7 @@
 </section>
 </template>
 <script setup lang="ts">
-import { ProductCardKeyParams, ProductCardParams } from "@/type/intex";
+import type { ProductCardKeyParams, ProductCardParams } from "@/type/intex";
 
 const props = defineProps<{create?: boolean}>()
 const emit = defineEmits<{

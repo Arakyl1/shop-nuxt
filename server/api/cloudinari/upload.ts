@@ -1,6 +1,5 @@
 import { uploadImageCloudinary } from "@/server/utils/cloudibary";
 import formidable from 'formidable';
-import IncomingForm from "formidable/Formidable";
 
 const addImageCloud = async (key: string, obj: any) => {
     const file = obj[key].filepath

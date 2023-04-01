@@ -32,9 +32,9 @@
 </template>
 
 <script setup lang="ts">
-import ShowContent from "@/utils/ShowContent"
+import { showContent } from "@/utils/ShowContent"
 import { prevPage, nextPage } from "~~/components/Atom/catalog/funControlPage";;
-import { _ProductCardBase, productCardBaseParamsSelect } from "~~/type/intex";
+import { type _ProductCardBase, productCardBaseParamsSelect } from "~~/type/intex";
 
 definePageMeta({
     middleware: ['catalog'],
@@ -44,7 +44,7 @@ definePageMeta({
 
 const filter = ref<HTMLElement | null>(null)
 const toucheData = toucheElemPosition(filter)
-const { stage, updateStage } = ShowContent()
+const { stage, updateStage } = showContent()
 const route = useRoute()
 const listIdProduct = ref<_ProductCardBase[]>([])
 const loader = ref<boolean>(true)

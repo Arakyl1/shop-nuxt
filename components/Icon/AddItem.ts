@@ -1,9 +1,6 @@
 import { h } from "vue";
 
-interface Props {
-
-}
-export default (_props?: Props) => {
+export default (_props: any) => {
     return h('svg', {
         viewBox: '0 0 576 512',
         class: 'w-7 h-7',

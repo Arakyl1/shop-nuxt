@@ -32,7 +32,7 @@
 </template>
 <script setup lang="ts">
 import { Prisma } from '@prisma/client';
-import { _ProductCardBase, productCardBaseParamsSelect } from '~~/type/intex';
+import { type _ProductCardBase, productCardBaseParamsSelect } from '~~/type/intex';
 
 const props = defineProps<{ searchCategor: Prisma.ProductCardWhereInput }>()
 const data = ref<_ProductCardBase[] | null>(null)

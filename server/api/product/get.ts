@@ -1,4 +1,3 @@
-import { log } from "console"
 import { H3Event } from "h3"
 import { prismaFindUnique, prismafindMany } from "~~/server/db/methods"
 

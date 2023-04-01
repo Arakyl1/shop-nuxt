@@ -15,7 +15,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { CreateBaseProductCard, CharacteristicBlock, ProductCardParams } from '~~/type/intex';
+import type { CreateBaseProductCard, CharacteristicBlock, ProductCardParams } from '~~/type/intex';
 
 definePageMeta({
     title: "Добавить товар", 

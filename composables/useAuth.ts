@@ -1,5 +1,5 @@
 
-import { UserLoginData, UserRegisterData } from "@/type/intex";
+import type { UserLoginData, UserRegisterData } from "@/type/intex";
 
 export default () => {
     const register = async(event: UserRegisterData) => {

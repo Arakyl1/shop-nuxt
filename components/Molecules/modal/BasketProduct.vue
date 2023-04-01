@@ -22,9 +22,9 @@
 </template>
 
 <script setup lang="ts">
-import ShowContent from "~~/utils/ShowContent";
+import { showContent } from "~~/utils/ShowContent";
 
-const { stage, updateStage } = ShowContent();
+const { stage, updateStage } = showContent();
 const { basket: _basketSore } = useStore()
 const { basket } = _basketSore()
 

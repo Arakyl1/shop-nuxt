@@ -26,10 +26,9 @@
     </AtomModalTransition>
 </template>
 <script setup lang="ts">
-import { UserBase } from '@/type/intex';
-import { UserCreateCommit } from "@/type/intex";
-import { AsyncDataExecuteOptions } from 'nuxt/dist/app/composables/asyncData';
-import { updateStage } from '~~/utils/ShowContent';
+import type { UserBase, UserCreateCommit } from '@/type/intex';
+import type { AsyncDataExecuteOptions } from 'nuxt/dist/app/composables/asyncData';
+import type { updateStage } from '~~/utils/ShowContent';
 
 const props = defineProps<{
     data: {

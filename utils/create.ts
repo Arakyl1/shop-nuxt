@@ -1,5 +1,6 @@
 import { RouteLocationNormalizedLoaded } from "vue-router";
-import { FilterList } from "./type";
+import { FilterList } from "@/type/intex";
+import { Prisma } from "@prisma/client";
 
 
 export const filterList = <T extends RouteLocationNormalizedLoaded>(route: T): FilterList => {
@@ -13,7 +14,7 @@ export const filterList = <T extends RouteLocationNormalizedLoaded>(route: T): F
     }
 }
 
-export const createBaseProductCard = <T extends object = {}>(select: T) => {
+export const createBaseProductCard = <T extends Prisma.ProductCardSelect = {}>(select: T) => {
     return {
         name: '',
         art: '',

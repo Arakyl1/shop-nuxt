@@ -27,7 +27,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { _ProductCardBase, productCardBaseParamsSelect } from '~~/type/intex';
+import { type _ProductCardBase, productCardBaseParamsSelect } from '~~/type/intex';
 
 const props = withDefaults(defineProps<{
     data: _ProductCardBase | null

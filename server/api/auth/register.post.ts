@@ -31,7 +31,6 @@ export default defineEventHandler(async(event: H3Event) => {
 
         const user: UserCreateBase = await prismaCreate('user', { data: updateUserData, select: UserCreateSelect })
         
-
         // Generate Token
         try {
             const { accessToken, refrechToken } = await generateTokens(user)

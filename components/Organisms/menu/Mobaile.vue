@@ -27,8 +27,8 @@ ref="modalMenu">
 </div>
 </template>
 <script setup lang="ts">
-import { _AsyncData } from 'nuxt/dist/app/composables/asyncData';
-import { updateStage } from '~~/utils/ShowContent';
+import type { _AsyncData } from 'nuxt/dist/app/composables/asyncData';
+import type { updateStage } from '~~/utils/ShowContent';
 
 interface ToucheData {
     x: number | null,

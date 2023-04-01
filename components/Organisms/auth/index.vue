@@ -20,9 +20,9 @@
     </AtomModalTransition>
 </template>
 <script setup lang="ts">
-import ShowContent from '~~/utils/ShowContent';
+import { showContent } from '~~/utils/ShowContent';
 
-const { stage, updateStage } = ShowContent()
+const { stage, updateStage } = showContent()
 const modalLogin = ref<boolean>(true)
 const { user: _user} = useStore()
 const { userData } = _user()

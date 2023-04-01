@@ -1,5 +1,5 @@
 export type updateStage = (e?: Event | undefined, active?: boolean) => void
-export default function () {
+export function showContent() {
     const stage = ref(false)
     const { windowMask: _windowMask } = useStore()
     const { updateMask, active } = _windowMask()

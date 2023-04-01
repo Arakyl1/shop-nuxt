@@ -1,9 +1,7 @@
 import { prismaCreate } from "~~/server/db/methods";
 import { CharacteristicItem } from "~~/type/intex";
 
-
 export default defineEventHandler(async(event) => {
-    
     const data = await readBody(event);
 
     const characteristic = async(id: number) => {

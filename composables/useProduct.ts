@@ -1,5 +1,4 @@
 import { ProductCard } from "@prisma/client";
-import { log } from "console";
 import { CharacteristicBlock } from "~~/type/intex";
 
 export default () => {
