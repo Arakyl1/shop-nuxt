@@ -1,13 +1,8 @@
 import { Prisma, ProductCard } from "@prisma/client";
-import { returnParamsAditional, returnParamsMain } from "~~/server/utils/searchParams";
+import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
 import { LocationQueryValue } from "vue-router";
+import { productCardBaseParams, productCardParamsForSearch } from "@/utils/prismaSelect"
 
-export type Request = 
-| { key: 'ProductCard', data: ProductCard }
-
-
-export type ProductCardSearchOption = 'id'|'name'|'art'|'price'|'img'|'sale'
-export type ProductCardBaseOption = 'id'|'name'|'art'|'price'|'img'|'news'|'sale'|'quantity'
  
 export type RecordOption<T extends PropertyKey, U> = { [K in T]: U} 
 
@@ -37,11 +32,11 @@ export type UserRegisterData = UserLoginData & { email: string, repeartPassword:
 
 export type BasketItem = { id: number, price: number, quantity: number }
 
-const searchParams = returnParamsMain({ id: -1 }, returnParamsAditional({}))
+const searchParams = userBaseParams({ id: -1 }, userAditionalParams({}))
 const UserSelect = Prisma.validator<Prisma.UserArgs>()({select: searchParams.select })
 export type UserBase = Prisma.UserGetPayload<typeof UserSelect>
 
-export const selectOptionFull = selectForCard({
+export const productCardBaseParamsSelectFull = productCardBaseParams({
     ranting: true,
     itemArt: true,
     itemMod: true,
@@ -66,18 +61,18 @@ export const selectOptionFull = selectForCard({
         }
     }
 })
-export const selectOptionBase = selectForCard({})
-export const selectOptionSearch = selectCardBySearch({ quantity: true })
+const _productCardBaseParamsSelectFull = Prisma.validator<Prisma.ProductCardArgs>()(productCardBaseParamsSelectFull)
+export type _ProductCardFull = Prisma.ProductCardGetPayload<typeof _productCardBaseParamsSelectFull>
 
 
-const _selectOptionSearch = Prisma.validator<Prisma.ProductCardArgs>()(selectOptionSearch)
-export type ProductCardForSearch = Prisma.ProductCardGetPayload<typeof _selectOptionSearch>
+export const productCardBaseParamsSelect = productCardBaseParams({})
+const _productCardBaseParamsSelect = Prisma.validator<Prisma.ProductCardArgs>()(productCardBaseParamsSelect)
+export type _ProductCardBase = Prisma.ProductCardGetPayload<typeof _productCardBaseParamsSelect>
 
-const _selectOptionBase = Prisma.validator<Prisma.ProductCardArgs>()(selectOptionBase)
-export type _ProductCardBase = Prisma.ProductCardGetPayload<typeof _selectOptionBase>
 
-const _selectOptionFull = Prisma.validator<Prisma.ProductCardArgs>()(selectOptionFull)
-export type _ProductCardFull = Prisma.ProductCardGetPayload<typeof _selectOptionFull>
+export const productCardParamsForSearchSelect = productCardParamsForSearch({ quantity: true })
+const _productCardParamsForSearchSelect = Prisma.validator<Prisma.ProductCardArgs>()(productCardParamsForSearchSelect)
+export type ProductCardForSearch = Prisma.ProductCardGetPayload<typeof _productCardParamsForSearchSelect>
 
 
 export type CategorItem = { name: string,  children: (CategorItem |{ name: string })[] } 
@@ -117,4 +112,26 @@ export type ItemBasket = {
     id: number,
     quantity: number,
     price: number,
+}
+
+
+export const UserCreateSelect =  {
+    id: true,
+    email: true,
+    name: true,
+    username: true,
+    profileImage: true,
+}
+
+const _UserCreateSelect = Prisma.validator<Prisma.UserArgs>()({ select: UserCreateSelect })
+export type UserCreateBase = Prisma.UserGetPayload<typeof _UserCreateSelect>
+
+
+export interface FilterList {
+    cat?: string | LocationQueryValue[],
+    price: { from: number, upTo: number },
+    maker: string[],
+    ranting: number,
+    actual: string[],
+    other: string[],
 }

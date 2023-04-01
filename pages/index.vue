@@ -1,30 +1,28 @@
 <template>
-    <div>
-         
-        <!-- <WidgetsMainStocks class="mb-16 xl:mb-12"/> -->
+    <div> 
+        <TemplatesPageMainStocks class="mb-16 xl:mb-12"/>
 
-        <WidgetsMainCarusel :searchCategor="{ sale: true }">
+        <TemplatesPageMainCarusel :searchCategor="{ 'sale': true }">
             <template #title>
                 Товары на акции
             </template>
-        </WidgetsMainCarusel>
+        </TemplatesPageMainCarusel>
 
-        <!-- <WidgetsMainCarusel :searchCategor="'news'">
+        <TemplatesPageMainCarusel :searchCategor="{ 'news': true }">
             <template #title>
                 Новинки
             </template>
-        </WidgetsMainCarusel>
+        </TemplatesPageMainCarusel>
 
-        <WidgetsMainAdvertisement class="mb-16 xl:mb-12"/>
+        <TemplatesPageMainAdvertisement class="mb-16 xl:mb-12"/>
         
-        <WidgetsMainCarusel :searchCategor="'top'">
+        <TemplatesPageMainCarusel :searchCategor="{ 'top': true }">
             <template #title>
                 Товары месяца
             </template>
-        </WidgetsMainCarusel>
+        </TemplatesPageMainCarusel>
     
-        <WidgetsMainAdvantages class="mb-20 xl:mb-16"/> -->
-        
+        <TemplatesPageMainAdvantages class="mb-20 xl:mb-16"/>
     </div>
 </template>
 
@@ -33,6 +31,4 @@ definePageMeta({
    keepalive: true,
    title: 'Главная страница'
 })
-
-
 </script>

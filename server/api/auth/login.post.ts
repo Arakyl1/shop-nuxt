@@ -1,15 +1,16 @@
+import { H3Event } from "h3"
 import { prismaFindUnique } from "../../db/methods";
 import { generateTokens, sendRefrechToken } from "../../utils/jwt";
 import bcryptjs from "bcryptjs";
 import { prismaCreate } from "~~/server/db/methods";
 import { userTransform } from "~~/server/utils/userTransform";
-import { returnParamsMain, returnParamsAditional } from "@/server/utils/searchParams";
+import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect"
 
-export default defineEventHandler(async(event) => {
+export default defineEventHandler(async(event: H3Event) => {
     const body = await readBody(event)
     const { username, password } = body 
 
-    const searchParams = returnParamsMain({ username: username }, returnParamsAditional({ password: true }))
+    const searchParams = userBaseParams({ username: username }, userAditionalParams({ password: true }))
     const user = await prismaFindUnique('user', searchParams)
     if (!user) return({ message: 'Такой пользователь на зарегистрирован'})
 

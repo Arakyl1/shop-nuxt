@@ -1,7 +1,7 @@
 import { prismaFindUnique } from "@/server/db/methods"
 import { decodeAccessToken } from "@/server/utils/jwt"
 import { userTransform } from "~~/server/utils/userTransform"
-import { returnParamsMain, returnParamsAditional } from "@/server/utils/searchParams";
+import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
 import { Prisma } from '@prisma/client'
 
 
@@ -12,7 +12,7 @@ export default defineEventHandler(async(event) => {
     if (!(decoded instanceof Object && 'userId' in decoded)) return { message: 'Unauthorized' }
 
     try {
-        const searchParams = returnParamsMain({ id: decoded.userId }, returnParamsAditional({}))
+        const searchParams = userBaseParams({ id: decoded.userId }, userAditionalParams({}))
         const select = Prisma.validator<Prisma.UserArgs>()({select: searchParams.select })
         type UserBase = Prisma.UserGetPayload<typeof select>
 

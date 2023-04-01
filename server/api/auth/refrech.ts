@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { prismaFindUnique } from "~~/server/db/methods"
 import { decodeRefrechToken, generateTokens } from "~~/server/utils/jwt"
-import { returnParamsMain, returnParamsAditional } from "@/server/utils/searchParams";
+import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
 
 export default defineEventHandler(async(event) => {
 
@@ -14,11 +14,15 @@ export default defineEventHandler(async(event) => {
     const token: string | JwtPayload | null = decodeRefrechToken(refrechToken)
     
     try {
-        const searchParams = returnParamsMain({ id: token.userId}, returnParamsAditional())
-        const user = await prismaFindUnique('user', searchParams)
-        
-        const { accessToken } = await generateTokens(user)
-        return { accessToken }
+        if (typeof token === 'object' && token) {
+            const searchParams = userBaseParams({ id: token.userId}, userAditionalParams({}))
+            const user = await prismaFindUnique('user', searchParams)
+            
+            const { accessToken } = await generateTokens(user)
+            return { accessToken }
+        } else {
+            return { message: "Something went wrong" }
+        }
     } catch (error) {
         return { message: "Something went wrong" }
     }

@@ -1,33 +1,82 @@
 import { Prisma } from "@prisma/client";
 import prisma from "."
 
-export type ModelName = 
-    | { key: 'user', type: Prisma.UserCreateArgs } 
-    | { key: 'refrechToken', type: Prisma.RefrechTokenCreateArgs} 
-    | { key: 'post', type: Prisma.PostCreateArgs }
-    | { key: 'productCard', type: Prisma.ProductCardCreateArgs }
-    | { key: 'comment', type: Prisma.CommentCreateArgs }
-    | { key: 'characteristic', type: Prisma.CharacteristicCreateArgs }
-    | { key: 'characteristicItem', type: Prisma.CharacteristicItemCreateArgs }
+type ModelNameCreate = {
+    'user': Prisma.UserCreateArgs , 
+    'refrechToken': Prisma.RefrechTokenCreateArgs , 
+    'post': Prisma.PostCreateArgs ,
+    'productCard': Prisma.ProductCardCreateArgs ,
+    'comment': Prisma.CommentCreateArgs ,
+    'characteristic': Prisma.CharacteristicCreateArgs ,
+    'characteristicItem': Prisma.CharacteristicItemCreateArgs
+}
 
-type keyPrismaTable = 'characteristic' | 'characteristicItem' | 'comment' | 'post' | 'productCard' | 'refrechToken' | 'user'
+type ModelNameFindUnique = {
+    'user': Prisma.UserFindUniqueArgsBase, 
+    'refrechToken': Prisma.RefrechTokenFindUniqueArgsBase, 
+    'post': Prisma.PostFindUniqueArgsBase, 
+    'productCard': Prisma.ProductCardFindUniqueArgsBase, 
+    'comment': Prisma.CommentFindUniqueArgsBase, 
+    'characteristic': Prisma.CharacteristicFindUniqueArgsBase, 
+    'characteristicItem': Prisma.CharacteristicItemFindUniqueArgsBase
+}
 
-export const prismaCreate = async<T extends ModelName>( key: T['key'], body: T['type']) => {
+type ModelNameFindMany = {
+    'user': Prisma.UserFindManyArgs , 
+    'refrechToken': Prisma.RefrechTokenFindManyArgs , 
+    'post': Prisma.PostFindManyArgs, 
+    'productCard': Prisma.ProductCardFindManyArgs, 
+    'comment': Prisma.CommentFindManyArgs, 
+    'characteristic': Prisma.CharacteristicFindManyArgs, 
+    'characteristicItem': Prisma.CharacteristicItemFindManyArgs
+}
+
+type ModelNameUpdate = {
+    'user': Prisma.UserUpdateArgs,
+    'refrechToken': Prisma.RefrechTokenUpdateArgs,
+    'post': Prisma.PostUpdateArgs,
+    'productCard': Prisma.ProductCardUpdateArgs,
+    'comment': Prisma.CommentUpdateArgs,
+    'characteristic': Prisma.CharacteristicUpdateArgs,
+    'characteristicItem': Prisma.CharacteristicItemUpdateArgs
+}
+
+type ModelNameDelete = {
+    'user': Prisma.UserDeleteArgs ,
+    'refrechToken': Prisma.RefrechTokenDeleteArgs ,
+    'post': Prisma.PostDeleteArgs,
+    'productCard': Prisma.ProductCardDeleteArgs,
+    'comment': Prisma.CommentDeleteArgs,
+    'characteristic': Prisma.CharacteristicDeleteArgs,
+    'characteristicItem': Prisma.CharacteristicItemDeleteArgs
+}
+
+
+//type keyPrismaTable = 'characteristic' | 'characteristicItem' | 'comment' | 'post' | 'productCard' | 'refrechToken' | 'user'
+
+export const prismaCreate = async<T extends keyof ModelNameCreate>(
+    key: T, body: ModelNameCreate[T]) => {
     return await prisma[key].create(body)
 }
 
-export const prismaFindUnique = async(key: unknown, body: object) => {
-    return await prisma[key as keyPrismaTable].findUnique(body)
+export const prismaFindUnique = async<T extends keyof ModelNameFindUnique>(
+    key: T, body: ModelNameFindUnique[T]) => {
+    return await prisma[key].findUnique(body)
 }
 
-export const prismafindMany = async(key: unknown, body: object) => {
-    return prisma[key as keyPrismaTable].findMany(body)
+export const prismafindMany = async<T extends keyof ModelNameFindMany>(
+    key: T, body: ModelNameFindMany[T]) => {
+    return prisma[key].findMany(body)
 }
 
-export const prismaUpdate = async(key: unknown, body: object) => {
-    return prisma[key as keyPrismaTable].update(body)
+export const prismaUpdate = async<T extends keyof ModelNameUpdate>(
+    key: T, body: ModelNameUpdate[T]) => {
+    return prisma[key].update(body)
 }
 
-export const prismaDelete = async(key: unknown, body: object) => {
-    return prisma[key as keyPrismaTable].delete(body)
+export const prismaDelete = async<T extends keyof ModelNameDelete>(
+    key: T, body: ModelNameDelete[T]) => {
+    return prisma[key].delete(body)
 }
+
+// prisma.user.findUnique({select: { ff: true }})

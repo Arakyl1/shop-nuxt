@@ -11,7 +11,7 @@ const cloudinaryPost = () => {
     return cloudinary
 }
 
-export const uploadImageCloudinary = async (image: any) => {
+export const uploadImageCloudinary = async (image: string) => {
     return await cloudinaryPost().uploader.upload(image, {
         height: 800,
         width: 800,

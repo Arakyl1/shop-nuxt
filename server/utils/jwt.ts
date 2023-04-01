@@ -1,21 +1,21 @@
+import { H3Event } from "h3";
 import jwt from "jsonwebtoken";
+import { RuntimeConfig } from "@nuxt/schema";
+import { UserCreateBase } from "~~/type/intex";
 
-const generateAsccessToken = (user: any, config: any) => {
-
+const generateAsccessToken = <T extends RuntimeConfig>(user: UserCreateBase, config: T) => {
     return jwt.sign({ userId: user.id}, config.jwtAccessSecret, {
         expiresIn: '1h'
     })
 }
-const generateRefrechToken = (user: any, config: any) => {
+const generateRefrechToken = <T extends RuntimeConfig>(user: UserCreateBase, config: T) => {
     return jwt.sign({ userId: user.id}, config.jwtRefrechSecret, {
         expiresIn: '4h'
     })
-
 }
 
 export const decodeRefrechToken = (token: string) => {
     const config = useRuntimeConfig()
-
     try {
         return jwt.verify(token, config.jwtRefrechSecret)
     } catch (error) {
@@ -25,7 +25,6 @@ export const decodeRefrechToken = (token: string) => {
 
 export const decodeAccessToken = (token: string) => {
     const config = useRuntimeConfig()
-
     try {
         return jwt.verify(token, config.jwtAccessSecret)
     } catch (error) {
@@ -33,10 +32,9 @@ export const decodeAccessToken = (token: string) => {
     }
 }
 
-export const generateTokens = async(user: any) => {
+export const generateTokens = async(user: UserCreateBase) => {
     const config = useRuntimeConfig()
-
-    const accessToken = generateAsccessToken(user, config)
+    const accessToken = generateAsccessToken<typeof config>(user, config)
     const refrechToken = generateRefrechToken(user, config)
     
     return {
@@ -45,7 +43,8 @@ export const generateTokens = async(user: any) => {
     }
 }
 
-export const sendRefrechToken = async (event, token) => {
+export const sendRefrechToken = async (event: H3Event, token: string | null) => {
+    if (!token) return
     setCookie(event, "refrech_token", token, {
         httpOnly: true,
         sameSite: true

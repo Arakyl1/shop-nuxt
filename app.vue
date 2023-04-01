@@ -3,32 +3,33 @@
     <div class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask" :class="[{ active: active }]"
       @click="updateMask(false)"></div>
     <div>
-      <WidgetsHeader v-if="isDesktopOrTablet" class="mb-4" />
-      <WidgetsHeaderMobaile v-else class="mb-4" />
+      <OrganismsHeader v-if="isDesktopOrTablet" class="mb-4" />
+      <OrganismsHeaderMobaile v-else class="mb-4" />
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
       <Transition name="path">
-        <EntitiesOtherPath v-if="route.path !== '/'" />
+        <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition>
       <div class="min-h-screen">
         <NuxtPage :transition="{ name: 'page-transition' }"></NuxtPage>
       </div>
     </div>
     <div>
-      <WidgetsFooter v-if="isDesktopOrTablet" />
-      <WidgetsFooterMobaile v-else />
+      <OrganismsFooter v-if="isDesktopOrTablet" />
+      <OrganismsFooterMobaile v-else />
     </div>
     <Transition name="alert">
-      <EntitiesOtherAlert />
+      <AtomOtherAlert />
     </Transition>
-    <WidgetsModalFavorite/>
-    <WidgetsModalBasket/>
-    <FeaturesUseAuth />
+    <TemplatesModalFavorite/>
+    <TemplatesModalBasket/>
+    <OrganismsAuth />
     <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
   </div>
 </template>
 
 <script setup lang="ts">
+
 const { windowMask: _windowMask, windowSize: _windowSize, user: _user } = useStore()
 const { updateMask, active } = _windowMask()
 const { userData } = _user()
@@ -45,8 +46,6 @@ onBeforeMount(async () => {
   updateSize(window)
   window.addEventListener('resize', () => updateSize(window))
 })
-
-
 
 // user data
 // name PPPPPPPP

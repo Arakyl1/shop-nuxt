@@ -1,10 +1,10 @@
 import { prismaFindUnique } from "~~/server/db/methods"
-import { returnParamsMain } from "@/server/utils/searchParams";
+import { userBaseParams } from "@/utils/prismaSelect";
 
 export default defineEventHandler(async(event) => {
     const body = await readBody(event)
     try {
-        const searchParams = returnParamsMain({ id: body })
+        const searchParams = userBaseParams({ id: body }, {})
         const data = await prismaFindUnique('user', searchParams)
         return data
     } catch (error) {

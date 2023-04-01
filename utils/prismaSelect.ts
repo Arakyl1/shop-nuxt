@@ -1,4 +1,6 @@
-export const selectForCard = <T extends object>(select: T) => {
+import { Prisma } from "@prisma/client";
+
+export const productCardBaseParams = <T extends Prisma.ProductCardSelect>(select: T) => {
     return {
         select: {
             id: true,
@@ -13,7 +15,7 @@ export const selectForCard = <T extends object>(select: T) => {
         }
     }
 }
-export const selectCardBySearch = <T extends object>(select: T) => {
+export const productCardParamsForSearch = <T extends Prisma.ProductCardSelect>(select: T) => {
     return {
         select: {
             id: true,
@@ -27,6 +29,28 @@ export const selectCardBySearch = <T extends object>(select: T) => {
     }
 }
 
+export function userBaseParams<T extends Prisma.UserSelect = {}>(
+    where: Prisma.UserWhereUniqueInput, select: T) {
+        return {
+            where: where,
+            select: {
+                username: true,
+                profileImage: true,
+                ...select
+            }
+        }
+    }
+    
+export function userAditionalParams<T extends Prisma.UserSelect = {}>(
+    select: T){
+        return {
+            id: true,
+            name: true,
+            email: true,
+            ...select
+        }
+    }
+    
 
 type DeepKeys<T> = T extends string ? never : {
     [K in keyof T & string]: T[K] extends boolean ? true : DeepKeys<T[K]>;

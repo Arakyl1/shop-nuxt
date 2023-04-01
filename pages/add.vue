@@ -1,16 +1,16 @@
 <template>
     <div>
-        <WidgetsAddMain class="mb-8" @main-data="(e) => mainParams = e " :create="create"/>
-        <WidgetsAddCharacteristic class="mb-8"
+        <TemplatesPageAddMain class="mb-8" @main-data="(e) => mainParams = e " :create="create"/>
+        <TemplatesPageAddCharacteristic class="mb-8"
         @characteristic="(e) => characteristic = e"
         :create="create"/>
-        <WidgetsAddParameters class="mb-8" @parameter="(e) => additionalParameter = e"
+        <TemplatesPageAddParameters class="mb-8" @parameter="(e) => additionalParameter = e"
         :create="create"/>
         <div class="mb-10 text-right">
-            <UIStandart @click="createItem"
+            <AtomButtonStandart @click="createItem"
             class="bg-blue-700 text-white">
                 Добавить товар
-            </UIStandart>
+            </AtomButtonStandart>
         </div>
     </div>
 </template>

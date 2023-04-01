@@ -1,31 +1,31 @@
 <template>
     <div></div>
     <section>
-        <WidgetsCatalogHeader />
+        <TemplatesPageCatalogHeader />
         <div class="flex -mx-4 md:relative mb-8 min-h-[90vh] sm:-mx-2">
             <div class=" fixed top-1/2 left-0 z-20 transition-all hidden md:block"
                 :class="[stage ? 'opacity-0' : ' opacity-100']">
-                <UIStandart class="bg-blue-500 aspect-square
+                <AtomButtonStandart class="bg-blue-500 aspect-square
                 sm:px-2 sm:py-1" @click="updateStage($event, true)">
-                    <UIIconFilter class="group is-icon-white h-6"/>
-                </UIStandart>
+                    <IconFilter class="group is-icon-white h-6"/>
+                </AtomButtonStandart>
             </div>
             <div ref="filter" class="w-1/4 px-4 lg:w-1/3 transition-all
             md:fixed md:top-0 md:-left-full md:w-[360px] md:z-40
             sm:w-full sm:p-0 sm:overflow-y-scroll sm:h-screen"
                 :class="[stage ? 'md:-left-4 sm:left-0' : 'md:-left-full']">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md">
-                    <WidgetsCatalogFilter @option-seacrh="(e) => getIdProduct(e)"/>
+                    <TemplatesPageCatalogFilter @option-seacrh="(e) => getIdProduct(e)"/>
                 </div>
             </div>
-            <WidgetsCatalogGalletyItems :list-id-product="listIdProduct" :loader="loader" />
+            <TemplatesPageCatalogGalletyItems :list-id-product="listIdProduct" :loader="loader" />
         </div>
             <div class="flex mb-20">
                 <div class="w-1/4 md:hidden"></div>
                 <div class="w-3/4 flex justify-center md:w-full">
-                    <SharedUIButtomArround @click="prevPage(route)" :disabled="route.query.page ? (+route.query.page === 1) : false"
+                    <AtomButtonStandart @click="prevPage(route)" :disabled="route.query.page ? (+route.query.page === 1) : false"
                         class="-scale-x-100 mr-32" />
-                    <SharedUIButtomArround @click="nextPage(route)" :disabled="activeButtomNext === 0" />
+                    <AtomButtonStandart @click="nextPage(route)" :disabled="activeButtomNext === 0" />
                 </div>
             </div>
         </section>
@@ -33,8 +33,8 @@
 
 <script setup lang="ts">
 import ShowContent from "@/utils/ShowContent"
-import { prevPage, nextPage } from "@/components/Features/catalog/FunctionControl";;
-import { _ProductCardBase, selectOptionBase } from "~~/type/intex";
+import { prevPage, nextPage } from "~~/components/Atom/catalog/funControlPage";;
+import { _ProductCardBase, productCardBaseParamsSelect } from "~~/type/intex";
 
 definePageMeta({
     middleware: ['catalog'],
@@ -71,7 +71,7 @@ async function getIdProduct(optionSeacrh: object = {}) {
         skip: ((page - 1) * limit),
         take: limit,
         where: optionSeacrh,
-        ...selectOptionBase
+        ...productCardBaseParamsSelect
     }, 'many=true')
 
     listIdProduct.value = res ? res : []

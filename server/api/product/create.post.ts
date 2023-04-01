@@ -28,7 +28,7 @@ export default defineEventHandler(async(event) => {
     }
 
     try {
-        const product = await prismaCreate('roductCard',{ data: data.main });
+        const product = await prismaCreate('productCard',{ data: data.main });
         await characteristic(product.id)
         return true
     } catch (error) {
