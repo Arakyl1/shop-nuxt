@@ -4,8 +4,10 @@
             <template #item="{ elem, prevItem, nextItem }">
                 <template v-if="elem">
                     <div class="relative">
-                        <!-- <img :src="isDesktopOrTablet ? elem.link_img_big : elem.link_img_small" alt=""
-                            class="object-cover min-w-full rounded"> -->
+                        <ClientOnly>
+                            <img :src="isDesktopOrTablet ? elem.link_img_big : elem.link_img_small" alt=""
+                                class="object-cover min-w-full rounded">
+                        </ClientOnly>
                         <div class="absolute w-[40%] h-min top-1/2 left-[10%]
                                 -translate-y-1/2 text-black-300
                                 lg:w-1/2

@@ -5,7 +5,9 @@
                 <template #item="{ elem }">
                     <div >
                         <div>
-                            <img :src="elem.img" alt="market_foto" class="object-cover w-full">
+                            <ClientOnly>
+                                <img :src="elem.img" alt="market_foto" class="object-cover w-full">
+                            </ClientOnly>
                             <p class="py-2 lg:text-sm md:text-base">{{ elem.adress }}</p>
                         </div>
                     </div>
