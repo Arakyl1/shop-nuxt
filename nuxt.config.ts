@@ -31,5 +31,12 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/delivery': { swr: true }
+  },
+  vite: {
+    resolve: {
+      alias: {
+        ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
+      }
+    }
   }
 });
