@@ -5,16 +5,16 @@
     <div>
       <OrganismsHeader v-if="isDesktopOrTablet" class="mb-4" />
       <OrganismsHeaderMobaile v-else class="mb-4" />
-    </div>
+    </div> -->
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
       <Transition name="path">
         <MoleculesOtherPath v-if="route.path !== '/'" />
-      </Transition> -->
+      </Transition>
       <div class="min-h-screen">
         <NuxtPage :transition="{ name: 'page-transition' }"></NuxtPage>
       </div>
-    <!-- </div>
-    <div>
+    </div>
+    <!-- <div>
       <OrganismsFooter v-if="isDesktopOrTablet" />
       <OrganismsFooterMobaile v-else />
     </div>
@@ -34,7 +34,7 @@
 // const { updateMask, active } = _windowMask()
 // const { userData } = _user()
 // const { updateSize } = _windowSize()
-// const route = useRoute()
+const route = useRoute()
 // const { isDesktopOrTablet } = useDevice();
 // const { initAuth } = useAuth()
 
