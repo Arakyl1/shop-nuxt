@@ -1,9 +1,9 @@
 <template>
     <MoleculesSladerBase :data="data" :containerClass="style.container" class="mb-16 xl:mb-12">
         <template #header="{ prevItem, nextItem }">
-            <MoleculesSladerControl :prevItem="prevItem" :nextItem="nextItem">
+            <!-- <MoleculesSladerControl :prevItem="prevItem" :nextItem="nextItem">
                 <slot name="title">Slader title</slot>
-            </MoleculesSladerControl>
+            </MoleculesSladerControl> -->
         </template>
         <template #item="{ elem }">
             <MoleculesItemProductCard v-if="elem" :data="elem" class="group is-pos-info-for-stock">

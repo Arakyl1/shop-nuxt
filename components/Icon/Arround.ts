@@ -2,7 +2,6 @@ import { h } from "vue";
 
 export default (_props: any) => {
     return h('svg', {
-        ..._props,
         width: '6',
         height: '11',
         viewBox: '0 0 6 11',
