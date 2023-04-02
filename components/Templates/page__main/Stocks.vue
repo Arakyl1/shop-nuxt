@@ -1,6 +1,6 @@
 <template>
     <section class="aspect-[228/101] w-full">
-        <MoleculesSladerBase :data="dataSlader">
+        <MoleculesSladerBase :data="data.body">
             <template #item="{ elem, prevItem, nextItem }">
                 <template v-if="elem">
                     <div class="relative">
@@ -53,31 +53,31 @@
 <script setup lang="ts">
 const { isDesktopOrTablet, isMobile } = useDevice()
 
-// const data = await queryContent('/main/slader').findOne()
+const data = await queryContent('/main/slader').findOne()
 
 
-const dataSlader = [
-    {
-        title: "Сильнее снегопада",
-        text: "Большой выбор снегоуборочных машин. Качественные устройства для любого бюджета",
-        link_img_big: "https://ic.wampi.ru/2023/01/10/3-1.webp",
-        link_img_small: "https://ic.wampi.ru/2023/01/10/sla3-min-1.webp",
-        title_col: "text-black-300"
-    },
-    {
-        title: "Электро-Бензо инструмент",
-        text: "Большой выбор и хорошие цены",
-        link_img_big: "https://ie.wampi.ru/2023/01/10/1-1.webp",
-        link_img_small: "https://ie.wampi.ru/2023/01/10/sla1-min-1.webp",
-        title_col: "text-white"
-    },
-    {
-        title: "FUBAG ГЕНЕРАТОРЫ",
-        text: "FUBAG предлагает широкий набор опций для увеличения функциональности и мобильности генераторов",
-        link_img_big: "https://im.wampi.ru/2023/01/10/2-1.webp",
-        link_img_small: "https://im.wampi.ru/2023/01/10/sla2-min-1.webp",
-        title_col: "text-black-300"
-    },
-]
+// const dataSlader = [
+//     {
+//         title: "Сильнее снегопада",
+//         text: "Большой выбор снегоуборочных машин. Качественные устройства для любого бюджета",
+//         link_img_big: "https://ic.wampi.ru/2023/01/10/3-1.webp",
+//         link_img_small: "https://ic.wampi.ru/2023/01/10/sla3-min-1.webp",
+//         title_col: "text-black-300"
+//     },
+//     {
+//         title: "Электро-Бензо инструмент",
+//         text: "Большой выбор и хорошие цены",
+//         link_img_big: "https://ie.wampi.ru/2023/01/10/1-1.webp",
+//         link_img_small: "https://ie.wampi.ru/2023/01/10/sla1-min-1.webp",
+//         title_col: "text-white"
+//     },
+//     {
+//         title: "FUBAG ГЕНЕРАТОРЫ",
+//         text: "FUBAG предлагает широкий набор опций для увеличения функциональности и мобильности генераторов",
+//         link_img_big: "https://im.wampi.ru/2023/01/10/2-1.webp",
+//         link_img_small: "https://im.wampi.ru/2023/01/10/sla2-min-1.webp",
+//         title_col: "text-black-300"
+//     },
+// ]
 
 </script>

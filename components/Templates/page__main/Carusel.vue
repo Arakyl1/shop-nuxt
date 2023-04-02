@@ -16,12 +16,12 @@
                     </ClientOnly>
                 </template>
                 <template #bt-basket>
-                    <AtomButtonStandart class="flex bg-blue-500  justify-center items-center" @click="addBasket({
+                    <AtomButtonStandart class="flex bg-blue-500  justify-center items-center md:py-2 sm:text-sm" @click="addBasket({
                         id: elem.id,
                         quantity: 1,
                         price: elem.sale ? Math.floor(elem.price * 0.9) : elem.price
                     })">
-                        <IconBasketSmall class="group icon-white" />
+                        <IconBasketSmall class="group icon-white sm:w-5" />
                         <p class="text-white ml-2">В корзину</p>
                     </AtomButtonStandart>
                 </template>
