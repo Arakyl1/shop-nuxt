@@ -1,11 +1,11 @@
 <template>
   <div>
-    <!-- <div class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask" :class="[{ active: active }]"
+    <div class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask" :class="[{ active: active }]"
       @click="updateMask(false)"></div>
     <div>
       <OrganismsHeader v-if="isDesktopOrTablet" class="mb-4" />
       <OrganismsHeaderMobaile v-else class="mb-4" />
-    </div> -->
+    </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
       <Transition name="path">
         <MoleculesOtherPath v-if="route.path !== '/'" />
@@ -14,7 +14,7 @@
         <NuxtPage :transition="{ name: 'page-transition' }"></NuxtPage>
       </div>
     </div>
-    <!-- <div>
+    <div>
       <OrganismsFooter v-if="isDesktopOrTablet" />
       <OrganismsFooterMobaile v-else />
     </div>
@@ -24,28 +24,28 @@
     <TemplatesModalFavorite/>
     <TemplatesModalBasket/>
     <OrganismsAuth />
-    <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div> -->
+    <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-// const { windowMask: _windowMask, windowSize: _windowSize, user: _user } = useStore()
-// const { updateMask, active } = _windowMask()
-// const { userData } = _user()
-// const { updateSize } = _windowSize()
+const { windowMask: _windowMask, windowSize: _windowSize, user: _user } = useStore()
+const { updateMask, active } = _windowMask()
+const { userData } = _user()
+const { updateSize } = _windowSize()
 const route = useRoute()
-// const { isDesktopOrTablet } = useDevice();
-// const { initAuth } = useAuth()
+const { isDesktopOrTablet } = useDevice();
+const { initAuth } = useAuth()
 
-// onBeforeMount(async () => {
-//   if (!userData.value) {
-//     initAuth()
-//   }
+onBeforeMount(async () => {
+  if (!userData.value) {
+    initAuth()
+  }
 
-//   updateSize(window)
-//   window.addEventListener('resize', () => updateSize(window))
-// })
+  updateSize(window)
+  window.addEventListener('resize', () => updateSize(window))
+})
 
 // user data
 // name PPPPPPPP
