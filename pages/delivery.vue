@@ -1,5 +1,5 @@
 <template>
-    <!-- <TemplatesPageDeliveryInfo/> -->
+    <TemplatesPageDeliveryInfo/>
     <section class="hidden lg:gap-x-6"></section>
 </template>
 

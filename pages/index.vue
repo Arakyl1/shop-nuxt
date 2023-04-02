@@ -8,7 +8,7 @@
             </template>
         </TemplatesPageMainCarusel>
 
-        <!-- <TemplatesPageMainCarusel :searchCategor="{ 'news': true }">
+        <TemplatesPageMainCarusel :searchCategor="{ 'news': true }">
             <template #title>
                 Новинки
             </template>
@@ -22,7 +22,7 @@
             </template>
         </TemplatesPageMainCarusel>
     
-        <TemplatesPageMainAdvantages class="mb-20 xl:mb-16"/> -->
+        <TemplatesPageMainAdvantages class="mb-20 xl:mb-16"/>
     </div>
 </template>
 

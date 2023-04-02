@@ -1,6 +1,6 @@
 <template>
     <div></div>
-    <!-- <section>
+    <section>
         <TemplatesPageCatalogHeader />
         <div class="flex -mx-4 md:relative mb-8 min-h-[90vh] sm:-mx-2">
             <div class=" fixed top-1/2 left-0 z-20 transition-all hidden md:block"
@@ -28,62 +28,62 @@
                     <AtomButtonStandart @click="nextPage(route)" :disabled="activeButtomNext === 0" />
                 </div>
             </div>
-        </section> -->
+        </section>
 </template>
 
 <script setup lang="ts">
 import { showContent } from "@/utils/ShowContent"
-// import { prevPage, nextPage } from "~~/components/Atom/catalog/funControlPage";;
-// import { type _ProductCardBase, productCardBaseParamsSelect } from "~~/type/intex";
+import { prevPage, nextPage } from "~~/components/Atom/catalog/funControlPage";;
+import { type _ProductCardBase, productCardBaseParamsSelect } from "~~/type/intex";
 
-// definePageMeta({
-//     middleware: ['catalog'],
-//     title: 'Каталог товаров',
-//     keepalive: true
-// })
+definePageMeta({
+    middleware: ['catalog'],
+    title: 'Каталог товаров',
+    keepalive: true
+})
 
-// const filter = ref<HTMLElement | null>(null)
-// const toucheData = toucheElemPosition(filter)
-// const { stage, updateStage } = showContent()
-// const route = useRoute()
-// const listIdProduct = ref<_ProductCardBase[]>([])
-// const loader = ref<boolean>(true)
-// const activeButtomNext = ref<number>(0)
-// const { getInfo: getInfoProduct } = useProduct()
-// const { isMobile } = useDevice()
+const filter = ref<HTMLElement | null>(null)
+const toucheData = toucheElemPosition(filter)
+const { stage, updateStage } = showContent()
+const route = useRoute()
+const listIdProduct = ref<_ProductCardBase[]>([])
+const loader = ref<boolean>(true)
+const activeButtomNext = ref<number>(0)
+const { getInfo: getInfoProduct } = useProduct()
+const { isMobile } = useDevice()
 
 
-// watch(() => toucheData.vector, (newVector) => {
-//     if (newVector === 3) {
-//         updateStage()
-//     }
-// })
+watch(() => toucheData.vector, (newVector) => {
+    if (newVector === 3) {
+        updateStage()
+    }
+})
 
-// async function getIdProduct(optionSeacrh: object = {}) {
-//     if (isMobile) {
-//         updateStage(event, false)
-//     }
-//     loader.value = true
-//     const page = route.query.page ? +route.query.page : 1
-//     const limit = route.query.limit ? +route.query.limit : 12
+async function getIdProduct(optionSeacrh: object = {}) {
+    if (isMobile) {
+        updateStage(event, false)
+    }
+    loader.value = true
+    const page = route.query.page ? +route.query.page : 1
+    const limit = route.query.limit ? +route.query.limit : 12
 
-//     const res = await getInfoProduct<_ProductCardBase[]>({
-//         skip: ((page - 1) * limit),
-//         take: limit,
-//         where: optionSeacrh,
-//         ...productCardBaseParamsSelect
-//     }, 'many=true')
+    const res = await getInfoProduct<_ProductCardBase[]>({
+        skip: ((page - 1) * limit),
+        take: limit,
+        where: optionSeacrh,
+        ...productCardBaseParamsSelect
+    }, 'many=true')
 
-//     listIdProduct.value = res ? res : []
+    listIdProduct.value = res ? res : []
 
-//     const dataOfNextPage = await getInfoProduct<_ProductCardBase[]>({
-//         skip: (page * limit),
-//         take: limit,
-//         where: optionSeacrh,
-//         select: { id: true }
-//     }, 'many=true') || []
+    const dataOfNextPage = await getInfoProduct<_ProductCardBase[]>({
+        skip: (page * limit),
+        take: limit,
+        where: optionSeacrh,
+        select: { id: true }
+    }, 'many=true') || []
 
-//     activeButtomNext.value = dataOfNextPage ? dataOfNextPage.length : 0
-//     loader.value = false
-// }
+    activeButtomNext.value = dataOfNextPage ? dataOfNextPage.length : 0
+    loader.value = false
+}
 </script>
