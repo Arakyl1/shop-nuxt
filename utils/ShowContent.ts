@@ -1,3 +1,4 @@
+
 export type updateStage = (e?: Event | undefined, active?: boolean) => void
 export function showContent() {
     const stage = ref(false)
@@ -7,9 +8,9 @@ export function showContent() {
    
     const updateStage: updateStage = (e = undefined, active = !stage.value) => { 
         stage.value = active
-        updateMask(active)  
+        updateMask(active)
     }
-
+    
     watch(() => useRoute().fullPath, async () => {
         if (stage.value) updateStage(event, false)
     })
@@ -19,5 +20,6 @@ export function showContent() {
             stage.value = false
         }
     })
+
     return { stage, updateStage }
 }

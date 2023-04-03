@@ -8,7 +8,7 @@
         :create="create"/>
         <div class="mb-10 text-right">
             <AtomButtonStandart @click="createItem"
-            class="bg-blue-700 text-white">
+            class="bg-blue-700 text-white ">
                 Добавить товар
             </AtomButtonStandart>
         </div>
@@ -19,6 +19,7 @@ import type { CreateBaseProductCard, CharacteristicBlock, ProductCardParams } fr
 
 definePageMeta({
     title: "Добавить товар", 
+    middleware: ['add']
 })
 
 const data = ref({})
@@ -27,6 +28,8 @@ const characteristic = ref<CharacteristicBlock[] | null>(null)
 const additionalParameter = ref<ProductCardParams>({})
 const create = ref(false)
 const { createAlert } = useAlert()
+const { user: _user } = useStore()
+const { userData } = _user()
 const { create: createProduct } = useProduct()
 
 // methods 
@@ -48,4 +51,10 @@ async function createItem() {
     }
 }
 
+
+watch(() => userData.value, async(newV) => {
+    if (!newV) {
+        await navigateTo('/')
+    }
+})
 </script>

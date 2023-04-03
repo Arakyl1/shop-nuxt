@@ -18,7 +18,7 @@
             </div>
             <div class="relative">
                 <AtomOtherInfoForStock :news="data.news!" :sell="data.sale!" class="-left-4 top-16 text-lg px-5
-                sm:-left-3 sm:top-4 sm:px-3 sm:text-sm" />
+                    sm:-left-3 sm:top-4 sm:px-3 sm:text-sm" />
                 <div class="px-16">
                     <img :src="data.img" :alt="data.name" class="object-cover">
                 </div>
@@ -31,13 +31,12 @@
             </div>
             <div class="flex justify-between py-4">
                 <AtomTransformPrice :price="data.price" :sale="data.sale!" :style="'text-4xl sm:text-2xl'" />
-                <AtomOtherQuantitySelection :data-quantity="data.quantity"
-                    @number-of-products="(e) => numberOfProducts = e" class="sm:px-2 sm:py-1" />
+                <AtomOtherQuantitySelection :data-quantity="data.quantity" @number-of-products="(e) => numberOfProducts = e"
+                    class="sm:px-2 sm:py-1" />
             </div>
             <div class="flex">
 
-                <AtomButtonStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow"
-                @click="addBasket({
+                <AtomButtonStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow" @click="addBasket({
                     id: data.id,
                     quantity: numberOfProducts,
                     price: data.sale ? Math.floor(data.price * 0.9) : data.price
@@ -45,16 +44,16 @@
                     <IconBasketSmall class="group icon-white" />
                     <p class="text-white ml-2">В корзину</p>
                 </AtomButtonStandart>
-                
-                        <ClientOnly>
-                            <AtomButtonStandart class="group bg-blue-500 px-4 ml-3 aspect-square sm:px-3"
-                                @click="addFatoriteItem(data.id)"
-                                :class="[checkIdInFavorites(data.id) ? 'icon-red' : 'icon-black']">
-                                <IconLike class="h-7" />
-                            </AtomButtonStandart>
-                        </ClientOnly>
-                    
-                <AtomButtonShare @click="copyLink" class="bg-blue-500 px-4 ml-3 aspect-square sm:px-3 group is-icon-white" />
+
+                <ClientOnly>
+                    <AtomButtonStandart class=" bg-blue-500 px-4 mx-3 sm:px-3 aspect-square group"
+                        @click="addFatoriteItem(data.id)"
+                        :class="[checkIdInFavorites(data.id) ? 'icon-red' : 'icon-black']">
+                        <IconLike class="h-7" />
+                    </AtomButtonStandart>
+                    <AtomButtonShare @click="copyLink"
+                    class="bg-blue-500 px-4  m:px-3 group is-icon-white aspect-square" />
+                </ClientOnly>
             </div>
         </div>
     </section>

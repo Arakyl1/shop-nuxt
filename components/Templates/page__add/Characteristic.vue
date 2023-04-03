@@ -15,14 +15,14 @@
                     <input
                       type="text"
                       :class="style.input"
-                      class="w-full"
+                      class="w-full mb-4"
                       placeholder="Название раздела"
                       v-model.trim="dataChare.name"
                     />
                     <template v-if="dataChare.content.length > 0">
                         <div v-for="(item, index) in dataChare.content"
                         :key="index"
-                        class="grid grid-cols-2 gap-x-4">
+                        class="flex items-center mb-4">
                         <input
                           type="text"
                           :class="style.input"
@@ -31,10 +31,14 @@
                         />
                         <input
                           type="text"
+                          class="mx-4"
                           :class="style.input"
                           placeholder="Значение"
                           v-model="dataChare.content[index].value"
                         />
+                        <AtomButtonStandart class="p-0 group is-icon-black" @click="removeItem(index)">
+                          <IconClose class="h-6 w-6"/>
+                        </AtomButtonStandart>
                         </div>
                     </template>
                 </form>
@@ -47,12 +51,25 @@
                         >{{ item.text }}
                         </AtomButtonStandart>
                     </template>
+                    <AtomButtonStandart
+                      class="text-white font-medium mx-2 bg-yellow-500"
+                      @click="editActive ? applyEditGroup() : createSection()"
+                      >{{ editActive ? 'Применить изменения' : 'Создать раздел' }}
+                    </AtomButtonStandart>
                 </div>
             </template>
             <template v-if="data.length">
-                <div class="pt-4">
-                    <div class="mb-2" v-for="item in data" :key="item.name">
-                      <h2 class="text-2xl mb-2 xl:text-xl">{{ item.name }}</h2>
+                <div class="pt-4 ">
+                    <div class="mb-4" v-for="item, index in data" :key="item.name">
+                      <div class="flex mb-2">
+                        <h2 class="text-2xl xl:text-xl grow">{{ item.name }}</h2>
+                        <AtomButtonStandart class="p-0 ml-2 group is-icon-black" @click="makeEditingActive(index)">
+                          <IconEdit class="h-6 w-6 "/>
+                        </AtomButtonStandart>
+                        <AtomButtonStandart class="p-0 ml-2 group is-icon-black" @click="removeGroup(index)">
+                          <IconDelete class="h-7 w-7"/>
+                        </AtomButtonStandart>
+                      </div>
                       <div class="decor-line mb-2"></div>
                       <div class="flex mb-0" v-for="el in item.content" :key="el.name">
                         <p class="text-lg grow xl:text-base">{{ el.name }}</p>
@@ -75,6 +92,9 @@ const emit = defineEmits<{
 
 const data = ref<CharacteristicBlock[]>([])
 const dataChare = ref<CharacteristicBlock | null>(null)
+const editActive = ref<boolean>(false)
+const indexEditGroup = ref<number | null>(null)
+const { createAlert } = useAlert()
 
 
 const arrayButtom = {
@@ -85,7 +105,6 @@ const arrayButtom = {
   edit: [
     { style: 'bg-blue-500', function: () => { dataChare.value?.content.push({ name: '', value: '' }) }, text: 'Добавить поле' },
     { style: 'bg-black-300', function: () => { dataChare.value?.content.pop() }, text: 'Удалить последнее поле' },
-    { style: 'bg-yellow-500', function: createSection, text: 'Создать раздел' }
   ]
 }
 
@@ -98,12 +117,43 @@ const checkDataLength = computed(() => data.value.length)
 
 
 function createSection() {
-    if (checkDataChare.value === -1 && dataChare.value) {
-        data.value.push(dataChare.value)
-        dataChare.value = null
-    }
+  if (checkDataChare.value === -1 && dataChare.value) {
+    data.value.push(dataChare.value)
+    dataChare.value = null
+  }
+  if (checkDataChare.value !== null && checkDataChare.value >= 0) {
+    createAlert('Не все поля заполенены')
+  }
 }
 
+function removeItem(elemIndex: number) {
+    if (dataChare.value) {
+      dataChare.value.content.splice(elemIndex,1)
+    }
+}
+function makeEditingActive(groupIndex:number) {
+  indexEditGroup.value = groupIndex
+  const group = data.value.slice(groupIndex, groupIndex + 1)
+  dataChare.value = group[0]
+  if (group[0]) {
+    editActive.value = true
+  }
+}
+
+function applyEditGroup() {
+  if (checkDataChare.value === -1 && dataChare.value && indexEditGroup.value !== null) {
+    data.value.splice(indexEditGroup.value, 1, dataChare.value)  
+    dataChare.value = null
+    editActive.value = false
+  }
+  if (checkDataChare.value !== null && checkDataChare.value >= 0) {
+    createAlert('Не все поля заполенены')
+  }
+}
+
+function removeGroup(indexGroup:number) {
+  data.value.splice(indexGroup,1)
+}
 // watch
 watch(() => checkDataLength.value, () => {
     emit('characteristic', data.value)
@@ -115,6 +165,6 @@ watch(() => props.create, () => {
 })
 
 const style = {
-    input: 'px-2 pb-1.5 pt-1 mb-4 border border-gray-300 border-solid rounded focus-visible:outline-0 focus:outline-0'
+    input: 'px-2 pb-1.5 pt-1 border border-gray-300 border-solid rounded focus-visible:outline-0 focus:outline-0 grow'
 }
 </script>

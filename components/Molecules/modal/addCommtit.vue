@@ -1,5 +1,5 @@
 <template>
-    <AtomModalTransition :active="stage">
+    <AtomModalTransition :active="stage" :draggable="true">
         <div class="bg-white rounded-md py-8 px-6 sm:py-6 sm:px-4">
             <div class="flex items-center mb-4" v-if="userData">
                 <img :src="userData.profileImage" alt="user-image" class="w-12 aspect-square">

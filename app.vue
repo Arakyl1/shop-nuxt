@@ -24,7 +24,7 @@
     <TemplatesModalFavorite/>
     <TemplatesModalBasket/>
     <OrganismsAuth />
-    <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6"></div>
+    <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6 "></div>
   </div>
 </template>
 
@@ -35,16 +35,28 @@ const { updateMask, active } = _windowMask()
 const { userData } = _user()
 const { updateSize } = _windowSize()
 const route = useRoute()
-const { isDesktopOrTablet } = useDevice();
+const { isDesktopOrTablet, isDesktop, isFirefox } = useDevice();
 const { initAuth } = useAuth()
 
 onBeforeMount(async () => {
-  if (!userData.value) {
-    initAuth()
-  }
+  if (!userData.value) initAuth()
 
   updateSize(window)
   window.addEventListener('resize', () => updateSize(window))
+})
+
+watch(() => active.value, (newValue) =>{
+  if (newValue) {
+    document.body.style.overflow = 'hidden'
+    if (isDesktop && !isFirefox) {
+      document.body.style.paddingRight = '16px'
+    }
+  } else {
+    document.body.style.overflowY = ''
+    if (isDesktop && !isFirefox) {
+      document.body.style.paddingRight = '0'
+    }
+  }
 })
 
 // user data

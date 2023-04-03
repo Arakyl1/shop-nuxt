@@ -15,7 +15,7 @@
             sm:w-full sm:p-0 sm:overflow-y-scroll sm:h-screen"
                 :class="[stage ? 'md:-left-4 sm:left-0' : 'md:-left-full']">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md">
-                    <TemplatesPageCatalogFilter @option-seacrh="(e) => getIdProduct(e)"/>
+                    <TemplatesPageCatalogFilter @option-seacrh="getIdProduct($event)"/>
                 </div>
             </div>
             <TemplatesPageCatalogGalletyItems :list-id-product="listIdProduct" :loader="loader" />
@@ -76,7 +76,7 @@ async function getIdProduct(optionSeacrh: object = {}) {
 
     listIdProduct.value = res ? res : []
 
-    const dataOfNextPage = await getInfoProduct<_ProductCardBase[]>({
+    const dataOfNextPage = await getInfoProduct<{ id: number}[]>({
         skip: (page * limit),
         take: limit,
         where: optionSeacrh,

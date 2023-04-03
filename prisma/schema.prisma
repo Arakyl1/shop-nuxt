@@ -20,6 +20,7 @@ model User {
   profileImage String
 
   createAt DateTime @default(now())
+  admin Boolean @default(false)
 
   posts   Post[]
   reviews Comment[]

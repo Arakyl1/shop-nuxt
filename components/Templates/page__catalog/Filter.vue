@@ -145,8 +145,8 @@ function routePushQueryCategor({ target }: Event) {
 }
 
 type filterListKey = 'maker'|'other'|'actual'
-const addData = (el: any[], way: string) => {
-    filterList.value[way as unknown as filterListKey] = el
+const addData = (el: any[], way: filterListKey) => {
+    filterList.value[way] = el
 }
 const addOption = (data: string[], option: object): void => Object.assign(
     option, ...data.map(el => { return { [el]: true } }));

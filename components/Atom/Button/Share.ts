@@ -3,5 +3,5 @@ import AtomButtonStandart from "@/components/Atom/Button/Standart.vue"
 import IconShare from '@/components/Icon/Share';
 
 export default (props: any ) => {
-    return h(AtomButtonStandart, null, () => h(IconShare))
+    return h(AtomButtonStandart, null, () => h(IconShare, { class: 'aspect-square'}))
 }

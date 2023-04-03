@@ -1,8 +1,8 @@
 <template>
     <div v-show="alertActive"
-    class="fixed top-5 right-5 shadow-md shadow-gray-300 z-50">
+    class="fixed top-5 right-5 shadow-md shadow-gray-300 z-50 max-w-[25%]">
         <div class="bg-white px-4 py-2 w-min h-min rounded">
-            <p class="text-blue-500 sm:text-sm whitespace-nowrap">{{ content }}</p>
+            <p class="text-blue-500 sm:text-sm whitespace-nowrap [overflow-wrap:break-word]">{{ content }}</p>
         </div>
     </div>
 </template>

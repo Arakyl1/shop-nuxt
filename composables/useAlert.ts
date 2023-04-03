@@ -1,10 +1,13 @@
-import { alertContent } from "~~/pinia/alertContent";
+import { alertContent, type notificationOption } from "~~/pinia/alertContent";
 
-export default () => {
+
+export default (option?: notificationOption) => {
     const alert = alertContent()
     const { content, alertActive } = storeToRefs(alert)
-    const createAlert = (event:string) => {
-        alert.updateContent(event)
+
+    const createAlert = (text:string) => {
+        alert.updateContent(text)
     }
+
     return { createAlert, content, alertActive }
 }

@@ -4,7 +4,7 @@
             <template #title>
                 <h2 class="text-2xl grow text-black-300 mb-6">Адреса для самовывоза</h2>
             </template>
-            <template #content>
+            <template #default>
                 <div>
                     <div class="flex justify-between bg-gray-100 py-3 px-5 rounded-md">
                         <p class="text-gray-300">Адрес</p>
