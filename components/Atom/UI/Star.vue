@@ -3,8 +3,7 @@
     @click="addNumberStar">
         <IconStar v-for="item in 5" :key="item"
         :data-star="item"
-        :class="[ quantityStar >= item ? 'group is-star-yellow' : 'group is-star-gray']"
-        class="item__star group-[.is-icon-small]:sm:scale-75 "/>
+        :class="[style.base, quantityStar >= item ? style.active : style.inActive]"/>
     </div>
 </template>
 
@@ -12,8 +11,19 @@
 import { RecordOption } from '~~/type/intex';
 
 withDefaults(defineProps<{
-    quantityStar?: number | undefined 
-}>(), { quantityStar: 0})
+    quantityStar?: number | undefined
+    style?: { base: string, active: string, inActive: string }
+}>(), {
+    quantityStar: 3,
+    style() {
+        return {
+            base: 'item__star group-[.is-icon-small]:sm:scale-75',
+            active: 'group is-star-yellow',
+            inActive: 'group is-star-gray'
+        }
+    },
+})
+
 const emit = defineEmits<{
     (e: 'numberStar', id: number): void
 }>()
@@ -23,7 +33,6 @@ function addNumberStar({ target }: MouseEvent) {
     interface ModifiedHTMLElement extends HTMLElement {
         dataset: DOMStringMap & RecordOption<DatasetKey, string>
     }
-
     const elementTarget = target as HTMLElement
     const element = elementTarget.closest('.item__star') as ModifiedHTMLElement
     const number: number = +element.dataset.star

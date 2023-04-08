@@ -1,7 +1,7 @@
 <template>
     <MoleculesModalFavoriteProduct>
         <template #default="{ item }">
-            <MoleculesItemProductCard :id="item" class="group is-pos-info-for-stock">
+            <MoleculesItemProductCard :id="item" :data="null" class="group is-pos-info-for-stock">
                 <template #bt-favorite>
 
                     <ClientOnly>

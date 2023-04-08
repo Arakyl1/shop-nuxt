@@ -23,9 +23,9 @@
             <div class="flex mb-20">
                 <div class="w-1/4 md:hidden"></div>
                 <div class="w-3/4 flex justify-center md:w-full">
-                    <AtomButtonStandart @click="prevPage(route)" :disabled="route.query.page ? (+route.query.page === 1) : false"
+                    <AtomButtonArround @click="prevPage(route)" :disabled="route.query.page ? (+route.query.page === 1) : false"
                         class="-scale-x-100 mr-32" />
-                    <AtomButtonStandart @click="nextPage(route)" :disabled="activeButtomNext === 0" />
+                    <AtomButtonArround @click="nextPage(route)" :disabled="activeButtomNext === 0" />
                 </div>
             </div>
         </section>

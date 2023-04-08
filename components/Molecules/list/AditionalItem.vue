@@ -7,7 +7,7 @@
         </AtomButtonStandart>
         <p class="text-white grow">{{ item.name }}</p>
     </div>
-    <div>
+    <div v-if="'children' in item">
         <ul v-show="active" class="pl-8 pt-3">
             <li v-for="elem in item.children" :key="elem.name"
             class="mb-2 text-white last:mb-0">
@@ -16,10 +16,11 @@
         </ul>
     </div>
 </li>
-
+ 
 </template>
 <script setup lang="ts">
-defineProps<{ item: object }>()
+import type { CategorItem } from "@/type/intex";
+defineProps<{ item: CategorItem | { name: string } }>()
 
 const active = ref<boolean>(false)
 </script>

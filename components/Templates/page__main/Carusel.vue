@@ -1,7 +1,7 @@
 <template>
     <MoleculesSladerBase :data="data" :containerClass="style.container" class="mb-16 xl:mb-12">
-        <template #header="{ prevItem, nextItem }">
-            <MoleculesSladerControl :prevItem="prevItem" :nextItem="nextItem">
+        <template #header="{ prevItem, nextItem, sladerValueScroll }">
+            <MoleculesSladerControl :prevItem="prevItem" :nextItem="nextItem" :slader-value-scroll="sladerValueScroll">
                 <slot name="title">Slader title</slot>
             </MoleculesSladerControl>
         </template>

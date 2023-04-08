@@ -45,6 +45,5 @@
 </template>
 
 <script setup lang="ts">
-
-const card = ['maestro', 'master', 'mir', 'visa']
+const card: readonly string[] = ['maestro', 'master', 'mir', 'visa']
 </script>

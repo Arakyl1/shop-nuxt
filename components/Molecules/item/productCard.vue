@@ -44,8 +44,9 @@ async function getCardData() {
     if (data) content.value = data
 }
 
-if (props.id) {
+if (props.id && !content.value) {
     getCardData()
 }
 const style = "text-2xl lg:text-xl md:text-base"
+
 </script>

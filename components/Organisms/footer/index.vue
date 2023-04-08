@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-const card = ['maestro', 'master', 'mir', 'visa']
+const card: readonly string[] = ['maestro', 'master', 'mir', 'visa']
 const style = {
     title: 'text-lg text-white mb-5 xl:text-base xl:mb-4',
     text: '',

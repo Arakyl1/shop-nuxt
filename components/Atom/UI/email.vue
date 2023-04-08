@@ -1,8 +1,10 @@
 <template>
-    <input type="email" :class="[{ 'focus-visible:outline-red-500 outline-red-500': !emailValid }]" v-model="email" />
+        <input type="email" :class="[{ styleInvalid: !emailValid }]" v-model="email" />
 </template>
 
 <script setup lang="ts">
+
+withDefaults(defineProps<{ styleInvalid?: string }>(), { styleInvalid: 'focus-visible:outline-red-500 outline-red-500' })
 const emit = defineEmits<{
     (e: 'input-email', value: string): void
 }>()

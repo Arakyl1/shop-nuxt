@@ -52,7 +52,7 @@ watch(() => active.value, (newValue) =>{
       document.body.style.paddingRight = '16px'
     }
   } else {
-    document.body.style.overflowY = ''
+    document.body.style.overflow = 'auto'
     if (isDesktop && !isFirefox) {
       document.body.style.paddingRight = '0'
     }

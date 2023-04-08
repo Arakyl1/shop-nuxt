@@ -53,7 +53,7 @@ const heightSelectAditional = ref<number>(0)
 const list = ref<HTMLElement | null>(null)
 const active = ref(true)
 
-const arrayLink = [
+const arrayLink: readonly string[] = [
     "Аккумуляторы",
     "Блоки контроля",
     "Генераторы",

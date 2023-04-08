@@ -32,15 +32,15 @@
 </template>
 <script setup lang="ts">
 import { basketProduct } from "~~/pinia/basket";
-import { ProductCardForSearch, productCardParamsForSearchSelect } from "@/type/intex";
+import { ProductCardForSearch, productCardParamsForSearchSelect, BasketItem } from "@/type/intex";
 
 const props = defineProps<{
-    item: { id: number, quantity: number, price: number },
+    item: BasketItem,
     index: number
 }>()
 
 const basketProd = basketProduct()
-const { getInfo: getInfoProduct } = useProduct()
+const { getInfo: getInfoProduct } = useProduct() 
 
 const data = await getInfoProduct<ProductCardForSearch>({ where: { id: props.item.id }, ...productCardParamsForSearchSelect})
 </script>

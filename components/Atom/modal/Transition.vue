@@ -1,7 +1,8 @@
 <template>
   <transition name="modal" appear>
-      <div v-show="active" ref="modal" @dragover="mathCords"
-      @dragstart="dragStart" @dragenter.prevent @dragleave.prevent :draggable="draggable"
+      <div v-show="active" ref="modal" 
+      @pointerdown="draggable ? onPointerDown($event) : () => null"
+      @pointerup="draggable ? onPoinerUp($event) : () => null"
       class="fixed inset-1/2 origin-center -translate-y-2/4 -translate-x-2/4 text-left z-50 modal" >
         <slot></slot>
     </div>
@@ -9,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+
 const props = withDefaults(
   defineProps<{
     active: boolean,
@@ -25,35 +27,7 @@ const elementSize = reactive({
   x: 0,
   y: 0 })
 
-function dragStart({ clientX, clientY, dataTransfer }:DragEvent) {
-  elementSize.startX = clientX
-  elementSize.startY = clientY
-  
-  dataTransfer!.effectAllowed = 'move'
-  const img = new Image()
-  dataTransfer!.setDragImage(img, 0, 0)
 
-  if (modal.value) {
-    const { x, y, height, width } = modal.value.getBoundingClientRect()
-    elementSize.x = x + width/2
-    elementSize.y = y + height/2
-  }
-}
-
-function mathCords({ clientX, clientY }:DragEvent) {
-  const difX = elementSize.startX - clientX
-  const difY = elementSize.startY - clientY
-  elementSize.startX = clientX
-  elementSize.startY = clientY
-  elementSize.x -= difX
-  elementSize.y -= difY
-  
-  if (modal.value) {
-    const cords = { x: elementSize.x, y: elementSize.y}
-    updatePositionElement(modal.value, cords)
-  }
-  
-}
 
 type cords = { x: number, y: number}
 function updatePositionElement<T extends HTMLElement>(el:T, cords: cords) {
@@ -66,7 +40,42 @@ function updatePositionElement<T extends HTMLElement>(el:T, cords: cords) {
   el.style.left = ((elW + cords.x - elW/2) > wX-15) || ((cords.x - elW/2) < 15) ? el.style.left : cords.x + 'px'
 }
 
-// })
+function onPointerDown({ pointerId, clientX, clientY }:PointerEvent) {
+  elementSize.startX = clientX
+  elementSize.startY = clientY
+  if (modal.value) {
+    modal.value.onpointermove = onPointerMove
+    modal.value.setPointerCapture(pointerId)
+
+    const { x, y, height, width } = modal.value.getBoundingClientRect()
+    elementSize.x = x + width/2
+    elementSize.y = y + height/2
+  }
+}
+
+function onPointerMove({clientX, clientY}:PointerEvent) {
+  const difX = elementSize.startX - clientX
+  const difY = elementSize.startY - clientY
+  elementSize.startX = clientX
+  elementSize.startY = clientY
+  elementSize.x -= difX
+  elementSize.y -= difY
+
+  if (modal.value) {
+    const cords = { x: elementSize.x, y: elementSize.y}
+    updatePositionElement(modal.value, cords)
+    document.body.style.cursor = 'move'
+  }
+
+}
+
+function onPoinerUp({pointerId}:PointerEvent) {
+  if (modal.value) {
+    modal.value.onpointermove = null
+    modal.value.releasePointerCapture(pointerId)
+  }
+  document.body.style.cursor = ''
+}
 </script>
 
 <style lang="css">
