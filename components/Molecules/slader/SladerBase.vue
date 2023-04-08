@@ -11,7 +11,7 @@
             </div>
             <div ref="slader" class="basic__slader slader__container" :class="[containerClass]" @scroll="onScroll"
                 @pointerdown.passive="onPointerDown" @pointerup.passive="onPointerUp" @pointerleave.passive="onPointerLeave"
-                @dragstart.stop @click="test">
+                @dragstart.stop.prevent @click="test">
                 <template v-for="elem in sladerData" :key="elem">
                     <div class="slader__item">
                         <slot name="item" v-bind="{
@@ -87,9 +87,9 @@ function onPointerDown({ clientX, type, pointerId, pointerType }: PointerEvent) 
         cordsScroll.value = { startX: clientX, startSx: slader.value.scrollLeft, difX: 0, active: true }
         slader.value.style.setProperty('scroll-snap-type', 'none')
         slader.value.style.setProperty('scroll-behavior', 'auto')
+        document.body.style.setProperty('cursor', 'all-scroll')
         slader.value.onpointermove = onPointerMove
         buttonAcitive.value = true
-        console.log(pointerId);
     }
 }
 
@@ -110,7 +110,6 @@ function onPointerUp({ type, pointerId, pointerType }: PointerEvent) {
     if (type === 'pointerup' && pointerType === 'mouse') {
         resetScrollData(pointerId)
         cordsScroll.value = null
-        console.log(pointerId);
     }
 }
 
@@ -134,6 +133,7 @@ function resetScrollData(pointerId: number) {
         }
         // slader.value.releasePointerCapture(pointerId)
         slader.value.onpointermove = null
+        document.body.style.setProperty('cursor', 'auto')
         buttonAcitive.value = false
     }
 }
