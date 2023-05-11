@@ -24,7 +24,7 @@
                         </div>
                     </template>
                     <MoleculesSladerControlItem :indexActiveButton="indexActiveButton"
-                    :updateScrolLeftSlader="updateScrolLeftSlader" :data="doc.body"
+                    :updateScrolLeftSlader="updateScrolLeftSlader" :data="doc.body.length"
                     v-if="isMobile"/>
                 </template>
             </MoleculesSladerBase>

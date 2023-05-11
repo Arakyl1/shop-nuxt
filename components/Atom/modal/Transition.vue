@@ -2,7 +2,7 @@
   <transition name="modal" appear>
       <div v-show="active" ref="modal" 
       @pointerdown="draggable ? onPointerDown($event) : () => null"
-      @pointerup="draggable ? onPoinerUp($event) : () => null"
+      @pointerup="onPoinerUp($event)"
       class="fixed inset-1/2 origin-center -translate-y-2/4 -translate-x-2/4 text-left z-50 modal" >
         <slot></slot>
     </div>

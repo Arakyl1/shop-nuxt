@@ -10,7 +10,7 @@
                 <div
                     class="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full p-8 flex items-center justify-center z-0">
                     <NuxtLink :to="`/catalog/${content.id}`" class="w-full h-full">
-                        <img :src="content.img" alt="product_image" class="object-contain max-w-full max-h-full">
+                        <img :src="content.image[0].link" alt="product_image" class="object-contain max-w-full max-h-full">
                     </NuxtLink>
                 </div>
             </div>

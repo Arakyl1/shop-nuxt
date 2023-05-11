@@ -1,9 +1,13 @@
 <template>
     <div>
         <ul :class="[containerClass]">
-            <li v-for="(item, index) in data.length" :key="item"
-                :class="[itemClass, indexActiveButton === index ? itemActiveState : itemBaseState]"
-                @click="updateScrolLeftSlader(index)"></li>
+            <li v-for="(item, index) in data" :key="item"
+                @click="updateScrolLeftSlader(index)"
+                :class="[itemClass]">
+                <slot v-bind="{ item, index, indexActiveButton }">
+                    <div :class="['h-4 aspect-square rounded-full mx-2', indexActiveButton === index ? 'bg-blue-500' : 'bg-blue-100']"></div>
+                </slot>
+            </li>
         </ul>
     </div>
 </template>
@@ -11,15 +15,11 @@
 withDefaults(defineProps<{
     indexActiveButton: number,
     updateScrolLeftSlader: (index: number) => void, 
-    data: any[],
+    data: number | any[],
     containerClass?: string,
     itemClass?: string,
-    itemBaseState?: string,
-    itemActiveState?: string
 }>(), {
     containerClass: 'flex justify-center pt-2',
-    itemClass: 'h-4 aspect-square rounded-full mx-2',
-    itemBaseState: 'bg-blue-100',
-    itemActiveState: 'bg-blue-500'
+    itemClass: 'aspect-square',
 })
 </script>

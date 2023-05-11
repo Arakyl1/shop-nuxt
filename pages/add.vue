@@ -1,29 +1,34 @@
 <template>
     <div>
-        <TemplatesPageAddMain class="mb-8" @main-data="(e) => mainParams = e " :create="create"/>
-        <TemplatesPageAddCharacteristic class="mb-8"
-        @characteristic="(e) => characteristic = e"
-        :create="create"/>
-        <TemplatesPageAddParameters class="mb-8" @parameter="(e) => additionalParameter = e"
-        :create="create"/>
+        <TemplatesPageAddMain class="mb-8"
+        @main-data="(e) => mainParams = e"
+        @image-data="(e) => imageData = e"
+        :create="create" />
+        <TemplatesPageAddCharacteristic class="mb-8" @characteristic="(e) => characteristic = e" :create="create" />
+        <TemplatesPageAddParameters class="mb-8" @parameter="(e) => additionalParameter = e" :create="create" />
         <div class="mb-10 text-right">
-            <AtomButtonStandart @click="createItem"
-            class="bg-blue-700 text-white ">
+            <AtomButtonStandart @click="createItem" class="bg-blue-700 text-white ">
                 Добавить товар
             </AtomButtonStandart>
         </div>
     </div>
 </template>
 <script setup lang="ts">
-import type { CreateBaseProductCard, CharacteristicBlock, ProductCardParams } from '~~/type/intex';
+import type {
+    CreateBaseProductCard,
+    CharacteristicBlock,
+    ProductCardParams,
+    ImageInfo
+} from '~~/type/intex';
 
 definePageMeta({
-    title: "Добавить товар", 
+    title: "Добавить товар",
     middleware: ['add']
 })
 
 const data = ref({})
 const mainParams = ref<CreateBaseProductCard | null>(null)
+const imageData = ref<ImageInfo[] | null>(null)
 const characteristic = ref<CharacteristicBlock[] | null>(null)
 const additionalParameter = ref<ProductCardParams>({})
 const create = ref(false)
@@ -39,12 +44,14 @@ async function createItem() {
     }
     Object.assign(data.value, mainParams.value, additionalParameter.value)
     try {
-        await createProduct(
-            characteristic.value ?
-            { main: data.value,  characteristic: characteristic.value } :
-            { main: data.value }
+        const sendData = Object.assign({},
+            { main: data.value },
+            characteristic.value ? { characteristic: characteristic.value } : {},
+            imageData.value ? { image: imageData.value} : {}
         )
-        create.value = !create.value
+
+        await createProduct(sendData)
+        // create.value = !create.value
         createAlert('Товар добавлен')
     } catch (error) {
         createAlert('Произошла ощибка, повторите потытку позже')
@@ -52,7 +59,7 @@ async function createItem() {
 }
 
 
-watch(() => userData.value, async(newV) => {
+watch(() => userData.value, async (newV) => {
     if (!newV) {
         await navigateTo('/')
     }

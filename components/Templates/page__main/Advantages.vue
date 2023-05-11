@@ -31,7 +31,7 @@
                         @click="nextItem"/>
                     </div>
                     <div v-else-if="isMobile">
-                        <MoleculesSladerControlItem :data="data.body"
+                        <MoleculesSladerControlItem :data="data.body.length"
                         :indexActiveButton="indexActiveButton" :updateScrolLeftSlader="updateScrolLeftSlader"/>
                     </div>
                 </template>

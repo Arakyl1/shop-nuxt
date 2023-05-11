@@ -1,58 +1,55 @@
 <template>
     <div>
         <form @click="input?.click()">
-            <input type="file" accept="image/png, image/jpeg" ref="input" hidden @change="imageChange($event)">
+            <input
+            type="file"
+            accept="image/png, image/jpeg, image/webp" ref="input"
+            hidden
+            :multiple="multiple"
+                @change="imageChange($event)">
             <div v-if="!inputImage">
                 <slot>
                 </slot>
             </div>
             <div v-else class="aspect-square">
-                <img :src="inputImage.toString()" alt="" class="min-w-full min-h-full object-cover aspect-square">
+                <img :src="inputImage" alt="" class="max-w-full max-h-full object-cover ">
             </div>
         </form>
     </div>
-
 </template>
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ reset: boolean }>(), { reset: false })
+import { type ResponseDownloadImage } from "@/composables/useImage";
+
+const props = withDefaults(defineProps<{
+    multiple: boolean,
+    inputImage: string | null
+}>(), {
+    multiple: false,
+    inputImage: null
+})
 const emit = defineEmits<{
-    (e: 'linkImg', value: string): void
+    (e: 'linkImg', value: (ResponseDownloadImage)[]): void
 }>()
 
 const input = ref<HTMLInputElement | null>(null)
-const inputImage = ref<string | ArrayBuffer | null>(null)
+const { doowload } = useImage()
 
 async function imageChange({ target }: Event) {
     const _target = target as unknown as HTMLInputElement
-    
     if (!_target.files) return
-    const file = _target.files[0]
+    const files = _target.files   
 
-    const reader = new FileReader()    
-    reader.onload = ({ target }: ProgressEvent<FileReader>) => {
-        if (!target) return
-        inputImage.value = target.result
+    const response = await Promise.all(Object.values(files).map(async(elem) => doowload(elem)))
+    const imagesLink = response.flat()
+  
+    function filterArray<T>(arr:T[]): NonNullable<T>[] {
+        return arr.filter(el => el !== null) as NonNullable<T>[]
     }
-    reader.readAsDataURL(file)
 
-    type ResponseDownloadImage = ({ url: string; secretUrl: string; } | "Error")[]
-
-    const { data } = await useFetch<ResponseDownloadImage>('/api/cloudinari/upload', {
-        method: "POST",
-        body: file,
-        headers: {
-            "Content-Type": "application/octet-stream"
-        }
-    })
-    if (data.value) {
-        for (let i = 0; i < data.value.length; i++) {
-            const el = data.value[i];
-            if (el !== 'Error') {
-                emit('linkImg', el.secretUrl)   
-            }
-        }
+    const _imagesLink = filterArray(imagesLink)
+    
+    if (_imagesLink.length) {
+       emit('linkImg', _imagesLink)
     }
 }
-
-watch(() => props.reset, () => { inputImage.value = '' })
 </script>

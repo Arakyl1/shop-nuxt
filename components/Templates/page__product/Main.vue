@@ -3,7 +3,30 @@
         <div class="flex">
             <div class="w-1/2 relative lg:w-5/12">
                 <div class="p-16 flex items-center justify-center xl:p-12">
-                    <img :src="data.img" :alt="data.name" class="max-w-[80%] max-h-[80%]">
+                    <MoleculesSladerBase :data="data.image">
+                        <template #item="{ elem }">
+                            <div class="flex justify-center items-center h-full">
+                                <img :src="elem.link" :alt="data.name" class="max-w-[80%] max-h-[80%]">
+                            </div>
+                        </template>
+                        <template #bottom="{ updateScrolLeftSlader, indexActiveButton }" v-if="data.image.length > 1">
+                            <MoleculesSladerControlItem
+                            :data="data.image"
+                            :index-active-button="indexActiveButton"
+                            :update-scrol-left-slader="updateScrolLeftSlader"
+                            :item-class="'aspect-square h-14 w-14 mx-2'"
+                                ><template #default="{ item, index }">
+                                    <div>
+                                        <div class="border-2 rounded-lg transition p-0.5 aspect-square flex justify-center items-center"
+                                            :class="[index === indexActiveButton ? 'border-yellow-500 ' : 'border-blue-300']">
+                                            <img :src="changeValueImageSize(item.link, { 'heigth': 'h_48' })" alt=""
+                                                class="rounded-md">
+                                        </div>
+                                    </div>
+                                </template>
+                            </MoleculesSladerControlItem>
+                        </template>
+                    </MoleculesSladerBase>
                 </div>
                 <AtomOtherInfoForStock :news="data.news!" :sell="data.sale!" class="left-0 top-24" />
             </div>

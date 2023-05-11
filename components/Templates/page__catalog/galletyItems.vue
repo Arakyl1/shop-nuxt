@@ -5,7 +5,7 @@
         </div>
         <div class="flex flex-wrap" v-else-if="!loader && Array.isArray(listIdProduct) ? listIdProduct.length : null">
             <template v-for="item in listIdProduct" :key="item.id">
-                <MoleculesItemProductCard v-if="item" :data="item"
+                <MoleculesItemProductCard :data="item"
                     class="group is-pos-info-for-stock w-1/3 mb-10 lg:w-1/2 md:w-1/3 sm:w-1/2 slader__item">
                     <template #bt-favorite>
                         <ClientOnly>

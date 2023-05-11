@@ -7,10 +7,14 @@ export const productCardBaseParams = <T extends Prisma.ProductCardSelect>(select
             name: true,
             art: true,
             price: true,
-            img: true,
             news: true,
             sale: true,
             quantity: true,
+            image: {
+                select: {
+                    link: true
+                }
+            },
             ...select
         }
     }
@@ -23,7 +27,11 @@ export const productCardParamsForSearch = <T extends Prisma.ProductCardSelect>(s
             art: true,
             price: true,
             sale: true,
-            img: true,
+            image: {
+                select: {
+                    link: true
+                }
+            },
             ...select
         }
     }

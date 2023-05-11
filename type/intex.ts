@@ -88,13 +88,12 @@ export interface FilterList {
     other: string[],
 }
 
-export type BaseOptionProductCard = 'name'|'art'|'maker'|'categor'|'img'|'subcategor'|'price'|'itemArt'|'itemMod'|'quantity'
+export type BaseOptionProductCard = 'name'|'art'|'maker'|'categor'|'subcategor'|'price'|'itemArt'|'itemMod'|'quantity'
 export interface CreateBaseProductCard {
     name: string,
     art: string,
     maker: string,
     categor: string,
-    img: string,
     subcategor: string,
     price: number,
     itemArt: string,
@@ -102,6 +101,7 @@ export interface CreateBaseProductCard {
     quantity: number,
 }
 
+export type ImageInfo = { link: string }
 export type CharacteristicItem = { name: string, value: string }
 export type CharacteristicBlock = { name: string, content: CharacteristicItem[] }
 

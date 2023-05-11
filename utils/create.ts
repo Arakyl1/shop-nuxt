@@ -20,7 +20,6 @@ export const createBaseProductCard = <T extends Prisma.ProductCardSelect = {}>(s
         art: '',
         maker: '',
         categor: '',
-        img: '',
         subcategor: '',
         price: 0,
         itemArt: '',

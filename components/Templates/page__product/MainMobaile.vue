@@ -20,7 +20,7 @@
                 <AtomOtherInfoForStock :news="data.news!" :sell="data.sale!" class="-left-4 top-16 text-lg px-5
                         sm:-left-3 sm:top-4 sm:px-3 sm:text-sm" />
                 <div class="px-16">
-                    <img :src="data.img" :alt="data.name" class="object-cover">
+                    <img :src="data.image[0].link" :alt="data.name" class="object-cover">
                 </div>
             </div>
             <div class="py-4">

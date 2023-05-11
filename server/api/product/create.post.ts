@@ -1,12 +1,13 @@
 import { prismaCreate } from "~~/server/db/methods";
-import { CharacteristicItem } from "~~/type/intex";
+import { CharacteristicItem, ImageInfo } from "~~/type/intex";
 
 export default defineEventHandler(async(event) => {
     const data = await readBody(event);
 
     const characteristic = async(id: number) => {
-        for (let i = 0; i < data.characteristic.characteristic.length; i++) {
-            const elem = data.characteristic.characteristic[i];
+        console.log(id)
+        for (let i = 0; i < data.characteristic.length; i++) {
+            const elem = data.characteristic[i];
             const titleID = await prismaCreate('characteristic', { data: {
                 title: elem.name, productCardId: id
             }})
@@ -25,9 +26,19 @@ export default defineEventHandler(async(event) => {
         }
     }
 
+    const image = async(id: number) => {
+        console.log(id)
+        const array: ImageInfo[] = data.image
+        for (let i = 0; i < array.length; i++) {
+            const el = array[i];
+            prismaCreate('image', { data: { ...el, productCardId: id } })
+        }
+    }
+
     try {
         const product = await prismaCreate('productCard',{ data: data.main });
         await characteristic(product.id)
+        await image(product.id)
         return true
     } catch (error) {
         return error

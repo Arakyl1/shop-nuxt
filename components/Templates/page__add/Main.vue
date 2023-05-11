@@ -2,7 +2,32 @@
   <section>
     <div class="flex md:flex-wrap">
       <div :class="style.container" class="pl-0 5/12 md:w-full md:mb-8">
-        <AtomDownloadImg :reset="create" @link-img="(e) => { data.img = e }">
+        <MoleculesSladerBase :data="image" v-if="image">
+          <template #item="{ elem }">
+            <div class="flex justify-center items-center h-full">
+              <img :src="elem.link" :alt="data.name" class="max-w-[80%] max-h-[80%]">
+            </div>
+          </template>
+          <template #bottom="{ updateScrolLeftSlader, indexActiveButton }" v-if="image.length > 1">
+            <MoleculesSladerControlItem
+              :data="image"
+              :index-active-button="indexActiveButton"
+              :update-scrol-left-slader="updateScrolLeftSlader"
+              :item-class="'aspect-square h-14 w-14 mx-2'"
+              ><template
+                #default="{ item, index }">
+                <div>
+                  <div class="border-2 rounded-lg transition p-0.5 aspect-square flex justify-center items-center"
+                    :class="[index === indexActiveButton ? 'border-yellow-500 ' : 'border-blue-300']">
+                    <img :src="changeValueImageSize(item.link, { 'heigth': 'h_48' })" alt="" class="rounded-md">
+                  </div>
+                </div>
+              </template>
+            </MoleculesSladerControlItem>
+          </template>
+        </MoleculesSladerBase>
+        <AtomDownloadImg v-else :input-image="image ? image[0].link : null" :multiple="true"
+          @link-img="(e) => { image = e.map(_ => ({ link: _.secretUrl })) }">
           <template #default>
             <div
               class="flex justify-center items-center h-full aspect-square bg-blue-100 opacity-30 rounded-md border-dashed border-2 cursor-pointer">
@@ -18,7 +43,7 @@
             <template v-if="Array.isArray(item)">
               <div class="flex -mx-2">
                 <input v-for="elem in item" :key="elem.placeholder" :type="elem.type" :placeholder="elem.placeholder"
-                  :class="[style.input, (data[elem.mobel ] === 0 || data[elem.mobel] === '') ? 'border-red-300' : '']"
+                  :class="[style.input, (data[elem.mobel] === 0 || data[elem.mobel] === '') ? 'border-red-300' : '']"
                   v-model="data[elem.mobel]" class="w-1/2 mx-2" />
               </div>
             </template>
@@ -35,24 +60,26 @@
   </section>
 </template>
 <script setup lang="ts">
-import { createBaseProductCard  } from "@/utils/create";
-import type { BaseOptionProductCard, CreateBaseProductCard } from "@/type/intex";
+import { createBaseProductCard } from "@/utils/create";
+import type { BaseOptionProductCard, CreateBaseProductCard, ImageInfo } from "@/type/intex";
 
 const props = defineProps<{ create?: boolean }>()
 const emit = defineEmits<{
-  (e: 'main-data', data: CreateBaseProductCard): void
+  (e: 'main-data', data: CreateBaseProductCard): void,
+  (e: 'image-data', data: ImageInfo[]): void
 }>()
 
 const data = ref<CreateBaseProductCard & {}>(createBaseProductCard({}))
+const image = ref<ImageInfo[] | null>(null)
 
 const validateDate = computed(() => checkValidDate(data.value))
 
 // methods
-type checkValidDate = { [K in PropertyKey]: string | number | object | any[]}
+type checkValidDate = { [K in PropertyKey]: string | number | object | any[] }
 function checkValidDate(data: checkValidDate | any[]): number {
   if (Array.isArray(data)) {
     return data.findIndex((el) => typeof el === 'object' && Array.isArray(el) ?
-    checkValidDate(el) : (el === '' || el <= 0))
+      checkValidDate(el) : (el === '' || el <= 0))
   } else {
     return checkValidDate(Object.values(data))
   }
@@ -61,11 +88,17 @@ function checkValidDate(data: checkValidDate | any[]): number {
 //watch
 watch(() => props.create, () => {
   data.value = createBaseProductCard({})
+  image.value = null
 })
 
 watch(() => validateDate.value, (number) => {
   if (number === -1) {
     emit('main-data', data.value);
+  }
+})
+watch(() => image.value, (newValue) => {
+  if (newValue) {
+    emit('image-data', newValue)
   }
 })
 
@@ -81,7 +114,7 @@ interface Model {
   mobel: BaseOptionProductCard
 }
 
-const dataInput: (Model | Model[] | { name: string})[] = [
+const dataInput: (Model | Model[] | { name: string })[] = [
   {
     type: 'text',
     placeholder: 'Название товара',

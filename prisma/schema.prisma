@@ -57,7 +57,7 @@ model ProductCard {
   price          Int
   itemArt        String
   itemMod        String
-  img            String
+  img            String?
   top            Boolean         @default(false)
   news           Boolean         @default(false)
   sale           Boolean         @default(false)
@@ -70,6 +70,14 @@ model ProductCard {
   description    String          @default("")
   reviews        Comment[]
   characteristic Characteristic[]
+  image Image[]
+}
+
+model Image {
+  id Int @id @default(autoincrement())
+  link String
+  product ProductCard @relation(fields: [productCardId], references: [id])
+  productCardId Int 
 }
 
 model Comment {

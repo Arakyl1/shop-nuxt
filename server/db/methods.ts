@@ -8,7 +8,9 @@ type ModelNameCreate = {
     'productCard': Prisma.ProductCardCreateArgs ,
     'comment': Prisma.CommentCreateArgs ,
     'characteristic': Prisma.CharacteristicCreateArgs ,
-    'characteristicItem': Prisma.CharacteristicItemCreateArgs
+    'characteristicItem': Prisma.CharacteristicItemCreateArgs,
+    'image': Prisma.ImageCreateArgs
+    
 }
 
 type ModelNameFindUnique = {
@@ -18,7 +20,8 @@ type ModelNameFindUnique = {
     'productCard': Prisma.ProductCardFindUniqueArgsBase, 
     'comment': Prisma.CommentFindUniqueArgsBase, 
     'characteristic': Prisma.CharacteristicFindUniqueArgsBase, 
-    'characteristicItem': Prisma.CharacteristicItemFindUniqueArgsBase
+    'characteristicItem': Prisma.CharacteristicItemFindUniqueArgsBase,
+    'image': Prisma.ImageFindUniqueArgsBase
 }
 
 type ModelNameFindMany = {
@@ -28,7 +31,8 @@ type ModelNameFindMany = {
     'productCard': Prisma.ProductCardFindManyArgs, 
     'comment': Prisma.CommentFindManyArgs, 
     'characteristic': Prisma.CharacteristicFindManyArgs, 
-    'characteristicItem': Prisma.CharacteristicItemFindManyArgs
+    'characteristicItem': Prisma.CharacteristicItemFindManyArgs,
+    'image': Prisma.ImageFindManyArgs
 }
 
 type ModelNameUpdate = {
@@ -38,7 +42,8 @@ type ModelNameUpdate = {
     'productCard': Prisma.ProductCardUpdateArgs,
     'comment': Prisma.CommentUpdateArgs,
     'characteristic': Prisma.CharacteristicUpdateArgs,
-    'characteristicItem': Prisma.CharacteristicItemUpdateArgs
+    'characteristicItem': Prisma.CharacteristicItemUpdateArgs,
+    'image': Prisma.ImageUpdateArgs
 }
 
 type ModelNameDelete = {
@@ -48,11 +53,13 @@ type ModelNameDelete = {
     'productCard': Prisma.ProductCardDeleteArgs,
     'comment': Prisma.CommentDeleteArgs,
     'characteristic': Prisma.CharacteristicDeleteArgs,
-    'characteristicItem': Prisma.CharacteristicItemDeleteArgs
+    'characteristicItem': Prisma.CharacteristicItemDeleteArgs,
+    'image': Prisma.ImageDeleteArgs
 }
 
 
 //type keyPrismaTable = 'characteristic' | 'characteristicItem' | 'comment' | 'post' | 'productCard' | 'refrechToken' | 'user'
+
 
 export const prismaCreate = async<T extends keyof ModelNameCreate>(
     key: T, body: ModelNameCreate[T]) => {
