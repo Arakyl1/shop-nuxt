@@ -1,8 +1,8 @@
 <template>
     <div>
         <template v-if="data">
-            <TemplatesPageProductMain v-if="isDesktopOrTablet" :data="data" class="mb-8 xl:mb-6" />
-            <TemplatesPageProductMainMobaile v-else :data="data" class="mb-12" />
+            <TemplatesPageProductMain :data="data" class="mb-8 xl:mb-6 block md:hidden" />
+            <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" />
             <TemplatesPageProductCharacteristic :data="data.characteristic" class="mb-8 xl:mb-6" />
             <TemplatesPageProductDescription :id="data.id" :name="data.name" :art="data.art" :description="data.description"
                 :reviews="data.reviews" :refresh="refresh" class="mb-12" />
@@ -18,7 +18,6 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { isDesktopOrTablet } = useDevice()
 const { getInfo: getInfoProduct } = useProduct()
 const option = { where: { id: +route.params.id }, ...productCardBaseParamsSelectFull }
 

@@ -15,8 +15,8 @@
                 </div>
             </div>
             <div class="py-4 grow flex flex-col sm:py-2">
-                <p class="text-gray-500 text-lg truncate sm:text-sm sm:truncate">{{ content.art }}</p>
-                <p class="text-lg text-black-700 mb-2 grow xl:text-base sm:text-sm sm:mb-1 sm:truncate">{{ content.name }}</p>
+                <p class="text-gray-500 text-lg truncate sm:text-sm ">{{ content.art }}</p>
+                <p class="text-lg text-black-700 mb-2 grow xl:text-base sm:text-sm sm:mb-1 truncate">{{ content.name }}</p>
                 <div class="flex items-center justify-between">
                     <AtomTransformPrice :price="content.price" :sale="content.sale!" :style="style" class="grow"/>
                     <AtomButtonStandart class="p-0 group is-icon-black rounded-none">

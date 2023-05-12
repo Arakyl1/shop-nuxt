@@ -50,7 +50,8 @@ const listIdProduct = ref<_ProductCardBase[]>([])
 const loader = ref<boolean>(true)
 const activeButtomNext = ref<number>(0)
 const { getInfo: getInfoProduct } = useProduct()
-const { isMobile } = useDevice()
+const { windowSize: _windowSize } = useStore()
+const { size } =_windowSize()
 
 
 watch(() => toucheData.vector, (newVector) => {
@@ -60,7 +61,7 @@ watch(() => toucheData.vector, (newVector) => {
 })
 
 async function getIdProduct(optionSeacrh: object = {}) {
-    if (isMobile) {
+    if (size.value.width <= 767) {
         updateStage(event, false)
     }
     loader.value = true

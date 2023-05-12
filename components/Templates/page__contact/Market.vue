@@ -13,7 +13,7 @@
                     </div>
                 </template>
                 <template #bottom="{ prevItem, nextItem, indexActiveButton, updateScrolLeftSlader }">
-                    <template v-if="isDesktopOrTablet">
+                    <template class="block sm:hidden">
                         <div class="absolute top-[42%] left-0 flex items-center -translate-y-1/2
                         -translate-x-1/2 hover:-left-0.5 -scale-100 transition-all xl:-translate-x-1/4 lg:top-[35%]">
                             <AtomButtonArround class="filter-none" @click="prevItem" />
@@ -25,7 +25,7 @@
                     </template>
                     <MoleculesSladerControlItem :indexActiveButton="indexActiveButton"
                     :updateScrolLeftSlader="updateScrolLeftSlader" :data="doc.body.length"
-                    v-if="isMobile"/>
+                    class="hidden sm:block "/>
                 </template>
             </MoleculesSladerBase>
         </ContentDoc>
@@ -33,7 +33,6 @@
 </template>
 
 <script setup lang="ts">
-const { isDesktopOrTablet, isMobile } = useDevice()
 
 const style = {
     container: '[grid-auto-columns:calc(100%/3)] md:[grid-auto-columns:calc(100%/2)] sm:[grid-auto-columns:calc(100%)]'

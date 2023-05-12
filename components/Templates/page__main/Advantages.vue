@@ -24,13 +24,13 @@
             </template>
             <template #bottom="{ prevItem, nextItem, indexActiveButton, updateScrolLeftSlader }" >
                 <template v-if="data && size.width">
-                    <div class="relative" v-if="(data.body.length / quantitySladerItem) > 1 && isDesktopOrTablet">
-                        <AtomButtonStandart class="-scale-x-100 absolute -top-32 -left-1"
+                    <div class="relative block sm:hidden" v-if="(data.body.length / quantitySladerItem) > 1">
+                        <AtomButtonArround class="-scale-x-100 absolute -top-32 -left-1"
                         @click="prevItem"/>
-                        <AtomButtonStandart class="absolute -top-32 -right-1"
+                        <AtomButtonArround class="absolute -top-32 -right-1"
                         @click="nextItem"/>
                     </div>
-                    <div v-else-if="isMobile">
+                    <div class="hidden sm:block">
                         <MoleculesSladerControlItem :data="data.body.length"
                         :indexActiveButton="indexActiveButton" :updateScrolLeftSlader="updateScrolLeftSlader"/>
                     </div>
@@ -43,7 +43,6 @@
 <script setup lang="ts">
 const { windowSize: _windowSize} = useStore()
 const { size } = _windowSize()
-const { isDesktopOrTablet, isMobile } = useDevice()
 const { data } = useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
 
 const quantitySladerItem = computed(() => size.value.width <= 640 ? 1 : size.value.width <= 768 ? 2 : size.value.width < 1028 ? 3 : 4)

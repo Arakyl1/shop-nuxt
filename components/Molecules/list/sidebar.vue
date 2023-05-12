@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import type { CategorItem } from "@/type/intex";
 
-const { data } = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
+const { data } = await useAsyncData('select-menu', () => queryContent('/select').only(['select']).findOne())
 const categor = ref<HTMLElement | null>(null)
 const route = useRoute()
 

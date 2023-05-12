@@ -42,7 +42,7 @@ const props = defineProps<{
 }>()
 
 const { data } = await useAsyncData(
-    'select', () => queryContent('/select').only(['select']).findOne())
+    'select-menu', () => queryContent('/select').only(['select']).findOne())
 const route = useRoute()
 
 const subcategorName = ref<string | null>(null)

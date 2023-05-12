@@ -11,7 +11,7 @@
             </div>
             <div ref="slader" class="basic__slader slader__container" :class="[containerClass]" @scroll="onScroll"
                 @pointerdown.passive="onPointerDown" @pointerup.passive="onPointerUp" @pointerleave.passive="onPointerLeave"
-                @dragstart.stop.prevent @click="test">
+                @dragstart.stop.prevent>
                 <template v-for="elem in sladerData" :key="elem">
                     <div class="slader__item">
                         <slot name="item" v-bind="{
@@ -77,7 +77,7 @@ function onScroll({ type }: Event): void {
                 slader.value!.style.setProperty('scroll-snap-type', 'x mandatory')
             }
             sladerValueScroll.value.current = slader.value!.scrollLeft
-        }, 400)
+        }, 800)
     }
 }
 
@@ -126,9 +126,9 @@ function resetScrollData(pointerId: number) {
         let widthCols: string = window.getComputedStyle(slader.value).getPropertyValue('grid-auto-columns')
         let sladerScrollLeft = slader.value.scrollLeft
         let sladerCotainerWIdth = slader.value.clientWidth
-        let difScrollComplet: number = sladerScrollLeft / (sladerCotainerWIdth / (100 / parseInt(widthCols)));
+        let difScrollComplet: number = Number((sladerScrollLeft / (sladerCotainerWIdth / (100 / parseFloat(widthCols)))).toFixed(2));
         if (!Number.isInteger(difScrollComplet)) {
-            let valueScroll = (Math.round(difScrollComplet) * (sladerCotainerWIdth / (100 / parseInt(widthCols)))) - sladerScrollLeft
+            let valueScroll = (Math.round(difScrollComplet) * (sladerCotainerWIdth / (100 / parseFloat(widthCols)))) - sladerScrollLeft
             slader.value.scrollBy({ left: valueScroll, behavior: 'smooth' })
         }
         // slader.value.releasePointerCapture(pointerId)
@@ -149,10 +149,6 @@ onUpdated(() => {
     }
 })
 
-function test({ type, target}: Event) {
-   // console.log(target);
-    
-}
 </script>
 
 <style lang="css">

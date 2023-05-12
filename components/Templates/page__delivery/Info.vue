@@ -1,16 +1,16 @@
 <template>
-    <section class="mb-12 -mx-4 md:mx-0">
-        <div class="flex w-full flex-wrap ">
-            <div class="w-1/2 px-4 md:w-full md:px-0">
+    <section class="mb-12">
+        <div class="grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-4 lg:gap-6 sm:gap-4">
+            <div class="">
                 <div v-for="item in data?.slice(0, Math.ceil(data.length / 2))" :key="item.title">
-                    <div class="bg-gray-100 p-8 mb-8 xl:p-6 xl:mb-6 sm:p-4 sm:mb-4">
+                    <div class="bg-gray-100  p-8 xl:p-6 sm:p-4   mb-8 sm:mb-4 lg:mb-6">
                         <ContentRenderer :value="item" class="delivety" />
                     </div>
                 </div>
             </div>
-            <div class="w-1/2 px-4 md:w-full md:px-0">
+            <div class="">
                 <div v-for="item in data?.slice(Math.ceil(data.length / 2), data.length)" :key="item.title">
-                    <div class="bg-gray-100 p-8 mb-8 xl:p-6 xl:mb-6 sm:p-4 sm:mb-4">
+                    <div class="bg-gray-100  p-8 xl:p-6 sm:p-4   mb-8 sm:mb-4 lg:mb-6">
                         <ContentRenderer :value="item" class="delivety" />
                     </div>
                 </div>

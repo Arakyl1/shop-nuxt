@@ -19,8 +19,11 @@ export default defineNuxtConfig({
     ['@pinia/nuxt', {
             autoImports: ['defineStore', 'acceptHMRUpdate', 'storeToRefs'],
         }
-    ], 
+    ],
   ],
+  device: {
+    refreshOnResize: true
+  },
   runtimeConfig: {
     cloudinaryName: process.env.CLOUDINARY__NAME,
     cloudinaryApiKey: process.env.CLOUDINARY__KEY,

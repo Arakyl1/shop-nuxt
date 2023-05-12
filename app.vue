@@ -3,8 +3,8 @@
     <div class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask" :class="[{ active: active }]"
       @click="updateMask(false)"></div>
     <div>
-      <OrganismsHeader v-if="isDesktopOrTablet" class="mb-4" />
-      <OrganismsHeaderMobaile v-else class="mb-4" />
+      <OrganismsHeader class="mb-4 block md:hidden" />
+      <OrganismsHeaderMobaile class="mb-4 md:block hidden"/>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
       <Transition name="path">
@@ -15,8 +15,7 @@
       </div>
     </div>
     <div>
-      <OrganismsFooter v-if="isDesktopOrTablet" />
-      <OrganismsFooterMobaile v-else />
+      <OrganismsFooter class="block sm:hidden"/>
     </div>
     <Transition name="alert">
       <AtomOtherAlert />
@@ -35,8 +34,9 @@ const { updateMask, active } = _windowMask()
 const { userData } = _user()
 const { updateSize } = _windowSize()
 const route = useRoute()
-const { isDesktopOrTablet, isDesktop, isFirefox } = useDevice();
+const { isDesktop, isFirefox } = useDevice();
 const { initAuth } = useAuth()
+
 
 onBeforeMount(async () => {
   if (!userData.value) initAuth()

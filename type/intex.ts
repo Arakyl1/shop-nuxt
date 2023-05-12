@@ -2,7 +2,12 @@ import { Prisma } from "@prisma/client";
 import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
 import { LocationQueryValue } from "vue-router";
 import { productCardBaseParams, productCardParamsForSearch } from "@/utils/prismaSelect"
+import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
 
+export interface LisLink extends MarkdownParsedContent {
+    name: string,
+    href: string
+}
  
 export type RecordOption<T extends PropertyKey, U> = { [K in T]: U} 
 

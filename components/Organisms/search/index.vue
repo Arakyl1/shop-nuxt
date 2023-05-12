@@ -21,21 +21,26 @@
                     <div class="p-1
                     max-h-[270px] overflow-y-scroll [scrollbar-width:none] modal_search-container">
                         <ul v-if="dataSearch">
-                            <li v-for="item in dataSearch" :key="item.id" class="py-1">
-                                <div class="flex items-center">
-                                    <div class="h-7 w-7">
-                                        <img :src="item.img" :alt="item.name" class="object-contain max-h-full max-w-full">
-                                    </div>
-                                    <NuxtLink :to="`/catalog/${item.id}`" class="grow px-2">
-                                        <div>
-                                            <p class="text-xs">{{ item.name }}</p>
-                                            <p class="text-xs">{{ item.art }}</p>
+                            <template v-if="dataSearch.length">
+                                <li v-for="item in dataSearch" :key="item.id" class="py-1">
+                                    <div class="flex items-center">
+                                        <div class="h-7 w-7">
+                                            <img :src="changeValueImageSize(item.image[0].link, { 'heigth': 'h_28' })" :alt="item.name" class="object-contain max-h-full max-w-full">
                                         </div>
-                                    </NuxtLink>
-                                   <AtomTransformPrice :style="'text-xs sm:mr-0 mr-0'" :sale="item.sale" :price="item.price"
-                                   class="flex-col"/>
-                                </div>
-                            </li>
+                                        <NuxtLink :to="`/catalog/${item.id}`" class="grow px-2">
+                                            <div>
+                                                <p class="text-xs">{{ item.name }}</p>
+                                                <p class="text-xs">{{ item.art }}</p>
+                                            </div>
+                                        </NuxtLink>
+                                        <AtomTransformPrice :style="'text-xs sm:mr-0 mr-0'" :sale="item.sale" :price="item.price"
+                                        class="flex-col"/>
+                                    </div>
+                                </li>
+                            </template>
+                            <template v-else>
+                                <p class="text-xs text-gray-700">Ничего не найдено</p>
+                            </template>
                         </ul>
                     </div>
                     <div class="border-t border-gray-300"

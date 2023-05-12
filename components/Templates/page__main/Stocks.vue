@@ -1,13 +1,15 @@
 <template>
-    <section class="aspect-[228/101] w-full">
-        <MoleculesSladerBase :data="data.body">
+    <section class=" w-full">
+        <MoleculesSladerBase :data="data ? data.body : null">
             <template #item="{ elem, prevItem, nextItem }">
                 <template v-if="elem">
                     <div class="relative">
-                        <ClientOnly>
-                            <img :src="isDesktopOrTablet ? elem.link_img_big : elem.link_img_small" alt=""
-                                class="object-cover min-w-full rounded">
-                        </ClientOnly>
+                        <picture>
+                            <source :srcset="elem.link_img_small" media="(max-width: 767px)"
+                            class="object-cover min-w-full rounded aspect-[228/101] md:aspect-[60/97]">
+                            <img :src="elem.link_img_big" alt=""
+                            class="object-cover min-w-full rounded aspect-[228/101] md:aspect-[60/97]">
+                        </picture>
                         <div class="absolute w-[40%] h-min top-1/2 left-[10%]
                                 -translate-y-1/2 text-black-300
                                 lg:w-1/2
@@ -33,7 +35,7 @@
                 <MoleculesItemBase v-else class="aspect-[3/2]"/>
             </template>
             <template #bottom="{ nextItem, prevItem }">
-                <template v-if="isMobile">
+                <template v-if="size.width !== 0 && size.width < 768">
                     <div class="py-4">
                         <div class="flex justify-end">
                             <AtomButtonStandart class="bg-blue-500 text-white mr-4 text-center py-3 text-xl grow
@@ -51,8 +53,8 @@
     </section>
 </template>
 <script setup lang="ts">
-const { isDesktopOrTablet, isMobile } = useDevice()
 
-const data = await queryContent('/main/slader').findOne()
-
+const { windowSize: _windowSize } = useStore()
+const { size } = _windowSize()
+const { data } = await useAsyncData('main-slader', () => queryContent('/main/slader').findOne()) 
 </script>

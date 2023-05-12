@@ -1,8 +1,10 @@
 <template>
     <section>
         <div class="rounded-md overflow-hidden relative md:-mx-4 sm:-mx-2">
-            <img :src="'/img/info/' + (isDesktopOrTablet ? 'info-for-catalog' : 'info-for-catalog-mobaile') + '.jpg'" alt=""
-            class="w-full">
+            <picture >
+                <source srcset="/img/info/info-for-catalog-mobaile.jpg" media="(max-width: 767px)" class="w-full">
+                <img src="/img/info/info-for-catalog.jpg" alt="" class="w-full">
+            </picture>
             <div class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-1/3 xl:w-5/12
             md:w-3/4 sm:w-10/12">
                 <p class="text-white text-2xl mb-3 xl:text-xl lg:text-lg
@@ -17,7 +19,3 @@
         </div>
     </section>
 </template>
-
-<script setup lang="ts">
-const { isDesktopOrTablet } = useDevice()
-</script>
