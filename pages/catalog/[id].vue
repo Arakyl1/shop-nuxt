@@ -2,10 +2,10 @@
     <div>
         <template v-if="data">
             <TemplatesPageProductMain :data="data" class="mb-8 xl:mb-6 block md:hidden" />
-            <!-- <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" />
+            <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" />
             <TemplatesPageProductCharacteristic :data="data.characteristic" class="mb-8 xl:mb-6" />
             <TemplatesPageProductDescription :id="data.id" :name="data.name" :art="data.art" :description="data.description"
-                :reviews="data.reviews" :refresh="refresh" class="mb-12" /> -->
+                :reviews="data.reviews" :refresh="refresh" class="mb-12" />
         </template>
         <TemplatesPageMainCarusel :searchCategor="{ 'news': true }">
             <template #title>
@@ -20,7 +20,6 @@ import { productCardBaseParamsSelectFull, type _ProductCardFull } from '~~/type/
 
 definePageMeta({
     title: 'Информация о товаре',
-    middleware: ['product']
 })
 
 const route = useRoute()
