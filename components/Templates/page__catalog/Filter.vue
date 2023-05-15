@@ -5,15 +5,14 @@
                 <h4 class="text-lg mb-1">Категория</h4>
                 <div v-if="categor">
                     <AtomList :list="categor" :class="[style.input]" class="w-full"
-                        :value="route.query.categor ? route.query.categor : 'Категория'"
-                        @change="routePushQueryCategor" />
+                        :value="route.query.categor ? route.query.categor : 'Категория'" @change="routePushQueryCategor" />
                 </div>
             </div>
             <div class="pb-3">
                 <h4 class="text-lg mb-1">Подкатегория</h4>
                 <div>
                     <AtomList :list="subcategor" :class="[style.input]" class="w-full"
-                    :disabled="!('categor' in route.query)">Подкатегория
+                        :disabled="!('categor' in route.query)">Подкатегория
                     </AtomList>
                 </div>
             </div>
@@ -27,7 +26,7 @@
                     <p class="grow text-center">:</p>
                     <input class="w-[45%] p-2"
                         :class="[style.input, { 'outline outline-1 outline-red-500': checkValidPrice.to }]"
-                        v-model="filterList.price.upTo " type="number" placeholder="До" />
+                        v-model="filterList.price.upTo" type="number" placeholder="До" />
                 </form>
             </div>
             <template v-if="makerList">
@@ -44,29 +43,23 @@
                     class="justify-between" />
             </div>
 
-            <ContentDoc path="/filter-list/other" v-slot="{ doc }">
-                <AtomListCheckbox :content="doc.body" :reset="reset" @maker-data="addData($event as any[], 'actual')">
-                    <template #title>
-                        <h4 class="text-lg mb-1">Другое</h4>
-                    </template>
-                </AtomListCheckbox>
-            </ContentDoc>
-            <ContentDoc path="/filter-list/other-service" v-slot="{ doc }">
-                <AtomListCheckbox :content="doc.body" :reset="reset" @maker-data="addData($event as any[], 'other')">
-                    <template #title>
-                        <h4 class="text-lg mb-1">Доставка и наличие'</h4>
-                    </template>
-                </AtomListCheckbox>
-            </ContentDoc>
+            <AtomListCheckbox :content="filterListParams" :reset="reset" @maker-data="addData($event as any[], 'actual')">
+                <template #title>
+                    <h4 class="text-lg mb-1">Другое</h4>
+                </template>
+            </AtomListCheckbox>
+            <AtomListCheckbox :content="filterListServive" :reset="reset" @maker-data="addData($event as any[], 'other')">
+                <template #title>
+                    <h4 class="text-lg mb-1">Доставка и наличие'</h4>
+                </template>
+            </AtomListCheckbox>
         </div>
         <div class="flex mt-4">
-            <AtomButtonStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2"
-            @click="searchProduct">
+            <AtomButtonStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2" @click="searchProduct">
                 Показать
             </AtomButtonStandart>
-            <AtomButtonStandart class="bg-blue-500 aspect-square p-3.5"
-            @click="resetSearchData">
-                <IconReload class="w-6 h-6 xl:w-5 xl:h-5 group icon-white"  />
+            <AtomButtonStandart class="bg-blue-500 aspect-square p-3.5" @click="resetSearchData">
+                <IconReload class="w-6 h-6 xl:w-5 xl:h-5 group icon-white" />
             </AtomButtonStandart>
         </div>
     </div>
@@ -77,13 +70,13 @@ import { filterList as CreateFilterList } from "@/utils/create";
 import { Prisma } from "@prisma/client";
 
 
-type MakerItem = { name: string, value : string }
+type MakerItem = { name: string, value: string }
 type optionSearch = {
     categor?: string,
     NOT?: [{ categor: '' }],
     price: { gte?: number, lte?: number },
     ranting: { gte: number },
-    maker?: { in: string[]}
+    maker?: { in: string[] }
 }
 
 const emit = defineEmits<{
@@ -130,11 +123,12 @@ const optionSearch = computed(() => {
     if (filterList.value.maker.length > 0) option.maker = { in: filterList.value.maker }
     if (filterList.value.actual.length > 0) addOption(filterList.value.actual, option)
     if (filterList.value.other.length > 0) addOption(filterList.value.other, option)
-    
+
     return option
 })
 
 // methods
+
 function routePushQueryCategor({ target }: Event) {
     const _target = target as HTMLSelectElement
     type params = { page: number, categor?: string }
@@ -144,7 +138,7 @@ function routePushQueryCategor({ target }: Event) {
     route.query.categor !== params.categor ? router.push({ query: params }) : ''
 }
 
-type filterListKey = 'maker'|'other'|'actual'
+type filterListKey = 'maker' | 'other' | 'actual'
 const addData = (el: any[], way: filterListKey) => {
     filterList.value[way] = el
 }
@@ -157,26 +151,27 @@ function resetSearchData() {
     sendParams()
 }
 
-type SearchParams = { where: { categor: string } | { NOT: [{categor: ''}] }, select: { maker: true } }
+type SearchParams = { where: { categor: string } | { NOT: [{ categor: '' }] }, select: { maker: true } }
 
 async function getMakerlist(params: SearchParams): Promise<void> {
     const selectOption = Prisma.validator<Prisma.ProductCardArgs>()({ select: params.select })
     type MakerNameList = Prisma.ProductCardGetPayload<typeof selectOption>
 
-    const listModifi = <T extends any,>(list: string[]):T[] => list.map(el => Object.create({ name: el, value: el }))
-        
+    const listModifi = <T extends any,>(list: string[]): T[] => list.map(el => Object.create({ name: el, value: el }))
+
+    const keyData = generateKey(optionSearch.value)
     try {
-        const res = await getInfoProduct<MakerNameList[]>(params, 'many=true')
-        if (!res) return
-        const list = new Set(res.map(el => el.maker))
+        const { data } = await getInfoProduct<MakerNameList[]>(params, { many: true }, { key: keyData })
+        if (!data.value) return
+        const list = new Set(data.value.map(el => el.maker))
         makerList.value = listModifi<MakerItem>([...list])
     } catch (error) {
         console.log(error);
-    } 
+    }
 }
 
-function SearchParams():SearchParams {
-   return {
+function SearchParams(): SearchParams {
+    return {
         where: typeof route.query.categor === 'string' ? { categor: route.query.categor } : { NOT: [{ categor: '' }] },
         select: { maker: true }
     }
@@ -202,12 +197,12 @@ async function initFilter() {
     await getMakerlist(SearchParams())
 }
 
-    
+
 watch(() => searchParameters.value, () => {
     searchProduct()
 })
 
-watch(() => route.query.categor!, async(newValue, oldValue) => {
+watch(() => route.query.categor!, async (newValue, oldValue) => {
 
     if (newValue === oldValue) return
     await getMakerlist(SearchParams())

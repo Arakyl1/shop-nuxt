@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import { showContent } from "@/utils/ShowContent"
+import { Prisma } from "@prisma/client";
 import { prevPage, nextPage } from "~~/components/Atom/catalog/funControlPage";;
 import { type _ProductCardBase, productCardBaseParamsSelect } from "~~/type/intex";
 
@@ -60,31 +61,35 @@ watch(() => toucheData.vector, (newVector) => {
     }
 })
 
-async function getIdProduct(optionSeacrh: object = {}) {
+async function getIdProduct(optionSeacrh: Prisma.ProductCardWhereInput = {}) {
     if (size.value.width <= 767) {
-        updateStage(event, false)
+        updateStage(undefined, false)
     }
     loader.value = true
     const page = route.query.page ? +route.query.page : 1
     const limit = route.query.limit ? +route.query.limit : 12
 
-    const res = await getInfoProduct<_ProductCardBase[]>({
+    const keyData = generateKey(optionSeacrh);
+    
+    const { data } = await getInfoProduct<_ProductCardBase[]>({
         skip: ((page - 1) * limit),
         take: limit,
         where: optionSeacrh,
         ...productCardBaseParamsSelect
-    }, 'many=true')
+    }, { many: true }, { key: keyData + limit + (page - 1) })
 
-    listIdProduct.value = res ? res : []
+    listIdProduct.value = data.value ? data.value : []
 
-    const dataOfNextPage = await getInfoProduct<{ id: number}[]>({
+    const { data: nextPagedata } = await getInfoProduct<{ id: number}[]>({
         skip: (page * limit),
         take: limit,
         where: optionSeacrh,
         select: { id: true }
-    }, 'many=true') || []
+    },
+    { many: true },
+    { key: keyData + limit + page})
 
-    activeButtomNext.value = dataOfNextPage ? dataOfNextPage.length : 0
+    activeButtomNext.value = nextPagedata.value?.length ? nextPagedata.value.length : 0
     loader.value = false
 }
 </script>

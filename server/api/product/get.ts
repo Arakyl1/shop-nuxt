@@ -7,9 +7,9 @@ export default defineEventHandler(async(event: H3Event) => {
     const query = getQuery(event)
     
     try {
-        if (Boolean(query.many)) { 
+        if (Boolean(query.many)) {             
             return await prismafindMany('productCard',body)
-        } else {    
+        } else {
             return await prismaFindUnique('productCard', body)
         }
     } catch (error) {

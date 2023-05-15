@@ -64,7 +64,7 @@ const route = useRoute()
 const { getInfo: getInfoProduct } = useProduct() 
 
 async function getSearch(searchText: string) {
-    dataSearch.value = await getInfoProduct<ProductCardForSearch[]>({
+    const { data } = await getInfoProduct<ProductCardForSearch[]>({
         where: {
             OR: [
                 { name: { contains: searchText, mode: 'insensitive' } },
@@ -75,7 +75,10 @@ async function getSearch(searchText: string) {
         },
         take: 15,
         ...productCardParamsForSearchSelect
-    }, 'many=true')
+    },
+    { many: true },
+    { key: 'search' + searchText, server: false })
+    dataSearch.value = data.value
 }
 
 function clearDataSearch() {

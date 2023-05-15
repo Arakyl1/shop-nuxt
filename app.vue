@@ -11,7 +11,7 @@
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition>
       <div class="min-h-screen">
-        <NuxtPage :transition="{ name: 'page-transition' }"></NuxtPage>
+        <NuxtPage ></NuxtPage>
       </div>
     </div>
     <div>
@@ -92,7 +92,7 @@ watch(() => active.value, (newValue) =>{
   opacity: 0;
 }
 
-.page-transition-enter-active {
+/* .page-transition-enter-active {
   transition: all 0.15s ease-out;
 }
 
@@ -104,6 +104,16 @@ watch(() => active.value, (newValue) =>{
 .page-transition-leave-to {
   transform: translateX(20px);
   opacity: 0;
+} */
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 
 .alert-enter-active,

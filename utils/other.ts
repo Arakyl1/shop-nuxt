@@ -9,4 +9,9 @@ export function changeValueImageSize(url:string, size?: TransfornSize): string {
     if (typeof size === 'object') {
         return url.replace(/upload\//, () => `upload/${ Object.values(size).join(',')}/`);
     } else { return url }
-}2
+}
+
+
+export function generateKey(data:object): string {
+    return Object.entries(data).flat(1).map(el => typeof el === 'object' ? generateKey(el): el).join(',')
+}

@@ -40,8 +40,15 @@ const { getInfo: getInfoProduct } = useProduct()
 const content = ref<_ProductCardBase | null>(props.data)
 
 async function getCardData() {
-    const data = await getInfoProduct<_ProductCardBase>({ where: { id: props.id }, ...productCardBaseParamsSelect })
-    if (data) content.value = data
+    const keyData = 'favorite' + generateKey(Object.assign({ id: props.id }, productCardBaseParamsSelect))
+    const { data } = await getInfoProduct<_ProductCardBase>(
+        { where: { id: props.id }, ...productCardBaseParamsSelect },
+        {},
+        { 'server': true, key: keyData })
+        
+    watch(() => data.value, (newV) => {
+        content.value = data.value
+    })
 }
 
 if (props.id && !content.value) {

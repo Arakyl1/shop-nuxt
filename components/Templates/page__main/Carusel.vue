@@ -35,17 +35,15 @@ import { Prisma } from '@prisma/client';
 import { type _ProductCardBase, productCardBaseParamsSelect } from '~~/type/intex';
 
 const props = defineProps<{ searchCategor: Prisma.ProductCardWhereInput }>()
-const data = ref<_ProductCardBase[] | null>(null)
 const { getInfo: getInfoProduct } = useProduct()
 const { addBasket } = useBasket()
 const { checkIdInFavorites, addFatoriteItem } = useFavorite()
 
-async function getDataByCategor() { 
-    const res = await getInfoProduct<_ProductCardBase[]>({ where: props.searchCategor, ...productCardBaseParamsSelect }, 'many=true')
-    if (res) data.value = res
-}
 
-getDataByCategor()
+const { data } = await getInfoProduct<_ProductCardBase[]>(
+    { where: props.searchCategor, ...productCardBaseParamsSelect },
+    { many: true },
+    { key: Object.keys(props.searchCategor).join(',')[0] })
 
 const style = {
     container: '[grid-auto-columns:calc(100%/4)] lg:[grid-auto-columns:calc(100%/3)] sm:[grid-auto-columns:calc(100%/2)]'

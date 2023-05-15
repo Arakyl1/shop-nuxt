@@ -43,6 +43,8 @@ const props = defineProps<{
 const basketProd = basketProduct()
 const { getInfo: getInfoProduct } = useProduct() 
 
-const data = await getInfoProduct<ProductCardForSearch>({ where: { id: props.item.id }, ...productCardParamsForSearchSelect})
+const { data } = await getInfoProduct<ProductCardForSearch>(
+    { where: { id: props.item.id }, ...productCardParamsForSearchSelect }, {},
+    { 'server': true, key: props.item.id.toString() })
 
 </script>

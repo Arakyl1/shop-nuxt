@@ -41,5 +41,8 @@ export default defineNuxtConfig({
         ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
       }
     }
+  },
+  app: {
+    pageTransition: { name: 'page', mode: 'in-out' }
   }
 });
