@@ -16,11 +16,13 @@
                     </ClientOnly>
                 </template>
                 <template #bt-basket>
-                    <AtomButtonStandart class="flex bg-blue-500  justify-center items-center md:py-2 sm:text-sm" @click="addBasket({
+                    <AtomButtonStandart class="flex bg-blue-500  justify-center items-center md:py-2 sm:text-sm"
+                    @click="addBasket({
                         id: elem.id,
                         quantity: 1,
                         price: elem.sale ? Math.floor(elem.price * 0.9) : elem.price
-                    })">
+                    })"
+                    :disabled="!checkProductAvailability(elem)">
                         <IconBasketSmall class="group icon-white sm:w-5" />
                         <p class="text-white ml-2">В корзину</p>
                     </AtomButtonStandart>
@@ -41,7 +43,7 @@ const { checkIdInFavorites, addFatoriteItem } = useFavorite()
 
 
 const { data } = await getInfoProduct<_ProductCardBase[]>(
-    { where: props.searchCategor, ...productCardBaseParamsSelect },
+    { where: props.searchCategor, ...productCardBaseParamsSelect, orderBy: { 'availability': 'desc' } },
     { many: true },
     { key: Object.keys(props.searchCategor).join(',')[0] })
 

@@ -43,7 +43,7 @@
 <script setup lang="ts">
 const { windowSize: _windowSize} = useStore()
 const { size } = _windowSize()
-const { data } = useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
+const { data } = await useAsyncData('advantages', () => queryContent('/main/advantages').findOne(), )
 
 const quantitySladerItem = computed(() => size.value.width <= 640 ? 1 : size.value.width <= 768 ? 2 : size.value.width < 1028 ? 3 : 4)
 

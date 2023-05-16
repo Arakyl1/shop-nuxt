@@ -6,5 +6,6 @@ export const userActive = defineStore('userActive', () => {
     function updateActiveUser(user: UserBase | null) {
         userData.value = user
     }
+
     return { userData, updateActiveUser }
 })

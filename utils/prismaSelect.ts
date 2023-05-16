@@ -10,6 +10,7 @@ export const productCardBaseParams = <T extends Prisma.ProductCardSelect>(select
             news: true,
             sale: true,
             quantity: true,
+            availability: true,
             image: {
                 select: {
                     link: true
@@ -27,6 +28,7 @@ export const productCardParamsForSearch = <T extends Prisma.ProductCardSelect>(s
             art: true,
             price: true,
             sale: true,
+            availability: true,
             image: {
                 select: {
                     link: true

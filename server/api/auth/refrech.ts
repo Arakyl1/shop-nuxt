@@ -4,8 +4,8 @@ import { decodeRefrechToken, generateTokens } from "~~/server/utils/jwt"
 import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
 
 export default defineEventHandler(async(event) => {
-
-    const refrechToken: string | undefined = getCookie(event, 'refrech_token')
+    
+    const refrechToken: string | null = getCookie(event, 'refrech_token') || null
     if (!refrechToken) return { message: "Refrech token is invalid one" }
     
     const rToken = await prismaFindUnique('refrechToken', { where: { token: refrechToken }})
@@ -21,9 +21,9 @@ export default defineEventHandler(async(event) => {
             const { accessToken } = await generateTokens(user)
             return { accessToken }
         } else {
-            return { message: "Something went wrong" }
+            return { message: "Something went wrong 1" }
         }
     } catch (error) {
-        return { message: "Something went wrong" }
+       return { message: "Something went wrong 2" }
     }
 })

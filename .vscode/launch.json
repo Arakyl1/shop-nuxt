@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "http://Cygwin",
+            "request": "launch",
+            "url": "http://Cygwin"
+        }
+    ]
+}

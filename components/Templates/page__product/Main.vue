@@ -64,11 +64,14 @@
                     </div>
                     <div class="decor-line"></div>
                     <div class="pt-8 flex items-center justify-between xl:pt-6">
-                        <AtomButtonStandart @click="addBasket({
+                        <AtomButtonStandart
+                        @click="addBasket({
                             id: data.id,
                             quantity: numberOfProduct,
                             price: data.sale ? Math.floor(data.price * 0.9) : data.price
-                        })" class="flex bg-blue-500  justify-center items-center px-16 lg:px-10">
+                        })"
+                        class="flex bg-blue-500  justify-center items-center px-16 lg:px-10"
+                        :disabled="!checkProductAvailability(data)">
                             <IconBasketSmall class="group icon-white" />
                             <p class="text-white ml-2">В корзину</p>
                         </AtomButtonStandart>

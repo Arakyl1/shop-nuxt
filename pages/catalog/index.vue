@@ -75,6 +75,7 @@ async function getIdProduct(optionSeacrh: Prisma.ProductCardWhereInput = {}) {
         skip: ((page - 1) * limit),
         take: limit,
         where: optionSeacrh,
+        orderBy: { 'availability': 'desc' },
         ...productCardBaseParamsSelect
     }, { many: true }, { key: keyData + limit + (page - 1) })
 

@@ -17,11 +17,13 @@
                     </template>
 
                     <template #bt-basket>
-                        <AtomButtonStandart @click="addBasket({
+                        <AtomButtonStandart
+                        @click="addBasket({
                             id: item.id,
                             quantity: 1,
                             price: item.sale ? Math.floor(item.price * 0.9) : item.price
-                        })" class="flex bg-blue-500  justify-center items-center">
+                        })" class="flex bg-blue-500  justify-center items-center"
+                        :disabled="!checkProductAvailability(item)">
                             <IconBasketSmall class="group icon-white" />
                             <p class="text-white ml-2">В корзину</p>
                         </AtomButtonStandart>

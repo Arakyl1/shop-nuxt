@@ -39,10 +39,14 @@ const { initAuth } = useAuth()
 
 
 onBeforeMount(async () => {
-  if (!userData.value) initAuth()
+  if (!userData.value) 
 
   updateSize(window)
   window.addEventListener('resize', () => updateSize(window))
+})
+
+onServerPrefetch(async() => {
+  await initAuth()
 })
 
 watch(() => active.value, (newValue) =>{

@@ -1,4 +1,4 @@
-import { ProductCard } from "@prisma/client";
+import { Prisma, ProductCard } from "@prisma/client";
 import { KeyOfRes, _AsyncData } from "nuxt/dist/app/composables/asyncData";
 import { UseFetchOptions } from "nuxt/dist/app/composables/fetch";
 import { CharacteristicBlock } from "~~/type/intex";
@@ -26,7 +26,7 @@ export default () => {
     }
 
     const getInfo = async<T = ProductCard>(
-        body: object = {},
+        body: Prisma.ProductCardFindManyArgs = {},
         query?: object,
         _options?: UseFetchOptions<T extends void ? any : T, (res: T extends void ? any : T) => T extends void ? any : T, KeyOfRes<(res: T extends void ? any : T) => T extends void ? any : T>> | undefined ) => {
         return await useFetch<T>('/api/product/get', {

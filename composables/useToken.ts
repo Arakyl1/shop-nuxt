@@ -1,37 +1,40 @@
 import jwtDecode from "jwt-decode";
 
 export default () => {
-    const createAccess = async() => {
+    const createAccess = async () => {
         const { access: _aceesToeken } = useStore()
         const { updateAccessToken } = _aceesToeken()
         try {
-            const data = await $fetch('/api/auth/refrech')
-           
-            if ('message' in data && data.message) {
-                console.log(data.message);
-                return 
+            const headers  = useRequestHeaders(['cookie']);
+            
+            const { data } = await useFetch('/api/auth/refrech', { headers })            
+            const _data = unref(data)
+            if (_data ) {
+                if ('message' in _data && _data.message) {
+                    console.log(_data.message);
+                    return
+                }             
+                updateAccessToken(_data.accessToken || '')
             }
-         
-            updateAccessToken(data.accessToken ? data.accessToken : '')
         } catch (error) {
             console.log(error);
         }
     }
 
     const reRefrechAccess = () => {
-    const { access: _aceesToeken } = useStore()
-    const { accessToken } = _aceesToeken()
-    if (!accessToken.value) {
-        return
+        const { access: _aceesToeken } = useStore()
+        const { accessToken } = _aceesToeken()
+        if (!accessToken.value) {
+            return
+        }
+        const jwt = jwtDecode(accessToken.value)
+
+        const newRefrecmTime = jwt.exp - 60000
+        setTimeout(() => {
+            createAccess()
+            reRefrechAccess()
+        }, newRefrecmTime)
+
     }
-    const jwt = jwtDecode(accessToken.value)
-    
-    const newRefrecmTime = jwt.exp - 60000
-    setTimeout(() => {
-        createAccess()
-        reRefrechAccess()
-    }, newRefrecmTime)
-    
-}
     return { createAccess, reRefrechAccess }
 }

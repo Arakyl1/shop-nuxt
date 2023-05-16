@@ -36,11 +36,14 @@
             </div>
             <div class="flex">
 
-                <AtomButtonStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow" @click="addBasket({
+                <AtomButtonStandart
+                class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow"
+                @click="addBasket({
                     id: data.id,
                     quantity: numberOfProducts,
                     price: data.sale ? Math.floor(data.price * 0.9) : data.price
-                })">
+                })"
+                :disabled="!checkProductAvailability(data)">
                     <IconBasketSmall class="group icon-white" />
                     <p class="text-white ml-2">В корзину</p>
                 </AtomButtonStandart>

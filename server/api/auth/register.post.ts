@@ -19,7 +19,7 @@ export default defineEventHandler(async(event: H3Event) => {
         username,
         email,
         password,
-        profileImage: "https://ie.wampi.ru/2023/01/26/avatar.jpg"
+        profileImage: "https://res.cloudinary.com/dmxetw6p8/image/upload/v1675156698/upload-examples/w7xbdugi7bgqt0psz3kg.webp"
     }
 
     try {

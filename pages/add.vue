@@ -1,9 +1,7 @@
 <template>
     <div>
-        <TemplatesPageAddMain class="mb-8"
-        @main-data="(e) => mainParams = e"
-        @image-data="(e) => imageData = e"
-        :create="create" />
+        <TemplatesPageAddMain class="mb-8" @main-data="(e) => mainParams = e" @image-data="(e) => imageData = e"
+            :create="create" />
         <TemplatesPageAddCharacteristic class="mb-8" @characteristic="(e) => characteristic = e" :create="create" />
         <TemplatesPageAddParameters class="mb-8" @parameter="(e) => additionalParameter = e" :create="create" />
         <div class="mb-10 text-right">
@@ -14,6 +12,7 @@
     </div>
 </template>
 <script setup lang="ts">
+import { ProductCard } from '.prisma/client';
 import type {
     CreateBaseProductCard,
     CharacteristicBlock,
@@ -26,7 +25,7 @@ definePageMeta({
     middleware: ['add']
 })
 
-const data = ref({})
+// const data = ref({})
 const mainParams = ref<CreateBaseProductCard | null>(null)
 const imageData = ref<ImageInfo[] | null>(null)
 const characteristic = ref<CharacteristicBlock[] | null>(null)
@@ -42,12 +41,16 @@ async function createItem() {
     if (!mainParams.value) {
         createAlert('Не заполены основные поля')
     }
-    Object.assign(data.value, mainParams.value, additionalParameter.value)
+    const mainData = Object.assign({},
+        mainParams.value,
+        additionalParameter.value,
+        { 'availability': mainParams.value ? mainParams.value.quantity > 0 : false }
+    )
     try {
         const sendData = Object.assign({},
-            { main: data.value },
+            { main: mainData },
             characteristic.value ? { characteristic: characteristic.value } : {},
-            imageData.value ? { image: imageData.value} : {}
+            imageData.value ? { image: imageData.value } : {}
         )
 
         await createProduct(sendData)

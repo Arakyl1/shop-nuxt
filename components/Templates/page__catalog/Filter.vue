@@ -55,7 +55,7 @@
             </AtomListCheckbox>
         </div>
         <div class="flex mt-4">
-            <AtomButtonStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2" @click="searchProduct">
+            <AtomButtonStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2" @click="sendParams">
                 Показать
             </AtomButtonStandart>
             <AtomButtonStandart class="bg-blue-500 aspect-square p-3.5" @click="resetSearchData">

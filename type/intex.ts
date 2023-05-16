@@ -46,6 +46,7 @@ export const productCardBaseParamsSelectFull = productCardBaseParams({
     itemArt: true,
     itemMod: true,
     description: true,
+    availability: true,
     characteristic: {
         select: {
             title: true,

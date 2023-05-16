@@ -67,7 +67,7 @@ export default () => {
         const { updateUser } = _userStore()
         const { accessToken } = _accessToken()
         
-    
+        
         try {
             const data = await $fetch('/api/auth/user', {
                 headers: {
@@ -75,8 +75,7 @@ export default () => {
                     Authorization: `Bearer ${accessToken.value}`
                 }
             })
-            if (data.message) return new Error('Error')
-    
+            if (data.message) return new Error('Error')        
             updateUser(data.user || null)   
         } catch (error) {
             throw new Error('Error')
