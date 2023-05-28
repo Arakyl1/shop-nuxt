@@ -1,6 +1,5 @@
 <template>
-    <div></div>
-    <section>
+    <div>
         <TemplatesPageCatalogHeader />
         <div class="flex -mx-4 md:relative mb-8 min-h-[90vh] sm:-mx-2">
             <div class=" fixed top-1/2 left-0 z-20 transition-all hidden md:block"
@@ -15,7 +14,7 @@
             sm:w-full sm:p-0 sm:overflow-y-scroll sm:h-screen"
                 :class="[stage ? 'md:-left-4 sm:left-0' : 'md:-left-full']">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md">
-                    <TemplatesPageCatalogFilter @option-seacrh="getIdProduct($event)"/>
+                    <TemplatesPageCatalogFilter @option-seacrh="(ev) => getIdProduct(ev)"/>
                 </div>
             </div>
             <TemplatesPageCatalogGalletyItems :list-id-product="listIdProduct" :loader="loader" />
@@ -28,7 +27,7 @@
                     <AtomButtonArround @click="nextPage(route)" :disabled="activeButtomNext === 0" />
                 </div>
             </div>
-        </section>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -66,31 +65,46 @@ async function getIdProduct(optionSeacrh: Prisma.ProductCardWhereInput = {}) {
         updateStage(undefined, false)
     }
     loader.value = true
-    const page = route.query.page ? +route.query.page : 1
-    const limit = route.query.limit ? +route.query.limit : 12
+    let pageV = route.query.page
+    let limitV = route.query.limit
+    const page = pageV ? +pageV : 1
+    const limit = limitV ? +limitV : 12
+    listIdProduct.value = []
 
     const keyData = generateKey(optionSeacrh);
     
-    const { data } = await getInfoProduct<_ProductCardBase[]>({
+    getInfoProduct<_ProductCardBase[]>({
         skip: ((page - 1) * limit),
         take: limit,
         where: optionSeacrh,
         orderBy: { 'availability': 'desc' },
         ...productCardBaseParamsSelect
-    }, { many: true }, { key: keyData + limit + (page - 1) })
+    },
+    { many: true },
+    {
+        key: keyData + limit + (page - 1),
+        server: false,
+        onResponse({ response }) {
+            listIdProduct.value = response._data
+            loader.value = false
+        }
+    })
 
-    listIdProduct.value = data.value ? data.value : []
-
-    const { data: nextPagedata } = await getInfoProduct<{ id: number}[]>({
+    getInfoProduct<{ id: number}[]>({
         skip: (page * limit),
         take: limit,
         where: optionSeacrh,
         select: { id: true }
     },
     { many: true },
-    { key: keyData + limit + page})
-
-    activeButtomNext.value = nextPagedata.value?.length ? nextPagedata.value.length : 0
-    loader.value = false
+    {
+        key: keyData + limit + page,
+        server: false,
+        onResponse({ response }) {
+            activeButtomNext.value = response._data.length
+        }
+    })
 }
+
+
 </script>

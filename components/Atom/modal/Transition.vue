@@ -40,7 +40,9 @@ function updatePositionElement<T extends HTMLElement>(el:T, cords: cords) {
   el.style.left = ((elW + cords.x - elW/2) > wX-15) || ((cords.x - elW/2) < 15) ? el.style.left : cords.x + 'px'
 }
 
-function onPointerDown({ pointerId, clientX, clientY }:PointerEvent) {
+function onPointerDown({ pointerId, clientX, clientY, button }:PointerEvent) {
+  if (button !== 2) return
+
   elementSize.startX = clientX
   elementSize.startY = clientY
   if (modal.value) {

@@ -20,6 +20,7 @@ import { productCardBaseParamsSelectFull, type _ProductCardFull } from '~~/type/
 
 definePageMeta({
     title: 'Информация о товаре',
+    keepalive: true
 })
 
 const route = useRoute()
@@ -27,7 +28,7 @@ const { getInfo: getInfoProduct } = useProduct()
 const id = route.params.id
 const option = { where: { id: +id }, ...productCardBaseParamsSelectFull }
 
-const { data, refresh, error } = await getInfoProduct<_ProductCardFull>(option,{}, { key: 'data_full' + id })
+const { data, refresh } = await getInfoProduct<_ProductCardFull>(option,{}, { key: 'data_full' + id })
 
 onMounted(() => {
     useHead({

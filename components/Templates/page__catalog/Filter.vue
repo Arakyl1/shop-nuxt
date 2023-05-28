@@ -3,16 +3,21 @@
         <div>
             <div class="pb-3">
                 <h4 class="text-lg mb-1">Категория</h4>
-                <div v-if="categor">
-                    <AtomList :list="categor" :class="[style.input]" class="w-full"
-                        :value="route.query.categor ? route.query.categor : 'Категория'" @change="routePushQueryCategor" />
+                <div>
+                    <AtomList :list="data ? data.map((el: any) => el.name) : []"
+                        :class="[style.input]" class="w-full"
+                        :option="$route.query.categor ? $route.query.categor?.toString() : ''"
+                        @change="routePushQueryCategor" />
                 </div>
             </div>
             <div class="pb-3">
                 <h4 class="text-lg mb-1">Подкатегория</h4>
                 <div>
-                    <AtomList :list="subcategor" :class="[style.input]" class="w-full"
-                        :disabled="!('categor' in route.query)">Подкатегория
+                    <AtomList :list="subcategor"
+                        :class="[style.input]" class="w-full"
+                        :disabled="!('categor' in route.query)"
+                        :option="''"
+                        >Подкатегория
                     </AtomList>
                 </div>
             </div>
@@ -29,7 +34,7 @@
                         v-model="filterList.price.upTo" type="number" placeholder="До" />
                 </form>
             </div>
-            <template v-if="makerList">
+            <template v-if="makerList.length">
                 <AtomListCheckbox :content="makerList" :reset="reset" @maker-data="addData($event as any[], 'maker')">
                     <template #title>
                         <h4 class="text-lg mb-1">Бренд</h4>
@@ -83,21 +88,24 @@ const emit = defineEmits<{
     (e: 'option-seacrh', id: object): void
 }>()
 
-
 const { getInfo: getInfoProduct } = useProduct()
 const route = useRoute()
 const router = useRouter()
 const filterList = ref(CreateFilterList(route))
 const makerList = ref<MakerItem[]>([])
 const reset = ref(false)
-const { data } = await useAsyncData('select', () => queryContent('/select').only(['select']).findOne())
+const { data } = await useAsyncData('select',
+    () => queryContent('/select').only(['select']).findOne(),
+    {
+        transform: (data) => data.select
+    })
 
 
 const searchParameters = computed(() => Object.values(route.query).map((el: any) => el.trim()).join('_'))
 
-const categor = computed(() => data.value ? data.value.select.map((el: any) => el.name) : [])
+const categor = computed(() => data.value && route.query.categor ? data.value.map((el: any) => el.name) : [])
 const subcategor = computed(() => data.value && route.query.categor ?
-    data.value.select.find((el: any) => el.name === route.query.categor).children.map((el: any) => el.name) :
+    data.value.find((el: any) => el.name === route.query.categor).children.map((el: any) => el.name) :
     [])
 
 const checkValidPrice = computed(() => {
@@ -111,7 +119,7 @@ const optionSearch = computed(() => {
         price: {},
         ranting: { gte: 0 },
     }
-
+    
     if (route.query.categor) {
         option.categor = route.query.categor as unknown as string
     } else {
@@ -161,10 +169,16 @@ async function getMakerlist(params: SearchParams): Promise<void> {
 
     const keyData = generateKey(optionSearch.value)
     try {
-        const { data } = await getInfoProduct<MakerNameList[]>(params, { many: true }, { key: keyData })
-        if (!data.value) return
-        const list = new Set(data.value.map(el => el.maker))
-        makerList.value = listModifi<MakerItem>([...list])
+        getInfoProduct<MakerNameList[]>(params,
+        { many: true },
+        {
+            key: keyData,
+            server: false,
+            onResponse({ response }) {
+                const list = new Set(response._data.map((el: MakerNameList) => el.maker)) as Set<string>
+                makerList.value = listModifi<MakerItem>([...list])
+            }
+        })
     } catch (error) {
         console.log(error);
     }
@@ -172,7 +186,7 @@ async function getMakerlist(params: SearchParams): Promise<void> {
 
 function SearchParams(): SearchParams {
     return {
-        where: typeof route.query.categor === 'string' ? { categor: route.query.categor } : { NOT: [{ categor: '' }] },
+        where: isString(route.query.categor) ? { categor: route.query.categor } : { NOT: [{ categor: '' }] },
         select: { maker: true }
     }
 }
@@ -194,7 +208,9 @@ function searchProduct() {
 
 async function initFilter() {
     searchProduct()
-    await getMakerlist(SearchParams())
+    console.log(isString(route.query.categor));
+    
+    getMakerlist(SearchParams())
 }
 
 
@@ -203,7 +219,6 @@ watch(() => searchParameters.value, () => {
 })
 
 watch(() => route.query.categor!, async (newValue, oldValue) => {
-
     if (newValue === oldValue) return
     await getMakerlist(SearchParams())
 })

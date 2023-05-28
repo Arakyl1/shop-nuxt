@@ -7,7 +7,7 @@
       <OrganismsHeaderMobaile class="mb-4 md:block hidden"/>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-3">
-      <Transition name="path">
+      <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition>
       <div class="min-h-screen">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <OrganismsFooter class="block sm:hidden"/>
+      <OrganismsFooter/>
     </div>
     <Transition name="alert">
       <AtomOtherAlert />
@@ -84,9 +84,11 @@ watch(() => active.value, (newValue) =>{
   opacity: 0.8;
 }
 
-.path-enter-active,
-.path-leave-active {
+.path-enter-active{
   transition: all 0.3s ease-in-out;
+}
+.path-leave-active{
+  transition: all 0;
 }
 
 

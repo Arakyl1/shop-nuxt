@@ -1,12 +1,13 @@
 import { type ProductCard } from "@prisma/client";
 
-type SizeH = 'h_28'|'h_48'|'h_56'|'h_60'|'h_64'|'h_72'|'h_80'|'h_92'|'h_96'
-type SizeW = 'w_28'|'w_48'|'w_56'|'w_60'|'w_64'|'w_72'|'w_80'|'w_92'|'h_96'
+type sizeI = 28|48|56|60|64|72|80|92|96|224|320
 
 type TransfornSize = {
-    heigth?: SizeH,
-    width?: SizeW
+    heigth?:  `h_${sizeI}`,
+    width?: `w_${sizeI}`
 }
+
+
 export function changeValueImageSize(url:string, size?: TransfornSize): string {
     if (typeof size === 'object') {
         return url.replace(/upload\//, () => `upload/${ Object.values(size).join(',')}/`);
@@ -18,5 +19,13 @@ export function generateKey(data:object): string {
     return Object.entries(data).flat(1).map(el => typeof el === 'object' ? generateKey(el): el).join(',')
 }
 export function checkProductAvailability<T extends { availability: boolean }>(data: T): boolean {
-    return data.availability
+    return unref(data.availability)
+}
+
+export function isNumber(elem: unknown): elem is number {
+    return typeof unref(elem) === 'number'
+}
+
+export function isString(elem: unknown): elem is string {
+    return typeof unref(elem) === 'string'
 }

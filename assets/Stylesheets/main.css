@@ -1,19 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+@import url('./keyframes.css');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+*,::after, ::before{
+    line-height: 1.2;
+    font-family: 'Lato', sans-serif;
+    color: #383838;
+}
 
 .decor-line{
     width: 100%;
     height: 1px;
     background-color: #C9C9C9;
 }
-*,::after, ::before{
-    line-height: 1.2;
-    font-family: 'Lato', sans-serif;
-    color: #383838;
+:root {
+    --color-white: #fff;
+    --color-gray-100: #F7F7F7;
+    --color-gray-200: #e7e7e7;
+    --color-gray-300: #9C9C9C;
+    --color-gray-500: #7D7D7D;
+    --color-gray-700: #757575;
+    --color-gray-900: #5E5E5E;
+    --color-yellow-100: #FFC773;
+    --color-yellow-300: #FFB240;
+    --color-yellow-500: #FF9900;
+    --color-yellow-700: #BF8630;
+    --color-yellow-900: #A66300;
+    --lin-grad-loader--deg: 135deg;
 }
+
 
 @layer components {
     .bt-base{
@@ -34,4 +53,10 @@
     .slader__container{
         @apply -mx-4  xl:-mx-3 sm:-mx-2 mb-4
     }
+    
+}
+
+.liner__gradient-loader {
+    background-image: linear-gradient(var(--lin-grad-loader--deg), var(--color-white), var(--color-gray-200), var(--color-white), var(--color-gray-200));
+    background-size: 400% 400%;
 }

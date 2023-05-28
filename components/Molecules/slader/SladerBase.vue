@@ -69,15 +69,17 @@ function updateScrolLeftSlader(index: number): void {
 
 function onScroll({ type }: Event): void {
     if (slader.value && type === 'scroll') {
-        indexActiveButton.value = Math.round(+(slader.value.scrollLeft / slader.value.clientWidth).toFixed(1))
+        let scrollLe = slader.value.scrollLeft
+        let clientW = slader.value.clientWidth
+        indexActiveButton.value = Math.round(+(scrollLe / clientW).toFixed(1))
         // 
         window.clearTimeout(isScrolling.value)
         isScrolling.value = setTimeout(() => {
             if (!buttonAcitive.value) {
                 slader.value!.style.setProperty('scroll-snap-type', 'x mandatory')
             }
-            sladerValueScroll.value.current = slader.value!.scrollLeft
-        }, 800)
+            sladerValueScroll.value.current = scrollLe
+        }, 400)
     }
 }
 
@@ -98,7 +100,7 @@ function onPointerMove({ clientX, buttons, type, pointerId, pointerType }: Point
         if (cordsScroll.value && cordsScroll.value.active && slader.value && buttons !== 0) {
             let difX = cordsScroll.value.startX - clientX
             cordsScroll.value.startX = clientX
-            slader.value.scrollBy({ left: difX })
+            slader.value.scrollLeft += difX
         } else {
             resetScrollData(pointerId)
             cordsScroll.value = null
@@ -138,7 +140,7 @@ function resetScrollData(pointerId: number) {
     }
 }
 
-onUpdated(() => {
+onMounted(() => {
     if (slader.value) {
         let scrollWidth = Math.max(
             slader.value.clientWidth,

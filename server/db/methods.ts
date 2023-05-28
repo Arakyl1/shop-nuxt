@@ -10,7 +10,6 @@ type ModelNameCreate = {
     'characteristic': Prisma.CharacteristicCreateArgs ,
     'characteristicItem': Prisma.CharacteristicItemCreateArgs,
     'image': Prisma.ImageCreateArgs
-    
 }
 
 type ModelNameFindUnique = {
@@ -73,17 +72,17 @@ export const prismaFindUnique = async<T extends keyof ModelNameFindUnique>(
 
 export const prismafindMany = async<T extends keyof ModelNameFindMany>(
     key: T, body: ModelNameFindMany[T]) => {
-    return prisma[key].findMany(body)
+    return await prisma[key].findMany(body)
 }
 
 export const prismaUpdate = async<T extends keyof ModelNameUpdate>(
     key: T, body: ModelNameUpdate[T]) => {
-    return prisma[key].update(body)
+    return await prisma[key].update(body)
 }
 
 export const prismaDelete = async<T extends keyof ModelNameDelete>(
     key: T, body: ModelNameDelete[T]) => {
-    return prisma[key].delete(body)
+    return await prisma[key].delete(body)
 }
 
 // prisma.user.findUnique({select: { ff: true }})

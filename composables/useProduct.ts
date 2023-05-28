@@ -14,7 +14,7 @@ export default () => {
             console.log(error);
         }
     }
-    const update = async (data: object) => {
+    const update = async (data: Prisma.ProductCardUpdateArgs) => {
         try {
             return await $fetch('/api/product/update', {
                 method: "PUT",

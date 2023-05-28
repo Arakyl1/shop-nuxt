@@ -1,20 +1,22 @@
 <template>
     <MoleculesModalFavoriteProduct>
         <template #default="{ item }">
-            <MoleculesItemProductCard :id="item" :data="null" class="group is-pos-info-for-stock">
-                <template #bt-favorite>
-
+            <MoleculesItemProductCard :data="item" class="group is-pos-info-for-stock">
+                <template #bt-favorite="{ content }">
                     <ClientOnly>
-                        <AtomButtonStandart class="group p-1" @click="addFatoriteItem(item)"
-                            :class="[checkIdInFavorites(item).value ? 'icon-red' : 'icon-black']">
+                        <AtomButtonStandart class="group p-1" @click="addFatoriteItem(content.id)"
+                            :class="[checkIdInFavorites(content.id).value ? 'icon-red' : 'icon-black']">
                             <IconLike class="h-7" />
                         </AtomButtonStandart>
                     </ClientOnly>
 
                 </template>
                 <template #bt-basket="{ content }">
-                    <AtomButtonStandart class="flex bg-blue-500  justify-center items-center" @click="addBasket({
-                        id: item,
+                    <AtomButtonStandart
+                    v-if="content && !isNumber(content)"
+                    class="flex bg-blue-500  justify-center items-center"
+                    @click="addBasket({
+                        id: content.id,
                         quantity: 1,
                         price: content.sale ? Math.floor(content.price * 0.9) : content.price
                     })"
@@ -29,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+
 const { addBasket } = useBasket()
 const { checkIdInFavorites, addFatoriteItem } = useFavorite()
 </script>

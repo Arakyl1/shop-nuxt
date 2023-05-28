@@ -6,29 +6,32 @@
             </MoleculesSladerControl>
         </template>
         <template #item="{ elem }">
-            <MoleculesItemProductCard v-if="elem" :data="elem" class="group is-pos-info-for-stock">
-                <template #bt-favorite>
+            <MoleculesItemProductCard  :data="elem" class="group is-pos-info-for-stock">
+                <template #bt-favorite="{ content }">
                     <ClientOnly>
-                        <AtomButtonStandart class="group p-1" @click="addFatoriteItem(elem.id)"
-                            :class="[checkIdInFavorites(elem.id).value ? 'icon-red' : 'icon-black']">
+                        <AtomButtonStandart
+                        v-if="content && !isNumber(content)"
+                        class="group p-1" @click="addFatoriteItem(content.id)"
+                            :class="[checkIdInFavorites(content.id).value ? 'icon-red' : 'icon-black']">
                             <IconLike class="h-7" />
                         </AtomButtonStandart>
                     </ClientOnly>
                 </template>
-                <template #bt-basket>
-                    <AtomButtonStandart class="flex bg-blue-500  justify-center items-center md:py-2 sm:text-sm"
+                <template #bt-basket="{ content }">
+                    <AtomButtonStandart
+                    v-if="content && !isNumber(content)"
+                    class="flex bg-blue-500  justify-center items-center md:py-2 sm:text-sm"
                     @click="addBasket({
-                        id: elem.id,
+                        id: content.id,
                         quantity: 1,
-                        price: elem.sale ? Math.floor(elem.price * 0.9) : elem.price
+                        price: content.sale ? Math.floor(content.price * 0.9) : content.price
                     })"
-                    :disabled="!checkProductAvailability(elem)">
+                    :disabled="!checkProductAvailability(content)">
                         <IconBasketSmall class="group icon-white sm:w-5" />
                         <p class="text-white ml-2">В корзину</p>
                     </AtomButtonStandart>
                 </template>
             </MoleculesItemProductCard>
-            <MoleculesItemBase v-else />
         </template>
     </MoleculesSladerBase>
 </template>
@@ -45,7 +48,7 @@ const { checkIdInFavorites, addFatoriteItem } = useFavorite()
 const { data } = await getInfoProduct<_ProductCardBase[]>(
     { where: props.searchCategor, ...productCardBaseParamsSelect, orderBy: { 'availability': 'desc' } },
     { many: true },
-    { key: Object.keys(props.searchCategor).join(',')[0] })
+    { key: Object.keys(props.searchCategor).join(',') })
 
 const style = {
     container: '[grid-auto-columns:calc(100%/4)] lg:[grid-auto-columns:calc(100%/3)] sm:[grid-auto-columns:calc(100%/2)]'

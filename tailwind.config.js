@@ -10,6 +10,7 @@ module.exports = {
   ],
   theme: {
     colors: {
+      transparent: "transparent",
       blue: {
         100: "#77B1F5",
         300: "#4A98F5",
@@ -67,6 +68,9 @@ module.exports = {
         '8': '1.2',
         '9': '1.2',
         '10': '1.2',
+      },
+      animation: {
+        'loader-data': 'gradient 2s linear infinite'
       }
     },
     screens: {

@@ -5,9 +5,9 @@
         </NuxtLink>
         <h3 class="text-2xl lg:text-lg xl:text-xl ">+7 (499) 719-99-94</h3>
         <div class="group header-main lg:grow"><slot></slot></div>
-        <ClientOnly>
+        
             <AtomOtherSocialIcon class="lg:hidden"/>
-        </ClientOnly>
+        
         <AtomButtonStandart class="bg-yellow-500 text-white py-2 lg:hidden">
             Адреса магазинов
         </AtomButtonStandart>

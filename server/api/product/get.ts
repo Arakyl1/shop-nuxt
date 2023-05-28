@@ -4,8 +4,10 @@ import { prismaFindUnique, prismafindMany } from "~~/server/db/methods"
 export default defineEventHandler(async(event: H3Event) => {
     const body = await readBody(event)
     const query = getQuery(event)
+    console.log(true);
+    
     try {
-        if (Boolean(query.many)) {    
+        if (Boolean(query.many)) {
             return await prismafindMany('productCard',body)
         } else {
             return await prismaFindUnique('productCard', body)

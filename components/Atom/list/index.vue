@@ -1,13 +1,17 @@
 <template>
-    <select class="p-2 rounded-md text-gray-300 w-full focus-visible:outline-none">
-        <template v-if="list">
-            <option v-for="item in list" :key="item" class="text-gray-300">
-                {{ item }}
-            </option>
+    <select class="p-2 rounded-md text-gray-300 w-full focus-visible:outline-none" v-model="value">
+        <option class="text-gray-300"></option>
+        <template v-for="item in list" :key="item">
+            <slot>
+                <option class="text-gray-300">
+                    {{ item }}
+                </option>
+            </slot>
         </template>
-        <option v-else class="text-gray-300"><slot></slot></option>
     </select>
 </template>
 <script setup lang="ts">
-defineProps<{ list: (string | number)[]}>()
+const props = defineProps<{ list: (string | number)[], option?: string }>()
+
+const value = ref(props.option)
 </script>
