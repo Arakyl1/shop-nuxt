@@ -1,35 +1,43 @@
 <template>
-    <div class="flex"
-    @click="addNumberStar">
+    <div class="flex" 
+    @click="addNumberStar" >
+        <slot v-bind="{ starValue }">
+            <input type="number" hidden name="ranting.gte" :value="starValue">
+        </slot>
         <IconStar v-for="item in 5" :key="item"
         :data-star="item"
-        :class="[style.base, quantityStar >= item ? style.active : style.inActive]"/>
+        :class="[style.base, starValue && starValue >= item ? style.active : style.deactive]"/>
     </div>
 </template>
 
 <script setup lang="ts">
+
 import { RecordOption } from '~~/type/intex';
 
-withDefaults(defineProps<{
+
+const props = withDefaults(defineProps<{
     quantityStar?: number | undefined
-    style?: { base: string, active: string, inActive: string }
+    style?: { base: string, active: string, deactive: string },
+    reset?: boolean
 }>(), {
-    quantityStar: 3,
     style() {
         return {
-            base: 'item__star group-[.is-icon-small]:sm:scale-75',
-            active: 'group is-star-yellow',
-            inActive: 'group is-star-gray'
+            base: 'item__star group-[.is-icon-small]:sm:scale-75 group',
+            active: 'stait-active--fill',
+            deactive: 'stait-deactive--fill'
         }
     },
+    reset: false
 })
 
 const emit = defineEmits<{
     (e: 'numberStar', id: number): void
 }>()
 
+const starValue = ref<number|undefined>(props.quantityStar ? props.quantityStar : undefined)
+
 type DatasetKey = 'star'
-function addNumberStar({ target }: MouseEvent) {
+function addNumberStar({ target }: MouseEvent): void {
     interface ModifiedHTMLElement extends HTMLElement {
         dataset: DOMStringMap & RecordOption<DatasetKey, string>
     }
@@ -37,7 +45,12 @@ function addNumberStar({ target }: MouseEvent) {
     const element = elementTarget.closest('.item__star') as ModifiedHTMLElement
     const number: number = +element.dataset.star
     if (number) {
-      emit('numberStar', number)
+        starValue.value = number
+        emit('numberStar', number)
     }
 }
+
+watch(() => props.reset, () => {
+    starValue.value = undefined
+})
 </script>

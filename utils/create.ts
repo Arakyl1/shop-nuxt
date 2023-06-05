@@ -3,18 +3,13 @@ import { FilterList } from "@/type/intex";
 import { Prisma } from "@prisma/client";
 
 
-export const filterList = <T extends RouteLocationNormalizedLoaded>(route: T): FilterList => {
+export const filterList = (categor?: string): Prisma.ProductCardWhereInput => {
     return {
-        cat: route.query.categor ? route.query.categor : 'Категория',
-        price: { from: 0, upTo: 0 },
-        ranting: 0,
-        maker: [],
-        actual: [],
-        other: [],
+        categor: categor || 'Категория'
     }
 }
 
-export const createBaseProductCard = <T extends Prisma.ProductCardSelect = {}>(select: T) => {
+export const createBaseProductCard = <T extends Prisma.ProductCardCreateArgs['select'] = {}>(select: T) => {
     return {
         name: '',
         art: '',

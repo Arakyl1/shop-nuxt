@@ -53,6 +53,20 @@
     .slader__container{
         @apply -mx-4  xl:-mx-3 sm:-mx-2 mb-4
     }
+    .input--validation {
+        @apply border-none
+        outline-1 outline outline-black-100
+        focus-visible:outline-yellow-400
+        focus-visible:invalid:outline-invalid
+        focus-visible:valid:outline-valid
+        transition-all
+    }
+    .stait-active--fill {
+        @apply fill-yellow-500
+    }
+    .stait-deactive--fill {
+        @apply fill-gray-300
+    }
     
 }
 

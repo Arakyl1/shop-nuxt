@@ -72,6 +72,7 @@ async function getIdProduct(optionSeacrh: Prisma.ProductCardWhereInput = {}) {
     listIdProduct.value = []
 
     const keyData = generateKey(optionSeacrh);
+    test(optionSeacrh)
     
     getInfoProduct<_ProductCardBase[]>({
         skip: ((page - 1) * limit),

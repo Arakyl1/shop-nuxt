@@ -1,12 +1,13 @@
 <template>
   <div>
     <AtomModalTransition :active="stage" class="model-style">
-      <AtomModalContent :title="'Ваши избранный'" :text-default="'Ваши избраны пусты'" :hude-window="updateStage">
-        <div class="grid grid-cols-3 md:grid-cols-2 -mx-4 sm:-mx-2" v-if="dataList">
+      <AtomModalContent :title="'Ваши избранный'" :hude-window="updateStage">
+        <div class="grid grid-cols-3 md:grid-cols-2 -mx-4 sm:-mx-2" v-if="dataList?.length">
           <div v-for="item in dataList" :key="item.id" class="mb-4 slader__item">
             <slot v-bind="{ item }"></slot>
           </div>
         </div>
+        <p v-else class="text-2xl text-gray-700 p-5 md:text-xl sm:text-lg">Ваши избраны пусты</p>
       </AtomModalContent>
     </AtomModalTransition>
   </div>

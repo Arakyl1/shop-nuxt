@@ -1,8 +1,7 @@
 <template>
     <form>
         <input type="text" :class="style.input" class="mb-6" placeholder="Логин" v-model="data.username" />
-        <input type="password" :class="style.input" class="mb-6" placeholder="Пароль" autocomplete="on"
-            v-model="data.password" />
+        <AtomUIPassword placeholder="Пароль" class="text-lg w-full px-4 py-2 rounded-md mb-6" v-model="data.password"/>
         <AtomButtonStandart @click="checkValidData()"
         class="bg-blue-500 rounded-md text-lg text-white w-full"
         >Войти </AtomButtonStandart>

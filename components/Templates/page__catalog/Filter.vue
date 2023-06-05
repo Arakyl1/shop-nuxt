@@ -1,88 +1,111 @@
 <template>
     <div>
-        <div>
-            <div class="pb-3">
-                <h4 class="text-lg mb-1">Категория</h4>
-                <div>
-                    <AtomList :list="data ? data.map((el: any) => el.name) : []"
+        <form ref="form">
+            <section>
+                <fieldset class="pb-3">
+                    <legend >Категория</legend>
+                    <div>
+                        <AtomList :name="getPropertyName('categor')"
+                        :list="data ? data.map((el: any) => el.name) : []"
                         :class="[style.input]" class="w-full"
-                        :option="$route.query.categor ? $route.query.categor?.toString() : ''"
-                        @change="routePushQueryCategor" />
-                </div>
-            </div>
-            <div class="pb-3">
-                <h4 class="text-lg mb-1">Подкатегория</h4>
-                <div>
-                    <AtomList :list="subcategor"
+                        :option="route.query.categor ? (route.query.categor as string) : '' "
+                        @change="[routePushQueryCategor($event)]" />
+                    </div>
+                </fieldset>
+                <fieldset class="pb-3">
+                    <legend >Подкатегория</legend>
+                    <div>
+                        <AtomList :list="subcategor"
                         :class="[style.input]" class="w-full"
                         :disabled="!('categor' in route.query)"
-                        :option="''"
-                        >Подкатегория
-                    </AtomList>
+                        :option="route.query.categor ? (route.query.categor as string) : '' "
+                        />
+                    </div>
+                </fieldset>
+            </section>
+
+            <section>
+                <div class="decor-line"></div>
+                <div class="py-3">
+                    <h1 class="text-lg mb-1">Цена</h1>
+                    <div class="flex w-full items-center">
+                        <template v-for="i in 1" :key="i">
+
+                        
+                        <input class="w-[45%]"
+                            type="number"
+                            placeholder="От"
+                            name="price.gte"
+                            ref="inputs"
+                            step="1"
+                            min="1"
+                            :max="priseValue.to <= 0 ? 99999999 : priseValue.to"
+                            :class="[style.input, 'input--validation']"
+                            @input="(e) => (priseValue.from = (e.target as HTMLInputElement).valueAsNumber)"
+                            />
+
+                        <p class="grow text-center">:</p>
+
+                        <input class="w-[45%] p-2"
+                            type="number"
+                            placeholder="До"
+                            name="price.lte"
+                            ref="inputs"
+                            step="1"
+                            :min="priseValue.from"
+                            :class="[style.input, 'input--validation']"
+                            @input="(e) => (priseValue.to = (e.target as HTMLInputElement).valueAsNumber)"
+                             />
+                        </template>
+                    </div> 
                 </div>
-            </div>
-            <div class="decor-line"></div>
-            <div class="py-3">
-                <h4 class="text-lg mb-1">Цена</h4>
-                <form class="flex w-full items-center">
-                    <input class="w-[45%]"
-                        :class="[style.input, { 'outline outline-1 outline-red-500': checkValidPrice.from }]"
-                        v-model="filterList.price.from" type="number" placeholder="От" />
-                    <p class="grow text-center">:</p>
-                    <input class="w-[45%] p-2"
-                        :class="[style.input, { 'outline outline-1 outline-red-500': checkValidPrice.to }]"
-                        v-model="filterList.price.upTo" type="number" placeholder="До" />
-                </form>
-            </div>
+            </section>
+            
             <template v-if="makerList.length">
-                <AtomListCheckbox :content="makerList" :reset="reset" @maker-data="addData($event as any[], 'maker')">
+                <AtomListCheckbox
+                :content="makerList"
+                :reset="reset">
                     <template #title>
-                        <h4 class="text-lg mb-1">Бренд</h4>
+                        <h1 class="text-lg mb-1">Бренд</h1>
                     </template>
                 </AtomListCheckbox>
             </template>
-            <div class="decor-line"></div>
+             <div class="decor-line"></div>
             <div class="py-3">
                 <h4 class="text-lg mb-1">Рейтинг</h4>
-                <AtomUIStar :quantity-star="filterList.ranting" @number-star="(e) => { filterList.ranting = e }"
-                    class="justify-between" />
+                <AtomUIStar class="justify-between" :reset="reset"/>
             </div>
 
-            <AtomListCheckbox :content="filterListParams" :reset="reset" @maker-data="addData($event as any[], 'actual')">
+            <AtomListCheckbox
+            :content="filterListParams"
+            :reset="reset">
                 <template #title>
-                    <h4 class="text-lg mb-1">Другое</h4>
+                    <h1 class="text-lg mb-1">Другое</h1>
                 </template>
             </AtomListCheckbox>
-            <AtomListCheckbox :content="filterListServive" :reset="reset" @maker-data="addData($event as any[], 'other')">
+            <AtomListCheckbox
+            :content="filterListServive"
+            :reset="reset">
                 <template #title>
                     <h4 class="text-lg mb-1">Доставка и наличие'</h4>
                 </template>
             </AtomListCheckbox>
-        </div>
         <div class="flex mt-4">
-            <AtomButtonStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2" @click="sendParams">
+            <AtomButtonStandart class="bg-blue-500 text-white grow text-lg mr-4 py-3 xl:py-2" @click="sendParams()">
                 Показать
             </AtomButtonStandart>
             <AtomButtonStandart class="bg-blue-500 aspect-square p-3.5" @click="resetSearchData">
                 <IconReload class="w-6 h-6 xl:w-5 xl:h-5 group icon-white" />
             </AtomButtonStandart>
         </div>
+        </form>
     </div>
 </template>
 
 <script setup lang="ts">
-import { filterList as CreateFilterList } from "@/utils/create";
 import { Prisma } from "@prisma/client";
+import { PP } from '~~/type/intex';
 
-
-type MakerItem = { name: string, value: string }
-type optionSearch = {
-    categor?: string,
-    NOT?: [{ categor: '' }],
-    price: { gte?: number, lte?: number },
-    ranting: { gte: number },
-    maker?: { in: string[] }
-}
 
 const emit = defineEmits<{
     (e: 'option-seacrh', id: object): void
@@ -91,8 +114,11 @@ const emit = defineEmits<{
 const { getInfo: getInfoProduct } = useProduct()
 const route = useRoute()
 const router = useRouter()
-const filterList = ref(CreateFilterList(route))
-const makerList = ref<MakerItem[]>([])
+const { createAlert } = useAlert() 
+const form = ref<HTMLFormElement | null>(null)
+const inputs = ref<any[]>([])
+const priseValue = ref<{ from: number, to: number }>({ from: 0, to: 0 })
+const makerList = ref<PP[]>([])
 const reset = ref(false)
 const { data } = await useAsyncData('select',
     () => queryContent('/select').only(['select']).findOne(),
@@ -100,42 +126,29 @@ const { data } = await useAsyncData('select',
         transform: (data) => data.select
     })
 
+const style = {
+    title: 'text-lg mb-1',
+    input: 'p-2 rounded-md text-gray-500'
+}
+
 
 const searchParameters = computed(() => Object.values(route.query).map((el: any) => el.trim()).join('_'))
 
-const categor = computed(() => data.value && route.query.categor ? data.value.map((el: any) => el.name) : [])
-const subcategor = computed(() => data.value && route.query.categor ?
+const subcategor = computed(() => data.value && 'categor' in route.query ?
     data.value.find((el: any) => el.name === route.query.categor).children.map((el: any) => el.name) :
-    [])
-
-const checkValidPrice = computed(() => {
-    const from = filterList.value.price.from
-    const upTO = filterList.value.price.upTo
-    return { from: from ? (from > upTO && upTO !== 0) || from < 0 : false, to: upTO < 0 }
-})
-
-const optionSearch = computed(() => {
-    const option: optionSearch = {
-        price: {},
-        ranting: { gte: 0 },
-    }
-    
-    if (route.query.categor) {
-        option.categor = route.query.categor as unknown as string
-    } else {
-        option.NOT = [{ categor: '' }]
-    }
-    if (filterList.value.ranting > 0) option.ranting.gte = filterList.value.ranting
-    if (filterList.value.price.from > 0) option.price.gte = filterList.value.price.from
-    if (filterList.value.price.upTo > 0) option.price.lte = filterList.value.price.upTo
-    if (filterList.value.maker.length > 0) option.maker = { in: filterList.value.maker }
-    if (filterList.value.actual.length > 0) addOption(filterList.value.actual, option)
-    if (filterList.value.other.length > 0) addOption(filterList.value.other, option)
-
-    return option
-})
+[])
 
 // methods
+
+function checkValidInput(): boolean {
+    let valid: boolean = false
+    if (!inputs.value) return valid
+    
+    if (Array.isArray(inputs.value)) {
+        valid = inputs.value.find(_ => !_.validity.valid) ? false : true
+    }
+    return valid 
+}
 
 function routePushQueryCategor({ target }: Event) {
     const _target = target as HTMLSelectElement
@@ -146,73 +159,121 @@ function routePushQueryCategor({ target }: Event) {
     route.query.categor !== params.categor ? router.push({ query: params }) : ''
 }
 
-type filterListKey = 'maker' | 'other' | 'actual'
-const addData = (el: any[], way: filterListKey) => {
-    filterList.value[way] = el
-}
-const addOption = (data: string[], option: object): void => Object.assign(
-    option, ...data.map(el => { return { [el]: true } }));
 
-function resetSearchData() {
-    filterList.value = CreateFilterList(route)
-    reset.value = !reset.value
-    sendParams()
-}
+async function getMakerlist<
+    T extends Prisma.ProductCardWhereInput 
+>(_w: T): Promise<void> {
 
-type SearchParams = { where: { categor: string } | { NOT: [{ categor: '' }] }, select: { maker: true } }
-
-async function getMakerlist(params: SearchParams): Promise<void> {
-    const selectOption = Prisma.validator<Prisma.ProductCardArgs>()({ select: params.select })
+    const selectOption = Prisma.validator<Prisma.ProductCardArgs>()({ select: { maker: true }})
     type MakerNameList = Prisma.ProductCardGetPayload<typeof selectOption>
 
-    const listModifi = <T extends any,>(list: string[]): T[] => list.map(el => Object.create({ name: el, value: el }))
+    const listModifi = <T extends any>(list: string[]): T[] => list.map(el => Object.create({ title: el, name: 'maker.in', value: el }))
 
-    const keyData = generateKey(optionSearch.value)
+    const keyData = generateKey({ categor: route.query.categor })
     try {
-        getInfoProduct<MakerNameList[]>(params,
-        { many: true },
-        {
-            key: keyData,
-            server: false,
-            onResponse({ response }) {
-                const list = new Set(response._data.map((el: MakerNameList) => el.maker)) as Set<string>
-                makerList.value = listModifi<MakerItem>([...list])
-            }
-        })
+        getInfoProduct<MakerNameList[]>({ 'where': _w, ...selectOption },
+            { many: true },
+            {
+                key: keyData,
+                server: false,
+                onResponse({ response }) {
+                    const list = new Set(response._data.map((el: MakerNameList) => el.maker)) as Set<string>
+                    makerList.value = listModifi<PP>([...list])
+                }
+            })
     } catch (error) {
         console.log(error);
     }
 }
 
-function SearchParams(): SearchParams {
-    return {
-        where: isString(route.query.categor) ? { categor: route.query.categor } : { NOT: [{ categor: '' }] },
-        select: { maker: true }
+type GG = { [prop: string]: any }
+function createSearchParams(): GG | void {
+    let s = Date.now()
+    if (!form.value) return
+    const f = new FormData(form.value)
+
+    let paramsData: GG = {}
+
+    for (const [key,value] of f) {
+        const keyAr = key.split('.').reverse()
+        let creatObj: GG = {}
+        
+        keyAr.forEach((_,i) => {
+            if (value) {
+                let valueIsNumber = parseFloat(value as string).toString().length === value.length
+                if (valueIsNumber) {
+                    creatObj = { [_]: i === 0 ? parseFloat(value as string) : creatObj }
+                    return
+                }
+                if (value === 'true') {
+                    creatObj = { [_]: i === 0 ? true : creatObj }
+                    return
+                }
+                if (_ === 'in') {
+                    creatObj = { in: [value] }
+                    return
+                }
+                if (isString(value) && value && i === 0) {
+                    creatObj = { [_]: value }
+                    return
+                }
+                creatObj = { [_]: creatObj }
+            }
+        })
+        paramsData = deepConcat(creatObj, paramsData)
+    }
+    console.log(paramsData);
+    return paramsData
+}
+
+type searchParams = () => Prisma.ProductCardWhereInput 
+const searchParams: searchParams = () => ('categor' in route.query ?
+    { 'categor': (route.query.categor as string) }:
+    { NOT: [{ categor: '' }] })
+
+
+function searchProduct() {
+    const d = createSearchParams()
+    test(d)
+    if (d) {
+        emit('option-seacrh', d)
+    } else {
+        emit('option-seacrh', searchParams() ) 
     }
 }
 
 function sendParams() {
-    if (+route.query.page! > 1) {
-        return navigateTo({
-            path: route.path,
-            query: { ...route.query, page: 1 }
-        })
+    const res = checkValidInput()
+    if (res) {
+        if (+route.query.page! > 1) {
+            return navigateTo({
+                path: route.path,
+                query: { ...route.query, page: 1 }
+            })
+        } else {
+            searchProduct()
+        }
     } else {
-        searchProduct()
+        createAlert('Проверить введеные данные')
     }
+    
 }
 
-function searchProduct() {
-    emit('option-seacrh', optionSearch.value)
+function resetSearchData() {
+    if (inputs.value.length) {
+        inputs.value.forEach(_ => _.value = '')
+    }
+    priseValue.value = { from: 0, to: 0 }
+    reset.value = !reset.value
+    setTimeout(() => sendParams(), 0) 
 }
 
 async function initFilter() {
     searchProduct()
-    console.log(isString(route.query.categor));
-    
-    getMakerlist(SearchParams())
+    getMakerlist(searchParams())
 }
 
+initFilter()
 
 watch(() => searchParameters.value, () => {
     searchProduct()
@@ -220,14 +281,7 @@ watch(() => searchParameters.value, () => {
 
 watch(() => route.query.categor!, async (newValue, oldValue) => {
     if (newValue === oldValue) return
-    await getMakerlist(SearchParams())
+    getMakerlist(searchParams())
 })
-
-initFilter()
-
-const style = {
-    title: 'text-lg mb-1',
-    input: 'p-2 rounded-md focus-visible:outline-none text-gray-500'
-}
 </script>
 

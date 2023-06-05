@@ -7,7 +7,7 @@
         </div>
         <div v-if="decorLine" class="decor-line mt-5 mb-4 sm:mt-3"></div>
         <div class="h-5/6 overflow-y-scroll ot2__container">
-            <slot><p class="text-2xl text-gray-700 p-5 md:text-xl sm:text-lg">{{ textDefault }}</p></slot>
+            <slot></slot>
         </div>
     </div>
 </template>

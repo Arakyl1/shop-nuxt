@@ -1,12 +1,12 @@
 <template>
     <div>
         <AtomModalTransition :active="stage" class="model-style">
-            <AtomModalContent :title="'Ваша корзина'" :text-default="'Ваша корзина пуста'"
+            <AtomModalContent :title="'Ваша корзина'"
                 :hude-window="updateStage">
-                <div class="flex flex-col" v-if="responseData">
+                <div class="flex flex-col" v-if="basket?.length">
                     <ul>
-                        <li v-for="(item, index) in responseData" :key="item.id">
-                            <slot v-bind="{ item, index, basketData: bastetItemData(item.id) }"></slot>
+                        <li v-for="(item, index) in basket" :key="item.id">
+                            <slot v-bind="{ basketData: item, index, resData: bastetItemData(item.id) }"></slot>
                         </li>
                     </ul>
                     <div class="decor-line"></div>
@@ -16,6 +16,7 @@
                         }}</p>
                     </div>
                 </div>
+                <p v-else class="text-2xl text-gray-700 p-5 md:text-xl sm:text-lg">Ваша корзина пуста</p>
             </AtomModalContent>
         </AtomModalTransition>
     </div>
@@ -47,12 +48,19 @@ async function getData(params: number[]) {
   )
 }
 
-function bastetItemData(id:number): BasketItem {
-    return basket.value.find(_ => _.id === id) as BasketItem
+function bastetItemData(id:number): ProductCardForSearch | null {
+    if (!responseData.value) return null
+    return responseData.value.find(_ => _.id === id) as ProductCardForSearch
 }
 
 onBeforeMount(() => {
     getData(basket.value.map(_ => _.id)),
     window.addEventListener('showModalBasketProduct', updateStage)
+})
+
+watch(() => basket.value.length, (newV,oldV) => {
+    if (newV > oldV) {
+        getData(basket.value.map(_ => _.id))
+    }
 })
 </script>

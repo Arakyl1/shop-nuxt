@@ -1,13 +1,12 @@
 <template>
   <div>
-    <form class="text-center">
+    <form class="text-center" >
       <input type="text" :class="style.input" placeholder="Логин" class="mb-4" autocomplete="on"
         v-model="data.username" />
-      <AtomUIEmail @input-email="(e) => { data.email = e }" placeholder="Email" :class="[style.input]" class="mb-4" />
-      <AtomUIPassword @password="(e) => { data.password = e }" placeholder="Пароль" :class="[style.input]" />
+      <AtomUIEmail placeholder="Email" class="text-lg w-full mb-4 px-4 py-2 rounded-md" v-model="data.email"/>
+      <AtomUIPassword placeholder="Пароль" class="text-lg w-full px-4 py-2 rounded-md" v-model="data.password"/>
       <label class="text-xs text-white mb-2 block">Используйте цифры, буквы малые и прописные, спец. сим.</label>
-      <input type="password" class="mb-8 " :class="style.input" placeholder="Повторите пароль" autocomplete="on"
-        v-model="data.repeartPassword" />
+      <AtomUIPassword placeholder="Повторите пароль" class="text-lg w-full px-4 py-2 rounded-md mb-8" v-model="data.repeartPassword"/>
 
       <AtomButtonStandart @click="userRegister()" class="bg-blue-500 rounded-md text-lg text-white w-full">
         Зарегистрироватьца

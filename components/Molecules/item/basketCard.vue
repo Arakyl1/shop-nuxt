@@ -1,18 +1,18 @@
 <template>
-    <article class=" py-4 sm:py-2 sm:mb-2" >
+    <article class=" py-4 sm:py-2 sm:mb-2" v-if="resData">
         <div class="flex items-center sm:flex-wrap">
-            <img :src="changeValueImageSize(item.image[0].link, { 'heigth': 'h_56' })" alt="image product">
+            <img :src="changeValueImageSize(resData.image[0].link, { 'heigth': 'h_56' })" alt="image product">
             <div class="pl-6 grow sm:pl-3 sm:w-9/12 sm:mb-2">
-                <NuxtLink :to="`/catalog/${item.id}`"
+                <NuxtLink :to="`/catalog/${resData.id}`"
                     class="text-black-500 mb-1 inline-block text-lg sm:text-base sm:mb-0 ">
-                    {{ item.name }}
+                    {{ resData.name }}
                 </NuxtLink>
                 <p class="text-gray-500 text-lg sm:text-base">
-                    {{ item.art }}
+                    {{ resData.art }}
                 </p>
             </div>
             <div class="mx-4 sm:grow sm:order-last">
-                <AtomTransformPrice :price="item.price" :sale="item.sale!"
+                <AtomTransformPrice :price="resData.price" :sale="resData.sale!"
                 :style="'text-xl ld:text-lg md:text-base sm:text-sm'" class="block sm:justify-end"/>
             </div>
             <div class="mr-6 sm:order-last block sm:mx-2">
@@ -34,16 +34,10 @@ import { BasketItem, ProductCardForSearch } from "@/type/intex";
 import { changeValueImageSize } from "@/utils/other";
 
 const props = defineProps<{
-    item: ProductCardForSearch,
+    resData: ProductCardForSearch | null,
     basketData: BasketItem,
     index: number
 }>()
 
 const basketProd = basketProduct()
-// const { getInfo: getInfoProduct } = useProduct() 
-
-// const { data } = await getInfoProduct<ProductCardForSearch>(
-//     { where: { id: props.item.id }, ...productCardParamsForSearchSelect }, {},
-//     { 'server': true, key: props.item.id.toString() })
-
 </script>

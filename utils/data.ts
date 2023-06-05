@@ -1,12 +1,12 @@
 export const filterListParams = [
-    { name: 'Новинки', value: 'news' },
-    { name: 'Акции', value: 'sale' },
-    { name: 'Популярные', value: 'top' }
+    { title: 'Новинки', name: getPropertyName('news'), value: true },
+    { title: 'Акции', name: getPropertyName('sale'), value: true },
+    { title: 'Популярные', name: getPropertyName('top'), value: true }
 ]
 
 export const filterListServive = [
-    { name: 'Доставка', value: 'delivery' },
-    { name: 'Самовывоз', value: 'pickUp' },
-    { name: 'Под заказ', value: 'underTheOrder' },
-    { name: 'В наличии', value: 'availability' }
+    { title: 'Доставка', name: getPropertyName('delivery'), value: true },
+    { title: 'Самовывоз', name: getPropertyName('pickUp'), value: true },
+    { title: 'Под заказ', name: getPropertyName('underTheOrder'), value: true },
+    { title: 'В наличии', name: getPropertyName('availability'), value: true }
 ]

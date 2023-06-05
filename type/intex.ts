@@ -4,6 +4,8 @@ import { LocationQueryValue } from "vue-router";
 import { productCardBaseParams, productCardParamsForSearch } from "@/utils/prismaSelect"
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
 
+export type PP = { title: string, name: string, value: boolean | string | number }
+
 export interface LisLink extends MarkdownParsedContent {
     name: string,
     href: string

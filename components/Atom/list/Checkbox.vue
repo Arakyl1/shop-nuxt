@@ -1,34 +1,38 @@
 <template>
+  <section>
     <div class="decor-line"></div>
-    <div class="py-3">
+    <fieldset class="py-3">
       <slot name="title"></slot>
       <ul class="">
-        <li class="mb-1 last:mb-0" v-for="item in content" :key="item.name">
-          <input class="mr-2" type="checkbox" v-model="data" :id="item.name" :value="item.value" />
-          <label class="" :for="item.name">
-            {{ item.name }}
-          </label>
+        <li class="mb-1 last:mb-0" v-for="item,i in content" :key="item.title">
+          <slot name="item" v-bind="{ item, i }">
+            <input class="mr-2" type="checkbox" :name="item.name" :id="item.title" :value="item.value" ref="input" />
+            <label class="" :for="item.title">
+              {{ item.title }}
+            </label>
+          </slot>
         </li>
       </ul>
-    </div>
+    </fieldset>
+  </section>
 </template>
-<script setup lang="ts">
 
-const emit = defineEmits<{
-  (e: 'maker-data', id: object): void
-}>()
+<script setup lang="ts" generic="U extends PP">
+// type PP = { name: string, value: string }
+import { PP } from '~~/type/intex';
+
 const props = defineProps<{
-  content: { name: string, value: string }[],
+  content: U[],
   reset?: boolean,
 }>()
-const data = ref<string[]>([])
 
-// before Update
-onBeforeUpdate(() => {
-  emit('maker-data', data)
-})
+const input = ref<HTMLInputElement[] | null>(null)
+
 // watch
 watch(() => props.reset, () => {
-  data.value = []
+  if (!input.value) return
+  input.value.forEach(_ => {
+    _.checked = false
+  })
 })
 </script>
