@@ -276,7 +276,7 @@ async function initFilter() {
 initFilter()
 
 watch(() => searchParameters.value, () => {
-    searchProduct()
+     setTimeout(() => searchProduct(), 4) 
 })
 
 watch(() => route.query.categor!, async (newValue, oldValue) => {
