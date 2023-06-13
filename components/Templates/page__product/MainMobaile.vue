@@ -43,7 +43,7 @@
                     quantity: numberOfProducts,
                     price: data.sale ? Math.floor(data.price * 0.9) : data.price
                 })"
-                :disabled="!checkProductAvailability(data)">
+                :disabled="!checkAvailability(data)">
                     <IconBasketSmall class="group icon-white" />
                     <p class="text-white ml-2">В корзину</p>
                 </AtomButtonStandart>

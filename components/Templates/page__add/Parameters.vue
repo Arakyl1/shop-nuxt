@@ -1,80 +1,58 @@
 <template>
 <section class="bg-gray-100 p-8 xl:p-6 lg:p-4">
     <div class="flex flex-wrap">
-        <div :class="style.item">
-            <h3 class="text-3xl xl:text-2xl lg:text-xl">Описание товара</h3>
+        <fieldset :class="style.item">
+            <legend class="text-3xl xl:text-2xl lg:text-xl">Описание товара</legend>
             <div class="decor-line my-6 xl:my-4"></div>
-            <form class="form">
-              <textarea
+              <textarea :name="modelProp('ProductCard','description')"
+              autocapitalize="words"
                 class="bg-white p-6 w-full h-80 border border-gray-300 border-solid rounded focus-visible:outline-0"
-                v-model="description"
-              ></textarea>
-            </form>
-        </div>
-        <div :class="style.item">
-            <h3 class="text-3xl xl:text-2xl lg:text-xl">Дополнительные опции</h3>
+                ></textarea>
+        </fieldset>
+        <fieldset :class="style.item">
+            <legend class="text-3xl xl:text-2xl lg:text-xl">Дополнительные опции</legend>
             <div class="decor-line my-6 xl:my-4"></div>
-            <form class="flex flex-wrap">
-              <p
-                class="inline-block grow mb-4"
-                v-for="item in dataOption"
-                :key="item.id"
-              >
+            <ul class="flex flex-wrap">
+              <li v-for="item in dataOption"
+                :key="item.name"
+                class="inline-block grow mb-4" >
                 <input
                   type="checkbox"
-                  :id="item.id"
-                  :value="item.id"
-                  v-model="data"
+                  :id="item.name"
+                  :name="item.name"
+                  value="true"
                   class="h-5 w-5 lg:w-4 lg:h-4"
                 />
-                <label class="pr-3 pl-2 text-xl align-bottom xl:text-lg lg:text-base" :for="item.id">{{ item.name }}</label>
-              </p>
-            </form>
-        </div>
+                <label class="pr-3 pl-2 text-xl align-bottom xl:text-lg lg:text-base"
+                  :for="item.name">{{ item.label }}</label>
+            </li>
+            </ul>
+        </fieldset>
     </div>
 </section>
 </template>
 <script setup lang="ts">
-import type { ProductCardKeyParams, ProductCardParams } from "@/type/intex";
+import { Prisma } from "@prisma/client";
+
+type ProKey = Prisma.ProductCardScalarFieldEnum
 
 const props = defineProps<{create?: boolean}>()
-const emit = defineEmits<{
-    (e: 'parameter', id: ProductCardParams):void
-}>()
+const input = ref<HTMLInputElement[] | null>(null)
 
-const data = ref<ProductCardKeyParams[]>([])
-const validData = ref<ProductCardParams>({})
-const description = ref<string>()
-
-type DataOption = { id: ProductCardKeyParams, name: string }
-const dataOption: DataOption[] = [
-  { id: 'top', name: 'Топ' },
-  { id: 'sale', name: 'Скидка' },
-  { id: 'news', name: 'Новый' },
-  { id: 'delivery', name: 'Доставка' },
-  { id: 'pickUp', name: 'Самовывоз' },
-  { id: 'underTheOrder', name: 'Под заказ' }
+type ProductCardOption= { name: ProKey, label: string }
+const dataOption: ProductCardOption[] = [
+  { name: modelProp('ProductCard','top'), label: 'Топ' },
+  { name: modelProp('ProductCard','sale'), label: 'Скидка' },
+  { name: modelProp('ProductCard','news'), label: 'Новый' },
+  { name: modelProp('ProductCard','delivery'), label: 'Доставка' },
+  { name: modelProp('ProductCard','pickUp'), label: 'Самовывоз' },
+  { name: modelProp('ProductCard','underTheOrder'), label: 'Под заказ' },
 ]
 
-// methods
-function createData () {
-  validData.value = {}
-  data.value.forEach((el: ProductCardKeyParams) => {
-      validData.value[el] = true
-  })
-  validData.value.description = description.value
-}
-
-onBeforeUpdate(() => {
-  createData()
-})
-
-onUpdated(() => emit('parameter', validData.value))
 
 // watch
 watch(() => props.create, () => {
-  data.value = []
-  description.value = ''
+
 })
 // style
 const style = {

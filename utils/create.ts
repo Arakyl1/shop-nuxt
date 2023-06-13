@@ -1,25 +1,17 @@
-import { RouteLocationNormalizedLoaded } from "vue-router";
-import { FilterList } from "@/type/intex";
 import { Prisma } from "@prisma/client";
 
 
-export const filterList = (categor?: string): Prisma.ProductCardWhereInput => {
+export const createBaseProductCard = <T extends object>(data: T): Prisma.ProductCardCreateInput => {
     return {
-        categor: categor || 'Категория'
-    }
-}
-
-export const createBaseProductCard = <T extends Prisma.ProductCardCreateArgs['select'] = {}>(select: T) => {
-    return {
-        name: '',
-        art: '',
-        maker: '',
-        categor: '',
-        subcategor: '',
-        price: 0,
-        itemArt: '',
-        itemMod: '',
-        quantity: 0,
-        ...select
+        [modelProp('ProductCard','name')]: '',
+        [modelProp('ProductCard','art')]: '',
+        [modelProp('ProductCard','maker')]: '',
+        [modelProp('ProductCard','categor')]: '',
+        [modelProp('ProductCard','subcategor')]: '',
+        [modelProp('ProductCard','price')]: 0,
+        [modelProp('ProductCard','itemArt')]: '',
+        [modelProp('ProductCard','itemMod')]: '',
+        [modelProp('ProductCard','quantity')]: 0,
+        ...data,
     }
 }

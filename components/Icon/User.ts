@@ -5,7 +5,8 @@ export default (_props: any) => {
         ..._props,
         viewBox: '0 0 35.4 36.8',
         fill: 'none',
-        xmlns: 'http://www.w3.org/2000/svg'
+        xmlns: 'http://www.w3.org/2000/svg',
+        'aria-hidden': true,
     }, [
         h('path', {
             'd': 'M17.6,18.7c4.6,0,8.3-3.7,8.3-8.3C26,5.7,22.2,2,17.6,2s-8.3,3.7-8.3,8.3C9.3,14.9,13,18.7,17.6,18.7z',

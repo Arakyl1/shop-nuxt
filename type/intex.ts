@@ -5,6 +5,8 @@ import { productCardBaseParams, productCardParamsForSearch } from "@/utils/prism
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
 
 export type PP = { title: string, name: string, value: boolean | string | number }
+export type GG = { id: number, art: string, name: string }
+export type unknownObj = { [prop: string]: any }    
 
 export interface LisLink extends MarkdownParsedContent {
     name: string,
@@ -15,7 +17,7 @@ export type RecordOption<T extends PropertyKey, U> = { [K in T]: U}
 
 
 export interface UserCreateCommit {
-    cardID: number
+    cardId: number
     ranting?: number
     text?: string
     userId: number
@@ -87,14 +89,6 @@ export type CategorItem = { name: string,  children: (CategorItem |{ name: strin
 export type CategorSelect = { select : CategorItem[]}
 
 
-export interface FilterList {
-    cat?: string | LocationQueryValue[],
-    price: { from: number, upTo: number },
-    maker: string[],
-    ranting: number,
-    actual: string[],
-    other: string[],
-}
 
 export type BaseOptionProductCard = 'name'|'art'|'maker'|'categor'|'subcategor'|'price'|'itemArt'|'itemMod'|'quantity'
 export interface CreateBaseProductCard {
@@ -111,7 +105,7 @@ export interface CreateBaseProductCard {
 
 export type ImageInfo = { link: string }
 export type CharacteristicItem = { name: string, value: string }
-export type CharacteristicBlock = { name: string, content: CharacteristicItem[] }
+export type CharacteristicBlock = { title: string, content: CharacteristicItem[] }
 
 export type ProductCardKeyParams = 'top'|'sale'|'news'|'delivery'|'pickUp'|'underTheOrder'
 export type ProductCardParams = Partial<RecordOption<ProductCardKeyParams, boolean>> & { 'description'?: string }

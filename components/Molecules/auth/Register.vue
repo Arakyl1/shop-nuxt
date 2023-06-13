@@ -1,12 +1,37 @@
 <template>
   <div>
-    <form class="text-center" >
-      <input type="text" :class="style.input" placeholder="Логин" class="mb-4" autocomplete="on"
+    <form class="text-center" ref="form">
+      <input
+        type="text"
+        :class="style.input"
+        placeholder="Логин"
+        class="mb-4"
+        required
+        aria-required="true"
+        autocomplete="username"
         v-model="data.username" />
-      <AtomUIEmail placeholder="Email" class="text-lg w-full mb-4 px-4 py-2 rounded-md" v-model="data.email"/>
-      <AtomUIPassword placeholder="Пароль" class="text-lg w-full px-4 py-2 rounded-md" v-model="data.password"/>
+      <AtomUIEmail
+        placeholder="Email"
+        class="text-lg w-full mb-4 px-4 py-2 rounded-md"
+        aria-required="true"
+        autocomplete="email"
+        required
+        v-model="data.email"/>
+      <AtomUIPassword
+        placeholder="Пароль"
+        class="text-lg w-full px-4 py-2 rounded-md"
+        aria-required="true"
+        autocomplete="new-password"
+        required
+        v-model="data.password"/>
       <label class="text-xs text-white mb-2 block">Используйте цифры, буквы малые и прописные, спец. сим.</label>
-      <AtomUIPassword placeholder="Повторите пароль" class="text-lg w-full px-4 py-2 rounded-md mb-8" v-model="data.repeartPassword"/>
+      <AtomUIPassword
+        placeholder="Повторите пароль"
+        class="text-lg w-full px-4 py-2 rounded-md mb-8"
+        aria-required="true"
+        autocomplete="new-password"
+        required
+        v-model="data.repeartPassword"/>
 
       <AtomButtonStandart @click="userRegister()" class="bg-blue-500 rounded-md text-lg text-white w-full">
         Зарегистрироватьца
@@ -24,9 +49,10 @@ type PartialNull<T> = { [P in keyof T]: T[P] | null; }
 const data = ref<PartialNull<UserRegisterData>>(createObject())
 const { createAlert } = useAlert()
 const { register: _userRegister } = useAuth()
+const form = ref<HTMLFormElement | null>(null)
 
 async function userRegister() {
-  const resValidData = checkValidData(unref(data.value))
+  const resValidData = checkValidData(unref(data.value), form.value ? form.value : null)
   
   if (resValidData) {
     const res = await _userRegister(data.value as UserRegisterData) || false
@@ -37,16 +63,10 @@ async function userRegister() {
   }
 }
 
-function checkValidData(data: PartialNull<UserRegisterData>): true | void {
+function checkValidData<T extends HTMLFormElement | null>(data: PartialNull<UserRegisterData>, form: T): true | void {
+  if (!form || !form.reportValidity()) return
+
   switch (true) {
-    case !data.username:
-      return createAlert('Некорретное имя')
-    case !data.email:
-      return createAlert('Некорректный адрес почты')
-    case !data.password:
-      return createAlert('Введите пароль')
-    case !data.repeartPassword:
-      return createAlert('Повторите пароль')
     case data.password !== data.repeartPassword:
       return createAlert('Пароли не совпадают')
     default:
@@ -56,7 +76,7 @@ function checkValidData(data: PartialNull<UserRegisterData>): true | void {
 }
 
 watch(() => props.active, () => {
-  data.value = createObject()
+  form.value?.reset()
 })
 
 function createObject() {

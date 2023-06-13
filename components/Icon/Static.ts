@@ -8,7 +8,8 @@ export default (_props: any) => {
         viewBox: '0 0 19 20',
         fill: 'none',
         class: 'icons__static',
-        xmlns: 'http://www.w3.org/2000/svg'
+        xmlns: 'http://www.w3.org/2000/svg',
+        'aria-hidden': true,
     }, [
         h('path', {
             'd': 'M0.125 10.5H2.20833V19.875H0.125V10.5ZM16.7917 6.33331H18.875V19.875H16.7917V6.33331ZM8.45833 0.083313H10.5417V19.875H8.45833V0.083313Z',

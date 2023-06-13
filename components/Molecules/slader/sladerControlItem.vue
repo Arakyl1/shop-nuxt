@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div >
         <ul :class="[containerClass]">
-            <li v-for="(item, index) in data" :key="item"
+            <li v-for="item,index in data" :key="item"
                 @click="updateScrolLeftSlader(index)"
                 :class="[itemClass]">
                 <slot v-bind="{ item, index, indexActiveButton }">
@@ -15,11 +15,12 @@
 withDefaults(defineProps<{
     indexActiveButton: number,
     updateScrolLeftSlader: (index: number) => void, 
-    data: number | any[],
+    data: number | unknown[],
     containerClass?: string,
     itemClass?: string,
 }>(), {
     containerClass: 'flex justify-center pt-2',
     itemClass: 'aspect-square',
 })
+
 </script>

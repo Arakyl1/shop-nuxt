@@ -9,13 +9,18 @@
                     updateScrolLeftSlader,
                     sladerValueScroll }"></slot>
             </div>
-            <div ref="slader" class="basic__slader slader__container" :class="[containerClass]" @scroll="onScroll"
-                @pointerdown.passive="onPointerDown" @pointerup.passive="onPointerUp" @pointerleave.passive="onPointerLeave"
+            <div ref="slader"
+                class="basic__slader slader__container"
+                :class="[containerClass]" @scroll.stop="onScroll"
+                @pointerdown.stop.passive="onPointerDown"
+                @pointerup.stop.passive="onPointerUp"
+                @pointerleave.stop.passive="onPointerLeave"
                 @dragstart.stop.prevent>
-                <template v-for="elem in sladerData" :key="elem">
+                <template v-for="elem, index in sladerData" :key="elem">
                     <div class="slader__item">
                         <slot name="item" v-bind="{
                             elem,
+                            index,
                             prevItem,
                             nextItem,
                             indexActiveButton,
@@ -83,7 +88,7 @@ function onScroll({ type }: Event): void {
     }
 }
 
-function onPointerDown({ clientX, type, pointerId, pointerType }: PointerEvent) {
+function onPointerDown({ clientX, type, pointerId, pointerType, target }: PointerEvent) {
     if (slader.value && type === 'pointerdown' && pointerType === 'mouse') {
         //slader.value.setPointerCapture(pointerId)
         cordsScroll.value = { startX: clientX, startSx: slader.value.scrollLeft, difX: 0, active: true }

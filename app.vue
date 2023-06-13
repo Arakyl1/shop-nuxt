@@ -56,10 +56,12 @@ watch(() => active.value, (newValue) =>{
       document.body.style.paddingRight = '16px'
     }
   } else {
-    document.body.style.overflow = 'auto'
-    if (isDesktop && !isFirefox) {
-      document.body.style.paddingRight = '0'
-    }
+    setTimeout(() => {  
+      document.body.style.overflow = 'auto'
+      if (isDesktop && !isFirefox) {
+        document.body.style.paddingRight = '0'
+      }
+    }, 300)
   }
 })
 
@@ -112,15 +114,7 @@ watch(() => active.value, (newValue) =>{
   opacity: 0;
 } */
 
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-}
+
 
 .alert-enter-active,
 .alert-leave-active {

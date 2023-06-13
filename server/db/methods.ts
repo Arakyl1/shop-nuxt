@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import prisma from "./index"
 
 type ModelNameCreate = {
-    'user': Prisma.UserCreateArgs , 
+    'user': Prisma.UserCreateManyArgs , 
     'refrechToken': Prisma.RefrechTokenCreateArgs , 
     'post': Prisma.PostCreateArgs ,
     'productCard': Prisma.ProductCardCreateArgs ,
@@ -60,8 +60,8 @@ type ModelNameDelete = {
 //type keyPrismaTable = 'characteristic' | 'characteristicItem' | 'comment' | 'post' | 'productCard' | 'refrechToken' | 'user'
 
 
-export const prismaCreate = async<T extends keyof ModelNameCreate>(
-    key: T, body: ModelNameCreate[T]) => {
+export const prismaCreate = async<T extends keyof ModelNameCreate, U extends ModelNameCreate[T]>(
+    key: T, body: Prisma.SelectSubset<U, ModelNameCreate[T]>) => {
     return await prisma[key].create(body)
 }
 

@@ -1,11 +1,5 @@
 <template>
     <div class="w-3/4 lg:w-2/3 md:w-full">
-        <!-- <div  class="flex justify-center mt-32">
-            <IconLoader />
-        </div> -->
-        
-
-        
         <div class="flex flex-wrap" v-show="loader || listIdProduct.length">
             <template v-for="(el,i) in lengthArr" :key="el">
                 <MoleculesItemProductCard :data="listIdProduct[i] || null"
@@ -27,7 +21,7 @@
                             quantity: 1,
                             price: content.sale ? Math.floor(content.price * 0.9) : content.price
                         })" class="flex bg-blue-500  justify-center items-center"
-                        :disabled="!checkProductAvailability(content)">
+                        :disabled="!checkAvailability(content)">
                             <IconBasketSmall class="group icon-white" />
                             <p class="text-white ml-2">В корзину</p>
                         </AtomButtonStandart>

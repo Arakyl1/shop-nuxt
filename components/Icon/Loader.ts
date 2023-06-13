@@ -5,7 +5,8 @@ export default (_props: any) => {
       ..._props,
         viewBox: '0 0 50 50',
         class: 'icon__loader',
-        xmlns: 'http://www.w3.org/2000/svg'
+        xmlns: 'http://www.w3.org/2000/svg',
+        'aria-hidden': true,
     }, [
         h('circle', {
             class: 'path',

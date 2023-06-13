@@ -76,6 +76,7 @@ model ProductCard {
 model Image {
   id Int @id @default(autoincrement())
   link String
+  main Boolean @default(false)
   product ProductCard @relation(fields: [productCardId], references: [id])
   productCardId Int 
 }

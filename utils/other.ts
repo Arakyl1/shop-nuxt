@@ -1,10 +1,11 @@
-import { Prisma, type ProductCard } from "@prisma/client";
+import { Prisma, type ProductCard, } from "@prisma/client";
 
-type sizeI = 28|48|56|60|64|72|80|92|96|224|320
+type sizeI = 28|48|56|60|64|72|80|92|96|224|320|480
 
 type TransfornSize = {
     heigth?:  `h_${sizeI}`,
-    width?: `w_${sizeI}`
+    width?: `w_${sizeI}`,
+    bgrem?: 'e_bgremoval',
 }
 
 
@@ -16,19 +17,29 @@ export function changeValueImageSize(url:string, size?: TransfornSize): string {
 
 
 export function generateKey(data:object): string {
-    return Object.entries(data).flat(1).map(el => typeof el === 'object' ? generateKey(el): el).join(',')
+    return Object.entries(data).flat(1).map(el => isObject(el) ? generateKey(el): el).join(',')
 }
 
-export function createObj<T extends (string | number)>(data: T[]): { [property: string]: true } {
-    return Object.assign({}, ...data.map(_ => ({ [_]: true }))) 
-}
 
-export function checkProductAvailability<T extends { availability: boolean }>(data: T): boolean {
+export function checkAvailability<T extends { availability: boolean }>(data: T): boolean {
     return unref(data.availability)
 }
 
-type GetPropertyName = <T extends keyof Prisma.ProductCardWhereInput>(key: T) => T
-export const getPropertyName: GetPropertyName = (key) => key
+type Model = {
+    'User': Prisma.UserUncheckedCreateInput ,
+    'RefrechToken': Prisma.RefrechTokenUncheckedCreateInput ,
+    'Post': Prisma.PostUncheckedCreateInput,
+    'ProductCard': Prisma.ProductCardUncheckedCreateInput,
+    'Comment': Prisma.CommentUncheckedCreateInput,
+    'Characteristic': Prisma.CharacteristicUncheckedCreateInput,
+    'CharacteristicItem': Prisma.CharacteristicItemCreateInput,
+    'Image': Prisma.ImageUncheckedCreateInput
+}
+type f = Prisma.ModelName
+type g = { [P in f]: Model[P] }
+
+type modelProp = <T extends keyof Model, U extends keyof Model[T]>(key: T, prop: U) => U
+export const modelProp: modelProp = (key, prop) => prop 
 
 
 export function deepConcat<T extends { [property: string]: any }>(dataAdd:T, dataDef: T): T {
@@ -44,6 +55,16 @@ export function deepConcat<T extends { [property: string]: any }>(dataAdd:T, dat
         }
     }
     return dataDef
+}
+
+export function checkValidInput<T extends HTMLInputElement>(arr: T[]): boolean {
+    let valid: boolean = false
+    if (!arr) return valid
+    
+    if (Array.isArray(arr)) {
+        valid = arr.find(_ => !_.validity.valid) ? false : true
+    }
+    return valid 
 }
 
 export function isNumber(elem: unknown): elem is number {
@@ -65,3 +86,11 @@ export function isObject(elem: unknown): elem is object {
 export function test(...f:any) {
     console.log(...f);
 }
+
+
+export let keyWhereValueIsNumber = [
+    modelProp('ProductCard', 'id'),
+    modelProp('ProductCard', 'price'),
+    modelProp('ProductCard', 'quantity'),
+    modelProp('ProductCard', 'ranting')
+]

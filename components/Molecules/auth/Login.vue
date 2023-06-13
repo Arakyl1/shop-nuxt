@@ -1,15 +1,31 @@
 <template>
-    <form>
-        <input type="text" :class="style.input" class="mb-6" placeholder="Логин" v-model="data.username" />
-        <AtomUIPassword placeholder="Пароль" class="text-lg w-full px-4 py-2 rounded-md mb-6" v-model="data.password"/>
-        <AtomButtonStandart @click="checkValidData()"
-        class="bg-blue-500 rounded-md text-lg text-white w-full"
-        >Войти </AtomButtonStandart>
+    <form ref="form">
+            <input type="text"
+                class="mb-6"
+                placeholder="Логин"
+                :class="style.input"
+                required
+                aria-required="true"
+                autocomplete="username"
+                v-model="data.username"/>
+            <AtomUIPassword
+                placeholder="Пароль"
+                autocomplete="current-password"
+                class="text-lg w-full px-4 py-2 rounded-md mb-6"
+                required
+                aria-required="true"
+                v-model="data.password"/>
+            <AtomButtonStandart @click="onClick()"
+            class="bg-blue-500 rounded-md text-lg text-white w-full"
+            >Войти </AtomButtonStandart>
     </form>
 </template>
 
 <script setup lang="ts">
 import { UserLoginData } from "@/type/intex";
+import { Prisma } from "@prisma/client";
+
+type UserKey = Prisma.UserScalarFieldEnum
 
 const props = defineProps<{
     functionModal?: () => void,
@@ -18,23 +34,24 @@ const props = defineProps<{
 
 const { createAlert } = useAlert()
 const { login: userLogin } = useAuth()
-
+const form = ref<HTMLFormElement | null>(null)
 const data = ref<UserLoginData>(createObject())
 
-async function checkValidData() {
-    switch (true) {
-        case data.value.username === '' || data.value.password === '':
-            return createAlert('Проверьте введеные данные')
-        default:
+
+async function onClick() {
+    if (form.value) {
+        if (data.value.password !== '' && data.value.username !== '') {
             await userLogin(data.value)
-            break;
+        } else {
+            createAlert('Проверьте введеные данные')
+        }
     }
 }
 
 function createObject() {
     return {
-        username: '',
-        password: '',
+        [modelProp('User', 'username')]: '',
+        [modelProp('User','password')]: '',
     }
 }
 

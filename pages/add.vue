@@ -1,64 +1,96 @@
 <template>
     <div>
-        <TemplatesPageAddMain class="mb-8" @main-data="(e) => mainParams = e" @image-data="(e) => imageData = e"
-            :create="create" />
-        <TemplatesPageAddCharacteristic class="mb-8" @characteristic="(e) => characteristic = e" :create="create" />
-        <TemplatesPageAddParameters class="mb-8" @parameter="(e) => additionalParameter = e" :create="create" />
-        <div class="mb-10 text-right">
-            <AtomButtonStandart @click="createItem" class="bg-blue-700 text-white ">
-                Добавить товар
-            </AtomButtonStandart>
-        </div>
+        <form ref="form" >
+            <TemplatesPageAddMain class="mb-8" @image-data="(e) => imageData = e" :create="create" />
+            <TemplatesPageAddCharacteristic class="mb-8" @characteristic="(e) => characteristic = e" :create="create" />
+            <TemplatesPageAddParameters class="mb-8" :create="create" />
+            <div class="mb-10 text-right">
+                <AtomButtonStandart @click="createItem" class="bg-blue-700 text-white ">
+                    Добавить товар
+                </AtomButtonStandart>
+            </div>
+        </form>
     </div>
 </template>
 <script setup lang="ts">
-import { ProductCard } from '.prisma/client';
-import type {
-    CreateBaseProductCard,
-    CharacteristicBlock,
-    ProductCardParams,
-    ImageInfo
-} from '~~/type/intex';
+import { Prisma } from '@prisma/client';
+import type { unknownObj } from '~~/type/intex';
+import { keyWhereValueIsNumber } from '@/utils/other'
+
+type RequiredPropertyProductCardKey = "name" | "art" | "maker" | "categor" | "price" | "itemArt" | "itemMod"
+type RequiredProperytyProductCardTyple =  ["name", "art", "maker", "categor", "price", "itemArt", "itemMod"]
+type RequiredPropertyProductCard = Pick<Prisma.ProductCardUncheckedCreateInput, RequiredPropertyProductCardKey>
+
 
 definePageMeta({
     title: "Добавить товар",
     middleware: ['add']
 })
 
-// const data = ref({})
-const mainParams = ref<CreateBaseProductCard | null>(null)
-const imageData = ref<ImageInfo[] | null>(null)
-const characteristic = ref<CharacteristicBlock[] | null>(null)
-const additionalParameter = ref<ProductCardParams>({})
+
+const form = ref<HTMLFormElement | null>(null)
+const imageData = ref<Prisma.ImageCreateNestedManyWithoutProductInput | null>(null)
+const characteristic = ref<Prisma.CharacteristicCreateNestedManyWithoutProductCardInput | null>(null)
 const create = ref(false)
 const { createAlert } = useAlert()
 const { user: _user } = useStore()
 const { userData } = _user()
 const { create: createProduct } = useProduct()
+const RequiredProperytyProductCardTyple: RequiredProperytyProductCardTyple = [
+    "name", "art", "maker", "categor", "price", "itemArt", "itemMod"]
 
 // methods 
 async function createItem() {
-    if (!mainParams.value) {
-        createAlert('Не заполены основные поля')
-    }
-    const mainData = Object.assign({},
-        mainParams.value,
-        additionalParameter.value,
-        { 'availability': mainParams.value ? mainParams.value.quantity > 0 : false }
-    )
-    try {
-        const sendData = Object.assign({},
-            { main: mainData },
-            characteristic.value ? { characteristic: characteristic.value } : {},
-            imageData.value ? { image: imageData.value } : {}
-        )
+    if (!form.value) return
+    form.value.reportValidity()
+    // test()
+    let creatObj: unknownObj = {}
+    const formData = new FormData(form.value)
 
-        await createProduct(sendData)
-        // create.value = !create.value
+
+    for (const [key, value] of formData) {
+        if (keyWhereValueIsNumber.find(_ => _ === key)) {
+            creatObj[key] = parseFloat(value as string)   
+        } else if (!value) {
+            test([key, value])
+            return
+        } else if (value === 'true') {
+            creatObj[key] = true 
+        } else {
+            creatObj[key] = value
+        }
+    }
+
+    const res = checkRequeredProperty(creatObj)
+    if (!res) return
+
+    const q =  modelProp('ProductCard', 'quantity') in creatObj ? {
+        [modelProp('ProductCard','availability')]: creatObj.quantity > 0
+    } : {}
+    const c: { characteristic: Prisma.CharacteristicCreateNestedManyWithoutProductCardInput | undefined } | undefined = characteristic.value ? {
+        [ modelProp('ProductCard', 'characteristic')]: characteristic.value
+    } : undefined
+
+    const im: { image: Prisma.ImageCreateNestedManyWithoutProductInput | undefined } | undefined = imageData.value ? {
+        [modelProp('ProductCard','image')]: imageData.value
+    } : undefined
+    
+
+    const sendData: Prisma.ProductCardCreateInput = { ...res, ...q, ...c, ...im }
+    
+    try {
+        await createProduct({ data: sendData })
+        test(sendData)
+        // form.value.reset()
         createAlert('Товар добавлен')
     } catch (error) {
         createAlert('Произошла ощибка, повторите потытку позже')
     }
+}
+
+function checkRequeredProperty<T extends object>(obj:T): false | RequiredPropertyProductCard {
+    const res = RequiredProperytyProductCardTyple.find(_ => !(_ in obj))
+    return res ? false : obj as unknown as RequiredPropertyProductCard
 }
 
 

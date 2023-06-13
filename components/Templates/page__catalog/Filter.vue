@@ -5,7 +5,7 @@
                 <fieldset class="pb-3">
                     <legend >Категория</legend>
                     <div>
-                        <AtomList :name="getPropertyName('categor')"
+                        <AtomList :name="modelProp('ProductCard','categor')"
                         :list="data ? data.map((el: any) => el.name) : []"
                         :class="[style.input]" class="w-full"
                         :option="route.query.categor ? (route.query.categor as string) : '' "
@@ -73,7 +73,7 @@
              <div class="decor-line"></div>
             <div class="py-3">
                 <h4 class="text-lg mb-1">Рейтинг</h4>
-                <AtomUIStar class="justify-between" :reset="reset"/>
+                <AtomUIStar class="justify-between" :reset="reset" :inputkey="'ranting.gte'"/>
             </div>
 
             <AtomListCheckbox
@@ -104,7 +104,7 @@
 
 <script setup lang="ts">
 import { Prisma } from "@prisma/client";
-import { PP } from '~~/type/intex';
+import { PP, unknownObj } from '~~/type/intex';
 
 
 const emit = defineEmits<{
@@ -140,15 +140,6 @@ const subcategor = computed(() => data.value && 'categor' in route.query ?
 
 // methods
 
-function checkValidInput(): boolean {
-    let valid: boolean = false
-    if (!inputs.value) return valid
-    
-    if (Array.isArray(inputs.value)) {
-        valid = inputs.value.find(_ => !_.validity.valid) ? false : true
-    }
-    return valid 
-}
 
 function routePushQueryCategor({ target }: Event) {
     const _target = target as HTMLSelectElement
@@ -186,17 +177,17 @@ async function getMakerlist<
     }
 }
 
-type GG = { [prop: string]: any }
-function createSearchParams(): GG | void {
+
+function createSearchParams(): unknownObj | void {
     let s = Date.now()
     if (!form.value) return
     const f = new FormData(form.value)
 
-    let paramsData: GG = {}
+    let paramsData: unknownObj = {}
 
     for (const [key,value] of f) {
         const keyAr = key.split('.').reverse()
-        let creatObj: GG = {}
+        let creatObj: unknownObj = {}
         
         keyAr.forEach((_,i) => {
             if (value) {
@@ -234,7 +225,6 @@ const searchParams: searchParams = () => ('categor' in route.query ?
 
 function searchProduct() {
     const d = createSearchParams()
-    test(d)
     if (d) {
         emit('option-seacrh', d)
     } else {
@@ -243,8 +233,7 @@ function searchProduct() {
 }
 
 function sendParams() {
-    const res = checkValidInput()
-    if (res) {
+    if (checkValidInput(unref(inputs))) {
         if (+route.query.page! > 1) {
             return navigateTo({
                 path: route.path,

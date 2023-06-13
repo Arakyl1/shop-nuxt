@@ -31,6 +31,7 @@
     --color-yellow-700: #BF8630;
     --color-yellow-900: #A66300;
     --lin-grad-loader--deg: 135deg;
+    --transition-blur: 1rem
 }
 
 
@@ -73,4 +74,14 @@
 .liner__gradient-loader {
     background-image: linear-gradient(var(--lin-grad-loader--deg), var(--color-white), var(--color-gray-200), var(--color-white), var(--color-gray-200));
     background-size: 400% 400%;
+}
+
+.blur-enter-active,
+.blur-leave-active {
+  transition: all 0.4s;
+}
+.blur-enter-from,
+.blur-leave-to {
+  opacity: 0;
+  filter: blur(var(--transition-blur));
 }

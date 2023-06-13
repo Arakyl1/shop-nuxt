@@ -26,7 +26,7 @@
                         quantity: 1,
                         price: content.sale ? Math.floor(content.price * 0.9) : content.price
                     })"
-                    :disabled="!checkProductAvailability(content)">
+                    :disabled="!checkAvailability(content)">
                         <IconBasketSmall class="group icon-white sm:w-5" />
                         <p class="text-white ml-2">В корзину</p>
                     </AtomButtonStandart>

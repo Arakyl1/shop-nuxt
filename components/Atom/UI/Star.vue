@@ -2,7 +2,7 @@
     <div class="flex" 
     @click="addNumberStar" >
         <slot v-bind="{ starValue }">
-            <input type="number" hidden name="ranting.gte" :value="starValue">
+            <input type="number" hidden :name="inputkey" :value="starValue">
         </slot>
         <IconStar v-for="item in 5" :key="item"
         :data-star="item"
@@ -18,7 +18,8 @@ import { RecordOption } from '~~/type/intex';
 const props = withDefaults(defineProps<{
     quantityStar?: number | undefined
     style?: { base: string, active: string, deactive: string },
-    reset?: boolean
+    reset?: boolean,
+    inputkey?: string
 }>(), {
     style() {
         return {
@@ -27,7 +28,8 @@ const props = withDefaults(defineProps<{
             deactive: 'stait-deactive--fill'
         }
     },
-    reset: false
+    reset: false,
+    inputkey: '_'
 })
 
 const emit = defineEmits<{

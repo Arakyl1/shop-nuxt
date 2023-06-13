@@ -1,10 +1,9 @@
 import { Prisma, ProductCard } from "@prisma/client";
 import { KeyOfRes, _AsyncData } from "nuxt/dist/app/composables/asyncData";
 import { UseFetchOptions } from "nuxt/dist/app/composables/fetch";
-import { CharacteristicBlock } from "~~/type/intex";
 
 export default () => {
-    const create = async<T = ProductCard>(data: { main: T, characteristic?: CharacteristicBlock[] }) => {
+    const create = async<T extends Prisma.ProductCardCreateArgs>(data: T) => {
         try {
             return await $fetch('/api/product/create', {
                 method: "POST",
