@@ -31,7 +31,6 @@ import { Cached, CategorDataItem, Content } from "@/type/intex";
 
 
 const route = useRoute()
-const { isDesktop, isFirefox } = useDevice();
 const storeUser = _user()
 const { data: _userData } = storeToRefs(storeUser)
 const { initAuth } = useAuth()
@@ -84,15 +83,6 @@ onServerPrefetch(async () => {
 })
 
 
-
-// onBeforeMount(async () => {
-//   if (!_userData.value) 
-
-//   updateSize(window)
-//   window.addEventListener('resize', () => updateSize(window))
-// })
-
-
 async function checkRes(res: InitAuthResponse) {
   if (res) {
     if ('user' in res && res.user) {
@@ -102,10 +92,6 @@ async function checkRes(res: InitAuthResponse) {
     }
   }
 }
-
-// onMounted(async() => {
-//  await useFetch('/api/other/init', )
-// })
 
 
 // user data
@@ -145,4 +131,4 @@ async function checkRes(res: InitAuthResponse) {
   transform: translateX(20px);
   opacity: 0;
 } */
-</style>./content/language/ru.js./content/language/ru.js
+</style>

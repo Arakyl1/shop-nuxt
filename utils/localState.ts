@@ -1,5 +1,5 @@
 
-export default function localState() {
+export default function localState(opt: { watch?: boolean } = { watch: true }) {
     const state = ref<boolean>(false)
 
     const update = (active: boolean) => {
@@ -7,10 +7,11 @@ export default function localState() {
             state.value = active
         }
     }
-    
-    watch(() => useRoute().fullPath, () => {
-        if (state.value) update(false)
-    })
+    if (opt.watch) {   
+        watch(() => useRoute().fullPath, () => {
+            if (state.value) update(false)
+        })
+    }
 
     return { state, update }
 }

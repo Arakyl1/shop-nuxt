@@ -50,7 +50,6 @@
             </Transition>
         </AtomModalMask>
         <div class="h-14 w-full bg-gray-100 relative lg:h-12 flex flex-nowrap">
-            <!-- :class="[state ? 'z-50' : 'z-20 delay-200', { 'after:content-none': state }]" -->
             <div class="h-full flex transition-all" ref="menubutton">
                 <AtomButtonStandart @mouseenter.stop="onMouseenter"
                     class="min-w-min text-white flex items-center bg-blue-500 ">
@@ -82,7 +81,6 @@
 </template>
 <script setup lang="ts">
 import localState from "@/utils/localState";
-import { Prisma } from "@prisma/client";
 import CreateIcon from "@/content/icons/create";
 import { CategorDataItem } from "~~/type/intex";
 

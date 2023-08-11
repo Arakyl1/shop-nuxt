@@ -1,7 +1,7 @@
 <template>
   <transition name="modal" appear>
       <div v-show="state" ref="modal" @click.stop 
-      class="fixed inset-1/2 origin-center -translate-y-2/4 -translate-x-2/4 text-left z-50 modal" >
+      class="fixed inset-1/2 origin-center -translate-y-2/4 -translate-x-2/4 text-left z-50 modal" :class="[addclass]">
         <slot></slot>
     </div>
   </transition>
@@ -12,17 +12,19 @@
 const props = withDefaults(
   defineProps<{
     state: boolean,
-    draggable?: boolean
+    draggable?: boolean,
+    addclass?: string
    }>(), {
     draggable: false })
 
 const modal = ref<HTMLElement | null>(null)
-// const { windowSize: _windowSize } = useStore()
+
 const elementSize = reactive({
   startX: 0,
   startY: 0,
   x: 0,
-  y: 0 })
+  y: 0
+})
 
 
 type cords = { x: number, y: number}

@@ -5,7 +5,7 @@
             <div class=" fixed top-1/2 left-0 z-40 transition-all hidden md:block"
                 :class="[state ? 'opacity-0' : ' opacity-100']">
                 <AtomButtonStandart class="bg-blue-500 aspect-square
-                sm:px-2 sm:py-1" @click="update(true)">
+                sm:px-2 sm:py-1" @click="visibleFilter(true)">
                     <CreateIcon name="filter_20_20" :att="{ class: 'fill-white' }" />
                 </AtomButtonStandart>
             </div>
@@ -13,9 +13,9 @@
             class="w-1/4 px-4 lg:w-1/3 transition-all
             md:fixed md:top-0 md:-left-full md:w-[360px] md:z-40
             sm:w-screen sm:p-0 sm:overflow-y-scroll sm:h-screen"
-                :class="[state ? 'md:-left-4 sm:left-0' : 'md:-left-full']">
-                <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md" @scroll.prevent>
-                    <TemplatesPageCatalogFilter />
+                :class="[state ? 'md:left-0 opacity-100' : 'md:-left-full opacity-0']">
+                <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md md:min-h-full" @scroll.prevent>
+                    <TemplatesPageCatalogFilter class=""/>
                 </div>
             </div>
             <TemplatesPageCatalogGalletyItems :data="!pending && data ? data.data : []" :pending="pending" />
@@ -33,7 +33,6 @@
 
 <script setup lang="ts">
 import CreateIcon from "@/content/icons/create";
-import { Prisma } from "@prisma/client";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 import localState from "@/utils/localState";
 
@@ -44,21 +43,18 @@ definePageMeta({
     keepalive: true
 })
 
-const { state, update } = localState()
+const { state, update } = localState({ watch: false })
 const filter = ref<HTMLElement | null>(null)
 const toucheData = toucheElemPosition(filter)
 const route = useRoute()
-// const route = useRoute()
 
-const activeTimer = ref()
-// const activeButtomNext = ref<number>(0)
 // const { windowSize: _windowSize } = useStore()
 // const { size } =_windowSize()
 
 
 watch(() => toucheData.vector, (newVector) => {
     if (newVector === 3) {
-        update(false)
+        visibleFilter(false)
     }
 })
 const paramsRouteQuery = computed(() => Object.values(route.query).map((el: any) => el.trim()).join('_'))
@@ -81,6 +77,19 @@ watch(() => paramsRouteQuery.value, () => {
     }, 0);
 })
 
+function visibleFilter(state: boolean) {
+    if (state) {
+        update(true)
+        if (document) {
+            document.body.style.overflow = 'hidden'
+        }
+    } else {
+        update(false)
+        if (document) {
+            document.body.style.overflow = 'auto'
+        }
+    }
+}
 
 function prevPage(route: RouteLocationNormalizedLoaded) {
     return navigateTo({
