@@ -1,10 +1,13 @@
+import { user as _user } from "@/stores/user";
+import { alert as _alert } from "@/stores/alert";
+
 export default defineNuxtRouteMiddleware((to, from) => {
-    const { user: _user } = useStore()
-    const { userData } = _user()
-    const { createAlert } = useAlert()
+    const storeUser = _user()
+    const storeAlert = _alert()
+    const { data: userData } = storeToRefs(storeUser)
 
     if (!userData.value) {
-        createAlert('Для перехода на эту страницу, авторизируйтесь')
+        storeAlert.create({ text: 'Для перехода на эту страницу, авторизируйтесь', state: 'error' })
         return abortNavigation()
     }
 })

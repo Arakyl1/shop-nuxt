@@ -1,33 +1,57 @@
 <template>
-    <AtomModalTransition class=" h-min w-[450px] sm:w-[calc(100vw-2rem)]" :active="stage">
-        <div class="bg-white py-8 px-12 rounded-md w-full h-full
-        sm:py-6 sm:px-6">
-            <template v-if="userData">
-                <MoleculesAuthMain/>
-            </template>
-           
-            <template v-else>
-                <h3 class="text-3xl text-center font-medium text-black-500 mb-7"
-                >{{ modalLogin ? 'Авторизация' : 'Регистрация' }}</h3>
-                    <MoleculesAuthLogin v-if="modalLogin" :active="stage"/>
-                    <MoleculesAuthRegister v-else :active="stage"/>
-                <div class="decor-line mt-6 mb-3"></div>
-                <p class="text-center text-blue-500 cursor-pointer"
-                @click="modalLogin = !modalLogin"
-                >{{ modalLogin ? 'Создать аккаунт' : 'Войти в аккаунт' }}</p>
-            </template>
-        </div>
-    </AtomModalTransition>
+    <AtomModalMask :state="state" :clickFun="update">
+        <AtomModalTransition class=" h-min w-[450px] sm:w-[calc(100vw-2rem)]" :state="state">
+            <div class="bg-white py-8 px-12 rounded-md w-full h-full
+            sm:py-6 sm:px-6">
+                <template v-if="_userData">
+                    <MoleculesAuthMain />
+                </template>
+
+                <template v-else>
+                    <MoleculesAuthLogin v-if="modalLogin" @response="onResponse" :reset="reset"/>
+                    <MoleculesAuthRegister v-else @response="onResponse" />
+                    <div class="decor-line mt-6 mb-3"></div>
+                    <p class="text-center text-blue-500 cursor-pointer" @click="modalLogin = !modalLogin">{{ modalLogin
+                        ?
+                        'Создать аккаунт' : 'Войти в аккаунт' }}</p>
+                </template>
+            </div>
+        </AtomModalTransition>
+    </AtomModalMask>
 </template>
 <script setup lang="ts">
-import { showContent } from '~~/utils/ShowContent';
+import { user as _user } from "@/stores/user";
+import { ResponseAuthUser } from "~~/type/intex";
+import localState from "@/utils/localState";
+import { alert as _alert } from "@/stores/alert";
 
-const { stage, updateStage } = showContent()
+const _content = useState('CONTENT_APP')
+const { state, update } = localState()
 const modalLogin = ref<boolean>(true)
-const { user: _user} = useStore()
-const { userData } = _user()
+const storeUser = _user()
+const { data: _userData } = storeToRefs(storeUser)
+const reset = ref<boolean>(false)
+const storeAlert = _alert()
+
+
+function onResponse(_e: ResponseAuthUser) {
+    if (_e) {
+        if ('messageKey' in _e && _e.messageKey) {
+            storeAlert.create({ text: _content[_e.messageKey as never] || null, state: 'error' })
+            return
+        }
+        if ('user' in _e && _e.user) {
+            reset.value = !reset.value
+            storeUser.update(_e.user)
+        }
+        if ('access_token' in _e && _e.access_token) {
+            // storeToken.update(_e.access_token)
+        }
+    }
+}
 
 onBeforeMount(() => {
-    window.addEventListener('createUser', updateStage)
+    window.addEventListener('create-user',() => update(true))
 })
+
 </script>

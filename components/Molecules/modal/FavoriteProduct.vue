@@ -1,55 +1,58 @@
 <template>
-  <div>
-    <AtomModalTransition :active="stage" class="model-style">
-      <AtomModalContent :title="'Ваши избранный'" :hude-window="updateStage">
-        <div class="grid grid-cols-3 md:grid-cols-2 -mx-4 sm:-mx-2" v-if="dataList?.length">
-          <div v-for="item in dataList" :key="item.id" class="mb-4 slader__item">
+  <AtomModalMask :state="state" :clickFun="update">
+    <AtomModalTransition :state="state" class="model-style">
+      <AtomModalContent :title="'Ваши избранный'" :click-fun="update">
+        <div class="grid grid-cols-3 md:grid-cols-2 gap-8 lg:gap-6 sm:gap-4" v-if="responseData?.length">
+          <div v-for="item in responseData" :key="item.id" class="mb-4">
             <slot v-bind="{ item }"></slot>
           </div>
         </div>
         <p v-else class="text-2xl text-gray-700 p-5 md:text-xl sm:text-lg">Ваши избраны пусты</p>
       </AtomModalContent>
     </AtomModalTransition>
-  </div>
+  </AtomModalMask>
 </template>
 <script setup lang="ts">
-import { showContent } from "~~/utils/ShowContent";
-import { type _ProductCardBase, productCardBaseParamsSelect } from '~~/type/intex';
+import { favorite as _favorire } from "@/stores/favorite";
+import localState from "@/utils/localState";
+import { ProductCardBase } from "~~/server/utils/prismaModelSelect";
 
-const { stage, updateStage } = showContent();
-const { favorite: _favoriteStore } = useStore()
-const { favorite } = _favoriteStore()
-const { getInfo: getInfoProduct } = useProduct()
-const dataList = ref<_ProductCardBase[] | null>(null)
+const { state, update } = localState()
+const storeFavorite = _favorire()
+const { data: favoriteData } = storeToRefs(storeFavorite)
+const responseData = ref<ProductCardBase[] | null>(null)
 
 async function getData(params: number[]) {
-  getInfoProduct<_ProductCardBase[]>(
-    { where: { id: { in: params } }, ...productCardBaseParamsSelect },
-    { many: true },
-    {
-      key: 'favorite_item__' + params.join(','),
-      server: false,
-      onResponse({ response }) {
-        dataList.value = response._data
-      }
-    }
-  )
+    useFetch<ProductCardBase[]>('/api/product/get', {
+        server: false,
+        method: 'GET',
+        params: { 'where.id.in': params.join(','), 'orderBy.quantity': 'desc' },
+        onResponse({ response }) {
+          if (response.status <= 400) {
+                if ('data' in response._data) {
+                    responseData.value = response._data.data
+                }
+            }
+        }
+    })
 }
 
 onBeforeMount(() => {
-  window.addEventListener('showModalFavoriteProduct', updateStage)
-  getData([...favorite.value])
+  window.addEventListener('show-modal-favorite', () => update(true))
+  getData([...favoriteData.value])
 })
-watch(() => favorite.value.size, (nValue, oValue) => {
-  if (dataList.value) {
+watch(() => favoriteData.value.size, (nValue, oValue) => {
+  if (responseData.value) {
     if (nValue > oValue) {
-      getData([...favorite.value])
+      getData([...favoriteData.value])
     } else {
-      const newArrId = [...favorite.value]
-      const oldArrId = dataList.value.map(_ => _.id)
+      const newArrId = [...favoriteData.value]
+      const oldArrId = responseData.value.map(_ => _.id)
       const idRemoveItem = oldArrId.find(_ => !newArrId.includes(_))
-      dataList.value = dataList.value.filter(_ => _.id !== idRemoveItem)
+      responseData.value = responseData.value.filter(_ => _.id !== idRemoveItem)
     }
+  } else {
+    getData([...favoriteData.value])
   }
 })
 </script>

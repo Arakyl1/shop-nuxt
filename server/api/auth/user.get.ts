@@ -1,24 +1,23 @@
-import { prismaFindUnique } from "@/server/db/methods"
-import { decodeAccessToken } from "@/server/utils/jwt"
-import { userTransform } from "~~/server/utils/userTransform"
-import { userBaseParams, userAditionalParams } from "@/utils/prismaSelect";
-import { Prisma } from '@prisma/client'
-
+import prisma from '~/server/db'
+import { userPersonalData, userTransform } from "~/server/utils/userTransform";
+import { decodeAccessToken } from '~~/server/utils/jwt';
+import { isObject } from "../../utils/other";
+import { GET_CONTENT_KEY } from "../../utils/other";
 
 export default defineEventHandler(async(event) => {
-    const token = event.req.headers['authorization']?.split(' ')[1] || ""
-    const decoded = decodeAccessToken(token)
     
-    if (!(decoded instanceof Object && 'userId' in decoded)) return { message: 'Unauthorized' }
+    const token = getHeader(event, 'authorization')?.split(' ')[1] || ''
+    const decoded = decodeAccessToken(token)
+    if (decoded === null) return { messageKey: GET_CONTENT_KEY('AUTH_UNAUTHORIZED') }
 
     try {
-        const searchParams = userBaseParams({ id: decoded.userId }, userAditionalParams({}))
-        const select = Prisma.validator<Prisma.UserArgs>()({select: searchParams.select })
-        type UserBase = Prisma.UserGetPayload<typeof select>
-
-        const user: UserBase = await prismaFindUnique('user', searchParams)
-        return { user: userTransform<UserBase>(user)}
+        if (!isObject(decoded)) return { messageKey: GET_CONTENT_KEY('AUTH_ERROR') }
+        const user = await prisma.user.findUnique({
+            where: { id: decoded.id },
+            select: userPersonalData.select,
+        })
+        return user ? { user: userTransform(user) } : { message: GET_CONTENT_KEY('AUTH_ERROR') }
     } catch (error) {
-        return { message: 'Error' }
+        return { message: GET_CONTENT_KEY('AUTH_ERROR') }
     }
 })

@@ -16,8 +16,7 @@
                 @pointerup.stop.passive="onPointerUp"
                 @pointerleave.stop.passive="onPointerLeave"
                 @dragstart.stop.prevent>
-                <template v-for="elem, index in sladerData" :key="elem">
-                    <div class="slader__item">
+                    <div v-for="(elem,index) in sladerData" :key="index" class="slader__item">
                         <slot name="item" v-bind="{
                             elem,
                             index,
@@ -27,7 +26,6 @@
                             updateScrolLeftSlader,
                             sladerValueScroll }"></slot>
                     </div>
-                </template>
             </div>
             <div>
                 <slot name="bottom" v-bind="{
@@ -40,10 +38,10 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends any">
 import { sladerValueScroll } from "./type";
 interface Props {
-    data: any[] | null,
+    data: T[] | null,
     containerClass?: string
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -53,7 +51,7 @@ const props = withDefaults(defineProps<Props>(), {
 const slader = ref<HTMLElement | null>(null)
 const indexActiveButton = ref<number>(0)
 const cordsScroll = ref<{ startX: number, startSx: number, difX: number, active: boolean } | null>(null)
-const sladerData = computed(() => props.data ? props.data : [...Array(8)])
+const sladerData = computed<(T)[]>(() => props.data ? props.data : [...Array(8)])
 const buttonAcitive = ref<boolean>(false)
 const isScrolling = ref()
 const sladerValueScroll = ref<sladerValueScroll>({ current: 0, max: 0 })
@@ -69,21 +67,21 @@ function nextItem(): void {
 
 function updateScrolLeftSlader(index: number): void {
     if (!slader.value) return
-    slader.value.scrollLeft = slader.value.clientWidth * index
+    slader.value.scrollLeft = Math.ceil(slader.value.clientWidth * index)
 }
 
-function onScroll({ type }: Event): void {
-    if (slader.value && type === 'scroll') {
-        let scrollLe = slader.value.scrollLeft
-        let clientW = slader.value.clientWidth
-        indexActiveButton.value = Math.round(+(scrollLe / clientW).toFixed(1))
+function onScroll(e: Event): void {
+    if (slader.value && e.type === 'scroll') {
+        let scrollLe = parseInt(slader.value.scrollLeft.toFixed(0))
+        let clientW = +slader.value.clientWidth.toFixed(0)
+        indexActiveButton.value = Math.round(+(scrollLe / clientW))
+        sladerValueScroll.value.current = scrollLe
         // 
         window.clearTimeout(isScrolling.value)
         isScrolling.value = setTimeout(() => {
-            if (!buttonAcitive.value) {
-                slader.value!.style.setProperty('scroll-snap-type', 'x mandatory')
+            if (!buttonAcitive.value && slader.value) {
+                slader.value.style.setProperty('scroll-snap-type', 'x mandatory')
             }
-            sladerValueScroll.value.current = scrollLe
         }, 400)
     }
 }
@@ -107,7 +105,7 @@ function onPointerMove({ clientX, buttons, type, pointerId, pointerType }: Point
             cordsScroll.value.startX = clientX
             slader.value.scrollLeft += difX
         } else {
-            resetScrollData(pointerId)
+            resetScrollData(pointerId, slader.value)
             cordsScroll.value = null
         }
     }
@@ -115,47 +113,58 @@ function onPointerMove({ clientX, buttons, type, pointerId, pointerType }: Point
 
 function onPointerUp({ type, pointerId, pointerType }: PointerEvent) {
     if (type === 'pointerup' && pointerType === 'mouse') {
-        resetScrollData(pointerId)
+        resetScrollData(pointerId, slader.value)
         cordsScroll.value = null
     }
 }
 
 function onPointerLeave({ type, pointerId, pointerType }: PointerEvent) {
     if (type === 'pointerleave' && pointerType === 'mouse') {
-        resetScrollData(pointerId)
+        resetScrollData(pointerId, slader.value)
         cordsScroll.value = null
     }
 }
 
-function resetScrollData(pointerId: number) {
-    if (slader.value) {
-        slader.value.style.setProperty('scroll-behavior', 'smooth')
-        let widthCols: string = window.getComputedStyle(slader.value).getPropertyValue('grid-auto-columns')
-        let sladerScrollLeft = slader.value.scrollLeft
-        let sladerCotainerWIdth = slader.value.clientWidth
+function resetScrollData(pointerId: number, elem: HTMLElement | null) {
+    if (elem) {
+        elem.style.setProperty('scroll-behavior', 'smooth')
+        let widthCols: string = window.getComputedStyle(elem).getPropertyValue('grid-auto-columns')
+        let sladerScrollLeft = elem.scrollLeft
+        let sladerCotainerWIdth = elem.clientWidth
         let difScrollComplet: number = Number((sladerScrollLeft / (sladerCotainerWIdth / (100 / parseFloat(widthCols)))).toFixed(2));
         if (!Number.isInteger(difScrollComplet)) {
             let valueScroll = (Math.round(difScrollComplet) * (sladerCotainerWIdth / (100 / parseFloat(widthCols)))) - sladerScrollLeft
-            slader.value.scrollBy({ left: valueScroll, behavior: 'smooth' })
+            elem.scrollBy({ left: valueScroll, behavior: 'smooth' })
         }
         // slader.value.releasePointerCapture(pointerId)
-        slader.value.onpointermove = null
+        elem.onpointermove = null
         document.body.style.setProperty('cursor', 'auto')
         buttonAcitive.value = false
     }
 }
 
-onMounted(() => {
-    if (slader.value) {
-        let scrollWidth = Math.max(
-            slader.value.clientWidth,
-            slader.value.offsetWidth,
-            slader.value.scrollWidth
-        )
-        sladerValueScroll.value.max = scrollWidth - slader.value.clientWidth
+function valueScroll(elem: HTMLElement | null): number | void {
+    if (elem) {
+        let c = elem.clientWidth,
+            o = elem.offsetWidth,
+            s = elem.scrollWidth
+        let scrollWidth = Math.max(c,o,s)
+        return scrollWidth - c
     }
+}
+function getValueScroll() {
+    sladerValueScroll.value.max = valueScroll(slader.value) || 0
+}
+
+onMounted(() => {
+    getValueScroll()
+    window.addEventListener('resize', getValueScroll, { passive: true })
+})
+onUpdated(() => {
+    getValueScroll() 
 })
 
+onBeforeMount(() => window.removeEventListener('resize', getValueScroll))
 </script>
 
 <style lang="css">

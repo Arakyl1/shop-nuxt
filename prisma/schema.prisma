@@ -1,9 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"] 
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -12,98 +9,93 @@ datasource db {
 }
 
 model User {
-  id     Int @id @default(autoincrement())
-  email   String  
-  name    String?
-  username String @unique
-  password String
+  id           Int            @id @default(autoincrement())
+  email        String
+  name         String?
+  username     String         @unique
+  password     String
   profileImage String
-
-  createAt DateTime @default(now())
-  admin Boolean @default(false)
-
-  posts   Post[]
-  reviews Comment[]
+  createAt     DateTime       @default(now())
+  admin        Boolean        @default(false)
+  reviews      Comment[]
   refrechToken RefrechToken[]
 }
 
 model RefrechToken {
-  id Int @id @default(autoincrement())
-  token String @unique
-
-  createAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  createAt  DateTime @default(now())
   updateAta DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
-  userId Int
-}
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model ProductCard {
   id             Int              @id @default(autoincrement())
   name           String
   art            String
-  maker          String
-  categor        String
-  subcategor     String          @default("")
-  price          Int
+  price          Float
   itemArt        String
   itemMod        String
-  img            String?
-  top            Boolean         @default(false)
-  news           Boolean         @default(false)
-  sale           Boolean         @default(false)
-  availability   Boolean         @default(false)
-  pickUp         Boolean         @default(false)
-  underTheOrder  Boolean         @default(false)
-  delivery       Boolean         @default(false)
-  quantity       Int             @default(0)
-  ranting        Int             @default(0)
-  description    String          @default("")
-  reviews        Comment[]
+  quantity       Int              @default(0)
+  description    String           @default("")
+  createAt       DateTime         @default(now())
+  discount       Int              @default(0)
+  views          Int              @default(0)
   characteristic Characteristic[]
-  image Image[]
+  reviews        Comment[]
+  image          Image[]
+  attribute      Attribute[]      @relation("AttributeToProductCard")
+}
+
+model Attribute {
+  id       Int           @id @default(autoincrement())
+  name     String        @default("")
+  value    String 
+  type     AttributeType @default(OTHER)
+  item     ProductCard[] @relation("AttributeToProductCard")
+  parent   Attribute[]   @relation("ParentChildren")
+  children Attribute[]   @relation("ParentChildren")
 }
 
 model Image {
-  id Int @id @default(autoincrement())
-  link String
-  main Boolean @default(false)
-  product ProductCard @relation(fields: [productCardId], references: [id])
-  productCardId Int 
+  id            Int         @id @default(autoincrement())
+  link          String
+  productCardId Int
+  main          Boolean     @default(false)
+  product       ProductCard @relation(fields: [productCardId], references: [id])
 }
 
 model Comment {
-  id          Int          @id @default(autoincrement())
-  ProductCard ProductCard @relation(fields: [cardId], references: [id])
+  id          Int         @id @default(autoincrement())
   cardId      Int
   ranting     Int?
   text        String?
-  user        User        @relation(fields: [userId], references: [id])
   userId      Int
+  ProductCard ProductCard @relation(fields: [cardId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
 }
 
 model Characteristic {
-  titleID       Int              @id @default(autoincrement())
   title         String
-  ProductCard   ProductCard         @relation(fields: [productCardId], references: [id])
   productCardId Int
+  id            Int                  @id @default(autoincrement())
+  ProductCard   ProductCard          @relation(fields: [productCardId], references: [id])
   content       CharacteristicItem[]
-
 }
 
 model CharacteristicItem {
-  itemId       Int              @id @default(autoincrement())
-  name                String
-  value               String
-  Characteristic      Characteristic @relation(fields: [characteristicTitle], references: [titleID])
-  characteristicTitle Int
+  name             String
+  value            String
+  characteristicId Int
+  id               Int            @id @default(autoincrement())
+  Characteristic   Characteristic @relation(fields: [characteristicId], references: [id])
+}
+
+enum AttributeType {
+  CATEGOR
+  MAKER
+  OTHER
+  SUBCATEGOR
+  CLASS
 }

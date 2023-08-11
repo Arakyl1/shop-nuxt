@@ -1,52 +1,29 @@
 <template>
     <div class="w-3/4 lg:w-2/3 md:w-full">
-        <div class="flex flex-wrap" v-show="loader || listIdProduct.length">
+        <div class="grid grid-cols-3 lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-2 gap-y-10 gap-x-8 xl:gap-x-6 sm:gap-x-4 px-4 xl:px-3 sm:px-2"
+            v-show="pending || data.length">
             <template v-for="(el,i) in lengthArr" :key="el">
-                <MoleculesItemProductCard :data="listIdProduct[i] || null"
-                    class="group is-pos-info-for-stock w-1/3 mb-10 lg:w-1/2 md:w-1/3 sm:w-1/2 slader__item">
-                    <template #bt-favorite="{ content }" >
-                        <ClientOnly>
-                            <AtomButtonStandart class="group p-1" @click="addFatoriteItem(content.id)"
-                                :class="[checkIdInFavorites(content.id).value ? 'icon-red' : 'icon-black']">
-                                <IconLike class="h-7" />
-                            </AtomButtonStandart>
-                        </ClientOnly>
-                    </template>
-
-                    <template #bt-basket="{ content }" >
-                        <AtomButtonStandart
-                        v-if="content && !isNumber(content)"
-                        @click="addBasket({
-                            id: content.id,
-                            quantity: 1,
-                            price: content.sale ? Math.floor(content.price * 0.9) : content.price
-                        })" class="flex bg-blue-500  justify-center items-center"
-                        :disabled="!checkAvailability(content)">
-                            <IconBasketSmall class="group icon-white" />
-                            <p class="text-white ml-2">В корзину</p>
-                        </AtomButtonStandart>
-                    </template>
-                </MoleculesItemProductCard>
+                <MoleculesCardProduct :data="data[i] ? data[i] : null"
+                    class="group is-pos-info-for-stock"/>
             </template>
         </div>
         <Transition name="gallery">
-        <div v-show="!loader && !listIdProduct.length">
+        <div v-show="!pending && data && !data.length">
             <p class="text-2xl text-gray-500 p-8 lg:text-xl sm:text-lg sm:p-4"
-            >По вашему запросу ничего не найденно</p>
+            >{{ _content?.TEXT_BASKET_EMPRY || 'nothing found'  }}</p>
         </div>
     </Transition>
     </div>
 </template>
 
 <script setup lang="ts">
-import type { _ProductCardBase } from "@/type/intex";
+import type { Content, ProductCardBase } from "@/type/intex";
 
-const { addBasket } = useBasket()
+const props = defineProps<{ data: ProductCardBase[], pending: boolean }>()
 const route = useRoute()
-const { checkIdInFavorites, addFatoriteItem } = useFavorite()
-const props = defineProps<{ listIdProduct: _ProductCardBase[], loader: boolean }>()
+const _content = useState<Content | null>('CONTENT_APP')
 
-const lengthArr = computed(() => props.loader ? Number(route.query.limit) : props.listIdProduct.length)
+const lengthArr = computed(() => props.pending ? Number(route.query.limit) : props.data.length)
 </script>
 
 <style lang="css">
@@ -58,13 +35,10 @@ const lengthArr = computed(() => props.loader ? Number(route.query.limit) : prop
   transition: all 0s;
 }
 
-.gallery-enter-from {
-  opacity: 0;
-  transform: translateY(12px);
-}
-
+.gallery-enter-from,
 .gallery-leave-to {
   opacity: 0;
-  transform: translateY(-12px);
+
 }
+
 </style>

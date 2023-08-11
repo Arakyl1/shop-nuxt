@@ -4,4 +4,8 @@
   // "vueCompilerOptions": {
   //   "experimentalRfc436": true
   // }
+  "compilerOptions": {
+    "allowImportingTsExtensions": true
+  }
+  
 }

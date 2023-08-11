@@ -1,83 +1,71 @@
 <template>
   <div>
     <form class="text-center" ref="form">
-      <input
-        type="text"
-        :class="style.input"
-        placeholder="Логин"
-        class="mb-4"
-        required
-        aria-required="true"
-        autocomplete="username"
-        v-model="data.username" />
-      <AtomUIEmail
-        placeholder="Email"
-        class="text-lg w-full mb-4 px-4 py-2 rounded-md"
-        aria-required="true"
-        autocomplete="email"
-        required
-        v-model="data.email"/>
-      <AtomUIPassword
-        placeholder="Пароль"
-        class="text-lg w-full px-4 py-2 rounded-md"
-        aria-required="true"
-        autocomplete="new-password"
-        required
-        v-model="data.password"/>
-      <label class="text-xs text-white mb-2 block">Используйте цифры, буквы малые и прописные, спец. сим.</label>
-      <AtomUIPassword
-        placeholder="Повторите пароль"
-        class="text-lg w-full px-4 py-2 rounded-md mb-8"
-        aria-required="true"
-        autocomplete="new-password"
-        required
-        v-model="data.repeartPassword"/>
+      <h3 class="text-3xl text-center font-medium text-black-500 mb-7">{{ _content?.AUTH_TEXT_TITLE_REGISTER || 'Register'}}</h3>
+      <input type="text" :class="style.input" :placeholder="_content?.AUTH_TEXT_PLACEHOLDER_USERNAME || 'Username'" class="mb-4" required
+        aria-required="true" autocomplete="username" v-model="data.username" />
+      <AtomFormEmail :placeholder="_content?.AUTH_TEXT_PLACEHOLDER_EMAIL || 'Email'" class="text-lg w-full mb-4 px-4 py-2 rounded-md"
+        aria-required="true" autocomplete="email" required v-model="data.email" />
+      <AtomFormPassword :placeholder="_content?.AUTH_TEXT_PLACEHOLDER_PASSWORD || 'Password'" class="text-lg w-full px-4 py-2 rounded-md"
+        aria-required="true" autocomplete="new-password" required v-model="data.password" />
+      <label class="text-xs text-gray-500 pt-1 pb-2 block">{{ _content?.TEXT_AUTH_REGISTER_PASSWORD_INFO || ''}}</label>
+      <AtomFormPassword :placeholder="_content?.AUTH_TEXT_PLACEHOLDER_PASSWORD_D || 'Repeat password'"
+        class="text-lg w-full px-4 py-2 rounded-md mb-8" aria-required="true" autocomplete="new-password" required
+        v-model="data.repeartPassword" />
 
       <AtomButtonStandart @click="userRegister()" class="bg-blue-500 rounded-md text-lg text-white w-full">
-        Зарегистрироватьца
+        {{ _content?.AUTH_TEXT_BUTTOM_REGISTER || "Register" }}
       </AtomButtonStandart>
     </form>
   </div>
 </template>
 <script setup lang="ts">
-import { UserRegisterData } from "@/type/intex";
+import { Content, UserRegisterData } from "@/type/intex";
+import { ResponseAuthUser, } from "@/type/intex"
+import { alert as _alert } from "@/stores/alert";
 
-const props = withDefaults(defineProps<{ active: boolean }>(), { active: false })
+const emit = defineEmits<{
+  (e: 'response', value: ResponseAuthUser): void
+}>()
 
-type PartialNull<T> = { [P in keyof T]: T[P] | null; }
+type ParticalMY<T> = { [P in keyof T]: T[P] | null; }
 
-const data = ref<PartialNull<UserRegisterData>>(createObject())
-const { createAlert } = useAlert()
-const { register: _userRegister } = useAuth()
+const data = ref<ParticalMY<UserRegisterData>>(createObject())
+const { register: _register } = useAuth()
 const form = ref<HTMLFormElement | null>(null)
+const storeAlert = _alert()
+const _content = useState<Content>('CONTENT_APP')
 
 async function userRegister() {
   const resValidData = checkValidData(unref(data.value), form.value ? form.value : null)
-  
+
   if (resValidData) {
-    const res = await _userRegister(data.value as UserRegisterData) || false
+    const res = await _register(data.value as UserRegisterData) || false
     if (res) {
-      createAlert('Пользователь зарегистрирован')
+      emit('response', res)
+      if (_content.value) {
+        storeAlert.create({ text: _content.value.ALERT_AUTH_REGISTER_SUCCESS || null, state: 'success' })
+      }
       data.value = createObject()
     }
   }
 }
 
-function checkValidData<T extends HTMLFormElement | null>(data: PartialNull<UserRegisterData>, form: T): true | void {
-  if (!form || !form.reportValidity()) return
 
-  switch (true) {
-    case data.password !== data.repeartPassword:
-      return createAlert('Пароли не совпадают')
-    default:
-      break
+function checkValidData<
+  T extends HTMLFormElement | null,
+  U extends typeof data.value>(data: U, form: T): true | void {
+  if (!form || !form.reportValidity()) return
+  if (data.password !== data.repeartPassword && _content.value) {
+    storeAlert.create({ text: _content.value.ALERT_AUTH_REGISTER_PASSWORD_DONT_MATCH || null, state: 'error' })
+    return
   }
   return true
 }
 
-watch(() => props.active, () => {
-  form.value?.reset()
-})
+// watch(() => props.active, () => {
+//   form.value?.reset()
+// })
 
 function createObject() {
   return {

@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div class="fixed top-0 left-0 w-full bg-black-700 z-40 ap0__mask" :class="[{ active: active }]"
-      @click="updateMask(false)"></div>
     <div>
+      <AtomOtherAlert/>
       <OrganismsHeader class="mb-4 block md:hidden" />
       <OrganismsHeaderMobaile class="mb-4 md:block hidden"/>
     </div>
@@ -13,57 +12,101 @@
       <div class="min-h-screen">
         <NuxtPage ></NuxtPage>
       </div>
+
     </div>
     <div>
       <OrganismsFooter/>
     </div>
-    <Transition name="alert">
-      <AtomOtherAlert />
-    </Transition>
     <TemplatesModalFavorite/>
-    <TemplatesModalBasket/>
-    <OrganismsAuth />
+    <TemplatesModalBasket/>  
+
+    <OrganismsAuth /> 
     <div class="hidden md:grid-cols-1 md:gap-y-6 md:mb-6 "></div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { user as _user } from "@/stores/user";
+import { Cached, CategorDataItem, Content } from "@/type/intex";
 
-const { windowMask: _windowMask, windowSize: _windowSize, user: _user } = useStore()
-const { updateMask, active } = _windowMask()
-const { userData } = _user()
-const { updateSize } = _windowSize()
+
 const route = useRoute()
 const { isDesktop, isFirefox } = useDevice();
+const storeUser = _user()
+const { data: _userData } = storeToRefs(storeUser)
 const { initAuth } = useAuth()
+const _content = useState<Content | null>('CONTENT_APP', () => null)
+const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
+const headers = useRequestHeaders()
+
+type useAuth = ReturnType<typeof useAuth>
+type InitAuthResponse = Cached<useAuth['initAuth']>
 
 
-onBeforeMount(async () => {
-  if (!userData.value) 
+onServerPrefetch(async () => {
+  useFetch('/api/attridute/get', {
+        server: true,
+        method: 'GET',
+        params: { type: 'CATEGOR' },
+        key: 'attridute:CATEGOR',
+        retry: 5,
+        onResponse({ response }) {
+            if (response.status < 400) {
+              CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
+            }
+        }
+    })
 
-  updateSize(window)
-  window.addEventListener('resize', () => updateSize(window))
-})
-
-onServerPrefetch(async() => {
-  await initAuth()
-})
-
-watch(() => active.value, (newValue) =>{
-  if (newValue) {
-    document.body.style.overflow = 'hidden'
-    if (isDesktop && !isFirefox) {
-      document.body.style.paddingRight = '16px'
-    }
+  const res = await initAuth()
+  if (Object.prototype.hasOwnProperty.call(headers, 'accept-language')) {
+    const userLocalLanguage = getLanguageUser(headers['accept-language']!)
+    const keyContent = userLocalLanguage.find(_ => _[0] !== 'en') || ['en', 0.9]
+    const key = keyContent[0].toString()
+    try {
+      import('@/content/language/ru.js').then(res => _content.value = res.content)
+    //   import(`@/content/language/${key || 'ru'}.js`).then(res => {  
+    //   if (res && 'content' in res) {
+    //     _content.value = res.content
+    //     console.log('read content find')
+    //   }
+    // })
+    } catch (error) {
+      import('@/content/language/ru.js').then(res => _content.value = res.content)
+      console.log('read content catch')
+    }  
   } else {
-    setTimeout(() => {  
-      document.body.style.overflow = 'auto'
-      if (isDesktop && !isFirefox) {
-        document.body.style.paddingRight = '0'
-      }
-    }, 300)
+    console.log('other Data')
+    import('@/content/language/ru.js').then(res => _content.value = res.content )
+    console.log('read content base')
   }
+ 
+  await checkRes(res)
 })
+
+
+
+// onBeforeMount(async () => {
+//   if (!_userData.value) 
+
+//   updateSize(window)
+//   window.addEventListener('resize', () => updateSize(window))
+// })
+
+
+async function checkRes(res: InitAuthResponse) {
+  if (res) {
+    if ('user' in res && res.user) {
+      storeUser.update(res.user)
+    } else if ('messageKey' in res && res.messageKey && _content.value) {
+      console.log(_content.value[res.messageKey as never])
+    }
+  }
+}
+
+// onMounted(async() => {
+//  await useFetch('/api/other/init', )
+// })
+
 
 // user data
 // name PPPPPPPP
@@ -74,22 +117,11 @@ watch(() => active.value, (newValue) =>{
 <style lang="css">
 @import './assets/Stylesheets/main.css';
 
-.ap0__mask {
-  transition-delay: 0.22s;
-  height: 0;
-  opacity: 0;
-}
-
-.ap0__mask.active {
-  height: 100vh;
-  transition-delay: 0s;
-  opacity: 0.8;
-}
-
-.path-enter-active{
+.path-enter-active {
   transition: all 0.3s ease-in-out;
 }
-.path-leave-active{
+
+.path-leave-active {
   transition: all 0;
 }
 
@@ -113,17 +145,4 @@ watch(() => active.value, (newValue) =>{
   transform: translateX(20px);
   opacity: 0;
 } */
-
-
-
-.alert-enter-active,
-.alert-leave-active {
-  transition: all 0.25s ease-out;
-}
-
-.alert-enter-from,
-.alert-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-</style>
+</style>./content/language/ru.js./content/language/ru.js

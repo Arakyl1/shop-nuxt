@@ -32,11 +32,10 @@
                         </div>
                     </div>
                 </template>
-                <MoleculesItemBase v-else class="aspect-[3/2]"/>
+                <MoleculesCardBase v-else class="aspect-[3/2]"/>
             </template>
             <template #bottom="{ nextItem, prevItem }">
-                <template v-if="size.width !== 0 && size.width < 768">
-                    <div class="py-4">
+                    <div class="py-4 md:block hidden">
                         <div class="flex justify-end">
                             <AtomButtonStandart class="bg-blue-500 text-white mr-4 text-center py-3 text-xl grow
                             sm:text-base sm:py-2">
@@ -46,15 +45,11 @@
                             <AtomButtonArround @click="nextItem" class="ml-2 group big px-6 sm:px-5" />
                         </div>
                     </div>
-                </template>
                 <div></div>
             </template>
         </MoleculesSladerBase>
     </section>
 </template>
 <script setup lang="ts">
-
-const { windowSize: _windowSize } = useStore()
-const { size } = _windowSize()
 const { data } = await useAsyncData('main-slader', () => queryContent('/main/slader').findOne()) 
 </script>

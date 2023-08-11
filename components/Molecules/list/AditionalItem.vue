@@ -1,26 +1,33 @@
 <template>
-<li class="mb-5 cursor-pointer"> 
     <div class="flex">
-        <AtomButtonStandart class="bg-black-500 mr-3 rounded p-1"
-        @click="active = !active">
-            <IconAdd class="group is-icon-white"/>
-        </AtomButtonStandart>
-        <p class="text-white grow">{{ item.name }}</p>
+        <div class="flex items-center">
+            <AtomButtonStandart class="bg-black-500 mr-3 rounded p-1" @click="() => { active = !active }">
+                <CreateIcon name="add-plus_16_16" :att="{ class: 'fill-white' }" />
+            </AtomButtonStandart>
+        </div>
+        <NuxtLink class="text-white grow"
+        :to="{ path: '/catalog', query: { categor: data.id, limit: $route.query.limit || 12,  page: 1 } }"
+            >{{ data.value }}</NuxtLink>
     </div>
-    <div v-if="'children' in item">
+    <div v-if="'children' in data && Array.isArray(data.children) && data.children.length">
         <ul v-show="active" class="pl-8 pt-3">
-            <li v-for="elem in item.children" :key="elem.name"
-            class="mb-2 text-white last:mb-0">
-                {{ elem.name }}
+            <li v-for="item in data.children" :key="item.id" class="mb-2 text-white last:mb-0">
+                <NuxtLink
+                :to="{ path: '/catalog', query: { categor: item.id, limit: $route.query.limit || 12,  page: 1 } }"
+                    >{{ item.value }}</NuxtLink>
             </li>
         </ul>
     </div>
-</li>
- 
 </template>
-<script setup lang="ts">
-import type { CategorItem } from "@/type/intex";
-defineProps<{ item: CategorItem | { name: string } }>()
+<script setup lang="ts" generic="T extends {
+    name: string,
+    id: number,
+    children: { name: string, id: number }[]
+}">
+
+import CreateIcon from "@/content/icons/create";
+
+defineProps<{ data: T }>()
 
 const active = ref<boolean>(false)
 </script>

@@ -2,12 +2,11 @@
     <div>
         <template v-if="data">
             <TemplatesPageProductMain :data="data" class="mb-8 xl:mb-6 block md:hidden" />
-            <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" />
+             <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" />
             <TemplatesPageProductCharacteristic :data="data.characteristic" class="mb-8 xl:mb-6" />
-            <TemplatesPageProductDescription :id="data.id" :name="data.name" :art="data.art" :description="data.description"
-                :reviews="data.reviews" :refresh="refresh" class="mb-12" />
+            <TemplatesPageProductDescription :data="data" :refresh="refresh" class="mb-12" />
         </template>
-        <TemplatesPageMainCarusel :searchCategor="{ 'news': true }">
+         <TemplatesPageMainCarusel :params="{ 'createAt.gte': new Date(Date.now() - 604800000 ), limit: 24  }">
             <template #title>
                 Новинки
             </template>
@@ -16,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { productCardBaseParamsSelectFull, type _ProductCardFull } from '~~/type/intex';
+import { ProductCardFull } from '~~/type/intex'
 
 definePageMeta({
     title: 'Информация о товаре',
@@ -24,11 +23,16 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { getInfo: getInfoProduct } = useProduct()
 const id = route.params.id
-const option = { where: { id: +id }, ...productCardBaseParamsSelectFull }
+const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
+    method: 'GET',
+    params: { id: id, fullinfo: true, unique: true }
+}), { 'lazy': true, transform: (context) => {
+    if (context && !Array.isArray(context)) {
+        return context as ProductCardFull
+    } else { return null }
+} })
 
-const { data, refresh } = await getInfoProduct<_ProductCardFull>(option,{}, { key: 'data_full' + id })
 
 onMounted(() => {
     useHead({

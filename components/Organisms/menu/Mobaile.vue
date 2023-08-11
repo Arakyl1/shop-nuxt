@@ -1,34 +1,49 @@
 <template>
-<div class="fixed w-screen h-screen top-0 z-50 transition-all right-0"
-ref="modalMenu">
-    <div class="bg-blue-500 h-full pb-8 pt-4 px-4 overflow-y-scroll">
-        <img src="@/assets/img/logo.png" alt="logo" class="w-32 mb-4">
-        <template v-if="data && !('children' in subcategorList)">
-            <ul ref="categor">
-                <li v-for="item in data.select" :key="item"
-                class=" py-3 border-b border-blue-100">
-                <div class="flex items-center justify-between">
-                    <NuxtLink :to="{ path: '/catalog', query: { ...route.query, categor: item.name, page: 1 } }"
-                    class="text-white cursor-pointer"
-                    > {{ item.name }}</NuxtLink>
-                    <div class="ml-5 cursor-pointer grow flex justify-end">
-                        <IconArround @click="subcategorName = item.name"/>
-                    </div>
-                </div>
-                </li>
-            </ul>
-        </template>
-        <template v-else-if="'children' in subcategorList">
-            <ul class="">
-                <MoleculesListAditionalItem v-for="elem in subcategorList.children" :item="elem" :key="elem.name"/>
-            </ul>
-        </template>
+    <div class="fixed w-screen h-screen top-0 z-50 transition-all right-0" >
+        <div class="bg-blue-500 h-full flex flex-col" ref="modalmain">
+            <div class="px-4 pt-4" >
+                <img src="@/assets/img/logo.png" alt="logo" class="w-32 mb-4">
+            </div>
+            <div class="grow overflow-y-scroll overflow-x-hidden scrollbar-v1 px-4 pb-8">
+                <Transition name="slide-up" mode="out-in">
+                    <template v-if="CATEGOR_DATA && !subcategorData">
+                        
+                            <ul class="flex flex-col">
+                                <li v-for="item in CATEGOR_DATA" :key="item.id" class=" py-3 border-b border-blue-100"
+                                @click="categorId = item.id">
+                                    <div class="flex items-center justify-between">
+                                        <NuxtLink
+                                            :to="{ path: '/catalog', query: { categor: item.id, page: 1, limit: route.query.limit || 12 } }"
+                                            class="text-white cursor-pointer"
+                                            @click.stop
+                                            > {{ item.value }}</NuxtLink>
+                                        <div class="ml-5 cursor-pointer grow flex justify-end">
+                                            <CreateIcon name="arround_6_11" :att="{ class: 'fill-white' }" />
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                    </template>
+
+                    <template v-else-if="subcategorData && subcategorData.children.length">
+                        <div >
+                            <ul class="flex flex-col">
+                                <li class="py-2" v-for="section in subcategorData.children" :key="section.id">
+                                    <MoleculesListAditionalItem  :data="section"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </template>
+                </Transition>
+            </div>
+
+        </div>
     </div>
-</div>
 </template>
 <script setup lang="ts">
 import type { _AsyncData } from 'nuxt/dist/app/composables/asyncData';
-import type { updateStage } from '~~/utils/ShowContent';
+import CreateIcon from "@/content/icons/create";
+import { CategorDataItem } from '~~/type/intex';
 
 interface ToucheData {
     x: number | null,
@@ -38,26 +53,27 @@ interface ToucheData {
 }
 
 const props = defineProps<{
-    updateFun: updateStage
+    updateFun: (...arg: any) => any
 }>()
 
-const { data } = await useAsyncData(
-    'select-menu', () => queryContent('/select').only(['select']).findOne())
+
 const route = useRoute()
+const modalmain = ref<HTMLElement | null>(null)
+const toucheDataModal: ToucheData = toucheElemPosition(modalmain)
+const categorId = ref<number>(0)
+const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP")
 
-const subcategorName = ref<string | null>(null)
-const modalMenu = ref<HTMLElement | null>(null)
-const toucheData: ToucheData = toucheElemPosition(modalMenu)
+const subcategorData = computed(() => categorId.value !== 0 && CATEGOR_DATA.value ? CATEGOR_DATA.value.find(_ => _.id === categorId.value) : null)
 
-const subcategorList = computed(() => data.value &&
-    subcategorName.value ? data.value.select.find((el: any) => el.name === subcategorName.value) :
-    {}
-)
-
-watch(() => toucheData.vector, (newVector) => {
+watch(() => toucheDataModal.vector, (newVector) => {
     if (newVector === 1) {
-        props.updateFun()
-        subcategorName.value = null
+        if (categorId.value !== 0) {
+            categorId.value = 0
+        } else {
+            props.updateFun(false)
+            categorId.value = 0
+        }
     }
 })
+
 </script>

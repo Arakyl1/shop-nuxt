@@ -1,5 +1,5 @@
 <template>
-    <AtomModalTransition :active="stage" :draggable="true">
+    <AtomModalTransition :state="state" :draggable="true">
         <div class="bg-white rounded-md py-8 px-6 sm:py-6 sm:px-4">
             <div class="flex items-center mb-4" v-if="userData">
                 <img :src="userData.profileImage" alt="user-image" class="w-12 aspect-square">
@@ -14,15 +14,10 @@
                 </div>
 
                 <div class="mb-4">
-                    <AtomUIStar
-                    :quantity-star="userCommit.ranting"
-                    @number-star="(e) => { userCommit.ranting = e }"
-                    :reset="reset"
-                        class="justify-start" />
+                    <AtomFormRating :quantity-star="userCommit.ranting" @number-star="(e) => { userCommit.ranting = e }"
+                        :reset="reset" class="justify-start" />
                 </div>
-                <textarea rows="10"
-                v-model="userCommit.text"
-                class="w-full border border-yellow-500 rounded-md
+                <textarea rows="10" v-model="userCommit.text" class="w-full border border-yellow-500 rounded-md
                 p-4 mb-6 focus-visible:outline-0 sm:p-2"></textarea>
                 <div class="text-right">
                     <AtomButtonStandart @click="onClick()" class="bg-yellow-500 text-white sm:py-2">
@@ -33,75 +28,67 @@
         </div>
     </AtomModalTransition>
 </template>
-<script setup lang="ts" generic="T extends GG, U extends UserBase">
-import { Prisma } from "@prisma/client";
-import type { UserBase, GG } from '@/type/intex';
+<script setup lang="ts" generic="T extends { id: number, art: string, name: string }, U extends Omit<User, 'password'>">
+import { Prisma, User } from "@prisma/client";
 import type { AsyncDataExecuteOptions } from 'nuxt/dist/app/composables/asyncData';
-import type { updateStage } from '~~/utils/ShowContent';
-
+import { alert as _alert } from "@/stores/alert";
+import { Content } from "~~/type/intex";
 
 const props = defineProps<{
     data: T,
-    stage: boolean,
+    state: boolean,
     userData: U | null,
     refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>,
     reviewsRantingValue: number[],
-    hudeFunction: updateStage,
+    modalFun: (...arg: any) => any,
 }>()
 
-const { createAlert } = useAlert()
-const { create } = useCommit()
-const { update: updateProduct } = useProduct()
+
+const _content = useState<Content | null>('CONTENT_APP')
 const form = ref<HTMLFormElement | null>(null)
 const reset = ref<boolean>(false)
 const textarea = ref<HTMLTextAreaElement | null>(null)
 const userCommit = ref({
-    [modelProp('Comment','ranting')]: 0,
-    [modelProp('Comment','text')]: '',
-    [modelProp('Comment','userId')]: props.userData && 'id' in props.userData ? props.userData.id : 0,
-    [modelProp('Comment','cardId')]: props.data.id,
+    [modelProp('Comment', 'ranting')]: 0,
+    [modelProp('Comment', 'text')]: '',
 })
+const storeAlert = _alert()
 
 
 async function onClick() {
-    if (props.userData && checkValidForm(unref(userCommit))) {
+    if (props.userData && userCommit.value.ranting !== 0 || userCommit.value.text !== '') {
+        const body: Prisma.CommentCreateInput = {
+            ...userCommit.value,
+            user: { connect: { id: props.userData!.id } },
+            ProductCard: { connect: { id: props.data.id } }
+        }
         try {
-            await create(userCommit.value)
-            const averageValue = Math.round([userCommit.value.ranting!, ...props.reviewsRantingValue]
-                .reduce((s, m) => s + m, 0) / (props.reviewsRantingValue.length + 1))
-            await updateProduct({
-                where: { id: props.data.id },
-                data: { ranting: averageValue },
-                select: { id: true }
+            useFetch('/api/review/create', {
+                method: "POST",
+                server: true,
+                body: body,
+                onResponse({ response }) {
+                    if (response.status < 400) {
+                        hudeModal()
+                    }
+                }
             })
-            hudeModal()
         } catch (error) {
             console.error(error);
         }
-    } else {
-        createAlert('Не заполнены поля')
+    } else if(_content.value) {
+        storeAlert.create({ text: _content.value.ALERT_COMMENT_CREATE_INVALID_DATA || null, state: 'error' })
     }
 }
-
-
-function checkValidForm<T extends object>(obj: T): boolean {
-    for (const key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            const el = obj[key];
-            if (isString(el) && el === '') return false
-            if (isNumber(el) && el === 0) return false    
-        }
-    }
-    return true   
-}
-    
 
 
 function hudeModal() {
-    props.refresh(),
-    props.hudeFunction(event),
-    createAlert('Ваш отзыв добавлен')
+    if (_content.value) {
+        storeAlert.create({ text: _content.value.ALERT_COMMENT_CREATE_SUCCESS || null, state: 'success' })
+    }
     userCommit.value.ranting = 0
     userCommit.value.text = ''
+    props.refresh()
+    props.modalFun(false)
 }
 </script>

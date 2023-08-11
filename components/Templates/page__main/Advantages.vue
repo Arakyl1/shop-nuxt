@@ -20,32 +20,22 @@
                     </div>
                 </div>
             </template>
-            <template #bottom="{ prevItem, nextItem, indexActiveButton, updateScrolLeftSlader }">
-                <template v-if="data && size.width">
-                    <div class="relative block sm:hidden" v-if="(data.body.length / quantitySladerItem) > 1">
-                        <AtomButtonArround class="-scale-x-100 absolute -top-32 -left-1" @click="prevItem" />
-                        <AtomButtonArround class="absolute -top-32 -right-1" @click="nextItem" />
-                    </div>
-                    <div class="hidden sm:block">
-                        <MoleculesSladerControlItem :data="data.body.length" :indexActiveButton="indexActiveButton"
-                            :updateScrolLeftSlader="updateScrolLeftSlader" />
-                    </div>
-                </template>
+            <template #bottom="{ prevItem, nextItem, indexActiveButton, updateScrolLeftSlader, sladerValueScroll }">
+                <div class="relative block sm:hidden" v-show="sladerValueScroll.max > 0">
+                    <AtomButtonArround class="-scale-x-100 absolute -top-32 -left-1" @click="prevItem" />
+                    <AtomButtonArround class="absolute -top-32 -right-1" @click="nextItem" />
+                </div>
+                <div class="hidden sm:block">
+                    <MoleculesSladerControlItem :data="data.body.length" :indexActiveButton="indexActiveButton"
+                        :updateScrolLeftSlader="updateScrolLeftSlader" />
+                </div>
             </template>
         </MoleculesSladerBase>
     </section>
 </template>
 
 <script setup lang="ts">
-const { windowSize: _windowSize } = useStore()
-const { size } = _windowSize()
 const { data } = await useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
-
-const quantitySladerItem = computed(() => (
-    size.value.width <= 640 ? 1 :
-    size.value.width <= 768 ? 2 :
-    size.value.width < 1028 ? 3 : 4
-))
 
 const style = {
     container: '[grid-auto-columns:calc(100%/4)] lg:[grid-auto-columns:calc(100%/3)] md:[grid-auto-columns:calc(100%/2)] sm:[grid-auto-columns:calc(100%)]'

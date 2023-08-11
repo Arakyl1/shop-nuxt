@@ -1,21 +1,24 @@
 <template>
-    <div class="relative" >
-        <slot name="form" v-bind="{ getSearch, clearDataSearch }">
+    <div class="relative search-modul" >
+        <slot name="form" v-bind="{ getSearch, updateState }">
             <form @submit.prevent
             class="rounded-md border border-gray-300 pl-3 pr-1 py-1 flex" >
                 <input type="text"
                 v-model="inputText"
                 placeholder="Что ищем?."
+                @focus.stop="updateState(true)"
                 @keyup.enter="getSearch(inputText)"
+                @input.stop="getSearch(inputText)"
                 class="mr-4 focus-visible:outline-none group-[.header-main]:xl:w-36 grow">
                 <AtomButtonStandart
                 @click="getSearch(inputText)"
+                
                 class="bg-blue-500 py-1.5 text-white xl:py-1.5"
                 >Поиск</AtomButtonStandart>
             </form>
         </slot>
         <div class="absolute top-[105%] left-0 w-full h-min z-30">
-            <div v-show="dataSearch" >
+            <div v-show="state && dataSearch" >
                 <Transition name="modal_search">
                 <div class=" bg-white shadow-lg border rounded-md border-gray-100">
                     <div class="p-1
@@ -33,8 +36,8 @@
                                                 <p class="text-xs">{{ item.art }}</p>
                                             </div>
                                         </NuxtLink>
-                                        <AtomTransformPrice :style="'text-xs sm:mr-0 mr-0'" :sale="item.sale" :price="item.price"
-                                        class="flex-col"/>
+                                        <AtomProductPrice :discount="item.discount" :price="item.price"
+                                        class="flex-col text-sm mr-0"/>
                                     </div>
                                 </li>
                             </template>
@@ -44,7 +47,7 @@
                         </ul>
                     </div>
                     <div class="border-t border-gray-300"
-                    @click="clearDataSearch">
+                    @click="updateState(false)">
                         <p class="text-center text-sm p-1 text-blue-500">Скрыть</p>
                     </div>
                 </div>
@@ -55,51 +58,57 @@
 </template>
 
 <script setup lang="ts">
-import { productCardParamsForSearchSelect, type ProductCardForSearch } from "@/type/intex";
+import { ProductCardBase } from '~~/type/intex'
 
 const props = defineProps<{ input?: string }>()
 const inputText = ref<string>('')
-const dataSearch = ref<ProductCardForSearch[]|void|null>(null)
+const dataSearch = ref<ProductCardBase[]|void|null>(null)
+const { state, update: updateState } = localState()
 const route = useRoute()
-const { getInfo: getInfoProduct } = useProduct() 
+const pending = ref<boolean>(false)
+
 
 async function getSearch(searchText: string) {
-    getInfoProduct<ProductCardForSearch[]>({
-        where: {
-            OR: [
-                { name: { contains: searchText, mode: 'insensitive' } },
-                { art: { contains: searchText, mode: 'insensitive' } },
-                { categor: { contains: searchText, mode: 'insensitive' } },
-                { subcategor: { contains: searchText, mode: 'insensitive' } }
-            ]
-        },
-        take: 15,
-        ...productCardParamsForSearchSelect
-    },
-    { many: true },
-    {
-        key: 'search' + searchText,
+    if (pending.value || searchText.length < 2) { return }
+   useFetch('/api/product/get', {
+        method: 'GET',
         server: true,
-        onResponse({ response}) {
-            dataSearch.value = response._data
+        params: { search: searchText, limit: 15  },
+        onRequest({ response }) {
+            if (!pending.value) {
+                pending.value = true
+            }
+        },
+        onResponse({ response }) {
+            if ('data' in response._data) {
+                dataSearch.value = response._data.data
+            }
+            pending.value = false
+            if (searchText !== inputText.value) {   
+                getSearch(inputText.value)
+            }
         }
     })
 }
 
-function clearDataSearch() {
-    dataSearch.value = null
+
+onMounted(() => window.addEventListener('click', checkClick))
+onUnmounted(() => window.removeEventListener('click', checkClick))
+
+function checkClick({ type, target }: Event) {
+    const elem = (target as HTMLElement).closest('.search-modul')
+    if (dataSearch.value && !elem) {
+        updateState(false)
+    }
 }
 
-watch(() => props.input ? props.input : inputText.value, (newData) => {
-    if (newData) {
-        getSearch(newData)
-    }
-})
+// watch(() => props.input ? props.input : inputText.value, (newData) => {
+//     if (newData) {
+//         getSearch(newData)
+//     }
+// })
 
-watch(() => route.fullPath, () =>{
-    clearDataSearch()
-    
-})
+watch(() => route.fullPath, () => updateState(false))
 </script>
 
 <style lang="css">

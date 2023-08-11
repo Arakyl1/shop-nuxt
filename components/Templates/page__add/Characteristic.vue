@@ -10,22 +10,18 @@
                     >{{ item.text }}</AtomButtonStandart>
                 </template>
             </div>
-            <template v-if="dataChare">
+            <template v-if="characteristicSection">
                 <div class="pt-4">
                     <input
                       type="text"
                       :class="style.input"
                       class="w-full mb-4"
                       placeholder="Название раздела"
-                      :tabindex="dataChare.title === '' ? 0 : -1"
-                      v-model.trim="dataChare.title"
+                      :tabindex="characteristicSection.title === '' ? 0 : -1"
+                      v-model.trim="characteristicSection.title"
                     />
-                    <template v-if="dataChare &&
-                      'content' in dataChare &&
-                      'create' && dataChare.content &&
-                      Array.isArray(dataChare.content.create)
-                      ">
-                        <div v-for="(item, index) in dataChare.content.create"
+                    
+                        <div v-for="(item, index) in characteristicSection.children"
                         :key="index"
                         class="flex items-center mb-4">
                         <input
@@ -33,25 +29,25 @@
                           placeholder="Характеристика"
                           autocapitalize="words"
                           :class="style.input"
-                          :tabindex="dataChare.content.create[index].name === '' ? 0 : -1"
-                          v-model="dataChare.content.create[index].name"
+                          :tabindex="characteristicSection.children[index].name === '' ? 0 : -1"
+                          v-model="characteristicSection.children[index].name"
                         />
                         <input
                           type="text"
                           class="mx-4"
                           :class="style.input"
                           placeholder="Значение"
-                          :tabindex="dataChare.content.create[index].value === '' ? 0 : -1"
-                          v-model="dataChare.content.create[index].value"
+                          :tabindex="characteristicSection.children[index].value === '' ? 0 : -1"
+                          v-model="characteristicSection.children[index].value"
                         />
                         <AtomButtonStandart
                           class="p-0 group is-icon-black"
                           tabindex="-1"
                           @click="removeItem(index)">
-                          <IconClose class="h-6 w-6"/>
+                          <CreateIcon name="close_20_20" :att="{ class: 'fill-red-500' }"/>
                         </AtomButtonStandart>
                         </div>
-                    </template>
+                    
                   </div>
                 <div class="flex -mx-2">
                     <template v-for="item in arrayButtom.edit" :key="item">
@@ -69,102 +65,119 @@
                     </AtomButtonStandart>
                 </div>
             </template>
-            <template v-if="'create' in data && Array.isArray(data.create)">
+            
                 <div class="pt-4 ">
-                    <div class="mb-4" v-for="item, index in data.create" :key="item.title">
-                      <template v-if="item.content && 'create' in item.content && Array.isArray(item.content.create)">
+                    <div class="mb-4" v-for="item, index in data" :key="item.title">
                         <div class="flex mb-2">
                         <h2 class="text-2xl xl:text-xl grow">{{ item.title }}</h2>
                         <AtomButtonStandart class="p-0 ml-2 group is-icon-black" @click="makeEditingActive(index)">
-                          <IconEdit class="h-6 w-6 "/>
+                          <CreateIcon name="edit_20_20" :att="{ class: 'stroke-yellow-500' }"/>
+                          
                         </AtomButtonStandart>
                         <AtomButtonStandart class="p-0 ml-2 group is-icon-black" @click="removeGroup(index)">
-                          <IconDelete class="h-7 w-7"/>
+                          <CreateIcon name="delete_20_20" :att="{ class: 'stroke-red-500' }"/>
                         </AtomButtonStandart>
                       </div>
                       <div class="decor-line mb-2"></div>
-                        <div class="flex mb-0" v-for="el in item.content.create" :key="el.name">
+                        <div class="flex mb-0" v-for="el in item.children" :key="el.name">
                           <p class="text-lg grow xl:text-base">{{ el.name }}</p>
                           <p class="text-lg grow text-right xl:text-base">{{ el.value }}</p>
                         </div>
-                      </template>
                     </div>
                 </div>
-            </template>
         </div>
     </section>
 </template>
 
-<script setup lang="ts">
-import { Prisma } from '@prisma/client';
+<script setup lang="ts" generic="T extends itemJSONData">
+import CreateIcon from "@/content/icons/create";
+import { alert as _alert } from "@/stores/alert";
+import { Content } from "~~/type/intex";
 
+export type itemJSONData = { char: { title: string, data: { name: string, value: string }[] }[] }
 
-const props = defineProps<{ create?: boolean}>()
+const props = defineProps<{ create?: boolean, doowloadJsonData: T | null }>()
 const emit = defineEmits<{
-    (e: 'characteristic', id: Prisma.CharacteristicCreateNestedManyWithoutProductCardInput): void
+    (e: 'characteristic', id: typeof data.value): void
 }>()
 
-const data = ref<Prisma.CharacteristicCreateNestedManyWithoutProductCardInput>({ 'create': []})
-const dataChare = ref<Prisma.CharacteristicCreateWithoutProductCardInput|null>(null)
+
+type CharacteristicSection = { title: string, children: { name:string, value: string }[] }
+const data = ref<CharacteristicSection[]>([])
+const characteristicSection = ref<CharacteristicSection|null>(null)
 const editActive = ref<boolean>(false)
 const indexEditGroup = ref<number | null>(null)
-const { createAlert } = useAlert()
-
-
-const arrayButtom = {
-  create: [
-    { style: 'bg-blue-500', function: () => {
-      dataChare.value = {
-        [modelProp('Characteristic','title')]: '',
-        [modelProp('Characteristic','content')]: { 'create': [] }
-      }},
-      text: 'Добавить раздел' },
-    { style: 'bg-red-500', function: () => { dataChare.value = null }, text: 'Удалить раздел' }
-  ],
-  edit: [
-    { style: 'bg-blue-500', function: () => addItem(), text: 'Добавить поле' },
-    { style: 'bg-black-300', function: () => deleteLastItem(), text: 'Удалить последнее поле' },
-  ]
-}
+const storeAlert = _alert()
+const _content = useState<Content | null>('CONTENT_APP')
 
 const checkDataChare = computed(() => {
-  let _d = dataChare.value
-  if (_d && _d.content && 'create' in _d.content && Array.isArray(_d.content.create)) {
-    if (_d.title !== '' && _d.content.create.length > 0) {
-       return _d.content.create.findIndex(_ => _.name === '' || _.value === '')
-    } else { return null }
+  let _d = characteristicSection.value
+  if (_d && _d.title !== '' && _d.children.length > 0) {
+    return _d.children.findIndex(_ => _.name === '' || _.value === '')
   } else { return null }
 })
 
-const checkDataLength = computed(() => Array.isArray(data.value.create) ? data.value.create.length : 0)
+// watch
+watch(() => data.value.length, () => {
+    emit('characteristic', data.value)
+})
 
+watch(() => props.create, () => {
+    data.value = []
+    characteristicSection.value = null
+})
+
+watch(() => props.doowloadJsonData, (newV) => {
+  if (newV) {
+    ParceJSONData(newV)
+  }
+})
+
+
+function ParceJSONData<T extends itemJSONData>(jsondata:T) {
+  for (const item of jsondata.char) {
+    const section: CharacteristicSection = {
+      title: '',
+      children: []
+    }
+    if ('title' in item) {
+      section.title = item.title
+      if ('data' in item) {
+        const filData = item.data.filter(_ => _.name && _.value)
+        if (filData.length) {
+          section.children = filData
+          data.value.push(section)
+        }
+      }
+    }
+  }
+}
 
 function createSection() {
-  if (checkDataChare.value === -1 && dataChare.value && Array.isArray(data.value.create)) {
-    data.value.create.push(dataChare.value)
-    dataChare.value = null
+  if (checkDataChare.value === -1 && characteristicSection.value) {
+    data.value.push(characteristicSection.value)
+    characteristicSection.value = null
   }
-  if (checkDataChare.value !== null && checkDataChare.value >= 0) {
-    createAlert('Не все поля заполенены')
+  if (checkDataChare.value !== null && checkDataChare.value >= 0 && _content.value) {
+    storeAlert.create({ text: _content.value.ALERT_PRODUCT_CREATE_INVALID_DATA || '', state: 'error' })
   }
 }
 
 function removeItem(elemIndex: number) {
-  check(dataChare.value, (data) => data.splice(elemIndex,1))
-}
-type checkArg = NonNullable<NonNullable<typeof dataChare.value>['content']>['create'][]
-function check<T extends typeof dataChare.value>(obj: T, f: (arg: checkArg) => any): void {
-  if (obj && obj.content && obj.content.create && Array.isArray(obj.content.create)) {
-    f(obj.content.create)
+  if (characteristicSection.value) {
+    characteristicSection.value = {
+      ...characteristicSection.value,
+      children: characteristicSection.value.children.filter((_,i) => i !== elemIndex)
+    }
   }
 }
 
 
 function makeEditingActive(groupIndex:number) {
-  if ('create' in data.value, Array.isArray(data.value.create)) {
+  if (data.value.length) {
     indexEditGroup.value = groupIndex
-    const group = data.value.create.slice(groupIndex, groupIndex + 1)
-    dataChare.value = group[0]
+    const group = data.value.slice(groupIndex, groupIndex + 1)
+    characteristicSection.value = group[0]
     if (group[0]) {
       editActive.value = true
     }
@@ -172,47 +185,44 @@ function makeEditingActive(groupIndex:number) {
 }
 
 function applyEditGroup() {
-  if ('create' in data.value, Array.isArray(data.value.create)) {
-    if (checkDataChare.value === -1 && dataChare.value && indexEditGroup.value !== null) {
-      data.value.create.splice(indexEditGroup.value, 1, dataChare.value)  
-      dataChare.value = null
+  if (data.value.length) {
+    if (checkDataChare.value === -1 && characteristicSection.value && indexEditGroup.value !== null) {
+      const indexActive = indexEditGroup.value
+      const replaceItme = characteristicSection.value
+      data.value = data.value.map((_, i) => i === indexActive ? replaceItme : _)
+      characteristicSection.value = null
       editActive.value = false
     }
-    if (checkDataChare.value !== null && checkDataChare.value >= 0) {
-      createAlert('Не все поля заполенены')
+    if (checkDataChare.value !== null && checkDataChare.value >= 0 && _content.value) {
+      storeAlert.create({ text: _content.value.ALERT_PRODUCT_CREATE_INVALID_DATA || '', state: 'error' })
     }
   } 
 }
 
 function removeGroup(indexGroup:number) {
-  if ('create' in data.value, Array.isArray(data.value.create)) {
-    data.value.create.splice(indexGroup,1)
+  if (data.value.length) {
+    data.value = data.value.filter((_,i) => indexGroup !== i)
   }
 }
 
 function addItem(): void {
-  check(dataChare.value, (data) => {
-    data.push({
-        [modelProp('CharacteristicItem','name')]: '',
-        [modelProp('CharacteristicItem','value')]: ''
-      })
-  })
+  if (characteristicSection.value) {
+    characteristicSection.value.children.push({ name: '', value: ''})
+  }
 }
 
-function deleteLastItem(): void {
-  check(dataChare.value, (data) => data.pop())
+const arrayButtom = {
+  create: [
+    { style: 'bg-blue-500', function: () => {
+      characteristicSection.value = { title: '', children: [] } },
+      text: 'Добавить раздел' },
+    { style: 'bg-red-500', function: () => { characteristicSection.value = null }, text: 'Удалить раздел' }
+  ],
+  edit: [
+    { style: 'bg-blue-500', function: () => addItem(), text: 'Добавить поле' },
+  ]
 }
 
-
-// watch
-watch(() => checkDataLength.value, () => {
-    emit('characteristic', data.value)
-})
-
-watch(() => props.create, () => {
-    data.value = { 'create': []}
-    dataChare.value = null
-})
 
 const style = {
     input: 'px-2 pb-1.5 pt-1 border border-gray-300 border-solid rounded focus-visible:outline-0 focus:outline-0 grow'

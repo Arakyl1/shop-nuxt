@@ -1,6 +1,6 @@
 
+// let spanClassDefault =  'absolute -translate-y-1/2 left-0 top-1/2'
 let animClass = 'liner__gradient-loader animate-loader-data'
-let spanClassDefault =  'absolute -translate-y-1/2 left-0 top-1/2'
 export default defineComponent({
     props: {
         tag: {
@@ -13,15 +13,8 @@ export default defineComponent({
         animated: {
             type: Boolean
         },
-        spanClass: {
-            type: String,
-            default: 'h-3 w-full rounded-full'
-        },
         loader: {
             type: [Boolean, ]
-        },
-        color: {
-            type: String
         },
         baseColor: {
             type: String,
@@ -31,12 +24,9 @@ export default defineComponent({
     },
     setup(props, { slots, attrs }) {
         return () => h(props.tag, { class: [
-            props.class, 'relative', props.loader ? 'text-transparent' : props.color 
-        ] }, [
-            slots.default(),
-            props.loader ? h('span', { class: [
-                props.spanClass, spanClassDefault, props.animated ? animClass : props.baseColor
-        ]}) : null
-        ])
+            props.class, props.loader ? 'visible' : 'hidden',
+            props.animated ? animClass : props.baseColor,
+            'text-transparent rounded bg-origin-content'
+        ] }, { default: () => '_'})
     },
 })

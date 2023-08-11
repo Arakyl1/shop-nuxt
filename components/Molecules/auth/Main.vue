@@ -1,9 +1,9 @@
 <template>
     <div class="sm:-mx-2">
-        <template v-if="userData">
+        <template v-if="_userData">
             <div class="flex items-center mb-6 sm:mb-4">
-                <img class="w-12 aspect-square rounded-full mr-6" :src="userData.profileImage" alt="user_photo">
-                <h3 class="text-2xl">{{ userData.username }}</h3>
+                <img class="w-12 aspect-square rounded-full mr-6" :src="_userData.profileImage" alt="user_photo">
+                <h3 class="text-2xl">{{ _userData.username }}</h3>
             </div>
         </template>
         <div class="decor-line"></div>
@@ -18,16 +18,19 @@
                     <div v-else-if="elem.decorLine" class="decor-line"></div>
                 </template>
             </div>
-            <AtomButtonStandart @click="userLogOut"
+            <AtomButtonStandart @click.stop="logoutUser"
             class="bg-red-500 text-white"
             >Выйти</AtomButtonStandart>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
-const { user: _user } = useStore()
-const { userData } = _user()
-const { logout: userLogOut } = useAuth()
+import { user as _user } from "@/stores/user";
+
+const storeUser = _user()
+const { data: _userData } = storeToRefs(storeUser)
+const { logout: _logout } = useAuth()
 
 const list = [
     { data: ['Корзина'] },
@@ -36,4 +39,9 @@ const list = [
     { decorLine: true },
     { data: ['Бонусный счет', 'Личные данные', 'История покупок', 'Отзывы и вопросы'] }
 ]
+
+function logoutUser() {
+    storeUser.update(null) 
+    _logout()
+}
 </script>

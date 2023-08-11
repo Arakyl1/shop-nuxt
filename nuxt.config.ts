@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
@@ -21,6 +22,12 @@ export default defineNuxtConfig({
         }
     ],
   ],
+  postcss: {
+    plugins:{
+      tailwindcss: {},
+      autoprefixer: {},
+    }
+  },
   device: {
     refreshOnResize: true
   },
@@ -31,6 +38,13 @@ export default defineNuxtConfig({
     
     jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
     jwtRefrechSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
+    redis: {
+      host: '',
+      port: 0,
+    },
+    public: {
+      linkPhotoUserBase: 'https://res.cloudinary.com/dmxetw6p8/image/upload/v1675156698/upload-examples/w7xbdugi7bgqt0psz3kg.webp'
+    }
   },
   routeRules: {
     '/delivery': { swr: true }

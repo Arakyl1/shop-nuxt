@@ -4,7 +4,8 @@
         <div class="py-5 sm:py-4">
             <div class="flex items-center">
                 <h3 class="grow text-white text-xl sm:text-lg">{{ title }}</h3>
-                <IconAdd class="group is-icon-white h-5 w-5" @click="() => active = !active" />
+                <CreateIcon name="add-plus_16_16" :att="{ class: 'fill-white' }"
+                @click="() => active = !active"/>
             </div>
             <ul v-show="active" class="mt-4">
                 <li v-for="item in data">
@@ -19,6 +20,7 @@
     </div>
 </template>
 <script setup lang="ts">
+import CreateIcon from "@/content/icons/create";
 
 withDefaults(defineProps<{
     data: any[]|null,

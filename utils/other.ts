@@ -1,16 +1,23 @@
-import { Prisma, type ProductCard, } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { NAMEAPP, CONTENT_KEY } from "~~/type/intex";
+
 
 type sizeI = 28|48|56|60|64|72|80|92|96|224|320|480
+type num = 1|2|3|4|5|6|7|8|9|10
 
 type TransfornSize = {
+    asp?: `ar_${number}:${number}`, 
+    crop?: 'c_crop'|'c_fill',
+    obj?: `g_auto:${string}`, 
     heigth?:  `h_${sizeI}`,
     width?: `w_${sizeI}`,
-    bgrem?: 'e_bgremoval',
+    bgrem?: 'e_bgremoval'|`co_white,e_make_transparent:${num}`,
+    
 }
 
 
 export function changeValueImageSize(url:string, size?: TransfornSize): string {
-    if (typeof size === 'object') {
+    if (isObject(size)) {
         return url.replace(/upload\//, () => `upload/${ Object.values(size).join(',')}/`);
     } else { return url }
 }
@@ -20,20 +27,25 @@ export function generateKey(data:object): string {
     return Object.entries(data).flat(1).map(el => isObject(el) ? generateKey(el): el).join(',')
 }
 
-
-export function checkAvailability<T extends { availability: boolean }>(data: T): boolean {
-    return unref(data.availability)
+export function checkDate(date:string, pastDate: number = 604800000): boolean {
+   return new Date(date).getTime() > (Date.now() - pastDate)
 }
 
+
+
+// export function checkAvailability<T extends { availability: boolean }>(data: T): boolean {
+//     return unref(data.availability)
+// }
+
 type Model = {
-    'User': Prisma.UserUncheckedCreateInput ,
-    'RefrechToken': Prisma.RefrechTokenUncheckedCreateInput ,
-    'Post': Prisma.PostUncheckedCreateInput,
-    'ProductCard': Prisma.ProductCardUncheckedCreateInput,
-    'Comment': Prisma.CommentUncheckedCreateInput,
-    'Characteristic': Prisma.CharacteristicUncheckedCreateInput,
-    'CharacteristicItem': Prisma.CharacteristicItemCreateInput,
-    'Image': Prisma.ImageUncheckedCreateInput
+    User: Prisma.UserUncheckedCreateInput;
+    RefrechToken: Prisma.RefrechTokenUncheckedCreateInput;
+    ProductCard: Prisma.ProductCardUncheckedCreateInput;
+    Comment: Prisma.CommentUncheckedCreateInput;
+    Characteristic: Prisma.CharacteristicUncheckedCreateInput;
+    CharacteristicItem: Prisma.CharacteristicItemCreateInput;
+    Image: Prisma.ImageUncheckedCreateInput;
+    Attribute: Prisma.AttributeUncheckedCreateInput
 }
 type f = Prisma.ModelName
 type g = { [P in f]: Model[P] }
@@ -92,5 +104,18 @@ export let keyWhereValueIsNumber = [
     modelProp('ProductCard', 'id'),
     modelProp('ProductCard', 'price'),
     modelProp('ProductCard', 'quantity'),
-    modelProp('ProductCard', 'ranting')
 ]
+
+export const sessionGet = (key: string) => sessionStorage.getItem(key)
+export const sessionSet = (key: string, elem: any) => sessionStorage.setItem(key, JSON.stringify(elem))
+export const sessionRemove = (key: string) => sessionStorage.removeItem(key)
+
+type KeyLocalStorage = `${NAMEAPP}_basket`|`${NAMEAPP}_favorite`
+export const localGet = (key: KeyLocalStorage) => localStorage.getItem(key)
+export const localSet = (key: KeyLocalStorage, elem: any) => localStorage.setItem(key, JSON.stringify(elem))
+export const localRemove = (key: KeyLocalStorage) => localStorage.removeItem(key)
+
+
+export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key
+
+export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.split(';')).filter(_ => _.length > 1 && _[0].split('-').length === 1).map(_ => [_[0],parseFloat(_[1].replace('q=','')) ])//.map(_ => _[0])

@@ -26,7 +26,7 @@
 </section>
 </template>
 <script setup lang="ts">
-import type { _ProductCardFull } from '~~/type/intex';
+import type { ProductCardFull } from '~~/type/intex';
 
-defineProps<{ data: _ProductCardFull['characteristic'] }>()
+defineProps<{ data: ProductCardFull['characteristic'] }>()
 </script>

@@ -1,10 +1,9 @@
-import { prismaUpdate } from "~~/server/db/methods"
-
+import prisma from "~~/server/db"
 
 export default defineEventHandler(async(event) => {
     const body = await readBody(event)
     try {
-        return await prismaUpdate('productCard', body)
+        return await prisma.productCard.update(body)
     } catch (error) {
         return error
     }

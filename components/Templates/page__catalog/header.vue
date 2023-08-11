@@ -7,10 +7,12 @@
                     <span class="text-blue-500 ml-1 sm:text-sm">по</span>
                 </p>
                 <ClientOnly>
-                    <AtomOtherSelectingNumberDisplayedItems
-                        class="p-0 px-1 focus-visible:outline-none text-blue-500 cursor-pointer sm:text-sm"
-                        @select-number="(e) => paramsLimitUpdate(e)" :data="selectValue"
-                        :valueD="parseInt($route.query.limit as string)" />
+                    <select @change="onChange" :value="'limit' in $route.query ? $route.query.limit : ''"
+                        class="p-0 px-1 focus-visible:outline-none text-blue-500 cursor-pointer sm:text-sm">
+                        <option disabled value="" class="text-gray-500">Sel..</option>
+                        <option v-for="item in selectValue" :key="item" :value="item" class="text-gray-500">{{ item }}
+                        </option>
+                    </select>
                 </ClientOnly>
             </div>
         </div>
@@ -22,15 +24,21 @@ const route = useRoute()
 
 const selectValue = [6, 12, 18, 24, 30, 36, 42, 48, 54, 60]
 
-function paramsLimitUpdate(event: string) {
-    return navigateTo({
-        path: route.path,
-        query: {
-            ...route.query,
-            page: 1,
-            limit: event,
+function onChange({ target }: Event) {
+    const _target = target as HTMLElement
+    if (_target.tagName === 'SELECT') {
+        const value = (_target as HTMLSelectElement).value
+        if (value !== '') {
+            return navigateTo({
+                path: route.path,
+                query: {
+                    ...route.query,
+                    page: 1,
+                    limit: value,
+                }
+            })
         }
-    })
+    }
 }
 
 </script>

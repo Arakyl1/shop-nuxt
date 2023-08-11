@@ -8,7 +8,7 @@
                 :disabled="sladerValueScroll ? sladerValueScroll.current === 0 : false"/>
             <AtomButtonArround @click="nextItem"
                 class="ml-5  group big xl:py-3 xl:ml-4 sm:py-2"
-                :disabled="sladerValueScroll ? sladerValueScroll.max === sladerValueScroll.current : false"/>
+                :disabled="sladerValueScroll ? sladerValueScroll.max <= sladerValueScroll.current : false"/>
         </div>
     </div>
     <div class="decor-line mb-8 lg:mb-6"></div>

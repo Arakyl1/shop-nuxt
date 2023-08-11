@@ -1,54 +1,51 @@
 import { H3Event } from "h3"
-import bcryptjs from "bcryptjs";
+import bcrypt from 'bcryptjs';
+import { Prisma } from "@prisma/client";
+import prisma from "~/server/db";
+import { userPersonalData, userTransform } from "~/server/utils/userTransform";
 import { generateTokens, sendRefrechToken } from "~~/server/utils/jwt";
-import { prismaCreate } from "~~/server/db/methods";
-import { userTransform } from "~~/server/utils/userTransform";
-import { UserCreateBase, UserCreateSelect } from "~~/type/intex";
+import { GET_CONTENT_KEY } from "../../utils/other";
 
 export default defineEventHandler(async(event: H3Event) => {
-    const body = await readBody(event)
+    const body = await readBody<Pick<Prisma.UserCreateInput, 'email'|'password'|'username'>>(event)
+
+    const appConfing = useRuntimeConfig()
     const { username, email, password } = body
 
-    type UserCreateData = {
-        username: string,
-        email:  string,
-        password: string,
-        profileImage: string
-    }
-    const userData: UserCreateData = {
-        username,
-        email,
-        password,
-        profileImage: "https://res.cloudinary.com/dmxetw6p8/image/upload/v1675156698/upload-examples/w7xbdugi7bgqt0psz3kg.webp"
-    }
-
     try {
-        const salt = bcryptjs.genSaltSync(10);
-        const updateUserData = {
-            ...userData,
-            password: bcryptjs.hashSync(userData.password, salt)
-        }
+        const salt = bcrypt.genSaltSync(10);
+        const userCreateData = Prisma.validator<Prisma.UserCreateArgs>()({
+            data: {
+                username,
+                email,
+                profileImage: appConfing.public.linkPhotoUserBase,
+                password: bcrypt.hashSync(password, salt)
+            },
+            select: userPersonalData.select
+        })
 
-        const user: UserCreateBase = await prismaCreate('user', { data: updateUserData, select: UserCreateSelect })
-        
+        const user = await prisma.user.create(userCreateData)
+        // add ConnecticHash
+
         // Generate Token
         try {
-            const { accessToken, refrechToken } = await generateTokens(user)
-            prismaCreate('refrechToken', { data: { token: refrechToken, userId: user.id }})
-            sendRefrechToken(event, refrechToken)
-
-            return {
-                access_token: accessToken,
-                user: userTransform<UserCreateBase>(user)
+            if (user) {
+                const { accessToken, refrechToken } = await generateTokens({ id: user.id })
+                await prisma.refrechToken.create({ data: { token: refrechToken, userId: user.id }})
+                sendRefrechToken(event, refrechToken)
+                return {
+                    access_token: accessToken,
+                    user: userTransform(user)
+                }
             }
         } catch (error) {
             return {
                 access_token: '',
-                user: userTransform<UserCreateBase>(user)
+                user: userTransform(user)
             }
         }
 
     } catch (error) {
-        return { message: "Такой пользователь уже существует" }
+        return { messageKey: GET_CONTENT_KEY('AUTH_REGISTER_SUCH_USER_ALREADY_EXISTS')}
     }
 })

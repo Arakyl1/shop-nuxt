@@ -68,6 +68,12 @@
     .stait-deactive--fill {
         @apply fill-gray-300
     }
+    .icon-like {
+        @apply group-[.icon-red]:fill-red-500 group-[.icon-red]:stroke-none group-[.icon-black]:stroke-gray-500 group-[.icon-black]:stroke-[1.5px] group-[.icon-black]:fill-none
+    }
+    .alert-model-1 {
+        @apply px-3 py-1 rounded shadow shadow-gray-900 
+    } 
     
 }
 
@@ -84,4 +90,50 @@
 .blur-leave-to {
   opacity: 0;
   filter: blur(var(--transition-blur));
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+.scrollbar-v1 {
+    /* overscroll-behavior-inline: contain; */
+    transition: all cubic-bezier(0.333, 0.5, 0.65, 1) 0.6s;
+    scrollbar-width: thin;
+    scrollbar-color: hsla(0 0% 91% / 60%);
+    /* scroll-behavior: smooth; */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.scrollbar-v1::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollbar-v1::-webkit-scrollbar-thumb {
+    border: 1px solid transparent;
+    border-radius: 100px;
+    background-color: hsla(0 0% 91% / 60%);
+    background-clip: content-box;
+}
+
+@-moz-document url-prefix() {
+    .scrollbar-v1{
+        padding-right: 6px;
+    }
 }

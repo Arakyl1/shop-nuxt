@@ -1,15 +1,14 @@
 import { H3Event } from "h3";
 import jwt from "jsonwebtoken";
 import { RuntimeConfig } from "@nuxt/schema";
-import { UserCreateBase } from "~~/type/intex";
 
-const generateAsccessToken = <T extends RuntimeConfig>(user: UserCreateBase, config: T) => {
-    return jwt.sign({ userId: user.id}, config.jwtAccessSecret, {
+const generateAccessToken = <T extends RuntimeConfig, U extends { id: PropertyKey }>(data: U, config: T) => {
+    return jwt.sign({ id: data.id}, config.jwtAccessSecret, {
         expiresIn: '1h'
     })
 }
-const generateRefrechToken = <T extends RuntimeConfig>(user: UserCreateBase, config: T) => {
-    return jwt.sign({ userId: user.id}, config.jwtRefrechSecret, {
+const generateRefrechToken = <T extends RuntimeConfig, U extends { id: PropertyKey }>(data: U, config: T) => {
+    return jwt.sign({ id: data.id}, config.jwtRefrechSecret, {
         expiresIn: '4h'
     })
 }
@@ -32,10 +31,10 @@ export const decodeAccessToken = (token: string) => {
     }
 }
 
-export const generateTokens = async(user: UserCreateBase) => {
+export const generateTokens = async<U extends { id: PropertyKey }>(data: U) => {
     const config = useRuntimeConfig()
-    const accessToken = generateAsccessToken<typeof config>(user, config)
-    const refrechToken = generateRefrechToken(user, config)
+    const accessToken = generateAccessToken(data, config)
+    const refrechToken = generateRefrechToken(data, config)
     
     return {
         accessToken,

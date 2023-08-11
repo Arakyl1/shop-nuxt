@@ -1,38 +1,35 @@
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 
 export default () => {
+
     const createAccess = async () => {
-        const { access: _aceesToeken } = useStore()
-        const { updateAccessToken } = _aceesToeken()
         try {
-            const headers  = useRequestHeaders(['cookie']);
+            const headers = useRequestHeaders(['cookie']);
+            console.log(headers)
+            const { data, error } = await useFetch('/api/auth/refrech', { headers })            
             
-            const { data } = await useFetch('/api/auth/refrech', { headers })            
-            const _data = unref(data)
-            if (_data ) {
-                if ('message' in _data && _data.message) {
-                    console.log(_data.message);
-                    return
-                }             
-                updateAccessToken(_data.accessToken || '')
-            }
+            return data.value
         } catch (error) {
-            console.log(error);
+            console.log('error create token', error, process.client);
         }
     }
 
-    const reRefrechAccess = () => {
-        const { access: _aceesToeken } = useStore()
-        const { accessToken } = _aceesToeken()
-        if (!accessToken.value) {
-            return
+    const reRefrechAccess = (_accessToken: string) => {
+        
+        interface JwtD extends JwtPayload{
+            id: PropertyKey,
+            exp: number
         }
-        const jwt = jwtDecode(accessToken.value)
+        const jwt = jwtDecode<JwtD>(_accessToken)
 
         const newRefrecmTime = jwt.exp - 60000
-        setTimeout(() => {
-            createAccess()
-            reRefrechAccess()
+        setTimeout(async() => {
+            const res = await createAccess()
+            if (res && 'accessToken' in res && res.accessToken) {
+                reRefrechAccess(res.accessToken)
+            } else if(res && 'message' in res && res.message){
+                console.log(res.message)
+            }
         }, newRefrecmTime)
 
     }

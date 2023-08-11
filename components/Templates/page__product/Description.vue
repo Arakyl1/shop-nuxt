@@ -4,7 +4,7 @@
             <div class="p-8 bg-gray-100 xl:p-6 sm:p-4">
                 <h3 class="text-xl text-black-100 sm:text-lg">Описание</h3>
                 <div class="decor-line my-4 xl:my-3 sm:my-2"></div>
-                <p class="text-gray-500 sm:text-sm">{{ description }}</p>
+                <p class="text-gray-500 sm:text-sm">{{ data.description }}</p>
             </div>
             <div class="p-8 bg-gray-100 xl:p-6 sm:p-4">
                 <MoleculesSladerBase :data="reviewsUpdate">
@@ -22,12 +22,12 @@
                         <div class="decor-line"></div>
                     </template>
                     <template #item="{ elem }">
-                        <MoleculesItemCommit :data="elem" v-if="elem" />
+                        <MoleculesCardCommit :data="elem" v-if="elem" />
                     </template>
                     <template #bottom>
                         <p v-if="!reviewsUpdate.length" class="text-xl text-gray-500 py-4 sm:text-base">На этот товар
                             пока нет отзывав</p>
-                        <AtomButtonStandart @click="updateStage" v-if="userData" class="bg-yellow-500 text-white sm:py-2">
+                        <AtomButtonStandart @click="update(true)" v-if="_userData" class="bg-yellow-500 text-white sm:py-2">
                             Добавить отзыв
                         </AtomButtonStandart>
                         <div></div>
@@ -35,38 +35,37 @@
                 </MoleculesSladerBase>
             </div>
         </div>
-        <MoleculesModalAddCommtit :data="data" :refresh="refresh" :userData="userData"
-            :reviewsRantingValue="reviewsRantingValue" :hudeFunction="updateStage" :stage="stage"
+        <AtomModalMask :state="state" :clickFun="update">
+            <MoleculesModalAddCommtit :data="modalData" :refresh="refresh" :userData="_userData"
+            :reviewsRantingValue="reviewsRantingValue" :modalFun="update" :state="state"
             class="h-min w-96 sm:w-[calc(100vw-2rem)]" />
+        </AtomModalMask>
     </section>
 </template>
 <script setup lang="ts">
-import { showContent } from "@/utils/ShowContent";
+import { user as _user } from "@/stores/user";
+import localState from "@/utils/localState";
 import type { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
-import type { _ProductCardFull } from '~~/type/intex';
+import type { ProductCardFull } from '~~/type/intex';
 
 interface Props {
-    description: _ProductCardFull['description'],
-    reviews: _ProductCardFull['reviews'],
-    id: _ProductCardFull['id'],
-    art: _ProductCardFull['art'],
-    name: _ProductCardFull['name'],
+    data: ProductCardFull,
     refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>
 }
 
 const props = defineProps<Props>()
-const { stage, updateStage } = showContent();
-const { user: _user } = useStore()
-const { userData } = _user()
+const { state, update } = localState()
+const storeUser = _user()
+const { data: _userData } = storeToRefs(storeUser)
 
-const data = ref({
-    id: props.id,
-    art: props.art,
-    name: props.name
+const modalData = ref({
+    id: props.data.id,
+    art: props.data.art,
+    name: props.data.name
 })
 
-const reviewsUpdate = computed(() => props.reviews.filter(el => el.text))
-const reviewsRantingValue = computed(() => props.reviews.map(
-    <T extends _ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
+const reviewsUpdate = computed(() => props.data.reviews.filter(el => el.text))
+const reviewsRantingValue = computed(() => props.data.reviews.map(
+    <T extends ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
 
 </script>
