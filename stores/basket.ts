@@ -33,7 +33,24 @@ export const basket = defineStore('basket', () => {
     onBeforeMount(() => {
         const localStorage = localGet('MARKET_5kv_basket')
         if (localStorage) {
-            localData.value = JSON.parse(localStorage)
+            const localDataParse = JSON.parse(localStorage) as typeof localData.value
+            const idCard = [... new Set([...localDataParse.map(_ => _.id)])]
+            if (idCard.length === localDataParse.length) {
+                localData.value = localDataParse
+            } else {
+                const mapBasket = new Map<number, typeof localData.value[number]>()
+                for (let i = 0, l = localDataParse.length; i < l; i++) {
+                    const item = localDataParse[i];
+                    if (mapBasket.has(item.id)) {
+                        const mapItem = mapBasket.get(item.id)
+                        mapBasket.set(item.id, { id: item.id, quantity: mapItem!.quantity + item.quantity })
+                    } else {
+                        mapBasket.set(item.id, { id: item.id, quantity: item.quantity })
+                    }
+                }
+                localData.value = [...mapBasket].map(_ => _[1])
+                localSet('MARKET_5kv_basket', localData.value)
+            }
         }
     })
     return { data, localData, updateData, addItem, findItem, removeItem }

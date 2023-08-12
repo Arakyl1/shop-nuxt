@@ -17,12 +17,40 @@
                 <p class="sm:text-sm"><span class="text-gray-500 pr-3">Артикул:</span>{{ data.itemMod }}</p>
             </div>
             <div class="relative">
-                <AtomProductStatus :news="checkDate(data.createAt as unknown as string)"
-                :discount="data.discount > 0" class="-left-4 top-16 text-lg px-5
+                <AtomProductStatus :news="checkDate(data.createAt as unknown as string)" :discount="data.discount > 0"
+                    class="-left-4 top-16 text-lg px-5
                         sm:-left-3 sm:top-4 sm:px-3 sm:text-sm" />
-                <div class="px-16">
-                    <img :src="changeValueImageSize(data.image[0].link, { 'crop': 'c_fill', 'obj': 'g_auto:subject', heigth: 'h_480' })" :alt="data.name" class="object-cover">
-                </div>
+                <MoleculesSladerBase :data="data.image">
+                    <template #header>
+                        <div></div>
+                    </template>
+                    <template #item="{ elem, }">
+                        <div class="px-16 xs:px-12 h-full flex justify-center items-center">
+                            <img :src="changeValueImageSize(elem.link, { 'crop': 'c_fill', 'obj': 'g_auto:subject', heigth: 'h_480' })"
+                                :alt="data.name" class="object-cover ">
+                        </div>
+                    </template>
+                    <template #bottom="{ updateScrolLeftSlader, indexActiveButton  }" v-if="data.image.length > 1">
+                        <MoleculesSladerControlItem
+                            class="overflow-hidden"
+                            :data="data.image.length"
+                            :index-active-button="indexActiveButton"
+                            :update-scrol-left-slader="updateScrolLeftSlader"
+                            :container-class="'gap-x-4 pt-2'"
+                            :item-class="'aspect-square h-12 w-12 justify-center'"
+                                ><template #default="{ item }">
+                                    <div >
+                                        <div class="border-2 rounded-lg transition p-0.5 aspect-square flex justify-center items-center"
+                                            :class="[(item-1) === indexActiveButton ? 'border-yellow-500 ' : 'border-blue-300']">
+                                            <img :src="changeValueImageSize(data.image[(item-1)].link, { 'heigth': 'h_28' })" :alt="data.name"
+                                                class="rounded-md">
+                                        </div>
+                                    </div>
+                                </template>
+                            </MoleculesSladerControlItem>
+                    </template>
+                </MoleculesSladerBase>
+
             </div>
             <div class="py-4">
                 <p :class="{ 'text-red-500 text-2xl font-medium sm:text-lg': data.quantity === 0 }">{{
@@ -37,14 +65,11 @@
             </div>
             <div class="flex">
 
-                <AtomButtonStandart
-                class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow"
-                @click="storeBasket.addItem({
+                <AtomButtonStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow" @click="addBasket({
                     data: { ...props.data, characteristic: [], reviews: [] },
                     quantity: numberOfProducts
-                })"
-                :disabled="data.quantity === 0">
-                    <CreateIcon name="basket_25_25" :att="{ class: 'fill-white' }"/>
+                })" :disabled="data.quantity === 0">
+                    <CreateIcon name="basket_25_25" :att="{ class: 'fill-white' }" />
                     <p class="text-white ml-2">В корзину</p>
                 </AtomButtonStandart>
 
@@ -52,7 +77,7 @@
                     <AtomButtonStandart class="bg-blue-500 px-4 mx-3 sm:px-3 aspect-square group"
                         @click="storeFavorite.toggleItem(data.id)">
                         <CreateIcon name="like_28_31"
-                            :att="{ class: [ storeFavorite.findItem(data.id).value ? 'fill-red-500 stroke-none' : 'fill-none stroke-white stroke-[1.5px]'] }"/>
+                            :att="{ class: [storeFavorite.findItem(data.id).value ? 'fill-red-500 stroke-none' : 'fill-none stroke-white stroke-[1.5px]'] }" />
                     </AtomButtonStandart>
                     <AtomButtonShare @click="onClick" class="bg-blue-500 px-4  m:px-3 group is-icon-white aspect-square" />
                 </ClientOnly>
@@ -76,11 +101,20 @@ const storeAlert = _alert()
 const _content = useState<Content | null>('CONTENT_APP')
 
 function getAverageValue(): number {
-   return props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0)
+    return props.data.reviews.reduce((s, _) => s + (_.ranting || 0), 0)
 }
 
 function onClick() {
     copyLink()
     storeAlert.create({ text: _content.value?.ALERT_COPE_LINK_INFO_TEXT || null, state: 'info' })
+}
+
+function addBasket(item: Parameters<typeof storeBasket['addItem']>[0]) {
+    if (storeBasket.findItem(item.data.id)) {
+        storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
+    } else {
+        storeBasket.addItem({ quantity: item.quantity, data: item.data })
+        storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
+    }
 }
 </script>

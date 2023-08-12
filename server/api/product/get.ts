@@ -224,7 +224,7 @@ function initWhereParams(query: QueryObject) {
     //         }
     //     }
     // }
-    console.log(findParams)
+    // console.log(findParams)
     return findParams
 }
 
@@ -290,19 +290,21 @@ export default defineEventHandler(async (event: H3Event) => {
                         select: { id: true }
                     })
                     return {
-                        data: res, nextPageLength: nextPageRes.length, params: {
-                            ...findParams,
-                            skip: (findParams.skip === 0 ? 0 : findParams.skip - 1) * findParams.take,
-                            include: { image: { where: { main: true } }, attribute: true }
-                        }
+                        data: res, nextPageLength: nextPageRes.length,
+                        // params: {
+                        //     ...findParams,
+                        //     skip: (findParams.skip === 0 ? 0 : findParams.skip - 1) * findParams.take,
+                        //     include: { image: { where: { main: true } }, attribute: true }
+                        // }
                     }
                 } else {
                     return {
-                        data: res, nextPageLength: 0, params: {
-                            ...findParams,
-                            skip: (findParams.skip === 0 ? 0 : findParams.skip - 1) * findParams.take,
-                            include: { image: { where: { main: true } }, attribute: true }
-                        }
+                        data: res, nextPageLength: 0,
+                        // params: {
+                        //     ...findParams,
+                        //     skip: (findParams.skip === 0 ? 0 : findParams.skip - 1) * findParams.take,
+                        //     include: { image: { where: { main: true } }, attribute: true }
+                        // }
                     }
                 }
             } else {
@@ -313,21 +315,5 @@ export default defineEventHandler(async (event: H3Event) => {
             console.log(error)
             return null
         }
-    }
-
-
-    // findParams.where.AND.push({ OR: charOrSearchParams } as never)
-    try {
-
-        const model = query.model ?
-            modelSelect[query.model as keyof typeof modelSelect] || modelSelect['base'] :
-            modelSelect['base']
-        // if (Boolean(query.many)) {
-        //     return await prisma.productCard.findMany({ select: model, ...body })
-        // } else {
-        //     return await prisma.productCard.findUnique({ select: model, ...body })
-        // }
-    } catch (error) {
-
     }
 })

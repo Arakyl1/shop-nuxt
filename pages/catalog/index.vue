@@ -13,7 +13,7 @@
             class="w-1/4 px-4 lg:w-1/3 transition-all
             md:fixed md:top-0 md:-left-full md:w-[360px] md:z-40
             sm:w-screen sm:p-0 sm:overflow-y-scroll sm:h-screen"
-                :class="[state ? 'md:left-0 opacity-100' : 'md:-left-full opacity-0']">
+                :class="[state ? 'md:left-0 md:opacity-100' : 'md:-left-full md:opacity-0']">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md md:min-h-full" @scroll.prevent>
                     <TemplatesPageCatalogFilter class=""/>
                 </div>

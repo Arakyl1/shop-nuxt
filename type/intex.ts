@@ -1,4 +1,4 @@
-import { Attribute, Prisma, ProductCard, User } from "@prisma/client";
+import { Attribute, Prisma, User } from "@prisma/client";
 
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
 
@@ -104,9 +104,6 @@ export type CategorSelect = { select: CategorItem[] }
 export type ImageInfo = { link: string }
 export type CharacteristicItem = { name: string, value: string }
 export type CharacteristicBlock = { title: string, content: CharacteristicItem[] }
-
-// export type ProductCardKeyParams = 'top' | 'sale' | 'news' | 'delivery' | 'pickUp' | 'underTheOrder'
-// export type ProductCardParams = Partial<RecordOption<ProductCardKeyParams, boolean>> & { 'description'?: string }
 
 export type ItemBasket = {
     id: number,

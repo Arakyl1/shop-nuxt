@@ -73,7 +73,7 @@
                     <div class="decor-line"></div>
                     <div class="pt-6 flex items-center justify-between lg:pt-5">
                         <AtomButtonStandart
-                        @click="storeBasket.addItem({
+                        @click="addBasket({
                             data: { ...props.data, characteristic: [], reviews: [] },
                             quantity: numberOfProduct
                         })"
@@ -115,5 +115,14 @@ function getAverageValue(): number {
 function onClick() {
     copyLink()
     storeAlert.create({ text: _content.value?.ALERT_COPE_LINK_INFO_TEXT || null, state: 'info' })
+}
+
+function addBasket(item: Parameters<typeof storeBasket['addItem']>[0]) {
+    if (storeBasket.findItem(item.data.id)) {
+        storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
+    } else {
+        storeBasket.addItem({ quantity: item.quantity, data: item.data })
+        storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
+    }
 }
 </script>

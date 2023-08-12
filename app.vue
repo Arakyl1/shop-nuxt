@@ -12,7 +12,6 @@
       <div class="min-h-screen">
         <NuxtPage ></NuxtPage>
       </div>
-
     </div>
     <div>
       <OrganismsFooter/>
@@ -101,7 +100,7 @@ async function checkRes(res: InitAuthResponse) {
 </script>
 
 <style lang="css">
-@import './assets/Stylesheets/main.css';
+@import './assets/css/main.css';
 
 .path-enter-active {
   transition: all 0.3s ease-in-out;

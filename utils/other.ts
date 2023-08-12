@@ -33,10 +33,6 @@ export function checkDate(date:string, pastDate: number = 604800000): boolean {
 
 
 
-// export function checkAvailability<T extends { availability: boolean }>(data: T): boolean {
-//     return unref(data.availability)
-// }
-
 type Model = {
     User: Prisma.UserUncheckedCreateInput;
     RefrechToken: Prisma.RefrechTokenUncheckedCreateInput;
@@ -54,30 +50,21 @@ type modelProp = <T extends keyof Model, U extends keyof Model[T]>(key: T, prop:
 export const modelProp: modelProp = (key, prop) => prop 
 
 
-export function deepConcat<T extends { [property: string]: any }>(dataAdd:T, dataDef: T): T {
-    for (let key of Object.keys(dataAdd)) {     
-        if (!dataDef.hasOwnProperty(key) || !isObject(dataDef[key])) {
-            dataDef[key] = dataAdd[key]
-        } else {
-            if (Array.isArray(dataDef[key]) && Array.isArray(dataAdd[key])) {
-                dataDef[key] = dataDef[key].concat(dataAdd[key])
-            } else {
-                deepConcat(dataAdd[key], dataDef[key])
-            }
-        }
-    }
-    return dataDef
-}
+// export function deepConcat<T extends { [property: string]: any }>(dataAdd:T, dataDef: T): T {
+//     for (let key of Object.keys(dataAdd)) {     
+//         if (!dataDef.hasOwnProperty(key) || !isObject(dataDef[key])) {
+//             dataDef[key] = dataAdd[key]
+//         } else {
+//             if (Array.isArray(dataDef[key]) && Array.isArray(dataAdd[key])) {
+//                 dataDef[key] = dataDef[key].concat(dataAdd[key])
+//             } else {
+//                 deepConcat(dataAdd[key], dataDef[key])
+//             }
+//         }
+//     }
+//     return dataDef
+// }
 
-export function checkValidInput<T extends HTMLInputElement>(arr: T[]): boolean {
-    let valid: boolean = false
-    if (!arr) return valid
-    
-    if (Array.isArray(arr)) {
-        valid = arr.find(_ => !_.validity.valid) ? false : true
-    }
-    return valid 
-}
 
 export function isNumber(elem: unknown): elem is number {
     return typeof unref(elem) === 'number'
@@ -100,11 +87,6 @@ export function test(...f:any) {
 }
 
 
-export let keyWhereValueIsNumber = [
-    modelProp('ProductCard', 'id'),
-    modelProp('ProductCard', 'price'),
-    modelProp('ProductCard', 'quantity'),
-]
 
 export const sessionGet = (key: string) => sessionStorage.getItem(key)
 export const sessionSet = (key: string, elem: any) => sessionStorage.setItem(key, JSON.stringify(elem))

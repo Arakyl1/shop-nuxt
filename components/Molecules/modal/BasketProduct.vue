@@ -67,8 +67,8 @@ function findItemLocal(id:number) {
 onBeforeMount(() => {
     if (basketLocalData.value.length) {
         getData(basketLocalData.value.map(_ => _.id));
-        window.addEventListener('show-modal-basket', () => update(true))   
     }
+    window.addEventListener('show-modal-basket', () => update(true))   
 })
 
 watch(() => basketLocalData.value.length, (newV, oldV) => {

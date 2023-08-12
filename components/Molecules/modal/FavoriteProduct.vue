@@ -15,7 +15,8 @@
 <script setup lang="ts">
 import { favorite as _favorire } from "@/stores/favorite";
 import localState from "@/utils/localState";
-import { ProductCardBase } from "~~/server/utils/prismaModelSelect";
+import { ProductCardBase } from "~~/type/intex";
+
 
 const { state, update } = localState()
 const storeFavorite = _favorire()

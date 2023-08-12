@@ -93,7 +93,7 @@ export default defineEventHandler<FilterData>(async (event) => {
                         case 'CATEGOR': {
                             const fullfilterData: FilterData = [
                                 { type: 'select', title: 'select', data: getSelectData(findDataRes, storageCategorData) },
-                                [findDataRes] as never
+                                // [findDataRes] as never
                             ]
                             console.log(Date.now() - s, 'create data categor')
                             return fullfilterData
@@ -118,7 +118,7 @@ export default defineEventHandler<FilterData>(async (event) => {
                                     { type: 'radio', name: 'discount.gt', title: "Скидка", value: 0 } as never,
                                     ...otherAttributeData as never
                                 ],
-                                [findDataRes] as never
+                                // [findDataRes] as never
                             ]
                             await useStorage().setItem('categor:' + attriduteId, JSON.stringify(fullfilterData))
                             console.log(Date.now() - s, 'create data subcategor')
@@ -174,9 +174,7 @@ export default defineEventHandler<FilterData>(async (event) => {
                                     { type: 'radio', title: "Скидка", name: 'discount.gt', value: 0 },
                                     ...otherAttributeData
                                 ],
-
-                                [findDataRes] as never,
-
+                                // [findDataRes] as never,
                             ] as FilterData
 
                             await useStorage().setItem('categor:' + attriduteId, JSON.stringify(fullfilterData))

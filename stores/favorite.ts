@@ -6,7 +6,12 @@ export const favorite = defineStore('favorite', () => {
     onBeforeMount(() =>{
         const localStorage = localGet('MARKET_5kv_favorite')
         if (localStorage) {
-            data.value = new Set(JSON.parse(localStorage))
+            const localDataParse = JSON.parse(localStorage) as number[]
+            const idCard = new Set([...localDataParse])
+            data.value = idCard
+            if (idCard.size !== localDataParse.length) {
+                localSet('MARKET_5kv_favorite', [...idCard])
+            }
         }
     })
 

@@ -1,10 +1,9 @@
 import prisma from "~~/server/db"
 import { storageCategorData } from "~~/type/intex"
 
-// transfer object extends Prisma.AttributeWhereInput
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    // console.log(body)
+
     try {
         let storageKey = ''
         for (const key in body) {

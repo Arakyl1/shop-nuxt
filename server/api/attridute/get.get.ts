@@ -10,7 +10,6 @@ function initFindParams(data: QueryObject) {
     const findParams = Prisma.validator<Prisma.AttributeFindManyArgs>()({
         where: {
             'AND': [],
-            // OR: [],
         },
         include: { 'children': { include: { 'children': true } } }
     })
