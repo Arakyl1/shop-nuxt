@@ -160,11 +160,21 @@ onMounted(() => {
     getValueScroll()
     window.addEventListener('resize', getValueScroll, { passive: true })
 })
-onUpdated(() => {
-    getValueScroll() 
+
+onBeforeUnmount(() => window.removeEventListener('resize', getValueScroll))
+
+onActivated(() => {
+    getValueScroll()
+    window.addEventListener('resize', getValueScroll, { passive: true })
 })
 
-onBeforeMount(() => window.removeEventListener('resize', getValueScroll))
+onDeactivated(() => window.removeEventListener('resize', getValueScroll))
+
+onUpdated(() => getValueScroll())
+
+
+
+
 </script>
 
 <style lang="css">

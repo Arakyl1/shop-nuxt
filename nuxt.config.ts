@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'node:url';
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
@@ -9,6 +8,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/content',
     '@nuxtjs/device',
+    "nuxt-vercel-analytics",
     ['@kevinmarrec/nuxt-pwa', {
       icon: {
         source: 'assets/logo.png'
