@@ -59,15 +59,15 @@ onUnmounted(() => {
 
 type DatasetKey = 'star'
 function addNumberStar({ target }: MouseEvent): void {
-    if (target instanceof HTMLElement) {
+    
+    if (target instanceof Element) {
         const _target = target.closest('[data-star]')
 
-        interface ModifiedHTMLElement extends HTMLElement {
+        interface ModifiedElement extends Element {
             dataset: DOMStringMap & RecordOption<DatasetKey, string>
         }
-
         if (_target) {
-            const checkElem = _target as ModifiedHTMLElement
+            const checkElem = _target as ModifiedElement
             const number: number = +checkElem.dataset.star
             if (number) {
                 starValue.value = number
