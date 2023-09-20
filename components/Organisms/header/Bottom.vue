@@ -31,13 +31,13 @@
                                         <ul class="w-1/2 flex flex-col min-w-[240px]">
                                             <li class="mb-5 cursor-pointer w-full" v-for="item in groupSubcategor[0]"
                                                 :key="item.name">
-                                                <MoleculesListAditionalItem :data="item" class="w-1/2" />
+                                                <MoleculesListAditionalItem :data="item" />
                                             </li>
                                         </ul>
                                         <ul class="w-1/2 flex flex-col min-w-[240px]">
                                             <li class="mb-5 cursor-pointer w-full" v-for="item in groupSubcategor[1]"
                                                 :key="item.name">
-                                                <MoleculesListAditionalItem :data="item" class="w-1/2" />
+                                                <MoleculesListAditionalItem :data="item"/>
                                             </li>
                                         </ul>
                                     </div>

@@ -7,9 +7,9 @@
 
 <script setup lang="ts">
 
-definePageMeta({
-    title: "Доставка"
-})
+
+onMounted(() => setHeaderTitle("Доставка"))
+onActivated(() => setHeaderTitle('Главная страница'))
 
 </script>
 

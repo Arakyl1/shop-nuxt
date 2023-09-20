@@ -39,7 +39,6 @@ import { alert as _alert } from "@/stores/alert";
 const numberProperty = ['price', 'quantity']
 
 definePageMeta({
-    title: "Добавить товар",
     middleware: ['add']
 })
 
@@ -57,6 +56,8 @@ const createActive = ref<boolean>(false)
 const storeAlert = _alert()
 const _content = useState<Content>('CONTENT_APP')
 
+onMounted(() => setHeaderTitle("Добавить товар"))
+onActivated(() => setHeaderTitle("Добавить товар"))
 
 onBeforeMount(() => {
     doowloadJSONData.value = null

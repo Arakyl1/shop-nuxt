@@ -11,30 +11,32 @@
                     <div class="absolute z-30 right-2 top-2 sm:scale-75 sm:top-1 sm:right-1">
                         <slot name="bt-favorite" v-bind="{ content }">
                             <ClientOnly>
-                            <AtomButtonStandart v-if="content && !isNumber(content)" class="p-1 after:content-none"
-                                @click="storeFavorite.toggleItem(content.id)">
-                                <CreateIcon name="like_28_31"
-                                    :att="{ class: [storeFavorite.findItem(content.id).value ? 'fill-red-500 stroke-none' : 'fill-none stroke-gray-500 stroke-[1.5px]'] }" />
-                            </AtomButtonStandart>
-                        </ClientOnly>
+                                <AtomButtonStandart v-if="content && !isNumber(content)" class="p-1 after:content-none"
+                                    @click="storeFavorite.toggleItem(content.id)">
+                                    <CreateIcon name="like_28_31"
+                                        :att="{ class: [storeFavorite.findItem(content.id).value ? 'fill-red-500 stroke-none' : 'fill-none stroke-gray-500 stroke-[1.5px]'] }" />
+                                </AtomButtonStandart>
+                            </ClientOnly>
                         </slot>
                     </div>
                     <div class="absolute -translate-x-1/2 -translate-y-1/2 inset-1/2 p-8 w-full h-full z-10">
-                        <NuxtLink :to="`/catalog/${content.id}`" class="h-full w-full flex justify-center items-center">
+                        <div class="h-full w-full flex justify-center items-center">
                             <img :src="content.image.length ?
                                 changeValueImageSize(content.image[0].link, { 'heigth': 'h_320', 'bgrem': 'co_white,e_make_transparent:1' }) :
                                 ''" :alt="content.name" class="object-contain max-w-full max-h-full">
-                        </NuxtLink>
+                        </div>
                     </div>
 
                 </template>
             </div>
             <div class="py-4 grow sm:py-2 flex flex-col">
                 <div v-if="content" class="grow">
-                    <p class="line-clamp-2 text-lg xl:text-base sm:text-sm ">
-                        <span class="mb-1 mr-2">{{ content.name }}</span>
-                        <span class="text-gray-300">{{ content.art }}</span>
-                    </p>
+                    <NuxtLink :to="`/catalog/${content.id}`">
+                        <p class="line-clamp-2 text-lg xl:text-base sm:text-sm ">
+                            <span class="mb-1 mr-2">{{ content.name }}</span>
+                            <span class="text-gray-300">{{ content.art }}</span>
+                        </p>
+                    </NuxtLink>
                 </div>
                 <div class="text-base xl:text-sm mb-2" v-else>
                     <AtomOtherSkeletonElem tag="p" class="mb-2" :loader="!Boolean(content)" />
@@ -58,7 +60,7 @@
                         quantity: 1
                     })" :disabled="content.quantity === 0">
                     <CreateIcon name="basket_25_25" :att="{ class: 'fill-white' }" />
-                    <p class="text-white ml-2"> {{ _content?.TEXT_BASKET_ADD_ITEM || 'add basket'  }}</p>
+                    <p class="text-white ml-2"> {{ _content?.TEXT_BASKET_ADD_ITEM || 'add basket' }}</p>
                 </AtomButtonStandart>
             </slot>
         </div>
@@ -85,10 +87,10 @@ const content = computed<ProductCardBase | null>(() => props.data)
 
 function addBasket(item: Parameters<typeof storeBasket['addItem']>[0]) {
     if (storeBasket.findItem(item.data.id)) {
-        storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
+        storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info' })
     } else {
         storeBasket.addItem({ quantity: item.quantity, data: item.data })
-        storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
+        storeAlert.create({ 'text': _content.value?.ALERT_BASKET_ADD_ITEM || null, state: 'info' })
     }
 }
 </script>

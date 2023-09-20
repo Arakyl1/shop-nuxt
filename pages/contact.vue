@@ -12,7 +12,8 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-    title: "Контакты"
-})
+
+onMounted(() => setHeaderTitle("Контакты"))
+onActivated(() => setHeaderTitle("Контакты"))
+
 </script>

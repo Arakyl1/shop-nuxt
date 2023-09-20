@@ -101,3 +101,10 @@ export const localRemove = (key: KeyLocalStorage) => localStorage.removeItem(key
 export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key
 
 export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.split(';')).filter(_ => _.length > 1 && _[0].split('-').length === 1).map(_ => [_[0],parseFloat(_[1].replace('q=','')) ])//.map(_ => _[0])
+
+export function setHeaderTitle(title: string) {
+    console.log('set header ' + title)
+    useHead({
+        titleTemplate: () => title
+    })
+}

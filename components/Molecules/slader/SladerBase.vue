@@ -86,9 +86,10 @@ function onScroll(e: Event): void {
     }
 }
 
-function onPointerDown({ clientX, type, pointerId, pointerType, target }: PointerEvent) {
+function onPointerDown(event: PointerEvent) {
+    const { clientX, type, pointerType } = event
     if (slader.value && type === 'pointerdown' && pointerType === 'mouse') {
-        //slader.value.setPointerCapture(pointerId)
+        
         cordsScroll.value = { startX: clientX, startSx: slader.value.scrollLeft, difX: 0, active: true }
         slader.value.style.setProperty('scroll-snap-type', 'none')
         slader.value.style.setProperty('scroll-behavior', 'auto')
@@ -98,7 +99,8 @@ function onPointerDown({ clientX, type, pointerId, pointerType, target }: Pointe
     }
 }
 
-function onPointerMove({ clientX, buttons, type, pointerId, pointerType }: PointerEvent) {
+function onPointerMove(event: PointerEvent) {
+    const { clientX, buttons, type, pointerId, pointerType } = event
     if (type === 'pointermove' && pointerType === 'mouse') {
         if (cordsScroll.value && cordsScroll.value.active && slader.value && buttons !== 0) {
             let difX = cordsScroll.value.startX - clientX
@@ -111,14 +113,16 @@ function onPointerMove({ clientX, buttons, type, pointerId, pointerType }: Point
     }
 }
 
-function onPointerUp({ type, pointerId, pointerType }: PointerEvent) {
+function onPointerUp(event: PointerEvent) {
+    const { type, pointerId, pointerType } = event
     if (type === 'pointerup' && pointerType === 'mouse') {
         resetScrollData(pointerId, slader.value)
         cordsScroll.value = null
     }
 }
 
-function onPointerLeave({ type, pointerId, pointerType }: PointerEvent) {
+function onPointerLeave(event: PointerEvent) {
+    const { type, pointerId, pointerType } = event
     if (type === 'pointerleave' && pointerType === 'mouse') {
         resetScrollData(pointerId, slader.value)
         cordsScroll.value = null

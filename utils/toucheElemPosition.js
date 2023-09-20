@@ -1,10 +1,11 @@
 import { onBeforeUnmount, onMounted, reactive } from 'vue'
 
 export function toucheElemPosition (elem) {
+
   const _elem = ref(elem)
   const touchStartPos = reactive({ x: null, y: null, started: false, vector: null })
+
   const onToucheStart = (e) => {
-    console.log(true);
     touchStartPos.x = e.touches[0].clientX
     touchStartPos.y = e.touches[0].clientY
     touchStartPos.started = true
@@ -47,8 +48,10 @@ export function toucheElemPosition (elem) {
 
   onMounted(() => addHandler(unref(elem)))
   onBeforeUnmount(() => removeHandler(unref(elem)))
+  
   watch(() => _elem.value, (newV) => {
     if (newV) { addHandler(unref(elem)) }
   })
+
   return touchStartPos
 }

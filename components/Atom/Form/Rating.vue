@@ -1,14 +1,11 @@
 <template>
-    <div class="flex" @click.stop="addNumberStar" >
+    <div class="flex" @click.stop="addNumberStar">
         <slot name="input">
             <input type="number" hidden :name="inputName" v-model.number="starValue" ref="input">
         </slot>
         <slot v-bind="{ starValue }">
-            <CreateIcon v-for="item in 5" :key="item"
-            :name="name"
-            class="item__star"
-            :att="{ class: starValue && starValue >= item ? style.active : style.deactive }"
-            :data-star="item"/>
+            <CreateIcon v-for="item in 5" :key="item" :name="name" class="item__star"
+                :att="{ class: starValue && starValue >= item ? style.active : style.deactive }" :data-star="item" />
         </slot>
     </div>
 </template>
@@ -53,7 +50,7 @@ onBeforeMount(() => {
 onMounted(() => {
     window.addEventListener('reset', resetForm)
     window.addEventListener('init-active-params', initParams)
-   
+
 })
 onUnmounted(() => {
     window.removeEventListener('reset', resetForm)
@@ -62,21 +59,27 @@ onUnmounted(() => {
 
 type DatasetKey = 'star'
 function addNumberStar({ target }: MouseEvent): void {
-    interface ModifiedHTMLElement extends HTMLElement {
-        dataset: DOMStringMap & RecordOption<DatasetKey, string>
-    }
-    const elementTarget = target as HTMLElement
-    const element = elementTarget.closest('.item__star') as ModifiedHTMLElement
-    const number: number = +element.dataset.star
-    if (number) {
-        starValue.value = number
-        emit('numberStar', number)
-        setTimeout(() => {    
-            if (input.value) {
-                const initEvent = new Event('input', { bubbles: true})
-                input.value.dispatchEvent(initEvent)
+    if (target instanceof HTMLElement) {
+        const _target = target.closest('[data-star]')
+
+        interface ModifiedHTMLElement extends HTMLElement {
+            dataset: DOMStringMap & RecordOption<DatasetKey, string>
+        }
+
+        if (_target) {
+            const checkElem = _target as ModifiedHTMLElement
+            const number: number = +checkElem.dataset.star
+            if (number) {
+                starValue.value = number
+                emit('numberStar', number)
+                setTimeout(() => {
+                    if (input.value) {
+                        const initEvent = new Event('input', { bubbles: true })
+                        input.value.dispatchEvent(initEvent)
+                    }
+                }, 0);
             }
-        }, 0);
+        }
     }
 }
 

@@ -29,6 +29,8 @@
 <script setup lang="ts">
 definePageMeta({
    keepalive: true,
-   title: 'Главная страница'
 })
+
+onMounted(() => setHeaderTitle('Главная страница'))
+onActivated(() => setHeaderTitle('Главная страница'))
 </script>
