@@ -18,6 +18,7 @@
 import { ProductCardFull } from '~~/type/intex'
 
 definePageMeta({
+    title: 'Информация о товаре',
     keepalive: true
 })
 
@@ -28,19 +29,20 @@ const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/produc
     params: { id: id, fullinfo: true, unique: true },
     onResponse({ response }) {
         if (response.status < 400, response._data && !Array.isArray(response._data)) {
-            useHead({
-                titleTemplate: () => data.value ? data.value.name : '',
-            })
+            
 
         }
     }
 }), {
-    'lazy': true,
     transform: (context) => {
         if (context && !Array.isArray(context)) {
             return context as ProductCardFull
         } else { return null }
     },
+    lazy: true
 })
+
+onMounted(() => setHeaderTitle( data.value ? data.value.name : 'Каталог товаров'))
+onActivated(() => setHeaderTitle(data.value ? data.value.name : 'Каталог товаров'))
 
 </script>

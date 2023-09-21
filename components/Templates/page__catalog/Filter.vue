@@ -22,14 +22,6 @@
                             <fieldset>
                                 <MoleculesFormSelectCategor :data="section.data" />
                             </fieldset>
-
-                            <!-- <fieldset class="pb-3">
-                            <h1 class="truncate mb-2">{{ section.title }}</h1>
-                            <div>
-                                <AtomFormSelect :value="section.value!" :data="section.data!" :class="[style.input]"
-                                    class="w-full" name="categor" />
-                            </div>
-                        </fieldset> -->
                         </template>
                         <template v-else-if="section.type === 'number-range'">
                             <div class="decor-line"></div>
@@ -69,8 +61,7 @@
                 </section>
 
                 <div class="flex justify-end pt-3">
-                    <AtomButtonStandart @click.prevent="resetData"
-                        class=" bg-blue-500 text-white text-lg py-2 xl:py-1">
+                    <AtomButtonStandart @click.prevent="resetData" class=" bg-blue-500 text-white text-lg py-2 xl:py-1">
                         {{ _content?.TEXT_FILTER_BUTTON_RESET || "Reset" }}
                     </AtomButtonStandart>
                 </div>
@@ -104,9 +95,6 @@ if (!dataFilterList.value) {
 }
 
 watch(() => routeCategorId.value, () => {
-    // if (dataFilterList.value) {
-    //     dataFilterList.value.map(_ => _.type)
-    // }
     resetForm()
     initFilterData()
 })
@@ -158,35 +146,41 @@ function resetData(event: MouseEvent) {
 
 function getParamsFilter({ target, type }: Event) {
     const queryParams = { ...route.query }
-    const _target = target as HTMLElement
-    if (form.value) {
-        if (!form.value.checkValidity()) return
 
-        let finalParams: { [key: string]: string } = {}
-        const formData = new FormData(form.value)
-        const paramsData = new Map<string, (string | number)[]>()
-        for (const [key, value] of formData) {
-            if (value) {
-                if (key === 'categor') {
-                    finalParams.categor = value as string
-                } else if (paramsData.has(key)) {
-                    const paramsItem = paramsData.get(key)
-                    paramsData.set(key, [...paramsItem!, (value as string)])
-                } else {
-                    paramsData.set(key, [(value as string)])
+    if (target instanceof Element) {
+        const _target = target
+
+        if (form.value) {
+            if (!form.value.checkValidity()) return
+
+            const changeStr = (s: string) => s.split(' ').join('__')
+            let finalParams: { [key: string]: string } = {}
+            const formData = new FormData(form.value)
+            const paramsData = new Map<string, (string | number)[]>()
+            for (const [key, value] of formData) {
+                const _value = isString(value) ? value : ''
+                if (_value) {
+                    if (key === 'categor') {
+                        finalParams.categor = _value
+                    } else if (paramsData.has(key)) {
+                        const paramsItem = paramsData.get(key)
+                        paramsData.set(key, [...paramsItem!, changeStr(_value)])
+                    } else {
+                        paramsData.set(key, [changeStr(_value)])
+                    }
                 }
             }
+            if (_target.tagName === 'SELECT' && _target.name === 'categor') {
+                finalParams.categor = _target.value
+            }
+            for (const [key, value] of paramsData) {
+                finalParams[key] = value.join(',')
+            }
+            const findParams = _target.tagName === 'SELECT' && 'categor' in finalParams ? { categor: finalParams.categor } : finalParams
+            let page = 'page' in queryParams ? { page: queryParams.page } : {}
+            let limit = 'limit' in queryParams ? { limit: queryParams.limit } : {}
+            router.push({ query: { ...findParams, ...page, ...limit } })
         }
-        if (_target.tagName === 'SELECT' && _target.name === 'categor') {
-            finalParams.categor = _target.value
-        }
-        for (const [key, value] of paramsData) {
-            finalParams[key] = value.join(',')
-        }
-        const findParams = _target.tagName === 'SELECT' && 'categor' in finalParams ? { categor: finalParams.categor } : finalParams
-        let page = 'page' in queryParams ? { page: queryParams.page } : {}
-        let limit = 'limit' in queryParams ? { limit: queryParams.limit } : {}
-        router.push({ query: { ...findParams, ...page, ...limit } })
     }
 }
 
@@ -194,20 +188,27 @@ onMounted(() => {
     if (form.value) {
         const activeParams = { ...route.query }
         const value = new Map<string, (string)[]>()
-        Object.entries(activeParams).map(_ => value.set(_[0], (_[1] as string).split(',')))
+
+        Object.entries(activeParams).map(_ => {
+            return value.set(_[0], (_[1] as string)
+                .split(',')
+                .map(_ => _.split('__').join(' ')))
+        })
+
         for (const element of form.value.elements) {
             const elemName = element.getAttribute('name') || ''
             if (elemName !== 'categor' && value.has(elemName)) {
                 const valueData = value.get(elemName) || []
                 if (element.tagName === 'INPUT') {
-                    switch (element.type) {
+                    const _input = element as HTMLInputElement
+                    switch (_input.type) {
                         case 'number': {
-                            element.value = parseInt(valueData[0])
+                            _input.valueAsNumber = parseInt(valueData[0])
                             break
                         }
                         case 'checkbox': {
-                            if (valueData.includes(element.value || '')) {
-                                element.checked = true
+                            if (valueData.includes(_input.value || '')) {
+                                _input.checked = true
                             }
                             break
                         }

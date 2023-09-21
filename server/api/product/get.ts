@@ -1,6 +1,5 @@
 import { H3Event } from "h3"
 import prisma from "~~/server/db"
-import { modelSelect } from "../../utils/prismaModelSelect";
 import { Prisma } from "@prisma/client";
 import { KeysMatchingWrite } from "~~/type/intex";
 
@@ -57,7 +56,7 @@ function initWhereParams(query: QueryObject) {
                 }
                 case key.startsWith('chr-'): {
                     const name = key.replace('chr-', '').split('_').join(" ")
-                    const arrValue = (value as string).split(',')
+                    const arrValue = (value as string).split(',').map(_ => _.split('__').join(' '))
                     const params: Prisma.Enumerable<Prisma.ProductCardWhereInput> = []
                     for (let i = 0, l = arrValue.length; i < l; i++) {
                         const value = arrValue[i];

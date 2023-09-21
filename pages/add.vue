@@ -39,6 +39,7 @@ import { alert as _alert } from "@/stores/alert";
 const numberProperty = ['price', 'quantity']
 
 definePageMeta({
+    title: "Добавить товар",
     middleware: ['add']
 })
 

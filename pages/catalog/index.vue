@@ -39,6 +39,7 @@ import localState from "@/utils/localState";
 
 definePageMeta({
     middleware: ['catalog'],
+    title: 'Каталог товаров',
     keepalive: true
 })
 
@@ -48,24 +49,23 @@ const toucheData = toucheElemPosition(filter)
 const mouseData = mouseElemPosition(filter)
 const route = useRoute()
 
-
-onMounted(() => setHeaderTitle('Каталог товаров'))
-onActivated(() => setHeaderTitle('Каталог товаров'))
-
-
 const paramsRouteQuery = computed(() => Object.values(route.query).map((el: any) => el.trim()).join('_'))
 
 const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
     method: 'POST',
     params: { ...route.query, model: 'base' }
 }), {
-    'lazy': true, transform: (context) => {
+    'lazy': true,
+    transform: (context) => {
         if (context && 'data' in context && 'nextPageLength' in context && Array.isArray(context.data)) {
             return context
         }
         return { data: [], nextPageLength: 0 }
     }
 })
+
+onMounted(() => setHeaderTitle('Каталог товаров'))
+onActivated(() => setHeaderTitle('Каталог товаров'))
 
 
 watch(() => toucheData.vector, (newVector) => {

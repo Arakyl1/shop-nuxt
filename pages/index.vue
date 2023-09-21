@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 definePageMeta({
+    title: 'Главная страница',
    keepalive: true,
 })
 

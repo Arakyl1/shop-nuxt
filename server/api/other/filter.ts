@@ -54,8 +54,10 @@ export default defineEventHandler<FilterData>(async (event) => {
     }
     const storageData = await useStorage().getItem('categor:' + attriduteId)
     if (storageData) {
-        console.log(Date.now() - s, 'cache data')
-        return storageData
+        return [
+            ...storageData,
+            { type: 'time', ms: Date.now() - s, state: 'cache data'}
+        ]
     }
 
 
@@ -93,9 +95,9 @@ export default defineEventHandler<FilterData>(async (event) => {
                         case 'CATEGOR': {
                             const fullfilterData: FilterData = [
                                 { type: 'select', title: 'select', data: getSelectData(findDataRes, storageCategorData) },
+                                { type: 'time', ms: Date.now() - s, state: 'create data' }
                                 // [findDataRes] as never
                             ]
-                            console.log(Date.now() - s, 'create data categor')
                             return fullfilterData
                         }
                         case 'SUBCATEGOR': {
@@ -118,10 +120,11 @@ export default defineEventHandler<FilterData>(async (event) => {
                                     { type: 'radio', name: 'discount.gt', title: "Скидка", value: 0 } as never,
                                     ...otherAttributeData as never
                                 ],
+                                { type: 'time', ms: Date.now() - s, state: 'create data'  }
                                 // [findDataRes] as never
                             ]
                             await useStorage().setItem('categor:' + attriduteId, JSON.stringify(fullfilterData))
-                            console.log(Date.now() - s, 'create data subcategor')
+                            
                             return fullfilterData
                         }
                         case 'CLASS': {
@@ -129,17 +132,33 @@ export default defineEventHandler<FilterData>(async (event) => {
                             const dataFilter = new Map<string, { data: (string | number)[], length: number }>()
                             // price data
                             const priseData = new Set<number>([])
+                            const makerList = new Set<string>([])
 
+                            function checkValidTitle(title:string) {
+                                return !(['Ширина', 'Длина', 'Высота'].includes(title)) && title.search(/Единиц|Вес|Площадь/gi) === -1
+                            }
 
                             for (let i = 0, l = findDataRes.item.length; i < l; i++) {
-                                const elem = findDataRes.item[i] as Prisma.ProductCardGetPayload<{ include: { characteristic: true, attribute: true } }>
+                                const elem = findDataRes.item[i]
+                                
+                                const nameMaker = elem.attribute.find((attr) => attr.type === 'MAKER')
+                                if (nameMaker) {
+                                    makerList.add(nameMaker.value)
+                                }
+
                                 for (let j = 0, jl = elem.characteristic.length; j < jl; j++) {
-                                    const charItem = elem.characteristic[j] as Prisma.CharacteristicGetPayload<{ include: { content: true } }>
+                                    const charItem = elem.characteristic[j]
+                                    
                                     for (let k = 0, kl = charItem.content.length; k < kl; k++) {
                                         const item = charItem.content[k];
-                                        if (dataFilter.has(item.name)) {
-                                            const dataFilterItem = dataFilter.get(item.name)
-                                            dataFilter.set(item.name, { data: [...dataFilterItem!.data, item.value], length: dataFilterItem!.length + 1 })
+                                        const dataFilterItem = dataFilter.get(item.name)
+                                        
+                                        if (dataFilterItem && checkValidTitle(item.name)) {
+                                            dataFilter.set(item.name, {
+                                                data: [...dataFilterItem!.data, item.value],
+                                                length: dataFilterItem!.length + 1
+                                            })
+                                        
                                         } else { dataFilter.set(item.name, { data: [item.value], length: 1 }) }
                                     }
                                 }
@@ -148,20 +167,23 @@ export default defineEventHandler<FilterData>(async (event) => {
 
                             // unnecessary characteristics are removed
                             const lengthItemArray = findDataRes.item.length
-                            const updateData = [...dataFilter].map(_ => ({ title: _[0], data: [...new Set(_[1].data)], length: _[1].length, type: 'checkbox', name: `chr-${_[0].split(' ').join('_')}` }))
-                                .filter(_ => _.length === lengthItemArray
-                                    && _.title !== 'Ширина'
-                                    && _.title !== 'Длина'
-                                    && _.title !== 'Высота'
-                                    && _.title.search(/Единиц|Вес|Площадь/gi) === -1
-                                    && _.data.length > 1
-                                ).sort()
+                            const updateData = [...dataFilter].map(_ => ({
+                                title: _[0],
+                                data: [...new Set(_[1].data)],
+                                length: _[1].length,
+                                type: 'checkbox',
+                                name: `chr-${_[0].split(' ').join('_')}`
+                            }))
+                            .filter(_ => _.length === lengthItemArray && _.data.length > 1)
+                            .sort()
 
                             // init maker data
-                            const makerList = findDataRes.item
-                                .map((_) => (_ as ProductCard & { attribute: Attribute[], characteristic: Characteristic[] }).attribute
-                                    .find((attr) => attr.type === 'MAKER')?.value).filter(_ => _)
-                            const makerData: HH | {} = makerList.length ? { title: "Производитель", data: [...new Set([...makerList])].sort(), type: 'checkbox', name: 'maker' } : {}
+                            const makerData: HH | {} = makerList.size ? {
+                                title: "Производитель",
+                                data: [...makerList].sort(),
+                                type: 'checkbox',
+                                name: 'maker'
+                            } : {}
 
 
                             const fullfilterData: FilterData = [
@@ -174,11 +196,12 @@ export default defineEventHandler<FilterData>(async (event) => {
                                     { type: 'radio', title: "Скидка", name: 'discount.gt', value: 0 },
                                     ...otherAttributeData
                                 ],
+                                { type: 'time', ms: Date.now() - s, state: 'create data' }
                                 // [findDataRes] as never,
                             ] as FilterData
 
                             await useStorage().setItem('categor:' + attriduteId, JSON.stringify(fullfilterData))
-                            console.log(Date.now() - s, 'create data')
+                            
                             return fullfilterData
 
                         }
