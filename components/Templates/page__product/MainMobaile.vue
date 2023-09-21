@@ -8,7 +8,7 @@
             </div>
             <div class="decor-line"></div>
             <div class="flex py-4 justify-between items-center">
-                <AtomFormRating :quantity-star="getAverageValue()" class="grow justify-between" />
+                <AtomFormRating :quantity-star="middleRating" class="grow justify-between" />
                 <p class="ml-4 grow text-gray-500">Отзывы ({{ data.reviews.length }})</p>
             </div>
             <div class="decor-line"></div>
@@ -100,9 +100,7 @@ const numberOfProducts = ref<number>(1)
 const storeAlert = _alert()
 const _content = useState<Content | null>('CONTENT_APP')
 
-function getAverageValue(): number {
-    return props.data.reviews.reduce((s, _) => s + (_.ranting || 0), 0)
-}
+const middleRating = computed(() => props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0) / props.data.reviews.length)
 
 function onClick() {
     copyLink()

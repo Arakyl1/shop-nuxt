@@ -35,8 +35,8 @@
                                 <h1 class="truncate">{{ section.title }}</h1>
                                 <div class="decor-line my-1"></div>
                                 <div class="py-1">
-                                    <AtomFormRating :input-name="section.name" class="justify-between"
-                                        :name="'star_25_25'" />
+                                    <AtomFormRating :input-name="section.name" :quantity-star="ratingStar"
+                                    @number-star="(e) => { ratingStar = e }" class="justify-between" :name="'star_25_25'" />
                                 </div>
                             </fieldset>
                         </template>
@@ -82,6 +82,7 @@ const storeAlert = _alert()
 const _content = useState<Content>('CONTENT_APP')
 const form = ref<HTMLFormElement | null>(null)
 const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
+const ratingStar = ref<number>(0) 
 
 
 const routeCategorId = computed(() => 'categor' in route.query ? route.query.categor : null)
@@ -153,10 +154,11 @@ function getParamsFilter({ target, type }: Event) {
         if (form.value) {
             if (!form.value.checkValidity()) return
 
-            const changeStr = (s: string) => s.split(' ').join('__')
+            const changeStr = (s: string) => s.trim().replace(/\s/, '__')
             let finalParams: { [key: string]: string } = {}
             const formData = new FormData(form.value)
             const paramsData = new Map<string, (string | number)[]>()
+
             for (const [key, value] of formData) {
                 const _value = isString(value) ? value : ''
                 if (_value) {
@@ -166,6 +168,8 @@ function getParamsFilter({ target, type }: Event) {
                         const paramsItem = paramsData.get(key)
                         paramsData.set(key, [...paramsItem!, changeStr(_value)])
                     } else {
+
+                        console.log(changeStr(_value))
                         paramsData.set(key, [changeStr(_value)])
                     }
                 }
@@ -216,7 +220,9 @@ onMounted(() => {
                 }
             }
         }
-        window.dispatchEvent(new CustomEvent('init-active-params'))
+        setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('init-active-params'))
+        })
     }
 })
 

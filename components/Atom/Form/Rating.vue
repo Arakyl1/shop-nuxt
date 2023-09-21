@@ -1,11 +1,11 @@
 <template>
     <div class="flex" @click.stop="addNumberStar">
         <slot name="input">
-            <input type="number" hidden :name="inputName" v-model.number="starValue" ref="input">
+            <input type="number" hidden :name="inputName" :value="quantityStar" ref="input">
         </slot>
-        <slot v-bind="{ starValue }">
+        <slot v-bind="{ quantityStar }">
             <CreateIcon v-for="item in 5" :key="item" :name="name" class="item__star"
-                :att="{ class: starValue && starValue >= item ? style.active : style.deactive }" :data-star="item" />
+                :att="{ class: quantityStar && quantityStar >= item ? style.active : style.deactive }" :data-star="item" />
         </slot>
     </div>
 </template>
@@ -30,7 +30,8 @@ const props = withDefaults(defineProps<{
     },
     name: 'star_20_20',
     reset: false,
-    inputkey: '_'
+    inputkey: '_',
+    quantityStar: 0
 })
 
 const emit = defineEmits<{
@@ -38,14 +39,7 @@ const emit = defineEmits<{
 }>()
 
 
-const starValue = ref<number | undefined>(undefined)
 const input = ref<HTMLInputElement | null>(null)
-
-onBeforeMount(() => {
-    if (props.quantityStar && props.quantityStar !== starValue.value) {
-        starValue.value = props.quantityStar
-    }
-})
 
 onMounted(() => {
     window.addEventListener('reset', resetForm)
@@ -70,7 +64,6 @@ function addNumberStar({ target }: MouseEvent): void {
             const checkElem = _target as ModifiedElement
             const number: number = +checkElem.dataset.star
             if (number) {
-                starValue.value = number
                 emit('numberStar', number)
                 setTimeout(() => {
                     if (input.value) {
@@ -84,13 +77,13 @@ function addNumberStar({ target }: MouseEvent): void {
 }
 
 function resetForm() {
-    starValue.value = undefined
+    emit('numberStar', 0)
 }
 function initParams() {
     if (input.value) {
         const value = input.value.value
-        if (value && starValue.value?.toString() !== value) {
-            starValue.value = parseInt(value)
+        if (value) {
+            emit('numberStar', parseInt(value))
         }
     }
 }

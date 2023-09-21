@@ -29,7 +29,7 @@ const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/produc
     params: { id: id, fullinfo: true, unique: true },
     onResponse({ response }) {
         if (response.status < 400, response._data && !Array.isArray(response._data)) {
-            
+
 
         }
     }
@@ -42,7 +42,11 @@ const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/produc
     lazy: true
 })
 
-onMounted(() => setHeaderTitle( data.value ? data.value.name : 'Каталог товаров'))
+
+
+onMounted(() => {
+    setHeaderTitle(data.value ? data.value.name : 'Каталог товаров')
+})
 onActivated(() => setHeaderTitle(data.value ? data.value.name : 'Каталог товаров'))
 
 </script>

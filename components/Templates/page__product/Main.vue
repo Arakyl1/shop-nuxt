@@ -50,7 +50,7 @@
                     </h3>
                     <div class="decor-line"></div>
                     <div class="flex py-6 justify-between lg:py-5 items-center">
-                        <AtomFormRating :quantity-star="getAverageValue()" class="grow justify-between lg:scale-90" :name="'star_25_25'"/>
+                        <AtomFormRating :quantity-star="middleRating" class="grow justify-between lg:scale-90" :name="'star_25_25'"/>
                         <p class="ml-4 grow text-gray-500 lg:text-sm">Отзывы ({{ data.reviews.length }})</p>
                         <AtomButtonShare @click="onClick" class="p-0 " >
                         <template #default>
@@ -108,9 +108,8 @@ const numberOfProduct = ref<number>(1)
 onMounted(() => {
     test(navigator)
 })
-function getAverageValue(): number {
-   return props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0)
-}
+
+const middleRating = computed(() => props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0) / props.data.reviews.length)
 
 function onClick() {
     copyLink()

@@ -57,6 +57,7 @@ function initWhereParams(query: QueryObject) {
                 case key.startsWith('chr-'): {
                     const name = key.replace('chr-', '').split('_').join(" ")
                     const arrValue = (value as string).split(',').map(_ => _.split('__').join(' '))
+
                     const params: Prisma.Enumerable<Prisma.ProductCardWhereInput> = []
                     for (let i = 0, l = arrValue.length; i < l; i++) {
                         const value = arrValue[i];
@@ -136,94 +137,6 @@ function initWhereParams(query: QueryObject) {
         }
     }
 
-    /// old parser
-    // for (const key in query) {
-    //     if (Object.prototype.hasOwnProperty.call(query, key)) {
-    //         const value = query[key];
-    //         if (key === 'categor') {
-    //             findParams.where.AND.push({ attribute: { some: { id: parseInt(value as string) } } } as never)
-
-    //         } else if (key === 'limit') {
-    //             findParams.take = parseInt(value as string) as never
-    //         } else if (key === 'maker') {
-    //             const arrValue = (value as string).split(',')
-    //             const params: Prisma.Enumerable<Prisma.ProductCardWhereInput> = []
-    //             for (let i = 0, l = arrValue.length; i < l; i++) {
-    //                 const name = arrValue[i];
-    //                 params.push({ attribute: { some: { value: { contains: name } } } } as never)
-    //             }
-    //             findParams.where.AND.push({ OR: params } as never)
-    //         } else if (key.startsWith('chr-')) {
-    //             const name = key.replace('chr-', '').split('_').join(" ")
-    //             const arrValue = (value as string).split(',')
-    //             const params: Prisma.Enumerable<Prisma.ProductCardWhereInput> = []
-    //             for (let i = 0, l = arrValue.length; i < l; i++) {
-    //                 const value = arrValue[i];
-    //                 params.push({ characteristic: { some: { content: { some: { name: name, value: value } } } } })
-    //             }
-    //             findParams.where.AND.push({ OR: params } as never)
-    //         } else if (key === 'other') {
-    //             const arrValue = (value as string).split(',')
-    //             for (let i = 0, l = arrValue.length; i < l; i++) {
-    //                 const value = arrValue[i];
-    //                 findParams.where.AND.push({ attribute: { some: { name: value } } } as never)
-    //             }
-    //         } else if (['price', 'discount', 'views', 'createAt'].includes(key.split('.')[0])) {
-    //             const optionKey = key.split('.')
-    //             console.log(optionKey)
-    //             if (optionKey[0] && optionKey[1] && WhereIntFilterKey.includes(optionKey[1] as never)) {
-    //                 findParams.where.AND.push({
-    //                     [optionKey[0]]: {
-    //                         [optionKey[1]]: optionKey[0] === 'createAt' ?
-    //                             new Date(value as string) :
-    //                             parseFloat(value as string)
-    //                     }
-    //                 } as never)
-    //             } else if (optionKey[0]) {
-    //                 findParams.where.AND.push({
-    //                     [optionKey[0]]: {
-    //                         gte: optionKey[0] === 'createAt' ?
-    //                             new Date(value as string) :
-    //                             parseFloat(value as string)
-    //                     }
-    //                 } as never)
-    //             }
-    //         } else if (key.startsWith('orderBy')) {
-    //             let finalKey = key.replace(/orderBy\.?/, '')
-    //             if (finalKey && ['asc', 'desc'].includes(value)) {
-    //                 findParams.orderBy.push({ [finalKey]: value } as never)
-    //             }
-    //         } else if (key === 'page') {
-    //             const pageVal = parseInt(value as string)
-    //             findParams.skip = pageVal as never
-    //         } else if (key.startsWith('where')) {
-    //             let replaceKey = key.replace(/where\.?/, '')
-    //             if (replaceKey && value) {
-    //                 let finalKey = replaceKey.split('.')
-    //                 if (finalKey[1] && WhereIntFilterKey.includes(finalKey[1] as never)) {
-    //                     if (finalKey[0] && PropertyProductCardInt.includes(finalKey[0] as never)) {
-    //                         switch (finalKey[1] as unknown as WhereIntFilterKey) {
-    //                             case 'in': {
-    //                                 findParams.where.AND.push({ [finalKey[0]]: { in: [...value.split(',').map((_: string) => parseFloat(_))] } } as never)
-    //                                 break;
-    //                             }
-
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         } else if (key === 'search') {
-    //             const whereParams: Prisma.ProductCardWhereInput = {
-    //                 OR: [
-    //                     { name: { contains: value, mode: 'insensitive' } },
-    //                     { art: { contains: value, mode: 'insensitive' } },
-    //                 ]
-    //             }
-    //             findParams.where.AND.push(whereParams as never)
-    //         }
-    //     }
-    // }
-    // console.log(findParams)
     return findParams
 }
 
@@ -288,23 +201,11 @@ export default defineEventHandler(async (event: H3Event) => {
                         skip: findParams.skip * findParams.take,
                         select: { id: true }
                     })
-                    return {
-                        data: res, nextPageLength: nextPageRes.length,
-                        // params: {
-                        //     ...findParams,
-                        //     skip: (findParams.skip === 0 ? 0 : findParams.skip - 1) * findParams.take,
-                        //     include: { image: { where: { main: true } }, attribute: true }
-                        // }
-                    }
+
+                    return { data: res, nextPageLength: nextPageRes.length}
                 } else {
-                    return {
-                        data: res, nextPageLength: 0,
-                        // params: {
-                        //     ...findParams,
-                        //     skip: (findParams.skip === 0 ? 0 : findParams.skip - 1) * findParams.take,
-                        //     include: { image: { where: { main: true } }, attribute: true }
-                        // }
-                    }
+                    
+                    return { data: res, nextPageLength: 0 }
                 }
             } else {
                 return null
