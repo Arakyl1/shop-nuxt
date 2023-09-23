@@ -167,14 +167,15 @@ export default defineEventHandler<FilterData>(async (event) => {
 
                             // unnecessary characteristics are removed
                             const lengthItemArray = findDataRes.item.length
-                            const updateData = [...dataFilter].map(_ => ({
+                            const updateData = [...dataFilter]
+                            .filter(_ => _[1].length === lengthItemArray && _[1].data.length > 1)
+                            .map(_ => ({
                                 title: _[0],
                                 data: [...new Set(_[1].data)],
                                 length: _[1].length,
                                 type: 'checkbox',
                                 name: `chr-${_[0].split(' ').join('_')}`
                             }))
-                            .filter(_ => _.length === lengthItemArray && _.data.length > 1)
                             .sort()
 
                             // init maker data
