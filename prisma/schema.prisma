@@ -25,7 +25,7 @@ model RefrechToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique
   createAt  DateTime @default(now())
-  updateAta DateTime @updatedAt
+  updateAt DateTime @updatedAt
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
 }
@@ -72,6 +72,8 @@ model Comment {
   ranting     Int?
   text        String?
   userId      Int
+  createAt    DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
   ProductCard ProductCard @relation(fields: [cardId], references: [id])
   user        User        @relation(fields: [userId], references: [id])
 }
