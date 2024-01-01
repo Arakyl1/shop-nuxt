@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { ComponentInternalInstance, Events } from "nuxt/dist/app/compat/capi";
 import { NAMEAPP, CONTENT_KEY } from "~~/type/intex";
 
 
@@ -81,6 +82,10 @@ export function isBoolean(elem: unknown): elem is boolean {
 export function isObject(elem: unknown): elem is object {
     return typeof unref(elem) === 'object'
 }
+export function isNumeric(str: string | number): boolean {
+    if (typeof str != "string") return false
+    return !isNaN(str) && !isNaN(parseFloat(str))
+}
 
 export function test(...f:any) {
     console.log(...f);
@@ -102,9 +107,31 @@ export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key
 
 export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.split(';')).filter(_ => _.length > 1 && _[0].split('-').length === 1).map(_ => [_[0],parseFloat(_[1].replace('q=','')) ])//.map(_ => _[0])
 
-export function setHeaderTitle(title: string) {
-    console.log('set header ' + title)
-    useHead({
-        titleTemplate: () => title
-    })
+
+
+export function checkThisComponent(target: Element, instanse: ComponentInternalInstance) {
+    if (target) {
+        return target.__vueParentComponent.uid === instanse?.uid
+    } return false
+}
+
+
+export function watchEvent(key: string| number, instanse: ComponentInternalInstance | null, fun: (...ard: any[]) => any) {
+    if (!key && !instanse && !fun) return null
+    const _key = key
+    const _instanse = instanse
+    const _fun = fun
+
+    return ({ target }: Event) => {
+        if (target instanceof Element) {
+            const _target = target.closest(`[${_key}]`)
+            if (_target) {
+                if (!checkThisComponent(_target, _instanse!)) {
+                    _fun()
+                }
+            } else {
+                _fun()
+            }
+        }
+    }
 }
