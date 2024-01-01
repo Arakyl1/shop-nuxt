@@ -16,7 +16,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/node": "^20.10.4",
     "autoprefixer": "^10.4.13",
-    "nuxt": "^3.0.0",
+    "nuxt": "3.6.1",
     "nuxt-vercel-analytics": "^0.2.2",
     "postcss": "^8.4.21",
     "prisma": "^5.7.0",
@@ -27,7 +27,8 @@
   "dependencies": {
     "@heroicons/vue": "^2.0.13",
     "@pinia/nuxt": "^0.4.6",
-    "@prisma/client": "^4.16.2",
+    "@prisma/client": "^5.7.0",
+    "@supabase/supabase-js": "^2.39.1",
     "@types/formidable": "^2.0.5",
     "@types/jsonwebtoken": "^9.0.0",
     "add": "^2.0.6",
@@ -37,8 +38,9 @@
     "heroicons": "^2.0.13",
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
-    "nuxt-viewport": "^2.0.4",
+    "nuxt-viewport": "^2.0.6",
     "pinia": "^2.0.28",
+    "sass": "^1.69.5",
     "unstorage": "^1.8.0",
     "yarn": "^1.22.19"
   }
