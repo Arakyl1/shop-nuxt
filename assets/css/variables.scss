@@ -1,0 +1,185 @@
+// CONTAINER STYLE
+$containerWidth: (
+  640px: 0 1rem,
+  768px: 0 1.5rem,
+  1024px: 0 2rem,
+  1280px: 0 2.5rem,
+  1536px: 0 3rem
+);
+
+
+// FLEX VARIABLE
+$justifyContent: (
+    'center': center,
+    'start': start,
+    'end': end,
+    'flex-start': flex-start,
+    'flex-end': flex-end,
+    'left': left,
+    'right': right,
+    'evenly': space-evenly,
+    'between': space-between,
+    'around': space-around,
+    'baseline': baseline,    
+);
+
+  
+$alignContent: (
+    'center': center,
+    'flex-start': flex-start,
+    'flex-end': flex-end
+);
+
+$flexDirection: row, row-reverse, column, column-reverse;
+
+$commonSize: (
+    '0\\.5': 0.5,
+    '1': 1,
+    '1\\.5': 1.5,
+    '2': 2,
+    '2\\.5': 2.5,
+    '3': 3,
+    '3\\.5': 3.5,
+    '4': 4,
+    '4\\.5': 4.5,
+    '5': 5,
+    '5\\.5': 5.5,
+    '6': 6,
+    '6\\.5': 6.5,
+    '7': 7,
+    '7\\.5': 7.5,
+    '8': 8,
+    '8\\.5': 8.5,
+    '9': 9,
+    '9\\.5': 9.5,
+    '10': 10,
+    '10\\.5': 10.5,
+    '11': 11,
+    '11\\.5': 11.5,
+    '12': 12,
+    '12\\.5': 13.5,
+    '13': 13,
+    '14': 14,
+    '15': 15,
+    '16': 16,
+);
+// GRID VARIABLE
+$justifyItems: (
+    'start': start,
+    'end': end,
+    'center': center,
+    'stretch': stretch
+);
+
+$alignContent: (
+    'normal': normal,
+    'center': center,
+    'start': start,
+    'end': end,
+    'between': space-between,
+    'around': space-around,
+    'evenly': space-evenly,
+    'baseline': baseline,
+    'stretch': stretch
+);
+
+
+// BUTTON VARIABLE
+$ButtonBasicPadding: (
+    '2xs': 0.25rem,
+    'xs': 0.5rem,
+    'sm': 0.9475rem,
+    'base': 1.125rem 3.125rem,
+    'lg': 0 1rem,
+    'xl': 0,
+    '2xl': 0,
+    '3xl': 0,
+    '4xl': 0,
+    'none': 0rem
+);
+
+$borderRadius: (
+    'none': 0,
+    'xs': 1px,
+    'sm': 2px,
+    'base': 4px,
+    'lg': 6px,
+    'xl': 8px,
+    '2xl': 12px,
+    'full': 9999px,
+);
+// TEXT VARIABLE
+$fontSize: (
+  'xs': 0.75rem,
+  'sm': 0.875rem,
+  'base': 1rem,
+  'lg': 1.125rem,
+  '2xl': 1.5rem,
+  '4xl': 2.25rem,
+  '5xl': 4rem,
+);
+
+$textWeight: (
+    'light': 300,
+    'regular': 400,
+    'bold': 700,
+    'black': 900,   
+);
+
+$color: (
+    "white": #fff,
+    "invalid": #EF5959,
+    "valid": #22c55e,
+    "blue-100": #77B1F5,
+    "blue-300": #4A98F5,
+    "blue-500": #1074EB,
+    "blue-700": #356DB0,
+    "blue-900": #054899,
+
+    "gray-100": #F7F7F7,
+    "gray-200": #e7e7e7,
+    "gray-300": #9C9C9C,
+    "gray-500": #7D7D7D,
+    "gray-700": #757575,
+    "gray-900": #5E5E5E,
+
+    "yellow-100": #FFC773,
+    "yellow-300": #FFB240,
+    "yellow-500": #FF9900,
+    "yellow-700": #BF8630,
+    "yellow-900": #A66300,
+
+    "red-100": #fca5a5,
+    "red-300": #f87171,
+    "red-500": #ef4444,
+    "red-700": #dc2626,
+    "red-900": #b91c1c,
+
+    "green-100": #86efac,
+    "green-300": #4ade80,
+    "green-500": #22c55e,
+    "green-700": #16a34a,
+    "green-900": #15803d,
+
+    "black-100": #575757,
+    "black-300": #383838,
+    "black-500": #323232,
+    "black-700": #2D2D2D,
+    "black-900": #282828,
+);
+
+
+:root {
+    --transparent: transparent;
+    @each $name, $value in $color {
+        --#{$name}: #{$value};
+    }
+
+    @each $name, $value in $fontSize {
+        --text-#{$name}: #{$value};
+    }
+
+    --lin-grad-loader--deg: 135deg;
+    --transition-blur: 1rem;
+
+};

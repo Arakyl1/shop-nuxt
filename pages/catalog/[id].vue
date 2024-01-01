@@ -44,9 +44,9 @@ const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/produc
 
 
 
-onMounted(() => {
-    setHeaderTitle(data.value ? data.value.name : 'Каталог товаров')
-})
-onActivated(() => setHeaderTitle(data.value ? data.value.name : 'Каталог товаров'))
+// onMounted(() => {
+//     setHeaderTitle(data.value ? data.value.name : 'Каталог товаров')
+// })
+// onActivated(() => setHeaderTitle(data.value ? data.value.name : 'Каталог товаров'))
 
 </script>

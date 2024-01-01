@@ -35,6 +35,7 @@ function initFindParams(data: QueryObject) {
 
 export default defineEventHandler(async (event) => {
 
+    console.log(true)
     const query = getQuery(event)
 
     const getStorageKey = Object.entries(query).map(_ => _.join(':')).join('/')

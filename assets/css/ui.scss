@@ -1,0 +1,42 @@
+:root {
+    // Input style
+    --input-transitions--xs: all 0.18s ease-in-out;
+    --input-transitions--sm: all 0.24s ease-in-out;
+    --input-transitions--base: all 0.3s ease-in-out;
+    --input-transitions--lg: all 0.36s ease-in-out;
+
+    --input-transitions-span--xs: all 0.18s ease-in-out;
+    --input-transitions-span--sm: all 0.24s ease-in-out;
+    --input-transitions-span--base: all 0.3s ease-in-out;
+    --input-transitions-span--lg: all 0.36s ease-in-out;
+    // Border Style
+    @each $name, $value in $borderRadius {
+        --rounded-#{$name}: #{$value};
+    }
+    /* UI Component Rating */
+    --rating-star-default: var(--gray-200);
+    --rating-star-active: var(--yellow-500);
+    --rating-star-transition: var(--input-transitions--sm);
+    /* UI Component Checkbox */
+    --checkbox-rounded: 4px;
+    --checkbox-background-color: var(--white);
+    --checkbox-border-color: var(--gray-500);
+    --checkbox-border-color--hover: var(--blue-100);
+    --checkbox-background-color--active: var(--blue-500);
+    --checkbox-border-color--active: var(--blue-500);
+    --checkbox-stroke-color--active: var(--white);
+    /* UI Component Group */
+    --separator-background-color: var(--gray-500);
+    // UI Components Button
+    --button-border-focus-visible: solid;
+    @each $name, $value in $ButtonBasicPadding {
+        --button-base-padding-#{$name}: #{$value};
+    }
+    --bt-transition--xs: all 0.18s ease-in-out;
+    --bt-transition--sm: all 0.24s ease-in-out;
+    --bt-transition--base: all 0.3s ease-in-out;
+    --bt-transition--lg: all 0.36s ease-in-out;
+    // UI Tooltip
+    --trigger-outline: 1.75px dashed var(--black-500);
+    --trigger-rounded: var(--rounded-base);
+}

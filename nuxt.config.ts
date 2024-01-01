@@ -5,10 +5,10 @@ export default defineNuxtConfig({
   //   preset: 'vercel-edge',
   // },
   modules: [
-    '@nuxtjs/tailwindcss',
     '@nuxt/content',
     '@nuxtjs/device',
     "nuxt-vercel-analytics",
+    'nuxt-viewport',
     ['@kevinmarrec/nuxt-pwa', {
       icon: {
         source: 'assets/logo.png'
@@ -22,12 +22,11 @@ export default defineNuxtConfig({
         }
     ],
   ],
-  postcss: {
-    plugins:{
-      tailwindcss: {},
-      autoprefixer: {},
-    }
-  },
+  // postcss: {
+  //   plugins:{
+  //     autoprefixer: {},
+  //   }
+  // },
   device: {
     refreshOnResize: true
   },
@@ -38,15 +37,19 @@ export default defineNuxtConfig({
     
     jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
     jwtRefrechSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
+    supabase_public_key: process.env.SUPABASE_PUBLIC_KEY,
     redis: {
       host: '',
       port: 0,
     },
     public: {
-      linkPhotoUserBase: 'https://res.cloudinary.com/dmxetw6p8/image/upload/v1675156698/upload-examples/w7xbdugi7bgqt0psz3kg.webp'
+      linkPhotoUserBase: 'https://res.cloudinary.com/dmxetw6p8/image/upload/v1675156698/upload-examples/w7xbdugi7bgqt0psz3kg.webp',
+      NAME_APP: 'GOOSE'
     }
   },
   routeRules: {
+    '/': { ssr: true },
+    '/add': { ssr: false },
     '/delivery': { swr: true }
   },
   vite: {

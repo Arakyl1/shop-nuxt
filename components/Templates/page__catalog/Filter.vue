@@ -1,6 +1,13 @@
 <template>
     <div @input.stop @change.stop>
-        <form ref="form" @input="getParamsFilter" @change="getParamsFilter">
+        <form ref="formCategory" @input="getParamsFilter" @change="getParamsFilter">
+            <template v-if="selectData">
+                <fieldset v-for="item in selectData" >
+                    <MoleculesFormSelectCategor :data="item.data" />
+                </fieldset>
+            </template>
+        </form>
+        <form ref="form">
             <template v-if="dataFilterList">
                 <section v-for="section, i in dataFilterList" :key="Array.isArray(section) ? i : section.title">
                     <template v-if="Array.isArray(section)">
@@ -10,8 +17,8 @@
                                 <template v-if="item.type === 'radio'">
                                     <p class="flex items-center justify-between mb-3">
                                         <span>{{ item.title }}</span>
-                                        <AtomFormSwitch :style="{ height: '20px' }" :input-name="item.name!"
-                                            :input-value="item.value!" />
+                                        <Switch :name="item.name!"
+                                            :value="item.value!" />
                                     </p>
                                 </template>
                             </template>
@@ -19,9 +26,6 @@
                     </template>
                     <template v-else>
                         <template v-if="section.type === 'select'">
-                            <fieldset>
-                                <MoleculesFormSelectCategor :data="section.data" />
-                            </fieldset>
                         </template>
                         <template v-else-if="section.type === 'number-range'">
                             <div class="decor-line"></div>
@@ -35,8 +39,7 @@
                                 <h1 class="truncate">{{ section.title }}</h1>
                                 <div class="decor-line my-1"></div>
                                 <div class="py-1">
-                                    <AtomFormRating :input-name="section.name" :quantity-star="ratingStar"
-                                    @number-star="(e) => { ratingStar = e }" class="justify-between" :name="'star_25_25'" />
+                                    <Rating :value="ratingStar" :name="section.name" :readonly="false" :step="1"/>
                                 </div>
                             </fieldset>
                         </template>
@@ -45,7 +48,7 @@
                                 <h1 class="truncate">{{ section.title }}</h1>
                                 <div class="decor-line my-1"></div>
                                 <div>
-                                    <MoleculesListChecbox :content="section" />
+                                    <ListCheckBox :content="section" />
 
                                 </div>
                             </fieldset>
@@ -53,8 +56,7 @@
                         <template v-else-if="section.type === 'radio'">
                             <p class="flex items-center justify-between mb-3">
                                 <span>{{ section.title }}</span>
-                                <AtomFormSwitch :style="{ height: '20px' }" :input-name="section.name!"
-                                    :input-value="section.value!" />
+                                <Switch :name="section.name!" :value="section.value!" />
                             </p>
                         </template>
                     </template>
@@ -72,6 +74,9 @@
 </template>
 
 <script setup lang="ts">
+import Rating from "@/components/UI/Rating/Rating.vue";
+import Switch from "@/components/UI/Switch/Switch.vue";
+import ListCheckBox from "@/components/UI/List/Checkbox.vue";
 import { Content, FilterData } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
 
@@ -80,12 +85,16 @@ const route = useRoute()
 const router = useRouter()
 const storeAlert = _alert()
 const _content = useState<Content>('CONTENT_APP')
+const formCategory = ref<HTMLFormElement | null>(null)
 const form = ref<HTMLFormElement | null>(null)
 const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
 const ratingStar = ref<number>(0) 
 
 
 const routeCategorId = computed(() => 'categor' in route.query ? route.query.categor : null)
+const selectData = computed(() => dataFilterList.value ? dataFilterList.value.filter(_ => {
+    return !Array.isArray(_) ? _.type === 'select' : false }
+) : null)
 const style = {
     title: 'text-lg mb-1',
     input: 'p-2 rounded-md text-gray-500'
@@ -96,7 +105,7 @@ if (!dataFilterList.value) {
 }
 
 watch(() => routeCategorId.value, () => {
-    resetForm()
+    // resetForm()
     initFilterData()
 })
 
@@ -116,32 +125,32 @@ function initFilterData() {
     })
 }
 
-function resetForm() {
-    if (form.value) {
-        const formElements = form.value.elements
-        for (const key in formElements) {
-            const value = formElements[key]
-            if (value.nodeName === 'INPUT') {
-                const _elem = value as HTMLInputElement
-                switch (_elem.type) {
-                    case 'number': {
-                        _elem.value = ''
-                        break;
-                    }
-                    case 'checkbox': {
-                        _elem.checked = false
-                        break;
-                    }
-                }
-            }
-        }
-        const formResetEvent = new Event('reset', { bubbles: true })
-        form.value.dispatchEvent(formResetEvent)
-    }
-}
+// function resetForm() {
+//     if (form.value) {
+//         const formElements = form.value.elements
+//         for (const key in formElements) {
+//             const value = formElements[key]
+//             if (value.nodeName === 'INPUT') {
+//                 const _elem = value as HTMLInputElement
+//                 switch (_elem.type) {
+//                     case 'number': {
+//                         _elem.value = ''
+//                         break;
+//                     }
+//                     case 'checkbox': {
+//                         _elem.checked = false
+//                         break;
+//                     }
+//                 }
+//             }
+//         }
+//         const formResetEvent = new Event('reset', { bubbles: true })
+//         form.value.dispatchEvent(formResetEvent)
+//     }
+// }
 
 function resetData(event: MouseEvent) {
-    resetForm()
+    // resetForm()
     getParamsFilter(event)
 }
 
@@ -168,8 +177,6 @@ function getParamsFilter({ target, type }: Event) {
                         const paramsItem = paramsData.get(key)
                         paramsData.set(key, [...paramsItem!, changeStr(_value)])
                     } else {
-
-                        console.log(changeStr(_value))
                         paramsData.set(key, [changeStr(_value)])
                     }
                 }
@@ -183,6 +190,8 @@ function getParamsFilter({ target, type }: Event) {
             const findParams = _target.tagName === 'SELECT' && 'categor' in finalParams ? { categor: finalParams.categor } : finalParams
             let page = 'page' in queryParams ? { page: queryParams.page } : {}
             let limit = 'limit' in queryParams ? { limit: queryParams.limit } : {}
+           
+            console.log({ ...findParams, ...page, ...limit })
             router.push({ query: { ...findParams, ...page, ...limit } })
         }
     }
@@ -199,30 +208,30 @@ onMounted(() => {
                 .map(_ => _.split('__').join(' ')))
         })
 
-        for (const element of form.value.elements) {
-            const elemName = element.getAttribute('name') || ''
-            if (elemName !== 'categor' && value.has(elemName)) {
-                const valueData = value.get(elemName) || []
-                if (element.tagName === 'INPUT') {
-                    const _input = element as HTMLInputElement
-                    switch (_input.type) {
-                        case 'number': {
-                            _input.valueAsNumber = parseInt(valueData[0])
-                            break
-                        }
-                        case 'checkbox': {
-                            if (valueData.includes(_input.value || '')) {
-                                _input.checked = true
-                            }
-                            break
-                        }
-                    }
-                }
-            }
-        }
-        setTimeout(() => {
-            window.dispatchEvent(new CustomEvent('init-active-params'))
-        })
+        // for (const element of form.value.elements) {
+        //     const elemName = element.getAttribute('name') || ''
+        //     if (elemName !== 'categor' && value.has(elemName)) {
+        //         const valueData = value.get(elemName) || []
+        //         if (element.tagName === 'INPUT') {
+        //             const _input = element as HTMLInputElement
+        //             switch (_input.type) {
+        //                 case 'number': {
+        //                     _input.valueAsNumber = parseInt(valueData[0])
+        //                     break
+        //                 }
+        //                 case 'checkbox': {
+        //                     if (valueData.includes(_input.value || '')) {
+        //                         _input.checked = true
+        //                     }
+        //                     break
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        // setTimeout(() => {
+        //     window.dispatchEvent(new CustomEvent('init-active-params'))
+        // })
     }
 })
 

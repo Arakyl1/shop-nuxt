@@ -43,7 +43,7 @@ function getSelectData(data: GetSelectData, categorData: storageCategorData) {
     return fullSelectData as ({ title: string, value: string | number, name: string })[]
 }
 
-export default defineEventHandler<FilterData>(async (event) => {
+export default defineEventHandler<FilterData>(async(event) => {
     let s = Date.now()
 
     const query = getQuery(event)

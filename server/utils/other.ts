@@ -15,6 +15,10 @@ export function isBoolean(elem: unknown): elem is boolean {
 export function isObject(elem: unknown): elem is object {
     return typeof elem === 'object'
 }
+export function isNumeric(str: string): boolean {
+    if (typeof str != "string") return false
+    return !isNaN(str as never) && !isNaN(parseFloat(str))
+}
 
 export const generateHash = (str:string, seed = 0) => {
     let h1 = 0xdeadbeef ^ seed,
