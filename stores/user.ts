@@ -1,11 +1,16 @@
-import { UserBase } from "~~/type/intex"
+import { Anonim } from "~~/type/intex"
 
 export const user = defineStore('user', () => {
-    const data = ref<UserBase | null>(null)
+    const data = ref<Anonim | null>(null)
 
-    function update(user: UserBase | null) {
+
+    const anonim = computed(() => data.value ? data.value.anonim : false)
+    const basket = computed(() => data.value ? data.value.basket : null)
+    const basketLength = computed(() => basket.value ? basket.value.item.length : 0)
+
+    function update(user: Anonim | null) {
         data.value = user
     }
 
-    return { data, update }
+    return { data, anonim, basket, basketLength, update }
 })
