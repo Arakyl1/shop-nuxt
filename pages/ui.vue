@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-40">
+        <!-- <div class="w-40">
             <Rating :readonly="false" />
             <Switch />
             <CheckBox :disabled="true"/>
@@ -28,11 +28,11 @@
                     <Button :icon-left="{ key: key, size: '24_24' }"  :size="'xs'" :appearance="'blue'" />
                 </template>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { default as CreateIcon, type Props as CreateIconProps } from "@/content/icons/create.ts";
 import { iconPath } from "@/content/icons/1.ts";
 import Rating from "@/components/UI/Rating/Rating.vue";
@@ -51,4 +51,4 @@ const storeModal = _modal()
 function onClick() {
     storeModal.changeActiveModal('auth-user')
 }
-</script>
+</script> -->
