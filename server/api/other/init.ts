@@ -4,7 +4,7 @@ import { db } from "@/utils/dbcategor";
 export default defineEventHandler(async () => {
 
     for (const categor of db) {
-        console.log('start', Date.now())
+        const start = Date.now()
         const createCategorRes = await prisma.attribute.create({
             data: { name: categor[0] as string, type: 'CATEGOR' },
             select: { id: true }
@@ -64,7 +64,7 @@ export default defineEventHandler(async () => {
             }
         }
 
-        console.log('end', Date.now())
+        console.log('end', start - Date.now())
     }
     
     return true
