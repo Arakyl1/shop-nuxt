@@ -55,18 +55,20 @@ export default () => {
     const initAuth = async() => { 
         try {
             // create new Access Token
+            // const resT = await createAccess();
+            // if (resT && 'accessToken' in resT && resT.accessToken) {
+            //     // Autorization user by token
+            //     const resU = await data(resT)
+            //     if (resU && 'user' in resU && resU.user) {
+            //         reRefrechAccess(resT.accessToken)
+            //     }
+            //     return resU 
+            // } else {
+            //     return resT || null;
+            // }
+            const { data: res } = await useFetch('/api/auth/anonim')
+             return res.value
 
-            const resT = await createAccess();
-            if (resT && 'accessToken' in resT && resT.accessToken) {
-                // Autorization user by token
-                const resU = await data(resT)
-                if (resU && 'user' in resU && resU.user) {
-                    reRefrechAccess(resT.accessToken)
-                }
-                return resU 
-            } else {
-                return resT || null;
-            }
         } catch (error) {
             console.log(error);
             return null
