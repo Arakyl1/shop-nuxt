@@ -64,8 +64,6 @@ const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/produc
     }
 })
 
-onMounted(() => setHeaderTitle('Каталог товаров'))
-onActivated(() => setHeaderTitle('Каталог товаров'))
 
 
 watch(() => toucheData.vector, (newVector) => {

@@ -16,7 +16,5 @@ definePageMeta({
     title: "Контакты"
 })
 
-onMounted(() => setHeaderTitle("Контакты"))
-onActivated(() => setHeaderTitle("Контакты"))
 
 </script>

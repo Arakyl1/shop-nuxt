@@ -2,13 +2,13 @@
     <div> 
         <TemplatesPageMainStocks class="mb-16 xl:mb-12"/>
 
-         <TemplatesPageMainCarusel :params="{ 'discount.gt': 0, limit: 24 }">
+         <TemplatesPageMainCarusel :params="{ 'discount': 'gt:0', limit: 24 }">
             <template #title>
                 Товары на акции
             </template>
         </TemplatesPageMainCarusel>
 
-        <TemplatesPageMainCarusel :params="{ 'createAt.gte': new Date(Date.now() - 604800000 ), limit: 24  }">
+        <TemplatesPageMainCarusel :params="{ 'createAt': `gte:${new Date(Date.now() - 11604800000).getTime()}`, limit: 24  }">
             <template #title>
                 Новинки
             </template>
@@ -16,7 +16,7 @@
         <div></div>
         <TemplatesPageMainAdvertisement class="mb-16 xl:mb-12"/>
         
-        <TemplatesPageMainCarusel :params="{ 'views.gt': 0, 'orderBy.views': 'desc' }">
+        <TemplatesPageMainCarusel :params="{ 'views': 'gt:0', 'orderBy': 'views:desc' }">
             <template #title>
                 Товары месяца
             </template>
@@ -32,6 +32,4 @@ definePageMeta({
    keepalive: true,
 })
 
-onMounted(() => setHeaderTitle('Главная страница'))
-onActivated(() => setHeaderTitle('Главная страница'))
 </script>
