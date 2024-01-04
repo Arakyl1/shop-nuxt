@@ -23,45 +23,47 @@ model User {
 }
 
 model Anonim {
-  id       Int      @id @default(autoincrement())
-  createAt DateTime @default(now())
-  ip       String
-  basket   Basket?
+  id        Int      @id @default(autoincrement())
+  createAt  DateTime @default(now())
+  sessionId String   @unique
+  anonim    Boolean  @default(true)
+  basket    Basket?
 }
 
 model RefrechToken {
-  id        Int      @id @default(autoincrement())
-  token     String   @unique
-  createAt  DateTime @default(now())
+  id       Int      @id @default(autoincrement())
+  token    String   @unique
+  createAt DateTime @default(now())
   updateAt DateTime @updatedAt
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id])
 }
 
 model ProductCard {
-  id             Int              @id @default(autoincrement())
-  name           String
-  art            String
-  price          Float
-  itemArt        String
-  itemMod        String
-  quantity       Int              @default(0)
-  description    String           @default("")
+  id          Int      @id @default(autoincrement())
+  name        String
+  art         String
+  price       Float
+  itemArt     String
+  itemMod     String
+  quantity    Int      @default(0)
+  description String   @default("")
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
-  discount       Int              @default(0)
-  views          Int              @default(0)
+  discount    Int      @default(0)
+  views       Int      @default(0)
+
   characteristic Characteristic[]
   reviews        Comment[]
   image          Image[]
   attribute      Attribute[]      @relation("AttributeToProductCard")
-  basket         Basket[]
+  basket         BasketItem[]
 }
 
 model Attribute {
   id       Int           @id @default(autoincrement())
   name     String        @default("")
-  value    String 
+  value    String        @default("")
   type     AttributeType @default(OTHER)
   item     ProductCard[] @relation("AttributeToProductCard")
   parent   Attribute[]   @relation("ParentChildren")
@@ -89,9 +91,9 @@ model Comment {
 }
 
 model Characteristic {
+  id            Int                  @id @default(autoincrement())
   title         String
   productCardId Int
-  id            Int                  @id @default(autoincrement())
   ProductCard   ProductCard          @relation(fields: [productCardId], references: [id])
   content       CharacteristicItem[]
 }
@@ -113,12 +115,23 @@ enum AttributeType {
 }
 
 model Basket {
-  id          Int           @id @default(autoincrement())
-  createAt    DateTime      @default(now())
-  updateAt    DateTime      @updatedAt
-  user        User?         @relation(fields: [userId], references: [id])
-  userId      Int?          @unique
-  anonim      Anonim?       @relation(fields: [anonimId], references: [id])
-  anonimId    Int?          @unique
-  productCard ProductCard[]
+  id       Int          @id @default(autoincrement())
+  createAt DateTime     @default(now())
+  updateAt DateTime     @updatedAt
+  user     User?        @relation(fields: [userId], references: [id])
+  userId   Int?         @unique
+  anonim   Anonim?      @relation(fields: [anonimId], references: [id])
+  anonimId Int?         @unique
+  item     BasketItem[]
+}
+
+model BasketItem {
+  id       Int         @id @default(autoincrement())
+  createAt DateTime    @default(now())
+  updateAt DateTime    @updatedAt
+  count    Int         @default(1)
+  card     ProductCard @relation(fields: [cardId], references: [id])
+  cardId   Int
+  basket   Basket      @relation(fields: [basketId], references: [id])
+  basketId Int
 }
