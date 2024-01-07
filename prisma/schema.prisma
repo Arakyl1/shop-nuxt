@@ -23,11 +23,11 @@ model User {
 }
 
 model Anonim {
-  id       Int      @id @default(autoincrement())
-  createAt DateTime @default(now())
-  ip       String   @unique
-  anonim   Boolean  @default(true)
-  basket   Basket?
+  id        Int      @id @default(autoincrement())
+  createAt  DateTime @default(now())
+  sessionId String   @unique
+  anonim    Boolean  @default(true)
+  basket    Basket?
 }
 
 model RefrechToken {
