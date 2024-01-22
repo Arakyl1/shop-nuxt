@@ -67,7 +67,7 @@
                 <Button
                 :appearance="'blue'"
                 :size="'xs'"
-                :active="!anonim"
+                :active="isBoolean(anonim) && anonim"
                 :icon-left="{ key: 'user', size: '24_24' }"/>
             </Flex>
         </div>

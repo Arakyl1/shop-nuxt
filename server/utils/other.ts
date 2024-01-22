@@ -1,4 +1,4 @@
-import { CONTENT_KEY } from "~~/type/intex";
+import { CONTENT_KEY, CookieKey } from "@/type/intex";
 
 export function isNumber(elem: unknown): elem is number {
     return typeof elem === 'number'
@@ -37,3 +37,13 @@ export const generateHash = (str:string, seed = 0) => {
 };
 
 export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key 
+
+type ArgumentsSetCookie = Parameters<typeof setCookie>
+export const _setCookie = async(event: ArgumentsSetCookie[0], key: CookieKey, value: string ) => {
+    if (key && value) {
+        setCookie(event, key, value, {
+            httpOnly: true,
+            sameSite: true,
+        })
+    }
+}

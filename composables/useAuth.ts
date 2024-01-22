@@ -52,7 +52,7 @@ export default () => {
     }
 
 
-    const initAuth = async() => { 
+    const initAuth = async(headers?: any) => { 
         try {
             // create new Access Token
             // const resT = await createAccess();
@@ -66,7 +66,7 @@ export default () => {
             // } else {
             //     return resT || null;
             // }
-            const { data: res } = await useFetch('/api/auth/anonim')
+            const { data: res } = await useFetch('/api/auth/anonim', { headers })
              return res.value
 
         } catch (error) {

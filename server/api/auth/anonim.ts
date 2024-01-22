@@ -1,9 +1,10 @@
 import prisma from '~/server/db'
-import { isObject } from "../../utils/other";
+import { _setCookie, isObject } from "../../utils/other";
 import { GET_CONTENT_KEY } from "../../utils/other";
 import { Prisma } from '@prisma/client';
 import { getModelName } from '@/type/intex';
 import { selectProductCard, selectAnonim } from '@/server/utils/selectData';
+import { generateSessionId } from '@/server/utils/session';
 
 
 type modelName = getModelName<'Anonim'>
@@ -19,8 +20,24 @@ const includeElemSelectParams: ThisMainTypeInclude = {
 
 export default defineEventHandler(async(event) => {
 
-    const clientIp = getHeader(event, 'x-forwarded-for') || event.req.connection.remoteAddress
-    console.log(clientIp)
+    const sessionId = getCookie(event, 'anonim_session_id')
+    let clientIp = null
+    console.log(sessionId)
+
+
+    if (!sessionId) {
+        const key = generateSessionId()
+        _setCookie(event, 'anonim_session_id', key)
+        const createData = await prisma.anonim.create({ 
+            data: { 'sessionId': key, basket: { 'create': {} } }, 
+            include: includeElemSelectParams
+        })
+       
+        
+        return { data: createData, message: null }
+    } else {
+        
+    }
 
     if (clientIp) {
         try {
@@ -31,12 +48,7 @@ export default defineEventHandler(async(event) => {
                 include: includeElemSelectParams
             })
             if (!data) {
-                const createData = await prisma.anonim.create({ 
-                    data: { ip: String(clientIp), basket: { 'create': {} } }, 
-                    include: includeElemSelectParams
-                })
                 
-                return { data: createData, message: null }
             } else {
                 return { data: data, message: null }
             }

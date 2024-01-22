@@ -15,6 +15,7 @@
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/node": "^20.10.4",
+    "@types/uuid": "^9.0.7",
     "autoprefixer": "^10.4.13",
     "nuxt": "3.6.1",
     "nuxt-vercel-analytics": "^0.2.2",
@@ -42,6 +43,7 @@
     "pinia": "^2.0.28",
     "sass": "^1.69.5",
     "unstorage": "^1.8.0",
+    "uuid": "^9.0.1",
     "yarn": "^1.22.19"
   }
 }

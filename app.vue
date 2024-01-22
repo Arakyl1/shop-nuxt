@@ -39,15 +39,20 @@ const route = useRoute()
 const storeUser = _user()
 const { data: _userData } = storeToRefs(storeUser)
 
+
 const _content = useState<Content | null>('CONTENT_APP', () => null)
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
-const headers = useRequestHeaders();
+const headers = useRequestHeaders(['cookie'])
+const event = useRequestEvent()
+
 
 type useAuth = ReturnType<typeof useAuth>
 type InitAuthResponse = Cached<useAuth['initAuth']>
+const { data: result } = await useAsyncData(async() => await fetchWithCookie('/api/auth/anonim'))
 
 
 onServerPrefetch(async() => {
+  
   import('@/content/language/ru.js').then(res => _content.value = res.content)
  
   useFetch('/api/attridute/get', {
@@ -63,9 +68,12 @@ onServerPrefetch(async() => {
         }
     })
     
+  
+  
+  //const { initAuth } = useAuth()
 
-  const { initAuth } = useAuth()
-  await checkRes(await initAuth())
+  
+  // await checkRes(await initAuth(headers))
   
 
   // if (Object.prototype.hasOwnProperty.call(headers, 'accept-language')) {
@@ -112,7 +120,7 @@ async function checkRes(res: InitAuthResponse) {
 useSeoMeta({
   title: () => route.meta.title ? `${config.public.NAME_APP} - ${route.meta.title}` : config.public.NAME_APP
 })
-
+onMounted(() => console.log(document.cookie))
 
 // user data
 // name PPPPPPPP

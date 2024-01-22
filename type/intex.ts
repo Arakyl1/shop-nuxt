@@ -5,7 +5,7 @@ import { KEY_ICON } from "content/icons/1";
 
 
 export type NAMEAPP = 'MARKET_5kv'
-export type CookieKey = 'refrech_token'
+export type CookieKey = 'refrech_token' | 'anonim_session_id'
 export type PP = { title: string, name: string, value: boolean | string | number }
 export type GG = { id: number, art: string, name: string }
 

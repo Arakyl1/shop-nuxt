@@ -4,7 +4,7 @@ export const user = defineStore('user', () => {
     const data = ref<Anonim | null>(null)
 
 
-    const anonim = computed(() => data.value ? data.value.anonim : false)
+    const anonim = computed(() => data.value ? data.value.anonim : null)
     const basket = computed(() => data.value ? data.value.basket : null)
     const basketLength = computed(() => basket.value ? basket.value.item.length : 0)
 
