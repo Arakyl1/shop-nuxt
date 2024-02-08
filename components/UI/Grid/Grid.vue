@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag" :class="rootClass" ref="grid" :data-grid="instanse?.uid"><slot></slot></component> 
+    <component :is="tag" :class="rootClass" ref="grid" :data-grid="instanse?.uid" :data-uid="instanse?.uid"><slot></slot></component> 
 </template>
 
 <script setup lang="ts">

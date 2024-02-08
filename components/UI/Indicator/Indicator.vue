@@ -1,5 +1,5 @@
 <template>
-    <div class="relative" :data-indicator="instanse?.uid">
+    <div class="relative" :data-indicator="instanse?.uid" :data-uid="instanse?.uid">
         <slot></slot>
         <div v-show="active" :class="rootClass">
             <template v-if="mode === 'secondary'">

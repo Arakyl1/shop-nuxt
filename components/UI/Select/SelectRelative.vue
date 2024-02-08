@@ -4,7 +4,7 @@
     чтобы можно было менять между абсолютно и относительным позиционированием
 -->
 <template>
-    <div :data-select="instanse.uid" class="relative" :class="{ 'gap-3': isActive, [className['main']]: true }" tabindex="-1" >
+    <div :data-select="instanse.uid" :data-uid="instanse.uid" class="relative" :class="{ 'gap-3': isActive }" tabindex="-1" >
         <div class="w-full" ref="trigger">
             <slot name="trigger" v-bind="{ isActive }">
                 <Button :text="activeOption?.value"

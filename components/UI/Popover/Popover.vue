@@ -1,5 +1,5 @@
 <template>
-    <div ref="popover" :data-popover="instanse.uid" :class="className['popover']">
+    <div ref="popover" :data-popover="instanse.uid" :data-uid="instanse?.uid" :class="className['popover']">
         <transition :name="animated">
             <div v-show="active && (isActive || always)" :class="[rootClass, className['decktop']]">
                 <template v-if="label">{{ label }}</template>

@@ -4,7 +4,7 @@
             <Button :mode="'outline-2'" :rounded="'lg'" :class="className['bt']"
                 @click="() => togglePopover()">
                 <Icon :name="'calendar-value'" />
-                <Paragraph :text="cahngeValue(inputValue)" class="text-medium text-dark-700" :size="'sm'" />
+                <Paragraph :text="changeValue(inputValue)" class="text-medium text-dark-700" :size="'sm'" />
             </Button>
         </template>
     </DatePicker>
@@ -35,7 +35,7 @@ watch(() => props.value, (newV) => {
     range.value = newV
 })
 
-function cahngeValue(value) {
+function changeValue(value) {
     emit('update:value', value)
     return changeDate(value)
 }

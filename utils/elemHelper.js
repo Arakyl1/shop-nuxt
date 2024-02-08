@@ -1,6 +1,7 @@
 export function checkThisComponent(target, instanse) {
-    if (target) {
-        return target.__vueParentComponent.uid === instanse?.uid
+    const elem = target.closest('[data-uid')
+    if (elem instanceof HTMLElement) {
+        return elem.dataset.uid === instanse?.uid
     } return false
 }
 

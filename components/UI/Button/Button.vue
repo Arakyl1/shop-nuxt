@@ -2,6 +2,7 @@
     <component :is="isTag" :type="isType"
         :class="rootClass"
         :data-button-id="instanse?.uid"
+        :data-uid="instanse?.uid"
         :tabindex="disabled || $attrs?.disabled ? -1 : 1">
 
         <template v-if="iconLeft">

@@ -1,5 +1,5 @@
 <template>
-    <div :data-accordion="instanse.uid" class="relative">
+    <div :data-accordion="instanse.uid" :data-uid="instanse.uid" class="relative">
         <div>
             <div v-if="content === 'after'">
                 <slot name="trigger" v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }">

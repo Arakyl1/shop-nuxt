@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass" :data-card="instanse!.uid" ref="element">
+    <div :class="rootClass" :data-card="instanse!.uid" :data-uid="instanse?.uid" ref="element">
         <slot></slot>
     </div>
 </template>

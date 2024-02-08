@@ -1,5 +1,5 @@
 <template>
-    <div ref="tooltip" :data-tooltip="instanse.uid" :class="className['tooltip']" @blur.capture="close"
+    <div ref="tooltip" :data-tooltip="instanse.uid" :data-uid="instanse?.uid" :class="className['tooltip']" @blur.capture="close"
         @mouseleave="close">
         <transition :name="props.animated">
             <div v-show="active && (isActive || always)" :class="rootClass">
