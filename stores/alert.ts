@@ -1,11 +1,19 @@
+import { ALERT_MESSAGE } from "@/common/C";
+
 export const alert = defineStore('alert', () => {
 
-    type Data = { text: string | number | null, state: 'info' | 'error' | 'success' | 'base', active: boolean, createAt: number }
+    type Data = { text: string | number, state: 'info' | 'error' | 'success' | 'base', active: boolean, createAt: number }
     const data = ref<Data[]>([])
 
-    function create(item: Pick<Data, 'state' | 'text'>) {
-        if (item && item.text) {
-            const createItem = { ...item, active: true, createAt: Date.now() }
+    type Item = Pick<Data, 'state'> & { key: keyof typeof ALERT_MESSAGE }
+    function create(item: Item) {
+        if (item && item.key) {
+            const createItem = {
+                state: item.state || 'info',
+                text: ALERT_MESSAGE[item.key], 
+                active: true,
+                createAt: Date.now()
+            }
             data.value.unshift(createItem)
         }
     }

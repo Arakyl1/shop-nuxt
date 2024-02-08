@@ -1,35 +1,32 @@
 <template>
-    <div> 
-        <TemplatesPageMainStocks class="mb-16 xl:mb-12"/>
-
-         <TemplatesPageMainCarusel :params="{ 'discount': 'gt:0', limit: 24 }">
-            <template #title>
-                Товары на акции
-            </template>
-        </TemplatesPageMainCarusel>
-
-        <TemplatesPageMainCarusel :params="{ 'createAt': `gte:${new Date(Date.now() - 11604800000).getTime()}`, limit: 24  }">
-            <template #title>
-                Новинки
-            </template>
-        </TemplatesPageMainCarusel>
-        <div></div>
-        <TemplatesPageMainAdvertisement class="mb-16 xl:mb-12"/>
-        
-        <TemplatesPageMainCarusel :params="{ 'views': 'gt:0', 'orderBy': 'views:desc' }">
-            <template #title>
-                Товары месяца
-            </template>
-        </TemplatesPageMainCarusel>
-    
-        <TemplatesPageMainAdvantages class="mb-20 xl:mb-16"/>
-    </div>
+    <Panel :mode="'view'"> 
+        <Stocks />
+        <Carousel
+        :params="{ 'discount': 'gt:0', limit: 24 }"
+        :title="common.CAROUSEL_TITLE_1"/>
+        <Carousel
+        :params="{ 'createAt': `gte:${new Date(Date.now() - 11604800000).getTime()}`, limit: 24  }"
+        :title="common.CAROUSEL_TITLE_2"/>
+        <Advertisement />
+        <Carousel
+        :params="{ 'views': 'gt:0', 'orderBy': 'views:desc' }"
+        :title="common.CAROUSEL_TITLE_3"/>
+        <Advantages/>
+    </Panel>
 </template>
 
 <script setup lang="ts">
+import Carousel from '@/components/Templates/Carousel/Product.vue';
+import Advantages from '@/components/Templates/page__main/Advantages.vue';
+import Stocks from '@/components/Templates/page__main/Stocks.vue';
+import Advertisement from '@/components/Templates/page__main/Advertisement.vue';
+import Panel from "@/components/UI/Panel/Panel.vue"
+import { PAGE_MAIN as common, PAGE_META as META } from "@/common/C";
+
 definePageMeta({
-    title: 'Главная страница',
+   title: META.MAIN.TITLE,
    keepalive: true,
 })
-
 </script>
+
+

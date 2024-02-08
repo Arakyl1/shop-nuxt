@@ -32,7 +32,7 @@
                     </template>
                     <template #bottom="{ updateScrolLeftSlader, indexActiveButton  }" v-if="data.image.length > 1">
                         <MoleculesSladerControlItem
-                            class="overflow-hidden"
+                            class="hidden"
                             :data="data.image.length"
                             :index-active-button="indexActiveButton"
                             :update-scrol-left-slader="updateScrolLeftSlader"

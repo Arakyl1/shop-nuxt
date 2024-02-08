@@ -46,7 +46,7 @@
                 :text="common.BUTTON_TEXT"
                 class="w-full text-base text-bold justify-center"/>
 
-                <Paragraph :text="common.PAYMENT_METHODS" class="text-lg text-white w-full"/>
+                <Paragraph :text="common.PAYMENT_METHODS" class="text-md text-white w-full"/>
 
                 <Flex class="gap-x-2.5 w-full">
                     <img v-for="item in card" :key="item" :src="`/img/card/${item}.png`" :alt="item" class="" >
@@ -70,7 +70,7 @@
                             <Paragraph :text="common.ADDRESS" class="text-gray-300"/>
                         </Group>
                         <Group class="gap-y-5">
-                            <Title :text="FOOTER_ROUTER[0].title" :size="'lg'" class="text-white"/>
+                            <Title :text="FOOTER_ROUTER[0].title" :tag="'h4'" class="text-white"/>
                             <Group class="gap-y-2.5">
                                 <Button v-for="item in FOOTER_ROUTER[0].links"
                                 :key="item.href"
@@ -82,7 +82,7 @@
                         </Group>
                         <Group class="gap-y-6.5">
                             <Group class="gap-y-5" v-for="section in FOOTER_ROUTER.slice(1,3)">
-                                <Title :text="section.title" :size="'lg'" class="text-white"/>
+                                <Title :text="section.title" :tag="'h4'" class="text-white"/>
                                 <Group class="gap-y-2.5">
                                     <Button v-for="item in section.links"
                                     :key="item.href"

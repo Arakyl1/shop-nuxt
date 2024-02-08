@@ -1,127 +1,203 @@
 <template>
     <section>
-        <div class="flex">
-            <div class="w-1/2 relative xl:w-5/12">
-                <div class="px-16 h-full flex items-center justify-center xl:px-12">
-                    <MoleculesSladerBase :data="data.image">
-                        <template #item="{ elem }">
-                            <div class="flex justify-center items-center h-full aspect-square object-contain">
-                                <img :src="changeValueImageSize(elem.link, { 'crop': 'c_fill', 'obj': 'g_auto:subject', heigth: 'h_480' })" :alt="data.name" class="max-w-[90%] max-h-[90%]">
-                            </div>
+        <Flex class="w-full">
+            <div class="relative" :class="className['photo']">
+                <Flex :justify="'center'" class="px-16 xl:px-12">
+                    <CardGridScroll :data="data.image" :container="'xs'">
+                        <template #default="{ elem }">
+                            <Flex :justify="'center'" :class="className['picture']">
+                                <img :src="changeValueImageSize(elem.link, { 'crop': 'c_fill', 'obj': 'g_auto:subject', heigth: 'h_480' })"
+                                :alt="data.name">
+                            </Flex>
                         </template>
-                        <template #bottom="{ updateScrolLeftSlader, indexActiveButton }" v-if="data.image.length > 1">
-                            <MoleculesSladerControlItem
-                            class="overflow-hidden"
+                        <template #footer="{ updateScrolLeft, indexActiveButton }" v-if="data?.image?.length > 1">
+                            <ControlItem
+                            class="hidden gap-x-4"
                             :data="data.image.length"
                             :index-active-button="indexActiveButton"
-                            :update-scrol-left-slader="updateScrolLeftSlader"
-                            :container-class="'gap-x-4 pt-2'"
-                            :item-class="'aspect-square h-14 w-14 justify-center'"
-                                ><template #default="{ item }">
-                                    <div >
-                                        <div class="border-2 rounded-lg transition p-0.5 aspect-square flex justify-center items-center"
-                                            :class="[(item-1) === indexActiveButton ? 'border-yellow-500 ' : 'border-blue-300']">
-                                            <img :src="changeValueImageSize(data.image[(item-1)].link, { 'heigth': 'h_48' })" :alt="data.name"
-                                                class="rounded-md">
-                                        </div>
-                                    </div>
+                            :update-scroll="updateScrolLeft"
+                            :item-class="'aspect-ratio h-14 w-14 justify-center'">
+                                <template #default="{ item }">
+                                    <Flex :justify="'center'"
+                                        :class="className['control-item']"
+                                        :data-border-color="(item-1) === indexActiveButton ? 'yellow' : 'blue'">
+                                        <img :src="changeValueImageSize(data.image[(item-1)].link, { 'heigth': 'h_48' })" :alt="data.name"
+                                            >
+                                    </Flex>
                                 </template>
-                            </MoleculesSladerControlItem>
+                            </ControlItem>
                         </template>
-                    </MoleculesSladerBase>
-                </div>
-                <AtomProductStatus
-                :news="checkDate(data.createAt as unknown as string)"
-                :discount="data.discount > 0" class="left-0 top-24 lg:text-sm lg:py-0.5" />
+                    </CardGridScroll>
+                </Flex>
+                <Status :status="getStatus(data)" data-left :class="className['status']"  />
             </div>
-            <div class="w-1/2 bg-gray-100 p-12 xl:p-8 xl:w-7/12">
-                <div class="relative">
-                    <div class="absolute z-20 -right-1 top-1 sm:scale-75 sm:top-1.5 sm:right-1.5">
+            <Card :appearance="'gray'" :container="'xl'" :class="className['info']" class="h-full">
+                <Flex class="relative gap-y-6" :direction="'column'" :align="'flex-start'">
+                    <div :class="className['button-like']">
                         <ClientOnly>
-                            <AtomButtonStandart class="group p-1" @click="storeFavorite.toggleItem(data.id)">
-                                <CreateIcon name="like_28_31"
-                                :att="{ class: [ storeFavorite.findItem(data.id).value ? 'fill-red-500 stroke-none' : 'fill-none stroke-gray-500 stroke-[1.5px]'] }"/>
-                            </AtomButtonStandart>
+                            <ButtonLike/>
                         </ClientOnly>
                     </div>
-
-                    <h3 class="text-4xl pr-12 text-black-500 mb-6 xl:text-3xl lg:mb-5 lg:text-xl">{{ data.name }}
-                        <span class="text-gray-300">{{ data.art }}</span>
-                    </h3>
+                    <Title :tag="'h2'"
+                    :text="data.name "
+                    :before-content="data.art"
+                    :before-content-class="'text-gray-300'"
+                    :class="className['name']"/>
                     <div class="decor-line"></div>
-                    <div class="flex py-6 justify-between lg:py-5 items-center">
-                        <AtomFormRating :quantity-star="middleRating" class="grow justify-between lg:scale-90" :name="'star_25_25'"/>
-                        <p class="ml-4 grow text-gray-500 lg:text-sm">Отзывы ({{ data.reviews.length }})</p>
-                        <AtomButtonShare @click="onClick" class="p-0 " >
-                        <template #default>
-                            <CreateIcon name="share_25_25" :att="{ class: 'fill-blue-500' }" class="lg:scale-75"/>
-                        </template>
-                        </AtomButtonShare>
-                    </div>
+                    <Flex :justify="'between'" class="gap-x-4 w-full">
+                        <Rating :readonly="true"
+                        :value="middleRating"
+                        :width="26"
+                        class="gap-x-8"/>
+                        <p class="grow text-gray-500">{{ `${common.TEXT_REVIEWS} (${data.reviews.length})` }}</p>
+                        <Button
+                        :icon-left="{ key: 'share', size: '25_25' }"
+                        :appearance="'blue-icon'"
+                        @click="onClick"/>
+                        
+                    </Flex>
                     <div class="decor-line"></div>
-                    <div class="flex py-6 lg:py-5">
-                        <p class="mr-5"><span class="text-gray-500 pr-3">Артикул:</span>{{ data.itemArt }}</p>
-                        <p><span class="text-gray-500 pr-3">Артикул:</span>{{ data.itemMod }}</p>
-                    </div>
+                    <Flex class="gap-x-5">
+                        <p :class="className['attr']" @click="copyArticle(data.itemArt)">
+                            <span class="text-gray-300">{{common.TEXT_ARTICLE  }} :</span>{{ data.itemArt }}
+                        </p>
+                        <p :class="className['attr']">
+                            <span class="text-gray-300">{{ common.TEXT_MODEL }} :</span>{{ data.itemMod }}
+                        </p>
+                    </Flex>
                     <div class="decor-line"></div>
-                    <div class="py-6 flex justify-between lg:py-5">
-                        <AtomProductPrice :price="data.price" :discount="data.discount"
+                    <Flex :justify="'between'" class="w-full">
+                        <ProductPrice :price="data.price" :discount="data.discount"
                             class="text-4xl xl:text-3xl lg:text-2xl" />
-                        <AtomOtherSelectionQuantity :data-quantity="data.quantity"
-                            @number-of-products="(e: number) => numberOfProduct = e" class="lg:py-1.5 lg:px-3" />
-                    </div>
+                        <Counter :max-value="data.quantity"
+                            @update:value="(e: number) => numberOfProduct = e" class="lg:py-1.5 lg:px-3" />
+                    </Flex>
                     <div class="decor-line"></div>
-                    <div class="pt-6 flex items-center justify-between lg:pt-5">
-                        <AtomButtonStandart
+                    <Flex :justify="'between'" class="w-full">
+                        <Button
+                        class="text-base px-16 h-12 lg:px-10"
+                        :text="common.BUTTON_BASKET_ADD"
+                        :appearance="'blue'"
+                        :icon-left="{ key: 'basket', size: '25_25' }"
+                        :disabled="data.quantity === 0"
                         @click="addBasket({
                             data: { ...props.data, characteristic: [], reviews: [] },
                             quantity: numberOfProduct
-                        })"
-                        class="flex bg-blue-500  justify-center items-center px-16 lg:px-10"
-                        :disabled="data.quantity === 0">
-                            <CreateIcon name="basket_25_25" :att="{ class: 'fill-white' }"/>
-                            <p class="text-white ml-2">В корзину</p>
-                        </AtomButtonStandart>
-                        <p class="text-lg font-medium" :class="[data.quantity === 0 ? 'text-red-500' : 'text-yellow-500 ']">
-                            {{ data.quantity > 0 ? 'В наличии' : 'Нет в наличии' }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        })"/>
+                        <p class="text-md font-medium" :class="[data.quantity === 0 ? 'text-red-500' : 'text-yellow-500 ']">
+                            {{ data.quantity > 0 ? `${common.AVAILABLE}: ${data.quantity}` : common.NOT_AVAILABLE }}</p>
+                    </Flex>
+                </Flex>
+            </Card>
+        </Flex>
     </section>
 </template>
 <script setup lang="ts">
-import type { Content, ProductCardFull } from '~~/type/intex';
-import CreateIcon from "@/content/icons/create";
+import type { ProductCardFull } from '~~/type/intex';
 import { basket as _basket } from "@/stores/basket";
 import { favorite as _favorite } from "@/stores/favorite";
 import { alert as _alert } from "@/stores/alert";
+import { getStatus } from '#imports';
+import { PAGE_CATALOG_ID as common } from "@/common/C";
+import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
+import ControlItem from "@/components/Templates/ControlElements/Item.vue";
+import Button from "@/components/UI/Button/Button.vue";
+import Rating from "@/components/UI/Rating/Rating.vue";
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Title from "@/components/UI/Title/Title.vue";
+import Card from "@/components/UI/Card/Card.vue";
+import Counter from "@/components/UI/Counter/Counter.vue";
+import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
+import ProductPrice from "@/components/Templates/Product/Price.vue";
+import { default as Status, type Props as StatusProps } from "@/components/UI/Status/Status.vue";
+
 
 const props = defineProps<{ data: ProductCardFull }>()
-const storeBasket = _basket()
 const storeFavorite = _favorite()
-const { copyLink } = useShare()
+const { copy } = useShare()
 const storeAlert = _alert()
-const _content = useState<Content | null>('CONTENT_APP')
 const numberOfProduct = ref<number>(1)
+const className = useCssModule()
 
-onMounted(() => {
-    test(navigator)
-})
 
-const middleRating = computed(() => props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0) / props.data.reviews.length)
+const middleRating = computed(() => props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0) / props.data.reviews.length  || 0)
 
 function onClick() {
-    copyLink()
-    storeAlert.create({ text: _content.value?.ALERT_COPE_LINK_INFO_TEXT || null, state: 'info' })
+    if (!window) return
+    copy(window.location.href)
+    storeAlert.create({ key: 'COPE_LINK', state: 'info' })
 }
 
-function addBasket(item: Parameters<typeof storeBasket['addItem']>[0]) {
-    if (storeBasket.findItem(item.data.id)) {
-        storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
-    } else {
-        storeBasket.addItem({ quantity: item.quantity, data: item.data })
-        storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
-    }
+function copyArticle(key: string) {
+    if (!key) return
+    copy(key)
+    storeAlert.create({ key: 'COPY_ARTICLE', state: 'info' })
+}
+
+function addBasket(item: any) {
+    // if (storeBasket.findItem(item.data.id)) {
+    //     storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
+    // } else {
+    //     storeBasket.addItem({ quantity: item.quantity, data: item.data })
+    //     storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
+    // }
 }
 </script>
+
+<style lang="css" module>
+.photo {
+    width: 50%;
+}
+.photo [ data-card-grid-scroll] > ul {
+    aspect-ratio: 9/8;
+}
+.info {
+    width: 50%;
+}
+.picture {
+    height: 80%;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+.picture > img {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.control-item {
+    border-radius: var(--rounded-xl);
+    overflow: hidden;
+    border-width: 2px;
+    border-style: solid;
+    transition: all ease 0.23s;
+    aspect-ratio: 1;
+    padding: 0.125rem;
+}
+[data-border-color="yellow"] {
+    border-color: var(--yellow-500);
+}
+[data-border-color="blue"] {
+    border-color: var(--blue-500);
+}
+
+.status {
+    top: 1.5rem;
+}
+
+.button-like {
+    position: absolute;
+    right: -0.25rem;
+    top: 0.25rem;
+    z-index: 20;
+}
+.name {
+    padding-right: 2rem;
+}
+.name > span:first-child {
+    margin-right: 0.5rem;
+}
+.attr >span {
+    margin-right: 0.5rem;
+}
+/* class="absolute z-20 -right-1 top-1 sm:scale-75 sm:top-1.5 sm:right-1.5" */
+</style>

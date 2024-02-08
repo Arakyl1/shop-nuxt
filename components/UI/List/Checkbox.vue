@@ -1,8 +1,9 @@
 <template>
     <Group class="gap-y-2">
-      <GroupItem v-for="item,i in content.data" :key="item">
-        <Checkbox v-bind="{ name: content.name, id: content.title + item, value: item }" :text="item"/>
-      </GroupItem>
+      <Checkbox v-for="item,i in content.data"
+      :key="item"
+      v-bind="{ name: content.name, id: content.title + item, value: item }"
+      :text="item"/>
     </Group>
 </template>
   

@@ -1,9 +1,9 @@
 export default () => {
-    const copyLink = async () => {
+    const copy = async (key: any) => {
         const permissionToUseClipboard = await navigator.permissions.query({ name: "clipboard-write" })
         if (permissionToUseClipboard.state === "granted" || permissionToUseClipboard.state === "prompt") {
-            navigator.clipboard.writeText(window.location.href)
+            navigator.clipboard.writeText(key)
         }
     }
-    return { copyLink }
+    return { copy }
 }

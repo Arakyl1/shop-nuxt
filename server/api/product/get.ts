@@ -2,7 +2,7 @@ import { H3Event } from "h3"
 import prisma from "~~/server/db"
 import { Prisma } from "@prisma/client";
 import { getWhereParamsCons, initFindParams, parceIncludeParams, parceOrderByParams, parseOtherArgs, parseSearchParams } from "@/server/utils/parseUrl";
-import { selectAttridute, selectCharacteristic, selectImage, selectComment, selectProductCard, selectCharacteristicItem } from "@/server/utils/selectData";
+import { selectAttridute, selectCharacteristic, selectImage, selectComment, selectProductCard, selectCharacteristicItem, selectUser } from "@/server/utils/selectData";
 import { KeysMatchingWrite, getModelName } from "@/type/intex";
 
 type modelName = getModelName<'ProductCard'>
@@ -19,7 +19,7 @@ type PropertyElemString = KeysMatchingWrite<ThisMainTypeWhereInput, Prisma.Strin
 const PropertyElemString: PropertyElemString[] = ['name','art','description','itemArt','itemMod']
 type PropertyElemDate = KeysMatchingWrite<ThisMainTypeWhereInput, Prisma.DateTimeFilter>
 const PropertyElemDate: PropertyElemDate[] = ['createAt']
-type keyPropElemRelation = keyof Pick<ThisMainTypeInclude, 'attribute' | 'characteristic' | 'image' | 'reviews'>
+type keyPropElemRelation = keyof Pick<ThisMainTypeInclude, 'attribute' | 'characteristic' | 'image' | 'reviews'|'basket'>
 const keyPropElemRelation: keyPropElemRelation[] = ['attribute','characteristic','image','reviews']
 
 
@@ -28,7 +28,7 @@ const includeElemSelectParams: ThisMainTypeInclude = {
     'attribute': { select : { ...selectAttridute() } },
     'characteristic': { select: { ...selectCharacteristic({ 'content': { 'select': { ...selectCharacteristicItem() } } }) } },
     'image': { select: { ...selectImage() } },
-    'reviews': { select: { ...selectComment() } }
+    'reviews': { select: { ...selectComment({ 'user': { select: { ...selectUser() } } }) } },
 }
 
 const ElemFullDataKey: ThisMainTypeSelect = {

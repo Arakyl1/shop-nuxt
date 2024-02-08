@@ -1,5 +1,8 @@
 <template>
     <div class="">
+        <Mask :active="state" :fun="update">
+
+        </Mask>
         <!-- <AtomModalMask :state="state" :clickFun="update" class="" :class="[state ? 'delay-[0]' : 'delay-200 ']">
             <Transition name="menu-modaile">
                 <div class="relative rounded-md w-min h-min max-h-[90vh] overflow-hidden flex flex-col" ref="menumodal"
@@ -61,7 +64,7 @@
                 appearance="blue"
                 @mouseenter.stop="onMouseenter"/>
             </div>
-            <div class="overflow-hidden h-14">
+            <div class="hidden h-14">
                 <Flex :tag="'ul'" :class="className['list-link']" ref="list">
                     <li v-for="item in CATEGOR_DATA" :key="item.id" class="p-4">
                         <Button :tag="'nuxt-link'"
@@ -89,7 +92,7 @@ import Button from "@/components/UI/Button/Button.vue";
 import localState from "@/utils/localState";
 import CreateIcon from "@/content/icons/create";
 import { CategorDataItem } from "~~/type/intex";
-import { DefineComponent } from "nuxt/dist/app/compat/capi";
+import Mask from "@/components/UI/Mask/Mask.vue";
 
 const { state, update } = localState()
 // ссылать через свойства el
@@ -118,12 +121,12 @@ const groupSubcategor = computed(() => {
 
 
 function onMouseenter(): void {
-    if (menubutton.value && menumodal.value) {
+    if (menubutton.value ) {
         let rect = menubutton.value.getBoundingClientRect()
-        menumodal.value.style.top = rect.y + 'px'
-        menumodal.value.style.left = rect.x + 'px'
-        let wModal = menumodal.value.clientWidth
-        menubutton.value.style.minWidth = wModal + 'px'
+        // menumodal.value.style.top = rect.y + 'px' && menumodal.value
+        // menumodal.value.style.left = rect.x + 'px'
+        // let wModal = menumodal.value.clientWidth
+        // menubutton.value.style.minWidth = wModal + 'px'
         update(true)
         nextTick(() => {
             if (contentmodal.value) {

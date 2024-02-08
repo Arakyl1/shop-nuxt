@@ -1,55 +1,147 @@
 <template>
     <section class=" w-full">
-        <MoleculesSladerBase :data="data ? data.body : null">
-            <template #item="{ elem, prevItem, nextItem }">
+        <CardGridScroll :data="data ? data.body : null" :container="'xs'">
+            <template #default="{ elem, prev, next, listValueScroll }">
                 <template v-if="elem">
                     <div class="relative">
                         <picture>
-                            <source :srcset="elem.link_img_small" media="(max-width: 767px)"
-                            class="object-cover min-w-full rounded aspect-[228/101] md:aspect-[60/97]">
-                            <img :src="elem.link_img_big" alt=""
-                            class="object-cover min-w-full rounded aspect-[228/101] md:aspect-[60/97]">
+                            <source :srcset="elem.link_img_small" media="(max-width: 768px)" :class="className['picture']">
+                            <img :src="elem.link_img_big" alt="" :class="className['picture']">
                         </picture>
-                        <div class="absolute w-[40%] h-min top-1/2 left-[10%]
-                                -translate-y-1/2 text-black-300
-                                lg:w-1/2
-                                md:w-10/12 md:top-[20%] md:-translate-x-1/2 md:left-1/2 md:text-center
-                                sm:w-11/12 sm:top-1/4">
-                            <h3 class="text-5xl font-bold
-                                    xl:text-4xl lg:text-3xl lg:mb-2 md:text-5xl md:mb-6 sm:text-2xl"
-                                :class="elem.title_col">{{
-                                    elem.title
-                                }}</h3>
-                            <p class="text-lg text-gray-300 mb-6
-                                    lg:text-base lg:mb-3 md:text-2xl sm:text-lg">{{ elem.text }}</p>
-                            <div class="flex md:hidden">
-                                <AtomButtonStandart class="bg-blue-500 text-white mr-4 px-16 py-2.5 lg:px-10">
-                                    Подробнее
-                                </AtomButtonStandart>
-                                <AtomButtonArround @click="prevItem" class="-scale-100 group big xl:py-3" />
-                                <AtomButtonArround @click="nextItem" class="ml-2 group big xl:py-3" />
-                            </div>
+                        <div :class="className['content']" >
+                            <p :class="[className['title'], elem.title_col]">{{ elem.title }}</p>
+                            <p :class="[className['text']]" class="text-gray-300 ">{{ elem.text }}</p>
+                            <Flex class="gap-x-4" v-if="!viewport.isLessThan('md')">
+                                <Button
+                                :appearance="'blue'"
+                                :text="common.BUTTON_MORE_DETAILS"
+                                class="px-16 h-12 text-base"
+                                :class="className['control-button']"/>
+                                <Flex class="gap-x-2" v-if="listValueScroll.max > 0">
+                                    <ButtonArrow
+                                    @click="prev"
+                                    class="-scale-100 h-12"
+                                    :class="className['control-button']"/>
+                                    <ButtonArrow
+                                    @click="next"
+                                    class="h-12"
+                                    :class="className['control-button']"/>
+                                </Flex>
+                            </Flex>
                         </div>
                     </div>
                 </template>
-                <MoleculesCardBase v-else class="aspect-[3/2]"/>
+                <MoleculesCardBase v-else class="aspect-[3/2]" />
             </template>
-            <template #bottom="{ nextItem, prevItem }">
-                    <div class="py-4 md:block hidden">
-                        <div class="flex justify-end">
-                            <AtomButtonStandart class="bg-blue-500 text-white mr-4 text-center py-3 text-xl grow
-                            sm:text-base sm:py-2">
-                                Подробнее
-                            </AtomButtonStandart>
-                            <AtomButtonArround @click="prevItem" class="-scale-100 group big px-6 sm:px-5" />
-                            <AtomButtonArround @click="nextItem" class="ml-2 group big px-6 sm:px-5" />
-                        </div>
-                    </div>
+            <template #footer="{ next, prev }">
+                <div v-if="viewport.isLessThan('md')">
+                    <Flex :justify="'end'" class="gap-x-4">
+                        <Button 
+                        :appearance="'blue'"
+                        :text="common.BUTTON_MORE_DETAILS"
+                         class="text-base grow h-12 justify-center"/>
+                         <Flex class="gap-x-2">
+                             <ButtonArrow @click="prev" class="-scale-100 h-12" />
+                             <ButtonArrow @click="next" class="h-12" />
+                        </Flex>
+                    </Flex>
+                </div>
                 <div></div>
             </template>
-        </MoleculesSladerBase>
+        </CardGridScroll>
     </section>
 </template>
 <script setup lang="ts">
-const { data } = await useAsyncData('main-slader', () => queryContent('/main/slader').findOne()) 
+import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
+import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Button from "@/components/UI/Button/Button.vue";
+import { PAGE_MAIN as common } from "@/common/C";
+
+const { data } = await useAsyncData('main-slader', () => queryContent('/main/slader').findOne())
+const className = useCssModule()
+const viewport = useViewport()
+
 </script>
+
+<style lang="css" module>
+.picture {
+    object-fit: cover;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: var(--rounded-base);
+    aspect-ratio: 228/101;
+}
+
+.content {
+    position: absolute;
+    width: 40%;
+    height: min-content;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: bold;
+}
+.text {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+}
+.control-element-left {
+    transform: scale(-1);
+}
+
+@media (max-width: 1024px) {
+    .content {
+        width: 50%;
+    }
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .text {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    .control-button {
+        height: 2.5rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .picture {
+        aspect-ratio: 60/97;
+    }
+
+    .content {
+        width: calc((100%/12) * 10);
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+    .title {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+    .text {
+        font-size: 1.5rem;
+    }
+}
+@media (max-width: 640px) {
+    .content {
+        width: calc((100%/12) * 11);
+        top: 25%;
+    }
+    .title {
+        font-size: 2rem;
+    }
+    .text {
+        font-size: 1.125rem;
+    }
+}
+</style>

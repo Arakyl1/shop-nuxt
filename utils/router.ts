@@ -33,7 +33,7 @@ export const FOOTER_ROUTER = [
         ]
     },
     {
-        title: 'Служба поддержки',
+        title: 'Личный кабинет',
         links: [
             ROOTER[9],
             ROOTER[10],

@@ -1,0 +1,74 @@
+<template>
+    <Card :appearance="'gray'" :container="'xl'">
+        <CardGridScroll :data="reviewsUpdate" :container="'xs'">
+            <template #header="{ prev, next, listValueScroll }">
+                <Flex :direction="'column'" :align="'flex-start'" class="gap-y-6 ">
+                    <Flex class="gap-x-4 w-full">
+                        <Title :tag="'h3'"
+                        :text="common.TEXT_REVIEWS"
+                        class="text-black-100 grow" />
+                        <Flex class="gap-x-2">
+                            <ButtonArrow
+                            :disabled="listValueScroll.current === 0"
+                            @click="prev"
+                            class="-scale-100 h-10 " />
+                            <ButtonArrow
+                            :disabled="listValueScroll.current >= listValueScroll.max"
+                            @click="next"
+                            class="h-10" />
+                        </Flex>
+                    </Flex>
+                    <div class="decor-line"></div>
+                </Flex>
+            </template>
+            <template #default="{ elem }">
+                <Commit :data="elem" v-if="elem" />
+            </template>
+            <template #footer>
+                <p v-if="!reviewsUpdate.length"
+                class="text-xl text-gray-500 py-4 sm:text-base"
+                >{{ common.TEXT_NOT_REVIEWS }}</p>
+                <Flex :align="'flex-end'" :direction="'column'" class="gap-y-4">
+                    <div></div>
+                    <div>
+                        <Button v-if="true"
+                        :appearance="'yellow'"
+                        :text="commonButton.REVIEWS_ADD"
+                        @click="update(true)"
+                        class="px-4 h-10 text-base" />
+                    </div>
+                </Flex>
+            </template>
+        </CardGridScroll>
+    </Card>
+</template>
+<script setup lang="ts">
+import type { ProductCardFull } from '~~/type/intex';
+import type { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
+import { PAGE_CATALOG_ID as common, BASE_BUTTON as commonButton } from "@/common/C";
+import { user as _user } from "@/stores/user";
+import localState from "@/utils/localState";
+import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
+import Commit from '@/components/Templates/Card/Commit.vue'
+import Button from "@/components/UI/Button/Button.vue";
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Title from "@/components/UI/Title/Title.vue";
+import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
+import Card from "@/components/UI/Card/Card.vue";
+
+interface Props {
+    data: ProductCardFull,
+    refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>
+}
+
+const props = defineProps<Props>()
+const { state, update } = localState()
+const storeUser = _user()
+const { data: _userData } = storeToRefs(storeUser)
+
+const reviewsUpdate = computed(() => props.data.reviews.filter(el => el.text))
+// const reviewsRantingValue = computed(() => props.data.reviews.map(
+//     <T extends ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
+
+</script>
+

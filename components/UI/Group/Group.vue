@@ -1,12 +1,16 @@
 <template>
     
-  <Flex :direction="'column'" :align="'flex-start'" class="w-full" ref="group">
+  <Flex :direction="'column'" :align="'flex-start'" ref="group" v-bind="{ ...props }">
       <slot></slot>
   </Flex>
 </template>
 
 <script setup lang="ts">
-import { default as Flex } from "@/components/UI/Flex/Flex.vue";
+import { default as Flex, type Props as FlexProps } from "@/components/UI/Flex/Flex.vue";
+
+interface Props extends Omit<FlexProps, 'align'|'direction'> {}
+
+const props = defineProps<Props>()
 
 // const flex = ref<InstanceType<typeof FlexCard> | null>(null)
 // const instanse = getCurrentInstance()

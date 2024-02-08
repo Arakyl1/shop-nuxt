@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { ComponentInternalInstance, Events } from "nuxt/dist/app/compat/capi";
-import { NAMEAPP, CONTENT_KEY } from "~~/type/intex";
+import { NAMEAPP, CONTENT_KEY, ProductCardBase } from "~~/type/intex";
+import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
 
 
 type sizeI = 28|48|56|60|64|72|80|92|96|224|320|480
@@ -28,7 +29,9 @@ export function generateKey(data:object): string {
     return Object.entries(data).flat(1).map(el => isObject(el) ? generateKey(el): el).join(',')
 }
 
-export function checkDate(date:string, pastDate: number = 604800000): boolean {
+// week = 604800000
+// mouth = 2678400000
+export function checkDate(date:string, pastDate: number =  3678400000): boolean {
    return new Date(date).getTime() > (Date.now() - pastDate)
 }
 
@@ -51,20 +54,7 @@ type modelProp = <T extends keyof Model, U extends keyof Model[T]>(key: T, prop:
 export const modelProp: modelProp = (key, prop) => prop 
 
 
-// export function deepConcat<T extends { [property: string]: any }>(dataAdd:T, dataDef: T): T {
-//     for (let key of Object.keys(dataAdd)) {     
-//         if (!dataDef.hasOwnProperty(key) || !isObject(dataDef[key])) {
-//             dataDef[key] = dataAdd[key]
-//         } else {
-//             if (Array.isArray(dataDef[key]) && Array.isArray(dataAdd[key])) {
-//                 dataDef[key] = dataDef[key].concat(dataAdd[key])
-//             } else {
-//                 deepConcat(dataAdd[key], dataDef[key])
-//             }
-//         }
-//     }
-//     return dataDef
-// }
+
 
 
 export function isNumber(elem: unknown): elem is number {
@@ -91,6 +81,10 @@ export function test(...f:any) {
     console.log(...f);
 }
 
+export function getScreenSize(window: Window) {
+    return { width: window.innerWidth, height: window.innerHeight }
+}
+
 
 
 export const sessionGet = (key: string) => sessionStorage.getItem(key)
@@ -108,31 +102,19 @@ export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key
 export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.split(';')).filter(_ => _.length > 1 && _[0].split('-').length === 1).map(_ => [_[0],parseFloat(_[1].replace('q=','')) ])//.map(_ => _[0])
 
 
+export function getStatus(data:ProductCardBase | null) {
+    if (!data) return null
+    let status: StatusProps['status'] | undefined
 
-export function checkThisComponent(target: Element, instanse: ComponentInternalInstance) {
-    if (target) {
-        return target.__vueParentComponent.uid === instanse?.uid
-    } return false
-}
-
-
-export function watchEvent(key: string| number, instanse: ComponentInternalInstance | null, fun: (...ard: any[]) => any) {
-    if (!key && !instanse && !fun) return null
-    const _key = key
-    const _instanse = instanse
-    const _fun = fun
-
-    return ({ target }: Event) => {
-        if (target instanceof Element) {
-            const _target = target.closest(`[${_key}]`)
-            if (_target) {
-                if (!checkThisComponent(_target, _instanse!)) {
-                    _fun()
-                }
-            } else {
-                _fun()
-            }
+    switch (true) {
+        case data.discount > 0: {
+            status = 'discount'
+            break;
+        }
+        case checkDate(data.createAt as unknown as string): {
+            status = 'news'
+            break;
         }
     }
+    return status
 }
-

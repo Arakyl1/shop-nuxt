@@ -10,13 +10,7 @@
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition> -->
-      <div class="view">
-        <NuxtPage ></NuxtPage>
-      </div>
-    </div>
-    <div>
-      
-      <!-- <OrganismsFooter/> -->
+      <NuxtPage ></NuxtPage>
     </div>
     <Footer/>
     <!-- <TemplatesModalFavorite/>
@@ -42,17 +36,23 @@ const { data: _userData } = storeToRefs(storeUser)
 
 const _content = useState<Content | null>('CONTENT_APP', () => null)
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
-const headers = useRequestHeaders(['cookie'])
 const event = useRequestEvent()
 
 
 type useAuth = ReturnType<typeof useAuth>
 type InitAuthResponse = Cached<useAuth['initAuth']>
-const { data: result } = await useAsyncData(async() => await fetchWithCookie('/api/auth/anonim'))
+
 
 
 onServerPrefetch(async() => {
-  
+  useAsyncData(() => fetchWithCookie(event, '/api/auth/anonim', {
+    onResponse({ response }) {
+      if (response._data && response._data.data && !response._data.message) {
+        storeUser.update(response._data.data)
+      }
+    },
+    retry: 3
+  }))
   import('@/content/language/ru.js').then(res => _content.value = res.content)
  
   useFetch('/api/attridute/get', {
@@ -144,9 +144,6 @@ onMounted(() => console.log(document.cookie))
 .path-leave-to {
   transform: translateX(30px);
   opacity: 0;
-}
-.view {
-  min-height: 100vh;
 }
 // /* .page-transition-enter-active {
 //   transition: all 0.15s ease-out;

@@ -4,11 +4,12 @@ import { FilterData, HH, storageCategorData } from "~~/type/intex"
 
 
 function getPriceData(data: number[]): HH {
-    const priceValue = { min: Math.min(...data), max: Math.max(...data) }
+    const priceValue = data.length > 0 ? { min: Math.min(...data), max: Math.max(...data) } : { min: null, max: null }
+    console.log(data, priceValue)
     return ({
         type: 'number-range', title: "Цена",
-        from: { name: 'price.gte', min: priceValue.min, max: priceValue.max, placeholder: 'От', step: 0.01 },
-        to: { name: 'price.lte', min: priceValue.min, max: priceValue.max, placeholder: 'До', step: 0.01 },
+        from: { name: 'price.gte', min: priceValue.min!, max: priceValue.max!, placeholder: 'От ' + (priceValue.min || " "), step: 0.1 },
+        to: { name: 'price.lte', min: priceValue.min!, max: priceValue.max!, placeholder: 'До ' + (priceValue.max || " "), step: 0.1 },
     })
 }
 

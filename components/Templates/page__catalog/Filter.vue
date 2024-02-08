@@ -1,73 +1,70 @@
 <template>
     <div @input.stop @change.stop>
-        <form ref="formCategory" @input="getParamsFilter" @change="getParamsFilter">
+        <form ref="formCategory" @input="changeCategor" @change="changeCategor">
             <template v-if="selectData">
-                <fieldset v-for="item in selectData" >
-                    <MoleculesFormSelectCategor :data="item.data" />
+                <fieldset v-for="item in selectData">
+                    <SelectCategor :data="item.data" :style="{ width: '250px' }"/>
                 </fieldset>
             </template>
         </form>
-        <form ref="form">
+        <form ref="form" class="flex flex-column gap-y-3">
             <template v-if="dataFilterList">
-                <section v-for="section, i in dataFilterList" :key="Array.isArray(section) ? i : section.title">
-                    <template v-if="Array.isArray(section)">
-                        <fieldset class="">
-                            <div class="decor-line mb-3"></div>
-                            <template v-for="item in section">
-                                <template v-if="item.type === 'radio'">
-                                    <p class="flex items-center justify-between mb-3">
-                                        <span>{{ item.title }}</span>
+                <template v-for="section, i in dataFilterList"
+                :key="Array.isArray(section) ? i : section.title">
+                <template v-if="Array.isArray(section)">
+                        <Group :tag="'fieldset'" class="w-full gap-y-2">
+                            <div class="decor-line"></div>
+                            <Group class="gap-y-2 w-full">
+                                <template v-for="item in section">
+                                    <Flex v-if="item.type === 'radio'" :justify="'between'" class="w-full">
+                                        <span class="text-md">{{ item.title }}</span>
                                         <Switch :name="item.name!"
-                                            :value="item.value!" />
-                                    </p>
+                                        :value="item.value!" />
+                                    </Flex>
                                 </template>
-                            </template>
-                        </fieldset>
+                            </Group>
+                        </Group>
                     </template>
                     <template v-else>
-                        <template v-if="section.type === 'select'">
-                        </template>
-                        <template v-else-if="section.type === 'number-range'">
+                        <div v-if="section.type === 'select'"></div>
+
+                        <Group v-else-if="section.type === 'number-range'" :tag="'fieldset'" class="gap-y-2" >
                             <div class="decor-line"></div>
-                            <fieldset class="py-3">
-                                <h1 class="truncate mb-2">{{ section.title }}</h1>
-                                <AtomFormNumberRange :section="section" :style="{ input: style.input }" />
-                            </fieldset>
-                        </template>
-                        <template v-else-if="section.type === 'star'">
-                            <fieldset class="py-2">
-                                <h1 class="truncate">{{ section.title }}</h1>
-                                <div class="decor-line my-1"></div>
-                                <div class="py-1">
-                                    <Rating :value="ratingStar" :name="section.name" :readonly="false" :step="1"/>
-                                </div>
-                            </fieldset>
-                        </template>
-                        <template v-else-if="section.type === 'checkbox'">
-                            <fieldset class="grid py-2">
-                                <h1 class="truncate">{{ section.title }}</h1>
-                                <div class="decor-line my-1"></div>
-                                <div>
-                                    <ListCheckBox :content="section" />
+                            <Title :tag="'h5'" class="truncate">{{ section.title }}</Title>
+                            <RangeNumber :section="section" :mode="'outline'" @change="() => { console.log(true) }"/>
+                        </Group>
 
-                                </div>
-                            </fieldset>
-                        </template>
-                        <template v-else-if="section.type === 'radio'">
-                            <p class="flex items-center justify-between mb-3">
-                                <span>{{ section.title }}</span>
-                                <Switch :name="section.name!" :value="section.value!" />
-                            </p>
-                        </template>
+                        <Group v-else-if="section.type === 'star'" :tag="'fieldset'" class="gap-y-2">
+                            <Title tag="h5" class="truncate" :text="section.title"/>
+                            <div class="decor-line"></div>
+                            <Rating
+                            :value="ratingStar"
+                            :name="section.name"
+                            :readonly="false"
+                            :step="1"
+                            :width="25"
+                            class="justify-between w-full"/>
+                        </Group>
+
+                        <Group v-else-if="section.type === 'checkbox'" :tag="'fieldset'" class="gap-y-2">
+                            <Title tag="h5" class="truncate" :text="section.title"/>
+                            <div class="decor-line"></div>
+                            <ListCheckBox :content="section" />
+                        </Group>
+
+                        <Flex v-else-if="section.type === 'radio'" :justify="'between'" class="gap-x-2">
+                            <span>{{ section.title }}</span>
+                            <Switch :name="section.name!" :value="section.value!" />
+                        </Flex>
                     </template>
-                </section>
+                </template>
 
-                <div class="flex justify-end pt-3">
-                    <AtomButtonStandart @click.prevent="resetData" class=" bg-blue-500 text-white text-lg py-2 xl:py-1">
-                        {{ _content?.TEXT_FILTER_BUTTON_RESET || "Reset" }}
-                    </AtomButtonStandart>
-                </div>
-
+                <Flex :justify="'end'" class=" pt-3">
+                    <Button
+                    :appearance="'blue'"
+                    :text="commonButton.FILTER_RESET"
+                    @click.prevent="resetData" class="text-lg px-8 h-10"/>
+                </Flex>
             </template>
         </form>
     </div>
@@ -76,29 +73,33 @@
 <script setup lang="ts">
 import Rating from "@/components/UI/Rating/Rating.vue";
 import Switch from "@/components/UI/Switch/Switch.vue";
+import Button from "@/components/UI/Button/Button.vue";
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Title from "@/components/UI/Title/Title.vue";
+import RangeNumber from "@/components/UI/Range/Number.vue";
+import Group from "@/components/UI/Group/Group.vue";
+import SelectCategor from '@/components/Templates/Form/Categor.vue'
 import ListCheckBox from "@/components/UI/List/Checkbox.vue";
 import { Content, FilterData } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
+import { BASE_BUTTON as commonButton } from "@/common/C";
 
 
 const route = useRoute()
 const router = useRouter()
 const storeAlert = _alert()
-const _content = useState<Content>('CONTENT_APP')
+// const _content = useState<Content>('CONTENT_APP')
 const formCategory = ref<HTMLFormElement | null>(null)
 const form = ref<HTMLFormElement | null>(null)
 const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
-const ratingStar = ref<number>(0) 
+const ratingStar = ref<number>(0)
 
 
 const routeCategorId = computed(() => 'categor' in route.query ? route.query.categor : null)
 const selectData = computed(() => dataFilterList.value ? dataFilterList.value.filter(_ => {
     return !Array.isArray(_) ? _.type === 'select' : false }
 ) : null)
-const style = {
-    title: 'text-lg mb-1',
-    input: 'p-2 rounded-md text-gray-500'
-}
+
 
 if (!dataFilterList.value) {
     initFilterData()
@@ -125,29 +126,6 @@ function initFilterData() {
     })
 }
 
-// function resetForm() {
-//     if (form.value) {
-//         const formElements = form.value.elements
-//         for (const key in formElements) {
-//             const value = formElements[key]
-//             if (value.nodeName === 'INPUT') {
-//                 const _elem = value as HTMLInputElement
-//                 switch (_elem.type) {
-//                     case 'number': {
-//                         _elem.value = ''
-//                         break;
-//                     }
-//                     case 'checkbox': {
-//                         _elem.checked = false
-//                         break;
-//                     }
-//                 }
-//             }
-//         }
-//         const formResetEvent = new Event('reset', { bubbles: true })
-//         form.value.dispatchEvent(formResetEvent)
-//     }
-// }
 
 function resetData(event: MouseEvent) {
     // resetForm()
@@ -156,10 +134,10 @@ function resetData(event: MouseEvent) {
 
 function getParamsFilter({ target, type }: Event) {
     const queryParams = { ...route.query }
-
+   
     if (target instanceof Element) {
         const _target = target
-
+        
         if (form.value) {
             if (!form.value.checkValidity()) return
 
@@ -197,6 +175,17 @@ function getParamsFilter({ target, type }: Event) {
     }
 }
 
+
+
+function changeCategor({ target, type }: Event) {
+    if (target instanceof HTMLSelectElement) {
+        const _target = target
+        let limit = 'limit' in route.query ? { limit: route.query.limit } : {}
+        router.push({ query: { [_target.name]: _target.value, page: 1, ...limit } })
+    }
+}
+
+
 onMounted(() => {
     if (form.value) {
         const activeParams = { ...route.query }
@@ -208,33 +197,8 @@ onMounted(() => {
                 .map(_ => _.split('__').join(' ')))
         })
 
-        // for (const element of form.value.elements) {
-        //     const elemName = element.getAttribute('name') || ''
-        //     if (elemName !== 'categor' && value.has(elemName)) {
-        //         const valueData = value.get(elemName) || []
-        //         if (element.tagName === 'INPUT') {
-        //             const _input = element as HTMLInputElement
-        //             switch (_input.type) {
-        //                 case 'number': {
-        //                     _input.valueAsNumber = parseInt(valueData[0])
-        //                     break
-        //                 }
-        //                 case 'checkbox': {
-        //                     if (valueData.includes(_input.value || '')) {
-        //                         _input.checked = true
-        //                     }
-        //                     break
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // setTimeout(() => {
-        //     window.dispatchEvent(new CustomEvent('init-active-params'))
-        // })
-    }
+    }  
 })
 
-// ('Проверить введеные данные')
 </script>
 

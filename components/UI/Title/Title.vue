@@ -27,13 +27,12 @@ interface Props {
     beforeContent?: string | number,
     afterContentClass?: string,
     beforeContentClass?: string,
-    size?: 'lg'|'2xl'|'4xl'|'5xl',
+   // size?: 'lg'|'2xl'|'4xl'|'5xl',
     mode?: 'primary'|'secondary'|'link'|'none'
 }
 
 const props = withDefaults(defineProps<Props>(), {
     tag: 'h2',
-    size: '4xl',
 })
 
 
@@ -42,7 +41,6 @@ const title = useCssModule()
 const rootClass = computed(() => {
     return {
         [title['title']]: true,
-        ['text-' + props.size]: props.size,
         [title['title-' + props.mode]]: props.mode
     }
 })

@@ -39,7 +39,7 @@ export function setValueInput(elem: HTMLFormElement, setData: Map<string, string
 
         for (const elem of elms) {
             const elemName = elem.getAttribute('name') || ''
-            const elemValid = setData.has(elemName) ? setData.get(elemName) || false : false;
+            const elemValid = setData.has(elemName) ? setData.get(elemName) : false;
 
             if (elem instanceof HTMLInputElement && elemValid && elemValid.length) {
                 switch (elem.type) {
@@ -55,7 +55,7 @@ export function setValueInput(elem: HTMLFormElement, setData: Map<string, string
                     }
                     case "radio":
                     case 'checkbox': {
-                        if (elemValid.includes(elem.value || '')) {
+                        if (elemValid.includes(elem.value)) {
                             elem.checked = true
                         }
                     }

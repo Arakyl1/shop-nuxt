@@ -62,4 +62,24 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'blur', mode: 'out-in' }
   },
+  viewport: {
+    breakpoints: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      '2xl': 1536,
+    },
+
+    defaultBreakpoints: {
+      desktop: 'lg',
+      mobile: 'xs',
+      tablet: 'md',
+    },
+
+    fallbackBreakpoint: 'lg'
+  },
 });
+
+// const viewport = useViewport() v-if="viewport.isGreaterOrEquals('sm')"

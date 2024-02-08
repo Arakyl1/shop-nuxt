@@ -12,5 +12,5 @@ export const user = defineStore('user', () => {
         data.value = user
     }
 
-    return { data, anonim, basket, basketLength, update }
+    return { anonim, basket, basketLength, update }
 })

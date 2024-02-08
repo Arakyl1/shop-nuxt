@@ -70,7 +70,7 @@ export default (props, watchFun) => {
     
     function onHover(e) {
         if (!props.triggers.includes('hover')) return
-
+        
         open()
     }
     

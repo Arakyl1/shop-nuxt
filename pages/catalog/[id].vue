@@ -1,42 +1,45 @@
 <template>
-    <div>
+    <Panel :mode="'primary'">
         <template v-if="data">
-            <TemplatesPageProductMain :data="data" class="mb-8 xl:mb-6 block md:hidden" />
-            <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" />
-            <TemplatesPageProductCharacteristic :data="data.characteristic" class="mb-8 xl:mb-6" />
-            <TemplatesPageProductDescription :data="data" :refresh="refresh" class="mb-12" />
+            <Main :data="data" />
+            <!-- <TemplatesPageProductMainMobaile :data="data" class="mb-12 hidden md:block" /> -->
+            <section class="gap-8" :class="className['content']">
+                <Characteristic :data="data.characteristic" />
+                <Description :data="data"/>
+                <Reviews :data="data" :refresh="refresh"/>
+            </section>
         </template>
-        <TemplatesPageMainCarusel :params="{ 'createAt.gte': new Date(Date.now() - 604800000), limit: 24 }">
-            <template #title>
-                Новинки
-            </template>
-        </TemplatesPageMainCarusel>
-    </div>
+        <Carousel
+        :params="{ 'createAt': `gte:${new Date(Date.now() - 11604800000).getTime()}`, limit: 24  }"
+        :title="common.CAROUSEL_TITLE"/>
+    </Panel>
 </template>
 
 <script setup lang="ts">
 import { ProductCardFull } from '~~/type/intex'
+import Carousel from '@/components/Templates/Carousel/Product.vue';
+import Main from '@/components/Templates/page__product/Main.vue';
+import Description from '@/components/Templates/page__product/Description.vue';
+import Characteristic from '@/components/Templates/page__product/Characteristic.vue';
+import Reviews from '@/components/Templates/page__product/Reviews.vue';
+import Panel from "@/components/UI/Panel/Panel.vue"
+import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
 
 definePageMeta({
-    title: 'Информация о товаре',
+    title: META.CATALOG_ID.TITLE,
     keepalive: true
 })
 
+const className = useCssModule()
 const route = useRoute()
 const id = route.params.id
-const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
+const { data, refresh } = useAsyncData(() => $fetch('/api/product/get', {
     method: 'GET',
-    params: { id: id, fullinfo: true, unique: true },
-    onResponse({ response }) {
-        if (response.status < 400, response._data && !Array.isArray(response._data)) {
-
-
-        }
-    }
+    params: { id: id, fullinfo: true, unique: true }
 }), {
     transform: (context) => {
-        if (context && !Array.isArray(context)) {
-            return context as ProductCardFull
+        if (context.data && !Array.isArray(context.data)) {
+            return context.data as ProductCardFull
         } else { return null }
     },
     lazy: true
@@ -50,3 +53,23 @@ const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/produc
 // onActivated(() => setHeaderTitle(data.value ? data.value.name : 'Каталог товаров'))
 
 </script>
+
+<style lang="css" module>
+.content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.content > *:first-child {
+    grid-column: span 2 / span 2;
+}
+.item {
+    width: 50%;
+}
+</style>
+
+ <!-- <AtomModalMask :state="state" :clickFun="update">
+            <MoleculesModalAddCommtit :data="modalData" :refresh="refresh" :userData="_userData"
+            :reviewsRantingValue="reviewsRantingValue" :modalFun="update" :state="state"
+            class="h-min w-96 sm:w-[calc(100vw-2rem)]" />
+        </AtomModalMask>  -->
+    

@@ -13,10 +13,11 @@
             
         </template>
 
-        <span v-if="text">{{ text }}</span>
-        <span v-else-if="$slots.default">
+        <p v-if="text">{{ text }}</p>
+
+        <p v-else-if="$slots.default">
             <slot />
-        </span>
+        </p>
         <template v-if="iconRight">
             <Transition v-if="iconTransition" :name="iconTransition" mode="out-in">
                 <CreateIcon :name="`${iconRight.key}_${iconRight.size}`" aria-hidden="true"/>
@@ -236,7 +237,7 @@ const rootClass = computed(() => {
     transition: var(--transition, var(--bt-transition--sm));
     --base-outline: 1px var(--button-border-focus-visible) var(--gray-500) !important;
 }
-.button span {
+.button p {
     color: inherit;
 }
 .button:not(.icon-none) g[data-type-icon=monocolor] {
@@ -342,21 +343,21 @@ const rootClass = computed(() => {
 .outline {
     border: 1px solid var(--gray-500);
     border-radius: var(--rounded-sm);
+    --color: var(--black-500);
     --fill-color: var(--gray-700);
 }
 
 // button primary
 .primary {
-    box-shadow: 0px 0px 15px -2px var(--grey-500);
+    box-shadow: 0px 0px 15px -2px var(--gray-500);
     --bg-color: var(--white);
-    --color: var(--dark-600);
-    --fill-color: var(--dark-600);
+    --color: var(--gray-700);
+    --fill-color: var(--gray-700);
 
-    --bg-color--hover: var(--grey-200);
-    --color--hover: var(--dark-500);
-    --fill-hover: var(--dark-500);
+    --color--hover: var(--gray-500);
+    --fill-hover: var(--gray-500);
 
-    --bg-color-active: var(--dark-500);
+    --bg-color-active: var(--blue-500);
 
     --outline: none;
 }

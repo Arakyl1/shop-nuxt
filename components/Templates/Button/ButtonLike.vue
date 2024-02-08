@@ -19,7 +19,7 @@ const rootClass = computed(() => {
 
 <style lang="css" module>
 .button {
-    --fill-color: var(--white);
+    --fill-color: var(--transparent);
 }
 .button g {
     stroke: var(--gray-300);

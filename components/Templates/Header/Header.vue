@@ -32,7 +32,8 @@
                         :icon-left="{ key: 'add-list', size: '30_30' }"
                         :appearance="'yellow-icon'"
                         to="/add"/>
-                    
+                    <ClientOnly>
+
                         <Indicator :text="favoriteData.size" :active="Boolean(favoriteData.size)">
                             <ButtonLike :check-hover-parent="true" :active="Boolean(favoriteData.size)"/>
                         </Indicator>
@@ -42,28 +43,37 @@
                             :icon-left="{ key: 'basket', size: '30_30' }"
                             :check-hover-parent="true"
                             :active="Boolean(basketLength)"/>
-                            
                         </Indicator>
+                    </ClientOnly>
                     </Flex>
                 </Flex>
             </div>
         </div>
         <div class="container">
             <Flex :justify="'between'" class="py-4.5">
-                <img src="@/assets/img/logo.png" class="h-9.5"
-                :alt="`Logo market place ${config.public.NAME_APP}`">
+                <Button
+                :tag="'nuxt-link'"
+                :to="'/'">
+                    <img src="@/assets/img/logo.png" class="h-9.5"
+                    :alt="`Logo market place ${config.public.NAME_APP}`">
+                </Button>
+
                 <Button tag="a"
                 :href="`tel:${common.TELEPHONE}`"
                 :mode="'none'"
                 :text="common.TELEPHONE" class="text-2xl text-bold"/>
+
                 <OrganismsSearch class="lg:mx-6" />
+                
                 <SocialIcon/>
+
                 <Button
                 :tag="'nuxt-link'"
                 :appearance="'yellow'"
                 :size="'lg'"
                 class="h-10 text-bold"
                 :text="common.BUTTON_ADDRESS_MARKER"/>
+
                 <Button
                 :appearance="'blue'"
                 :size="'xs'"

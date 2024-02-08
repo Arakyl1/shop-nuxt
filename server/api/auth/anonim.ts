@@ -21,7 +21,6 @@ const includeElemSelectParams: ThisMainTypeInclude = {
 export default defineEventHandler(async(event) => {
 
     const sessionId = getCookie(event, 'anonim_session_id')
-    let clientIp = null
     console.log(sessionId)
 
 
@@ -36,25 +35,20 @@ export default defineEventHandler(async(event) => {
         
         return { data: createData, message: null }
     } else {
-        
-    }
-
-    if (clientIp) {
         try {
             type IP = Prisma.StringFilter<"Anonim">
             
             const data = await prisma.anonim.findUnique({
-                where: { ip: String(clientIp) },
+                where: { 'sessionId': String(sessionId) },
                 include: includeElemSelectParams
             })
             if (!data) {
-                
+                return { data: null, message: GET_CONTENT_KEY('AUTH_ERROR') }
             } else {
                 return { data: data, message: null }
             }
         } catch (error) {
-            return { message: GET_CONTENT_KEY('AUTH_ERROR') }
+            return { data: null, message: GET_CONTENT_KEY('AUTH_ERROR') }
         }
     }
-
 })

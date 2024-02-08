@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full bg-white p-8 overflow-hidden rounded-md sm:p-4">
+    <div class="h-full bg-white p-8 hidden rounded-md sm:p-4">
         <div class="flex w-full">
             <slot name="title">
                 <h2 class="text-2xl grow text-blue-700 sm:text-xl">{{ title }}</h2>

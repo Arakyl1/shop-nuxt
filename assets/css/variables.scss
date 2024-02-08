@@ -24,7 +24,7 @@ $justifyContent: (
 );
 
   
-$alignContent: (
+$alignItems: (
     'center': center,
     'flex-start': flex-start,
     'flex-end': flex-end
@@ -113,7 +113,8 @@ $fontSize: (
   'xs': 0.75rem,
   'sm': 0.875rem,
   'base': 1rem,
-  'lg': 1.125rem,
+  'md': 1.125rem,
+  'lg': 1.25rem,
   '2xl': 1.5rem,
   '4xl': 2.25rem,
   '5xl': 4rem,

@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass" :data-card="instanse!.uid">
+    <div :class="rootClass" :data-card="instanse!.uid" ref="element">
         <slot></slot>
     </div>
 </template>
@@ -11,7 +11,7 @@ export type Padding = `${number}rem` | `${number}rem ${number}rem`
 
 export interface Props {
     mode?: 'primary' | 'secondary' |'outline',
-    appearance?: 'warning' | 'info' | 'grey' | 'gradient' | 'white',
+    appearance?: 'warning' | 'info' | 'gray' | 'gradient' | 'white',
     content?: 'text',
     rounded?: 'none'|'xs'|'sm'|'base'|'lg'|'xl'|'2xl'|'full',
     container?: 'xs'|'sm'|'m'|'lg'|'l'|'xl'|'2xl'|'3xl'
@@ -74,8 +74,8 @@ const rootClass = computed(() => {
 .card-warning {
     background: var(--card-bg-warning);
 }
-.card-grey{
-    background: var(--grey-300)
+.card-gray{
+    background: var(--gray-100)
 }
 
 .card-gradient{
@@ -106,7 +106,8 @@ const rootClass = computed(() => {
     padding: 1.875rem;
 }
 .card-xl {
-    padding: 2.25rem;
+    padding: 2rem;
+    border-radius: var(--rounded-xl);
 }
 .card-2xl {
     padding: 1.875rem 1.25rem;
@@ -116,10 +117,17 @@ const rootClass = computed(() => {
 }
 
 
-
-@media (max-width: 620px) {
+ @media (max-width: 1024px) {
+    .card-xl {
+        padding: 1.5rem;
+    }
+}
+@media (max-width: 640px) {
     .card-lg {
         padding: 1.125rem;
+    }
+    .card-xl {
+        padding: 1rem;
     }
 }
 </style>

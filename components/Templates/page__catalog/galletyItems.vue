@@ -3,8 +3,7 @@
         <div class="grid grid-cols-3 lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-2 gap-y-10 gap-x-8 xl:gap-x-6 sm:gap-x-4 px-4 xl:px-3 sm:px-2"
             v-show="pending || data.length">
             <template v-for="(el,i) in lengthArr" :key="el">
-                <MoleculesCardProduct :data="data[i] ? data[i] : null"
-                    class="group is-pos-info-for-stock"/>
+                <Card :data="data[i] ? data[i] : null"/>
             </template>
         </div>
         <Transition name="gallery">
@@ -18,6 +17,7 @@
 
 <script setup lang="ts">
 import type { Content, ProductCardBase } from "@/type/intex";
+import Card from '@/components/Templates/Card/Product.vue'
 
 const props = defineProps<{ data: ProductCardBase[], pending: boolean }>()
 const route = useRoute()

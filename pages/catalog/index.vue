@@ -2,20 +2,17 @@
     <div>
         <TemplatesPageCatalogHeader />
         <div class="flex -mx-4 md:relative mb-8 min-h-[90vh] sm:-mx-2">
-            <div class=" fixed top-1/2 left-0 z-40 transition-all hidden md:block"
+            <!-- <div class=" fixed top-1/2 left-0 z-40 transition-all hidden md:block"
                 :class="[state ? 'opacity-0' : ' opacity-100']">
                 <AtomButtonStandart class="bg-blue-500 aspect-square
                 sm:px-2 sm:py-1" @click="visibleFilter(true)">
                     <CreateIcon name="filter_20_20" :att="{ class: 'fill-white' }" />
                 </AtomButtonStandart>
-            </div>
+            </div> -->
             <div ref="filter" 
-            class="w-1/4 px-4 lg:w-1/3 transition-all select-none
-            md:fixed md:top-0 md:-left-full md:w-[360px] md:z-40
-            sm:w-screen sm:p-0 sm:overflow-y-scroll sm:h-screen"
-                :class="[state ? 'md:left-0 md:opacity-100' : 'md:-left-full md:opacity-0']">
+            :class="[className['filter']]">
                 <div class="bg-gray-100 px-4 py-8 xl:px-3 xl:py-6 rounded-md md:min-h-full" @scroll.prevent>
-                    <TemplatesPageCatalogFilter class=""/>
+                    <TemplatesPageCatalogFilter />
                 </div>
             </div>
             <TemplatesPageCatalogGalletyItems :data="!pending && data ? data.data : []" :pending="pending" />
@@ -48,12 +45,13 @@ const filter = ref<HTMLElement | null>(null)
 const toucheData = toucheElemPosition(filter)
 const mouseData = mouseElemPosition(filter)
 const route = useRoute()
+const className = useCssModule()
 
 const paramsRouteQuery = computed(() => Object.values(route.query).map((el: any) => el.trim()).join('_'))
 
 const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
     method: 'POST',
-    params: { ...route.query, model: 'base' }
+    params: { ...route.query,  }
 }), {
     'lazy': true,
     transform: (context) => {
@@ -120,3 +118,9 @@ function nextPage(route: RouteLocationNormalizedLoaded) {
     })
 }
 </script> 
+
+<style lang="css" module>
+.filter {
+    width: 25%;
+}
+</style>

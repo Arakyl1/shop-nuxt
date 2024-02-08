@@ -29,7 +29,7 @@
   }
 }
 
-@each $name, $value in $alignContent {
+@each $name, $value in $alignItems {
   .align-#{$name} {
     align-items: $value;
   }
@@ -61,11 +61,19 @@
     padding: calc(0.25rem * $value);
   }
   .py-#{$name} {
-    padding: calc(0.25rem * $value) 0;
+    padding-top: calc(0.25rem * $value);
+    padding-bottom: calc(0.25rem * $value);
   }
   .px-#{$name} {
-    padding: 0 calc(0.25rem * $value);
+    padding-left: calc(0.25rem * $value);
+    padding-right: calc(0.25rem * $value);
   }
+}
+.h-px {
+  height: 1px;
+}
+.w-px {
+  width: 1px;
 }
 
 .grow {
@@ -142,7 +150,7 @@
 // Color style
 @each $name, $value in $color {
   .text-#{$name} {
-    color: var(--#{$name});
+    color: var(--#{$name}) !important;
   }
   .border-#{$name} {
     border-color: var(--#{$name});
@@ -162,6 +170,9 @@
   .stroke-#{$name} {
     stroke: var(--#{$name});
   }
+}
+.color-inherit {
+  color: inherit;
 }
 
 // Text Style
@@ -186,6 +197,56 @@
 
 // visibility style 
 
-.overflow-hidden {
+
+// Typography style
+$sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+@each $value in $sizes {
+  .line-clamp-#{$value} {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+   }
+}
+h2 {
+  font-size: var(--text-4xl);
+}
+h3 {
+  font-size: var(--text-2xl);
+}
+h4 {
+  font-size: var(--text-lg);
+}
+h5 {
+  font-size: var(--text-md);
+}
+h6 {
+  font-size: var(--text-base);
+}
+
+@media screen and (max-width: 768px) {}
+@media screen and (max-width: 600px) {
+  h2 {
+    font-size: var(--text-2xl);
+  }
+  h4 {
+    font-size: var(--text-base);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.truncate {
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// TRANSFORM STYLE \
+
+// scale 
+.-scale-100 {
+  transform: scale(-1);
 }

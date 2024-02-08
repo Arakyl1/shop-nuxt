@@ -2,7 +2,7 @@
     <div class="">
         <AtomModalMask :state="state" :clickFun="update" class="" :class="[state ? 'delay-[0]' : 'delay-200 ']">
             <Transition name="menu-modaile">
-                <div class="relative rounded-md w-min h-min max-h-[90vh] overflow-hidden flex flex-col" ref="menumodal"
+                <div class="relative rounded-md w-min h-min max-h-[90vh] hidden flex flex-col" ref="menumodal"
                     @click.stop v-show="state" @mouseleave.stop="onMouseleave">
 
                     <div class="h-14 lg:h-12 flex bg-blue-500">
@@ -18,7 +18,7 @@
                     </div>
 
                     <Transition name="categor">
-                        <div class="flex origin-top-left bg-blue-500 grow overflow-hidden" v-show="state"
+                        <div class="flex origin-top-left bg-blue-500 grow hidden" v-show="state"
                             ref="contentmodal">
                             <div class="overflow-y-scroll overflow-x-hidden min-w-min scrollbar-v1">
                                 <MoleculesListSidebar class="pl-4 pr-1.5 w-max" :data="CATEGOR_DATA"
@@ -60,7 +60,7 @@
                     </NuxtLink>
                 </AtomButtonStandart>
             </div>
-            <div class="overflow-hidden">
+            <div class="hidden">
                 <ul class="flex flex-nowrap overflow-x-scroll scroll-smooth header__aditional" ref="list">
                     <li v-for="item in CATEGOR_DATA" :key="item.id" class="p-4 lg:p-3">
                         <NuxtLink
