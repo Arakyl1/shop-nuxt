@@ -2,15 +2,15 @@
     <Group class="gap-y-3">
         <Group class="gap-y-2 w-full">
             <Title :tag="'h5'" class="truncate" :text="'Категорий'"/>
-            <Select name="categor" :data="categorData" v-model="(categorValue as number)" class="w-full" />
+            <Select name="categor" :data="categorData" v-model="categorValue" class="w-full" />
         </Group>
         <Group v-if="subcategorData" class="gap-y-2 w-full" >
             <Title :tag="'h5'" class="truncate" :text="'Подкатегория'"/>
-            <Select name="categor" :data="subcategorData.children" v-model="(subcategorValue as number)" class="w-full"/>
+            <Select name="categor" :data="subcategorData.children" v-model="subcategorValue" class="w-full"/>
         </Group>
         <Group v-if="classData" class="gap-y-2 w-full">
             <Title :tag="'h5'" class="truncate" :text="'Группа'"/>
-            <Select name="categor" :data="classData.children" v-model="(classValue as number)" class="w-full" />
+            <Select name="categor" :data="classData.children" v-model="classValue" class="w-full" />
         </Group>
     </Group>
 </template>
@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import { CategorDataItem } from '~~/type/intex';
-import Flex from "@/components/UI/Flex/Flex.vue";
 import Title from "@/components/UI/Title/Title.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import Select from "@/components/UI/Select/SelectRelative.vue";
