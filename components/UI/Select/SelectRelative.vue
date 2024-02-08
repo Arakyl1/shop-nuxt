@@ -4,7 +4,12 @@
     чтобы можно было менять между абсолютно и относительным позиционированием
 -->
 <template>
-    <div :data-select="instanse.uid" :data-uid="instanse.uid" class="relative" :class="{ 'gap-3': isActive }" tabindex="-1" >
+    <div
+    :data-select="instanse.uid"
+    :data-uid="instanse.uid"
+    class="relative"
+    ref="body"
+    :class="{ 'gap-3': isActive }" tabindex="-1" >
         <div class="w-full" ref="trigger">
             <slot name="trigger" v-bind="{ isActive }">
                 <Button :text="activeOption?.value"
@@ -12,7 +17,7 @@
                 :rounded="'lg'"
                 :icon-transition="'select-icon'"
                 :icon-right="{ key: isActive ? 'arrow' : 'arrow', size: '25_25' }"
-                class="text-sm w-full  h-10 truncate"
+                class="text-base w-full  h-10 truncate"
                 :class="[className['trigger'], activeOption?.value ? 'justify-between' : 'justify-end']"
                 :style="{ padding: '0rem 0.25rem 0 0.75rem' }"
                 @click="onClick"/>
@@ -20,7 +25,7 @@
         </div>
 
         <Transition :name="animated">
-            <div ref="body"
+            <div ref="container"
             :class="className['body']" 
             :style="{ height: isActive ? size.h : 0 }"
             class="w-full"
@@ -36,15 +41,13 @@
                     role="listbox"
                     tabindex="0"
                     class="gap-y-1">
-                        <Paragraph v-for="item in data"
-                            role="option"
-                            :aria-selected="item.id === modelValue"
-                            :aria-controls="item.id"
-                            :key="item?.id"
-                            :data-select-item="item?.id"
-                            :text="item?.value"
-                            :size="'sm'"
-                            class="pointer"/>
+                        <p v-for="item in data"
+                        role="option"
+                        :aria-selected="item.id === modelValue"
+                        :aria-controls="item.id"
+                        :key="item?.id"
+                        :data-select-item="item?.id"
+                        class="pointer text-base">{{ item?.value }}</p>
                     </Group>
                 </Card>
             </div>
@@ -134,8 +137,9 @@ const className = useCssModule()
 const select = ref(null)
 const trigger = ref(null)
 const body = ref(null)
+const container = ref(null)
 const instanse = getCurrentInstance()
-const { size, refrech } = initSize(body)
+const { size, refrech } = initSize(container)
 //position = 'top'|'bottom'|'right'|'left'
 const position = ref('bottom')
 
@@ -178,16 +182,8 @@ watch(() => props.modelValue, (newV, oldV) => {
 })
 
 watch(() => props.data.length, () => {
-    console.log(true)
-    refrech()
+    nextTick(() => refrech())
 })
-
-// watch(() => activeOption.value, (newV, oldV) => {
-//     console.log(oldV,newV)
-//     if (newV) {
-        
-//     }
-// } )
 
 
 function changeActive({ target }) {
@@ -237,10 +233,9 @@ function onEvent() {
 }
 
 function sendEvent() {
-    if (select.value instanceof HTMLElement && checkThisComponent(select.value, instanse)) {
+    if (select.value instanceof HTMLElement && checkThisComponent(body.value, instanse)) {
         const event = new Event('change', { bubbles: true })
         select.value.dispatchEvent(event)
-        console.log(event, instanse.uid)
     }
 }
 </script>

@@ -180,6 +180,7 @@ function getParamsFilter({ target, type }: Event) {
 function changeCategor({ target, type }: Event) {
     if (target instanceof HTMLSelectElement) {
         const _target = target
+        console.log(true)
         let limit = 'limit' in route.query ? { limit: route.query.limit } : {}
         router.push({ query: { [_target.name]: _target.value, page: 1, ...limit } })
     }

@@ -121,6 +121,6 @@ function nextPage(route: RouteLocationNormalizedLoaded) {
 
 <style lang="css" module>
 .filter {
-    width: 25%;
+    width: min-content;
 }
 </style>

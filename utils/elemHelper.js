@@ -1,7 +1,7 @@
 export function checkThisComponent(target, instanse) {
-    const elem = target.closest('[data-uid')
+    const elem = unref(target).closest('[data-uid')
     if (elem instanceof HTMLElement) {
-        return elem.dataset.uid === instanse?.uid
+        return parseInt(elem.dataset.uid) === instanse?.uid
     } return false
 }
 
