@@ -7,7 +7,7 @@ export default () => {
         if (isNumber(e) || isNumeric(e)) {
             const maxPage = Math.ceil(unref(cardLength) / unref(sizePage))
             const value = e > maxPage ? maxPage : e < 1 ? 1 : isNumber(e) ? e : parseInt(e)
-    
+
             return navigateTo({
                 path: route.path,
                 query: {
