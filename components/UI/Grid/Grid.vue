@@ -3,16 +3,17 @@
 </template>
 
 <script setup lang="ts">
-import type { NumericRange } from "@/type/intex";
+
 export interface Props {
     tag?: string,
-    col?: NumericRange<1, 24>,
-    row?: NumericRange<1, 24>,
+    // col?: NumericRange<1, 24>,
+    // row?: NumericRange<1, 24>,
     justify?: 'center' | 'start' | 'end' | 'stretch',
-    align?: 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch'
+    align?: 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch',
+    container?: 'xs'|'sm'|'md'|'lg'|'xl'
 }
 
-const props = withDefaults(defineProps<Props>(), { 'tag': 'div', align: 'center' })
+const props = withDefaults(defineProps<Props>(), { 'tag': 'div', align: 'center', container: 'md' })
 const grid = ref<HTMLElement | null>(null)
 const instanse = getCurrentInstance()
 const className = useCssModule()
@@ -22,18 +23,32 @@ const rootClass = computed(() => {
         ['grid']: true,
         [`content-${props.align}`]: props.align,
         [`justify-items-${props.justify}`]: props.justify,
-        [className['grid-col']]: props.col,
-        [className['grid-row']]: props.row,
+        [className[props.container]]: props.container,
     }
 })
 
 </script>
 
 <style lang="css" module>
-    .grid-col {
-        grid-template-columns: repeat(v-bind('$props.col'), minmax(0, 1fr));
+    .sm {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .grid-row {
-        grid-template-rows: repeat(v-bind('$props.row'), minmax(0, 1fr));
+    .md {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 768px) {
+        /* .md {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        } */
+    }
+
+    @media (min-width: 1024px) {
+        .sm {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .md {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
     }
 </style>
