@@ -6,16 +6,15 @@
     :disabled="(disabled || page.disabled) && page.isCurrent"
     :class="rootClass"
     :appearance="'white'"
-    :rounded="'base'"
     :text="page.number"
     :square="true"
     :active="page.isCurrent"
-    class="padination-butoon"
+    class="h-12 justify-center text-base"
     />
 </template>
 
 <script setup>
-import Button from "@/components/UI/Button/index.vue"
+import Button from "@/components/UI/Button/Button.vue"
 // базовая кнопка пагинации
 
 const props = defineProps({
@@ -44,16 +43,16 @@ const props = defineProps({
     },
 })
 
-const rootClass = computed(() => {
-    return [
-        { 'button-white--active': props.page.isCurrent },
-        props.page.class
-    ]
-})
+// const rootClass = computed(() => {
+//     return [
+//         { 'button-white--active': props.page.isCurrent },
+//         props.page.class
+//     ]
+// })
 
 </script>
 
-<style lang="css">
+<!-- <style lang="css">
 .padination-butoon {
     width: 2.75rem;
     font-size: var(--text-base);
@@ -64,4 +63,4 @@ const rootClass = computed(() => {
         font-size: var(--text-sm);
     } 
 }
-</style>
+</style> -->
