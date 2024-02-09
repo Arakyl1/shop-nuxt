@@ -7,7 +7,7 @@
                 </fieldset>
             </template>
         </form>
-        <form ref="form" class="flex flex-column gap-y-3">
+        <form ref="form" class="flex flex-column gap-y-3" @input="getParamsFilter" @change="getParamsFilter">
             <template v-if="dataFilterList">
                 <template v-for="section, i in dataFilterList"
                 :key="Array.isArray(section) ? i : section.title">
@@ -83,6 +83,7 @@ import ListCheckBox from "@/components/UI/List/Checkbox.vue";
 import { Content, FilterData } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
 import { BASE_BUTTON as commonButton } from "@/common/C";
+import { resetForm, setValueInput } from "#imports";
 
 
 const route = useRoute()
@@ -106,7 +107,8 @@ if (!dataFilterList.value) {
 }
 
 watch(() => routeCategorId.value, () => {
-    // resetForm()
+    if (form.value) resetForm(form.value)
+
     initFilterData()
 })
 
@@ -144,33 +146,31 @@ function getParamsFilter({ target, type }: Event) {
             const changeStr = (s: string) => s.trim().replace(/\s/, '__')
             let finalParams: { [key: string]: string } = {}
             const formData = new FormData(form.value)
-            const paramsData = new Map<string, (string | number)[]>()
+            const paramsData = new Map<string, { key: string, value: (string | number)[] }>()
 
             for (const [key, value] of formData) {
-                const _value = isString(value) ? value : ''
-                if (_value) {
-                    if (key === 'categor') {
-                        finalParams.categor = _value
-                    } else if (paramsData.has(key)) {
+                if (isString(value) && Boolean(value) && value !== '0') {
+                    const keyArr = key.split('.')
+                    const _key = keyArr[0]
+                    const _value = `${keyArr.slice(1).join('.')}${keyArr.length > 1 ? ':' : ''}${value}` 
+                    
+                    if (paramsData.has(key)) {
                         const paramsItem = paramsData.get(key)
-                        paramsData.set(key, [...paramsItem!, changeStr(_value)])
+                        paramsData.set(key, { key: _key, value: [...paramsItem!.value, changeStr(_value)] })
                     } else {
-                        paramsData.set(key, [changeStr(_value)])
+                        paramsData.set(key, { key: _key, value: [changeStr(_value)] })
                     }
                 }
             }
-            if (_target.tagName === 'SELECT' && _target.name === 'categor') {
-                finalParams.categor = _target.value
-            }
+          
             for (const [key, value] of paramsData) {
-                finalParams[key] = value.join(',')
+                finalParams[value['key']] = value.value.join(',')
             }
-            const findParams = _target.tagName === 'SELECT' && 'categor' in finalParams ? { categor: finalParams.categor } : finalParams
-            let page = 'page' in queryParams ? { page: queryParams.page } : {}
+    
+            let page = 'page' in queryParams ? { page: 1 } : {}
             let limit = 'limit' in queryParams ? { limit: queryParams.limit } : {}
            
-            console.log({ ...findParams, ...page, ...limit })
-            router.push({ query: { ...findParams, ...page, ...limit } })
+            router.push({ query: { 'categor': routeCategorId.value, ...finalParams, ...page, ...limit } })
         }
     }
 }
@@ -180,7 +180,6 @@ function getParamsFilter({ target, type }: Event) {
 function changeCategor({ target, type }: Event) {
     if (target instanceof HTMLSelectElement) {
         const _target = target
-        console.log(true)
         let limit = 'limit' in route.query ? { limit: route.query.limit } : {}
         router.push({ query: { [_target.name]: _target.value, page: 1, ...limit } })
     }
@@ -190,14 +189,16 @@ function changeCategor({ target, type }: Event) {
 onMounted(() => {
     if (form.value) {
         const activeParams = { ...route.query }
-        const value = new Map<string, (string)[]>()
+        const params = new Map<string, (string)[]>()
 
-        Object.entries(activeParams).map(_ => {
-            return value.set(_[0], (_[1] as string)
-                .split(',')
-                .map(_ => _.split('__').join(' ')))
-        })
-
+        for (const key in activeParams) {
+            const value = activeParams[key]
+            const attr = (value as string).split(':')
+            const _key = `${key}${attr.length > 1 ? ('.' + attr[0]) : ''}`
+            const _value = (attr.length > 1 ? attr.slice(1): attr).join(':') .split(',').map(_ => _.split('__').join(' '))
+            params.set(_key, _value)
+        }        
+        setValueInput(form.value, params)
     }  
 })
 

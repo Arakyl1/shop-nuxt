@@ -139,8 +139,8 @@ function onClick({ target }: MouseEvent) {
     if (target instanceof Element) {
         updateValue(ratValue.value)
         nextTick(() => {
-        setCustomEvent()
-    })
+            setCustomEvent()
+        })
     }
 }
 
@@ -165,7 +165,7 @@ function updateValue(value: number | string) {
 
 function onInput({ target }: Event) {
     if (target instanceof HTMLInputElement) {
-        updateValue(toFixed(target.valueAsNumber))
+        updateValue(toFixed(Number(target.value)))
     } 
 }
 

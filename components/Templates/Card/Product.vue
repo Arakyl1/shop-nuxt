@@ -67,7 +67,8 @@
                     data: { ...content },
                     quantity: 1
                 })"
-                :class="className['button-basket']"/>
+                :class="className['button-basket']"
+                class="h-12"/>
             </slot> 
         </Flex>
     </Flex>
@@ -150,7 +151,6 @@ function addBasket(item: any) {
 }
 .button-basket {
     width: 100%;
-    padding: 1rem;
     justify-content: center;
     font-size: var(--text-base);
 }

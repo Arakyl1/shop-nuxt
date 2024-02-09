@@ -59,9 +59,9 @@
                 }}</p>
             </div>
             <div class="flex justify-between py-4">
-                <AtomProductPrice :price="data.price" :discount="data.discount" class="text-4xl sm:text-2xl" />
+                <!-- <AtomProductPrice :price="data.price" :discount="data.discount" class="text-4xl sm:text-2xl" />
                 <AtomOtherSelectionQuantity :data-quantity="data.quantity" @number-of-products="(e) => numberOfProducts = e"
-                    class="sm:px-2 sm:py-1" />
+                    class="sm:px-2 sm:py-1" /> -->
             </div>
             <div class="flex">
 

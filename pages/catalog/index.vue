@@ -126,30 +126,16 @@ function visibleFilter(state: boolean) {
     }
 }
 
-// function prevPage(route: RouteLocationNormalizedLoaded) {
-//     return navigateTo({
-//         path: route.path,
-//         query: {
-//             ...route.query,
-//             page: +route.query.page! > 1 ? +route.query.page! - 1 : route.query.page
-//         }
-//     })
-// }
-
-// function nextPage(route: RouteLocationNormalizedLoaded) {
-//     return navigateTo({
-//         path: route.path,
-//         query: {
-//             ...route.query,
-//             page: +route.query.page! + 1
-//         }
-//     })
-// }
 </script> 
 
 <style lang="css" module>
 .filter {
-    width: min-content;
+    min-width: 300px;
+    max-width: min-content;
+    width: 100%;
+}
+.filter > * {
+    min-height: 300px;
 }
 .main {
     min-height: 100%;

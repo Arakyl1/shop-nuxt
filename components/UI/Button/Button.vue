@@ -316,6 +316,13 @@ const rootClass = computed(() => {
 }
 
 
+.button > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 
 // button link 
 .link {
@@ -408,12 +415,14 @@ const rootClass = computed(() => {
 }
 
 .gray-icon {
+    --color: var(--gray-700);
     --fill-color: var(--gray-300);
     --fill-hover: var(--red-300);
     --fill-active: var(--red-500)
 }
 
 .blue-icon {
+    --color: var(--blue-500);
     --fill-color: var(--blue-500);
     --fill-hover: var(--blue-300);
 }

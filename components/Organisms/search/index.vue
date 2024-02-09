@@ -36,8 +36,8 @@
                                                 <p class="text-xs">{{ item.art }}</p>
                                             </div>
                                         </NuxtLink>
-                                        <AtomProductPrice :discount="item.discount" :price="item.price"
-                                        class="flex-col text-sm mr-0"/>
+                                        <!-- <AtomProductPrice :discount="item.discount" :price="item.price"
+                                        class="flex-col text-sm mr-0"/> -->
                                     </div>
                                 </li>
                             </template>

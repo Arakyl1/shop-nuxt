@@ -11,14 +11,14 @@
     ref="body"
     :class="{ 'gap-3': isActive }" tabindex="-1" >
         <div class="w-full" ref="trigger">
-            <slot name="trigger" v-bind="{ isActive }">
+            <slot name="trigger" v-bind="{ activeOption, isActive, onClick }">
                 <Button :text="activeOption?.value"
                 :mode="'outline'"
                 :rounded="'lg'"
                 :icon-transition="'select-icon'"
                 :icon-right="{ key: isActive ? 'arrow' : 'arrow', size: '25_25' }"
-                class="text-base w-full  h-10 truncate"
-                :class="[className['trigger'], activeOption?.value ? 'justify-between' : 'justify-end']"
+                class="text-base w-full h-10 truncate"
+                :class="[ activeOption?.value ? 'justify-between' : 'justify-end']"
                 :style="{ padding: '0rem 0.25rem 0 0.75rem' }"
                 @click="onClick"/>
             </slot>
@@ -160,6 +160,7 @@ onMounted(() => {
     if (trigger.value) {
         window.addEventListener('scroll', onEvent)
     }
+    updateOptionId(props.modelValue)
 })
 
 onBeforeUnmount(() => {
@@ -176,7 +177,7 @@ onBeforeUnmount(() => {
 // })
 
 watch(() => props.modelValue, (newV, oldV) => {
-    if (newV !== oldV && isNumber(newV) || isNumeric(newV)) {
+    if (newV !== oldV && (isNumber(newV) || isNumeric(newV))) {
         updateOptionId(newV)
     }
 })
@@ -268,11 +269,6 @@ function sendEvent() {
     left: 0;
     top: calc(0% - var(--value-indent));
     transform: translateY(-100%);
-}
-.trigger > p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 </style>
 

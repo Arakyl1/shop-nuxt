@@ -12,8 +12,8 @@
                 </p>
             </div>
             <div class="mx-4 sm:grow sm:order-last">
-                <AtomProductPrice :price="data.price" :discount="data.discount"
-                :style="'text-xl ld:text-lg md:text-base sm:text-sm'" class="block sm:justify-end"/>
+                <!-- <AtomProductPrice :price="data.price" :discount="data.discount"
+                :style="'text-xl ld:text-lg md:text-base sm:text-sm'" class="block sm:justify-end"/> -->
             </div>
             <div class="mr-6 sm:order-last block sm:mx-2">
                 <div class="inline-block">

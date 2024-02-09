@@ -32,15 +32,13 @@ export function searchInvalidElem(form: HTMLFormElement) {
 }
 export function setValueInput(elem: HTMLFormElement, setData: Map<string, string[]> ) {
     const _form = unref(elem)
-
+    
     if (_form instanceof HTMLFormElement) {
         const elms = _form.elements
         const event = new Event('input', { bubbles: false })
-
         for (const elem of elms) {
             const elemName = elem.getAttribute('name') || ''
             const elemValid = setData.has(elemName) ? setData.get(elemName) : false;
-
             if (elem instanceof HTMLInputElement && elemValid && elemValid.length) {
                 switch (elem.type) {
                     case 'email':
