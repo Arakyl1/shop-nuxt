@@ -205,6 +205,11 @@ export default defineEventHandler(async (event) => {
                 } as never)
                 return { data: resData }
             } else {
+                const allItem = await prisma[modelName].findMany({
+                    where: resParseData.params.where,
+                    select: { id: true }
+                })
+
                 const resData = await prisma[modelName].findMany({
                     ...resParseData.params,
                     select: {
@@ -215,30 +220,33 @@ export default defineEventHandler(async (event) => {
                     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take,
                     include: false
                 } as never)
+
+                return {
+                    data: resData,
+                    nextPageLength: 0,
+                    countItem: allItem.length
+                    // findParams: {
+                    //     ...resParseData.params,
+                    //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
+                    // }
+                }
+
                 if (resData.length === resParseData.params.take) {
                     const resDataNext = await prisma[modelName].findMany({
                         where: resParseData.params.where,
-                        skip: resParseData.params.skip * resParseData.params.take,
-                        take: resParseData.params.take,
                         select: { id: true }
                     })
                     return {
                         data: resData,
                         nextPageLength: resDataNext.length ? resDataNext.length : 0,
+                        countItem: resDataNext.length ? resDataNext.length : 0,
                         // findParams: {
                         //     ...resParseData.params,
                         //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
                         // }
                     }
                 } else {
-                    return {
-                        data: resData,
-                        nextPageLength: 0,
-                        // findParams: {
-                        //     ...resParseData.params,
-                        //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
-                        // }
-                    }
+                   
                 }
             }
         }
