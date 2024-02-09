@@ -14,7 +14,7 @@
     </Transition>
     </div>
 </template>
-
+<!--  -->
 <script setup lang="ts">
 import type { Content, ProductCardBase } from "@/type/intex";
 import Card from '@/components/Templates/Card/Product.vue'
@@ -27,18 +27,6 @@ const lengthArr = computed(() => props.pending ? Number(route.query.limit) : pro
 </script>
 
 <style lang="css">
-.gallery-enter-active {
-  transition: all 0.35s ease-out;
-}
 
-.gallery-leave-active {
-  transition: all 0s;
-}
-
-.gallery-enter-from,
-.gallery-leave-to {
-  opacity: 0;
-
-}
 
 </style>

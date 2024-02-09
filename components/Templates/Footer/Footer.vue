@@ -59,7 +59,7 @@
             <!-- Desktop Footer start -->
             <div :class="className['desktop']">
                 <Group class="gap-y-12">
-                    <Grid class="gap-10" :class="className['desktop-container']">
+                    <Grid class="gap-10" :container="'sm'">
                         <Group class="gap-y-5">
                             <div>
                                 <img src="@/assets/img/logo.png" :alt="`Logo market place ${config.public.NAME_APP}`" class="h-9">
@@ -148,9 +148,6 @@ const card: readonly string[] = ['maestro', 'master', 'mir', 'visa']
 .desktop {
     display: none;
 }
-.desktop-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 /* Desktop style end */
 @media (min-width: 768px) {
    .mobile {
@@ -162,11 +159,6 @@ const card: readonly string[] = ['maestro', 'master', 'mir', 'visa']
    .body {
         padding: 3.375rem  0 3.125rem 0;
    }
-}
-@media (min-width: 1024px) {
-    .desktop-container {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
 }
 
 </style>

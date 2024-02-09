@@ -101,3 +101,17 @@
   transform-style: preserve-3d;
 }
 
+
+.opacity-enter-active {
+  transition: all 0.35s ease-out;
+}
+
+.opacity-leave-active {
+  transition: all 0s;
+}
+
+.opacity-enter-from,
+.opacity-leave-to {
+  opacity: 0;
+
+}
