@@ -1,28 +1,42 @@
 <template>
-    <div>
-        <div class="flex justify-between pb-6 pt-4 flex-wrap">
-            <h2 class="text-3xl md:text-2xl sm:text-xl sm:w-full">Каталог товаров</h2>
-            <div class="flex items-start sm:text-right sm:w-full justify-end">
-                <p class="text-gray-300 mr-1 sm:text-sm">Показывать:
-                    <span class="text-blue-500 ml-1 sm:text-sm">по</span>
-                </p>
-                <ClientOnly>
-                    <select @change="onChange" :value="'limit' in $route.query ? $route.query.limit : ''"
-                        class="p-0 px-1 focus-visible:outline-none text-blue-500 cursor-pointer sm:text-sm">
-                        <option disabled value="" class="text-gray-500">Sel..</option>
-                        <option v-for="item in selectValue" :key="item" :value="item" class="text-gray-500">{{ item }}
-                        </option>
-                    </select>
-                </ClientOnly>
-            </div>
-        </div>
-    </div>
+   
+    <Flex :justify="'between'" >
+        <Title :tag="'h2'" :text="'Каталог товаров'" class="grow"/>
+        <Flex>
+            <p class="text-gray-300">Показывать:
+                <span class="text-blue-500 px-1">по</span>
+            </p>
+            <ClientOnly>
+                <Select :data="data" class="w-16" @change="onChange" :model-value="(sizeValue as number)">
+                    <template #trigger="{ activeOption, isActive, onClick }">
+                        <Button :text="activeOption?.value"
+                        :appearance="'blue-icon'"
+                        :rounded="'lg'"
+                        :icon-transition="'select-icon'"
+                        :icon-right="{ key: isActive ? 'arrow' : 'arrow', size: '25_25' }"
+                        class="text-base w-full h-6"
+                        :class="[ activeOption?.value ? 'justify-between' : 'justify-end']"
+                        :style="{ padding: '0.125rem 0.25rem' }"
+                        @click="onClick"/>
+                    </template>
+                </Select>
+            </ClientOnly>
+        </Flex>
+    </Flex>
 </template>
 
 <script setup lang="ts">
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Title from "@/components/UI/Title/Title.vue";
+import Select from "@/components/UI/Select/SelectRelative.vue";
+import Button from "@/components/UI/Button/Button.vue";
+
 const route = useRoute()
+const sizeValue = ref('limit' in route.query ? route.query.limit : 12)
+
 
 const selectValue = [6, 12, 18, 24, 30, 36, 42, 48, 54, 60]
+const data = computed(() => selectValue.map(_ => ({ id: _, value: _ })))
 
 function onChange({ target }: Event) {
     const _target = target as HTMLElement
@@ -30,7 +44,6 @@ function onChange({ target }: Event) {
         const value = (_target as HTMLSelectElement).value
         if (value !== '') {
             return navigateTo({
-                path: route.path,
                 query: {
                     ...route.query,
                     page: 1,
