@@ -231,23 +231,23 @@ export default defineEventHandler(async (event) => {
                     // }
                 }
 
-                if (resData.length === resParseData.params.take) {
-                    const resDataNext = await prisma[modelName].findMany({
-                        where: resParseData.params.where,
-                        select: { id: true }
-                    })
-                    return {
-                        data: resData,
-                        nextPageLength: resDataNext.length ? resDataNext.length : 0,
-                        countItem: resDataNext.length ? resDataNext.length : 0,
-                        // findParams: {
-                        //     ...resParseData.params,
-                        //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
-                        // }
-                    }
-                } else {
+                // if (resData.length === resParseData.params.take) {
+                //     const resDataNext = await prisma[modelName].findMany({
+                //         where: resParseData.params.where,
+                //         select: { id: true }
+                //     })
+                //     return {
+                //         data: resData,
+                //         nextPageLength: resDataNext.length ? resDataNext.length : 0,
+                //         countItem: resDataNext.length ? resDataNext.length : 0,
+                //         // findParams: {
+                //         //     ...resParseData.params,
+                //         //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
+                //         // }
+                //     }
+                // } else {
                    
-                }
+                // }
             }
         }
 
