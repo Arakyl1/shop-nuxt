@@ -1,4 +1,17 @@
 <template>
+    <div>
+        <Pagination
+            :total="120"
+            :range-before="1"
+            :range-after="2"
+            :size-page="7"
+            :current="activePage"
+            @update:current="(e) => updatePage(e, 120, 7)"
+            :before-content="true"
+            :afterContent="true"
+            class="gap-4"
+            />
+    
     <div class="test-ui-body">
         <Input :mode="'secondary'"
         :readonly="true"
@@ -10,6 +23,7 @@
         <Input :mode="'outline'" :readonly="true" :model-value="'Какой-то текст'" :icon="{ 'key': 'basket', size: '25_25' }"/>
         <RangeNumber :section="data"/>
         <Password :mode="'secondary'" :span="'Password'"/>
+        
         <!-- <div class="w-40">
             <Rating :readonly="false" />
             <Switch />
@@ -40,6 +54,7 @@
             </div>
         </div> -->
     </div>
+</div>
 </template>
 
 
@@ -47,7 +62,10 @@
 import Input from "@/components/UI/Input/Input.vue";
 import RangeNumber from "@/components/UI/Range/Number.vue";
 import Password from "@/components/UI/Input/Password.vue";
+import Pagination from "@/components/UI/Pagination/Pagination.vue";
+import { paggination } from '#imports'
 
+const { activePage, updatePage, getInfoPagination } = paggination()
 const data ={
         title: "NUMBER",
         from: { name: 'from', min: 0, max: 45, placeholder: 'from', step: 1 },
