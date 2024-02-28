@@ -67,9 +67,4 @@ const { data, refresh } = useAsyncData(() => $fetch('/api/product/get', {
 }
 </style>
 
- <!-- <AtomModalMask :state="state" :clickFun="update">
-            <MoleculesModalAddCommtit :data="modalData" :refresh="refresh" :userData="_userData"
-            :reviewsRantingValue="reviewsRantingValue" :modalFun="update" :state="state"
-            class="h-min w-96 sm:w-[calc(100vw-2rem)]" />
-        </AtomModalMask>  -->
     

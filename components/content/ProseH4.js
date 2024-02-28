@@ -2,7 +2,8 @@
 export default (props, { slots }) => {
     return h(
       "h3",
-      { class: "text-2xl text-black-500 xl:text-xl lg:text-lg sm:text-base" },
+      { class: "text-black-500" },
       slots.default()
     );
   };
+  // text-2xl  xl:text-xl lg:text-lg sm:text-base

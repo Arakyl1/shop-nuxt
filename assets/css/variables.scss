@@ -1,10 +1,19 @@
 // CONTAINER STYLE
+
+$containerSize: (
+    'sm': 640px,
+    'md': 768px,
+    'lg': 1024px,
+    'xl': 1280px,
+    '2xl': 1536px,
+);
+
 $containerWidth: (
-  640px: 0 1rem,
-  768px: 0 1.5rem,
-  1024px: 0 2rem,
-  1280px: 0 2.5rem,
-  1536px: 0 3rem
+    map-get($containerSize, 'sm'): 0 1rem,
+    map-get($containerSize, 'md'): 0 1.5rem,
+    map-get($containerSize, 'lg'): 0 2rem,
+    map-get($containerSize, 'xl'): 0 2.5rem,
+    map-get($containerSize, '2xl'): 0 3rem
 );
 
 
@@ -86,38 +95,32 @@ $alignContent: (
 
 // BUTTON VARIABLE
 $ButtonBasicPadding: (
-    '2xs': 0.25rem,
-    'xs': 0.5rem,
-    'sm': 0.9475rem,
-    'base': 1.125rem 3.125rem,
-    'lg': 0 1rem,
-    'xl': 0,
-    '2xl': 0,
-    '3xl': 0,
-    '4xl': 0,
+    '3xl': 0 3rem,
+    '2xl': 0 2.5rem,
+    'xl': 0 2rem,
+    'lg': 0 1.5rem,
+    'base': 0 1rem,
+    'sm': 0 0.75rem,
+    'xs': 0 0.5rem,
+    '2xs': 0 0.25rem,
     'none': 0rem
 );
 
 $borderRadius: (
-    'none': 0,
-    'xs': 1px,
-    'sm': 2px,
-    'base': 4px,
-    'lg': 6px,
-    'xl': 8px,
-    '2xl': 12px,
     'full': 9999px,
+    'xl': 8px,
+    'lg': 6px,
+    'base': 4px,
 );
 // TEXT VARIABLE
 $fontSize: (
-  'xs': 0.75rem,
-  'sm': 0.875rem,
-  'base': 1rem,
-  'md': 1.125rem,
-  'lg': 1.25rem,
-  '2xl': 1.5rem,
-  '4xl': 2.25rem,
-  '5xl': 4rem,
+    '2xl': 4rem,
+    'xl': 2rem,
+    'lg': 1.5rem,
+    'md': 1.125rem,
+    'base': 1rem,
+    'sm': 0.875rem,
+    'xs': 0.75rem,
 );
 
 $textWeight: (
@@ -169,6 +172,16 @@ $color: (
     "black-900": #282828,
 );
 
+$shadow: (
+    shadow-sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    shadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+    shadow-md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+    shadow-lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+    shadow-xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+    shadow-2xl: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+    shadow-inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+);
+
 
 :root {
     --transparent: transparent;
@@ -182,5 +195,9 @@ $color: (
 
     --lin-grad-loader--deg: 135deg;
     --transition-blur: 1rem;
+    // Shadow variable
+    @each $name, $value in $shadow {
+        --#{$name}: #{$value};
+    }
 
 };

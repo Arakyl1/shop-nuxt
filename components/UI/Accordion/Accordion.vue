@@ -1,5 +1,5 @@
 <template>
-    <div :data-accordion="instanse.uid" :data-uid="instanse.uid" class="relative">
+    <div :data-accordion="instanse?.uid" :data-uid="instanse?.uid" class="relative">
         <div>
             <div v-if="content === 'after'">
                 <slot name="trigger" v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }">
@@ -41,12 +41,12 @@
 
 <script setup lang="ts">
 import { default as Button, type Props as ButtonProps } from "@/components/UI/Button/Button.vue";
-import { watchEvent } from "#imports";
-import { type Props as CreateIconProps } from "@/content/icons/create.ts";
+import { watchEvent } from "@/utils/elemHelper";
+import { useShowProps } from '~~/type/intex';
+import useShow from '@/composables/useShow';
+import useHeight from '@/composables/useHeight';
 
-type Button_Icon = CreateIconProps['name']
-
-interface Props {
+interface Props extends useShowProps {
     active?: boolean,
     text?: string,
     // Accordion будет иметь анимацию
@@ -60,8 +60,6 @@ interface Props {
     btMode?: 'primary' | 'secondary',
     btClass?: string,
     // закрывать accordion когда активен другой accordion
-    autoClose?: boolean,
-    triggers?: Array<'click'|'hover'|'focus'|'contextmenu'>,
     delay?: number,
     closeDelay?: number,
 }
@@ -83,8 +81,8 @@ const emit = defineEmits(['message'])
 
 const className = useCssModule()
 const accordion = ref<HTMLElement | null>(null)
-const instanse = getCurrentInstance()
-const watchElement = watchEvent('data-accordion', instanse, () => { isActive.value = false })
+const instanse = ref()
+const watchElement = watchEvent('data-accordion', instanse.value, () => { isActive.value = false })
 const { isActive, close, onClick, open, onFocus, onHover, onContextMenu } = useShow(props, watchElement)
 const size = useHeight(accordion)
 
@@ -95,6 +93,9 @@ const iconClass = computed(() => {
         ''
 })
 
+onMounted(() => {
+    instanse.value = getCurrentInstance()
+})
 watch(() => isActive.value, (newV) => emit('message', newV ? 'open' : 'close'))
 
 </script>

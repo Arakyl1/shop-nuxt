@@ -13,7 +13,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), { 'tag': 'div', align: 'center' })
 const flex = ref<HTMLElement | null>(null)
-const instanse = getCurrentInstance()
+const instanse = ref()
 
 const rootClass = computed(() => {
     return {
@@ -24,8 +24,10 @@ const rootClass = computed(() => {
     }
 })
 
-defineExpose({
-    flex: flex
+defineExpose({ flex })
+
+onMounted(() => {
+    instanse.value = getCurrentInstance()
 })
 </script>
 

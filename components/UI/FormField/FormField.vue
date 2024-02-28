@@ -1,5 +1,5 @@
 <template>
-    <div @input="onCheckValid" @change="onCheckValid" @invalid.capture="onCheckValid" :class="className['field']">
+    <div @input="onCheckValid" @change="onCheckValid" @invalid.capture.prevent="onCheckValid" :class="className['field']">
         <label for="" v-if="label">{{ label }}</label>
         <slot v-bind="{ typeValid, messadge }"></slot>
         <span v-if="spanShow" v-show="messadge"

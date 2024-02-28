@@ -1,4 +1,4 @@
-import { CONTENT_KEY, CookieKey } from "@/type/intex";
+import { CONTENT_KEY, CookieKey, SERVER_RESPONSE_CONTENT_KEY } from "@/type/intex";
 
 export function isNumber(elem: unknown): elem is number {
     return typeof elem === 'number'
@@ -19,6 +19,9 @@ export function isNumeric(str: string): boolean {
     if (typeof str != "string") return false
     return !isNaN(str as never) && !isNaN(parseFloat(str))
 }
+export function checkStrBoolean(str: string) {
+    return str === 'false' ? undefined : str
+}
 
 export const generateHash = (str:string, seed = 0) => {
     let h1 = 0xdeadbeef ^ seed,
@@ -36,7 +39,8 @@ export const generateHash = (str:string, seed = 0) => {
     return 9528367296 * (2098527 & h2) + (h1 >>> 0);
 };
 
-export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key 
+export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key
+export const GET_SERVER_RESPONSE_KEY = (key: SERVER_RESPONSE_CONTENT_KEY) => key
 
 type ArgumentsSetCookie = Parameters<typeof setCookie>
 export const _setCookie = async(event: ArgumentsSetCookie[0], key: CookieKey, value: string ) => {

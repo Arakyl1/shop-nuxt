@@ -1,41 +1,82 @@
 <template>
-    <section>
-        <div class="flex text-gray-500 flex-wrap">
-            <div class="w-5/12 lg:w-full lg:mb-8">
-                <div>
-                    <h4 class="text-2xl text-gray-500 mb-8 xl:text-xl xl:mb-6">Для связи</h4>
-                    <div class="grid grid-cols-2 mb-12 xl:mb-8 lg:flex sm:flex-wrap">
-                        <div class="flex items-center lg:mr-8 sm:w-full sm:mb-4">
-                            <div class="p-1 aspect-square bg-white rounded-full shadow-lg mr-4">
-                                <img src="@/assets/img/svg/phone.svg" alt="">
-                            </div>
-                            <p class="text-lg xl:text-base">8-(495)-005-52-15</p>
+    <Flex :tag="'section'" class="text-gray-500 flex-wrap" :class="className['body']">
+        <div class="">
+            <Group class="gap-y-8">
+                <Title :tag="'h3'" class="text-gray-500" :text="'Для связи'"/>
+                <Flex class="gap-8" :class="className['']">
+                    <Flex class="gap-4">
+                        <div :class="className['circle']" class="shadow-md">
+                            <img src="@/assets/img/svg/phone.svg" alt="">
                         </div>
-                        <div class="flex items-center sm:w-full">
-                            <div class="p-1 aspect-square bg-white rounded-full shadow-lg mr-4">
-                                <img src="@/assets/img/svg/email.svg" alt="">
-                            </div>
-                            <a href="mailto:info@5kvt.ru" class="text-lg xl:text-base">info@5kvt.ru</a>
+                        <Button :tag="'a'"
+                        :mode="'link'"
+                        :text="common.TELEPHONE" 
+                        :href="`tel:${common.TELEPHONE}`"
+                        class="text-md"/>
+                        
+                    </Flex>
+                    <Flex class=" gap-4">
+                        <div :class="className['circle']" class="shadow-md">
+                            <img src="@/assets/img/svg/email.svg" alt="">
                         </div>
-                    </div>
-                    <h4 class="text-2xl text-gray-500 mb-4 xl:text-xl">Социальные сети</h4>
-                    <AtomOtherSocialIcon/>
-                </div>
-            </div>
-            <div class="w-7/12 lg:w-full">
-                <div class="bg-gray-100 p-8 xl:p-6">
-                    <h4 class="text-2xl text-gray-500 mb-2 xl:text-xl">Реквизиты</h4>
+                        <Button :tag="'a'"
+                        :mode="'link'"
+                        :text="common.MAIL" 
+                        :href="`mailto:${common.MAIL}`"
+                        class="text-md"/>
+                    </Flex>
+                </Flex>
+                <Title :tag="'h3'" class="text-gray-500" :text="'Социальные сети'"/>
+                <SocialIcon />
+            </Group>
+        </div>
+        <div class="grow">
+            <Card :appearance="'gray'" :container="'xl'">
+                <Group class="gap-y-2">
+                    <Title :tag="'h3'" class="text-gray-500" :text="'Реквизиты'"/>
                     <ContentDoc path="/contact/requisites" v-slot="{ doc }">
                         <ul class="text-black-300">
-                            <li v-for="item in doc.body" :key="item.name"
-                            class="flex justify-between py-2 sm:flex-wrap">
-                                <p class="text-lg xl:text-base sm:w-full sm:mb-1">{{ item.name }}</p>
-                                <p class="text-lg text-gray-500 xl:text-base sm:w-full">{{ item.value }}</p>
-                            </li>
+                            <Flex v-for="item in doc.body"
+                            :key="item.name"
+                            :tag="'li'"
+                            :justify="'between'"
+                            class="py-2 gap-4 text-md">
+                                <p>{{ item.name }}</p>
+                                <p class="text-gray-500">{{ item.value }}</p>
+                            </Flex>
                         </ul>
                     </ContentDoc>
-                </div>
-            </div>
+                </Group>
+            </Card>
         </div>
-    </section>
+    </Flex>
 </template>
+
+<script setup lang="ts">
+import Title from "@/components/UI/Title/Title.vue";
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Button from "@/components/UI/Button/Button.vue";
+import Card from "@/components/UI/Card/Card.vue";
+import Group from "@/components/UI/Group/Group.vue";
+import SocialIcon from "@/components/Templates/Other/SocialIcon";
+import { PAGE_CONTACT as common } from "@/common/C";
+
+const className = useCssModule()
+</script>
+
+<style lang="css" module>
+.body > *:nth-child(1) {
+    width: calc((100% /12) *5);
+}
+.circle {
+    padding: 0.25rem;
+    aspect-ratio: 1;
+    width: 2rem;
+    background-color: var(--white);
+    border-radius: var(--rounded-full);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+</style>

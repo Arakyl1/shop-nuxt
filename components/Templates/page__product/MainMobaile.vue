@@ -65,7 +65,7 @@
             </div>
             <div class="flex">
 
-                <AtomButtonStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow" @click="addBasket({
+                <!-- <AtomButtonStandart class="flex bg-blue-500  justify-center items-center px-16 lg:px-10 grow" @click="addBasket({
                     data: { ...props.data, characteristic: [], reviews: [] },
                     quantity: numberOfProducts
                 })" :disabled="data.quantity === 0">
@@ -80,7 +80,7 @@
                             :att="{ class: [storeFavorite.findItem(data.id).value ? 'fill-red-500 stroke-none' : 'fill-none stroke-white stroke-[1.5px]'] }" />
                     </AtomButtonStandart>
                     <AtomButtonShare @click="onClick" class="bg-blue-500 px-4  m:px-3 group is-icon-white aspect-square" />
-                </ClientOnly>
+                </ClientOnly> -->
             </div>
         </div>
     </section>

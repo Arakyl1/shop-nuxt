@@ -12,7 +12,6 @@ export default (el: any) => {
             
             const style = getComputedStyle(_elem);
             size.h = style.height;
-            console.log(style.height)
             _elem.style.position = '';
             _elem.style.visibility = '';
             _elem.style.display = '';
@@ -26,7 +25,6 @@ export default (el: any) => {
     onMounted(() =>{
         getHeight(el)
         window.addEventListener('resize',onResize)
-        console.log(size)
     })
 
     onBeforeUnmount(() => {

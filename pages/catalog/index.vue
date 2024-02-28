@@ -23,8 +23,7 @@
                 </Grid>
                 <Transition name="opacity" >
                     <div v-show="!pending && data && !dataLength">
-                        <p class="text-2xl text-gray-500 p-8 lg:text-xl sm:text-lg sm:p-4"
-                        >{{ 'nothing found'  }}</p>
+                        <p class="text-lg p-8 text-gray-500">{{ 'nothing found'  }}</p>
                     </div>
                 </Transition>
             </div>
@@ -56,11 +55,12 @@ import Panel from "@/components/UI/Panel/Panel.vue";
 import CardProduct from '@/components/Templates/Card/Product.vue'
 import Filter from '@/components/Templates/page__catalog/Filter.vue'
 import Pagination from "@/components/UI/Pagination/Pagination.vue";
+import { PAGE_META as META } from "@/common/C";
 
 
 definePageMeta({
     middleware: ['catalog'],
-    title: 'Каталог товаров',
+    title: META.CATALOG.TITLE,
 })
 
 const { state, update } = localState({ watch: false })

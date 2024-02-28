@@ -1,40 +1,21 @@
 <template>
 <Input
-    :type="showPassword ? 'password' : 'text'"
+    :type="showPassword ? 'text' : 'password'"
     :name="'password'"
-    :mode="mode"
-    :span="span"
-    :icon="{ 'key': !showPassword ? 'hide' : 'view', size: '22_22' }"
+    :icon="{ 'key': showPassword ? 'hide' : 'view', size: '22_22' }"
     :icon-clickable="true"
     :required="true"
-    autocomplete="new-password"
+    
+    v-bind="{ ...props }"
     @update:modelValue="(e) => emit('update:modelValue', e)"
     @icon-click="toggleShowPassword"/>
 </template>
+<!-- aria-autocomplete="list" -->
+<script setup lang="ts">
+import { default as Input, type Props as InputProps } from "@/components/UI/Input/Input.vue";
 
-<script setup>
-import Input from "@/components/UI/Input/Input.vue";
-// import { View, Hide } from "@element-plus/icons-vue";
-
-const props = defineProps({
-    // стиль оформления input
-    mode: {
-        type: String,
-        validator(value) {
-            return ['primary', 'secondary', 'outline'].includes(value)
-        }
-    },
-    // анимерованный placeholder вместо базового
-    // если была передано значание для базовго placeholder (эт пропс placeholder)
-    // то приоритет отдается базовому 
-    span: {
-        type: String
-    },
-    // базовый placeholder
-    placeholder: {
-        type: String
-    }
-})
+interface Props extends Pick<InputProps, 'autocomplete'|'disabled'|'placeholder'|'span'|'pattern'|'mode'> {}
+const props = withDefaults(defineProps<Props>(), { autocomplete: 'new-password' })
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -44,3 +25,12 @@ function toggleShowPassword(e) {
     showPassword.value = !showPassword.value
 }
 </script>
+
+<style lang="css">
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
+
+</style>

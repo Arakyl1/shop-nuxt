@@ -15,7 +15,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), { 'tag': 'div', align: 'center', container: 'md' })
 const grid = ref<HTMLElement | null>(null)
-const instanse = getCurrentInstance()
+const instanse = ref()
 const className = useCssModule()
 
 const rootClass = computed(() => {
@@ -26,10 +26,16 @@ const rootClass = computed(() => {
         [className[props.container]]: props.container,
     }
 })
+onMounted(() => {
+    instanse.value = getCurrentInstance()
+})
 
 </script>
 
 <style lang="css" module>
+    .xs {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
     .sm {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -41,6 +47,9 @@ const rootClass = computed(() => {
         /* .md {
             grid-template-columns: repeat(3, minmax(0, 1fr));
         } */
+        .xs {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
     @media (min-width: 1024px) {

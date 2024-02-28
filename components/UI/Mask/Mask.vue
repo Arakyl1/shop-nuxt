@@ -6,21 +6,24 @@
 
 <script setup lang="ts">
 
-interface Props {
+export interface Props {
     // при включеном параметре состояние :hover будет срабатывать при наведениие на родителя
     parentHover?: boolean,
     appearance?: 'white' | 'dark' | 'gray' | 'red',
-    opacity?: number,
     active?: boolean,
-    fullScreen?: boolean,
+    position?: 'fixed' | 'relative',
+    animation?: 'scale',
+    animationMobile?: string,
+    hideScroll?: boolean,
     fun?: (...arg: any[]) => any
 }
 
 const props = withDefaults(defineProps<Props>(), {
     parentHover: false,
     appearance: 'dark',
-    opacity: 0.8,
-    fullScreen: true,
+    position: 'fixed',
+    animation: 'scale',
+    hideScroll: true,
     fun: () => false
 })
 const className = useCssModule()
@@ -32,15 +35,15 @@ const rootClass = computed(() => {
         [className[props.appearance]]: props.appearance,
         [className['active']]: props.active,
         [className['hover']]: props.parentHover,
-        [className['relative']]: !props.fullScreen,
-        [className['fixed']]: props.fullScreen,
+        [className[props.position]]: props.position,
+        [className['anim-' + props.animation]]: props.animation,
         [className['mask']]: true
     }
 })
 
 watch(() => props.active, (newV) => {
-    if (!props.fullScreen) return
-
+    if (!props.hideScroll) return
+   
     if (newV) {
         document.body.style.overflow = 'hidden'
         if (isDesktop && !isFirefox) {
@@ -58,26 +61,67 @@ watch(() => props.active, (newV) => {
 </script>
 
 <style lang="css" module>
+
+.mask::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: var(--opacity-transition-for-mask--base);
+    z-index: -1;
+}
+
 .fixed {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.relative {
+    position: relative;
+    height: 100vh;
+    z-index: -1;
+}
+
+.anim-scale {
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    transition-delay: 360ms;
+}
+.anim-scale.active  {
+    transform: scaleY(1);
+    opacity: 1;
+    transition-delay: 0ms;
+}
+
+.anim-scale::after {
+    opacity: 0.8;
+    
+}
+
+.dark::after {
+    background-color: var(--black-900);
+}
+
+
+
+/* OLD STYLE */
+/* .fixed {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
     transition-delay: 200ms;
-    z-index: 9999;
-    transform-origin: top;
-    transform: scaleY(0);
-    opacity: 0;
+    
 }
-.fixed.active {
-    transform: scaleY(1);
-    opacity: v-bind('props.opacity');
-    transition-delay: 0ms;
-}
-.relative {
-    position: relative;
-}
+
 
 .relative:not(.fixed)::after {
     content: '';
@@ -103,9 +147,6 @@ watch(() => props.active, (newV) => {
     background-color: var(--white);
 }
 
-.dark:not(.relative), .dark::after {
-    background-color: var(--black-900);
-}
 
 .red:not(.relative), .red::after {
     background-color: var(--red-500);
@@ -116,5 +157,5 @@ watch(() => props.active, (newV) => {
 }
 
 *:hover> .hover::after {
-    display: block;
-}</style>
+    display: block;} */
+</style>

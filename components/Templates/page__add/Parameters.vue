@@ -1,47 +1,88 @@
 <template>
-  <section class="bg-gray-100 p-8 xl:p-6 lg:p-4">
-    <div class="flex flex-wrap">
-      <fieldset :class="style.item">
-        <legend class="text-3xl xl:text-2xl lg:text-xl">Описание товара</legend>
-        <div class="decor-line my-6 xl:my-4"></div>
-        <textarea :name="modelProp('ProductCard', 'description')" autocapitalize="words" ref="textarea"
-          class="bg-white p-6 w-full h-80 border border-gray-300 border-solid rounded focus-visible:outline-0"></textarea>
-      </fieldset>
-      <fieldset :class="style.item">
-        <legend class="text-3xl xl:text-2xl lg:text-xl">Дополнительные опции</legend>
-        <div class="decor-line my-6 xl:my-4"></div>
-        <ul class="flex flex-wrap" v-if="otherParams">
-          <li v-for="item in otherParams" :key="item.name" class="flex items-center mb-4">
-            <AtomFormCheckbox :attr="{ id: item.name, name: item.name, value: true, checked: Math.random() >= 0.3 }" class="h-4"/>
-            <label class="pr-3 pl-2 text-xl align-bottom xl:text-lg lg:text-base"
-            :for="item.name">{{ item.value }}</label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-  </section>
+  <Card :appearance="'gray'" :container="'xl'">
+    <Grid :container="'xs'" class="gap-8">
+      <Group :tag="'fieldset'" class="grow gap-y-6">
+        <Title :tag="'h3'" :text="common.TITLE_DESCRIPTION"/>
+        <div class="decor-line"></div>
+        <textarea
+        :name="modelProp('ProductCard', 'description')"
+        autocapitalize="words" ref="textarea"
+        class="bg-white p-6 w-full"
+        :class="className['textarea']"
+        :placeholder="commonInput.PRODUCT_CREATE_DESCRIPTION_TEXTAREA.PLACEHOLDER"></textarea>
+      </Group>
+      <Group :tag="'fieldset'" class="grow gap-y-6">
+        <Title :tag="'h3'" :text="common.TITLE_ADDITIONAL_OPTION"/>
+        <div class="decor-line"></div>
+        <Flex  v-if="otherData" class="gap-6 flex-wrap">
+          <Checkbox v-for="item in otherData" :key="item.value"
+          :attr="{
+            id: item.name,
+            name: item.name,
+            value: true,
+          }"
+          :checked="randomNum ? checkRandomNum() : checkRandomNum()"
+          :text="item.value"
+          class="h-5"/>
+        </Flex>
+      </Group>
+    </Grid>
+  </Card>
 </template>
-<script setup lang="ts" generic="U extends { description: string }, K extends { name: string, value: string }">
-const props = defineProps<{
-  doowloadJsonData: U | null,
-  otherParams: K[] | null
-}>()
+<script setup lang="ts">
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Group from "@/components/UI/Group/Group.vue";
+import Grid from "@/components/UI/Grid/Grid.vue";
+import Title from "@/components/UI/Title/Title.vue";
+import Card from "@/components/UI/Card/Card.vue";
+import Checkbox from "@/components/UI/Checkbox/Checkbox.vue";
+import { INPUT_CONTENT as commonInput, PAGE_ADD as common } from "@/common/C";
 
+const randomNum = ref(1)
+const className = useCssModule()
+const otherData = ref()
 
-const textarea = ref<HTMLTextAreaElement | null>(null)
-
-watch(() => props.doowloadJsonData, (newV) => {
-  if (newV && textarea.value) {
-    if (props.doowloadJsonData &&
-      Object.prototype.hasOwnProperty.call(props.doowloadJsonData, modelProp('ProductCard', 'description')) &&
-      props.doowloadJsonData.description)
-    {
-      textarea.value.value = props.doowloadJsonData.description
+await useFetch('/api/attridute/get', {
+    server: false,
+    method: 'GET',
+    params: { type: 'OTHER' },
+    key: 'attridute:OTHER',
+    onResponse({ response }) {
+        if (response.status < 400) {
+            otherData.value = response._data.filter((_: { type: string; }) => _.type === 'OTHER')
+        }
     }
-  }
 })
-// style
-const style = {
-  item: 'p-8 w-1/2 xl:p-6 lg:p-4 md:w-full md:p-2'
+
+
+onMounted(() => {
+  window.addEventListener('restore', onRestore)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('restore', onRestore)
+})
+
+function onRestore() {
+  nextTick(() => { randomNum.value = ++randomNum.value })
 }
+
+function checkRandomNum() {
+  return Math.random() > 0.35
+}
+// style
 </script>
+
+
+<style lang="css" module>
+.textarea {
+  height: 20rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--rounded-xl);
+  resize: vertical;
+  font-size: var(--text-md);
+}
+.textarea:focus-visible {
+  outline: none;
+}
+</style>

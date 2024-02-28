@@ -1,12 +1,18 @@
 <template>
     <div :class="className['root']" >
-        <input type="checkbox" v-bind="$attrs" :class="className['input']" ref="checkbox" hidden>
+        <input type="checkbox"
+        :checked="Boolean(checked)"
+        ref="checkbox"
+        :class="className['input']"
+        v-bind="{ ...attr?.attr! }"
+        hidden>
         <div :class="rootClass" @click.stop="onClick"
-        :tabindex="$attrs?.disabled ? -1 : 1"
+        :tabindex="attr?.disabled ? -1 : 1"
         @keyup.stop.enter="checkbox?.click()">
                 <CreateIcon :name="icon" :class="className['svg']" />
         </div>
         <Paragraph v-if="text"
+            :for="attr?.attr?.id"
             :tag="'label'"
             :text="text"
             :line="1"
@@ -18,28 +24,48 @@
 
 
 <script setup lang="ts">
-import { default as CreateIcon, NameIcon } from "@/content/icons/create";
+import { default as CreateIcon, NameIcon } from "@/utils/icon/create";
 import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
 
 export interface Props {
     mode?: 'primary' | 'secondary' | 'outline',
     icon?: `${NameIcon}_${number}_${number}`,
-    text?: string | number
+    text?: string | number,
+    checked?: boolean,
 }
 
-const props = withDefaults(defineProps<Props>(),{ icon: 'checkbox-1_15_15' })
+const props = withDefaults(defineProps<Props>(),{ icon: 'checkbox-1_15_15', checked: false })
 const checkbox = ref<HTMLInputElement | null>(null)
 const className = useCssModule()
+const attr = useAttrs()
+const observer = ref<MutationObserver | null>(null)
 
 const rootClass = computed(() => {
-    return [
-        [className['checkbox']],
-        [ props.mode ? className['checkbox-' + props.mode] : '' ],
-    ]
- })
+   return [
+       [className['checkbox']],
+       [ props.mode ? className['checkbox-' + props.mode] : '' ],
+   ]
+})
 
- function onClick() {
-    if (checkbox.value) {
+onMounted(() => {
+    if (checkbox.value instanceof HTMLInputElement) {
+        observer.value = new MutationObserver((mutationList, observer) => {
+            const _elem = mutationList[0].target as HTMLInputElement
+            _elem.checked = props.checked 
+        })
+        observer.value.observe(checkbox.value, { attributes: true })
+    }
+})
+
+onBeforeUnmount(() => {
+    if (checkbox.value && observer.value) {
+        observer.value.disconnect()
+    }
+})
+
+
+function onClick() {
+    if (checkbox.value instanceof HTMLInputElement) {
         checkbox.value.click()
     }
 }

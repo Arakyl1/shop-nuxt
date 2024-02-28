@@ -1,7 +1,7 @@
 <template>
     <div ref="popover" :data-popover="instanse.uid" :data-uid="instanse?.uid" :class="className['popover']">
         <transition :name="animated">
-            <div v-show="active && (isActive || always)" :class="[rootClass, className['decktop']]">
+            <div v-show="active && (isActive || always)" :class="[rootClass, className['desktop']]">
                 <template v-if="label">{{ label }}</template>
                 <template v-else-if="$slots.content">
                     <slot name="container" v-bind="{ isActive, close, onClick }" >
@@ -12,7 +12,7 @@
                 </template>
             </div>
         </transition>
-        <Transition :name="animatedMobaile" :class="className['mobaile']" :duration="250">
+        <Transition :name="animatedMobaile" :class="className['mobile']" :duration="250">
             <div v-show="active && (isActive || always)">
                 <div :class="[rootClass]">
                     <template v-if="label">{{ label }}</template>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { watchEvent } from '#imports'
+import { watchEvent } from "@/utils/elemHelper";
 import Card from "@/components/UI/Card/Card.vue";
 
 const props = defineProps({
@@ -101,7 +101,7 @@ const emit = defineEmits(['open', 'close'])
 
 const popover = ref(null)
 const className = useCssModule()
-const instanse = getCurrentInstance()
+const instanse = ref()
 const watchElement = watchEvent('data-popover', instanse, () => { isActive.value = false })
 const { isActive, close, onClick } = useShow(props, watchElement)
 
@@ -115,6 +115,9 @@ const rootClass = computed(() => {
     ]
 })
 
+onMounted(() => {
+    instanse.value = getCurrentInstance()
+})
 
 watch(() => isActive.value, (newV) => {
     emit(newV ? 'open' : 'close')
@@ -129,7 +132,7 @@ watch(() => isActive.value, (newV) => {
     font-size: var(--text-sm);
 }
 
-.content.decktop {
+.content.desktop {
     position: absolute;
     z-index: 20;
     bottom: -0.75rem;
@@ -159,11 +162,11 @@ watch(() => isActive.value, (newV) => {
     z-index: 10;
 }
 
-.decktop {
+.desktop {
     display: block;
 }
 
-.mobaile {
+.mobile {
     display: none;
 }
 
@@ -173,11 +176,11 @@ watch(() => isActive.value, (newV) => {
 }
 
 @media (max-width: 768px) {
-    .decktop {
+    .desktop {
         display: none;
     }
 
-    .mobaile {
+    .mobile {
         display: block;
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <figure :class="className['body']">
+    <figure :class="[className['body'], { [`rounded-${props.rounded}`]: props.rounded }]" class="hidden">
         <figcaption v-if="captionFirst">
             {{ captionFirst }}
         </figcaption>
@@ -20,7 +20,7 @@
 // через слот передаеться текс caption
 // в случае не загрузки изображения устаналивает стандартое фото
 // установка подписей под изображение до и после
-const props = defineProps({
+ const props = defineProps({
     src: { type: [String, null], required: true }, // src изобраения
     alt: { // alt изображения
         type: String,
@@ -48,12 +48,13 @@ const props = defineProps({
     customClass: { type: String }, // кастомные стили
     baseImage: {
         type: String,
-        default: () => '/img/base/webp/empty_photo.webp'
+        default: () => useRuntimeConfig().public.emptyImage
     }
 })
 
 const checkPropImage = ref(true)
 const className = useCssModule()
+
 
 const rootClass = computed(() => {
     return {
@@ -83,6 +84,6 @@ function onError() {
 .image {
     min-width: 100%;
     min-height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 </style>

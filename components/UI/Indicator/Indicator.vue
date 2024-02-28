@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
     appearance: 'blue'
 })
 
-const instanse = getCurrentInstance()
+const instanse = ref()
 const className = useCssModule()
 
 const rootClass = computed(() => {
@@ -33,6 +33,10 @@ const rootClass = computed(() => {
         [className['indicator']]: true,
         [className[props.mode]]: props.mode
     }
+})
+
+onMounted(() => {
+    instanse.value = getCurrentInstance()
 })
 </script>
 

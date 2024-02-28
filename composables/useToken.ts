@@ -5,7 +5,6 @@ export default () => {
     const createAccess = async () => {
         try {
             const headers = useRequestHeaders(['cookie']);
-            console.log(headers)
             const { data, error } = await useFetch('/api/auth/refrech', { headers })            
             
             return data.value

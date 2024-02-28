@@ -26,7 +26,7 @@
             </template>
             <template #footer>
                 <p v-if="!reviewsUpdate.length"
-                class="text-xl text-gray-500 py-4 sm:text-base"
+                class="text-lg text-gray-500 py-4"
                 >{{ common.TEXT_NOT_REVIEWS }}</p>
                 <Flex :align="'flex-end'" :direction="'column'" class="gap-y-4">
                     <div></div>
@@ -34,7 +34,7 @@
                         <Button v-if="true"
                         :appearance="'yellow'"
                         :text="commonButton.REVIEWS_ADD"
-                        @click="update(true)"
+                        @click="storeModal.changeActiveModal('add-reviews-user')"
                         class="px-4 h-10 text-base" />
                     </div>
                 </Flex>
@@ -47,6 +47,7 @@ import type { ProductCardFull } from '~~/type/intex';
 import type { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
 import { PAGE_CATALOG_ID as common, BASE_BUTTON as commonButton } from "@/common/C";
 import { user as _user } from "@/stores/user";
+import { modal as _modal } from "@/stores/modal";
 import localState from "@/utils/localState";
 import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
 import Commit from '@/components/Templates/Card/Commit.vue'
@@ -62,8 +63,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { state, update } = localState()
+// const { state, update } = localState()
 const storeUser = _user()
+const storeModal = _modal()
 const { data: _userData } = storeToRefs(storeUser)
 
 const reviewsUpdate = computed(() => props.data.reviews.filter(el => el.text))

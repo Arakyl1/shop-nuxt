@@ -66,7 +66,7 @@ const ratValue = ref<number | string>(props.value)
 const oldValue = ref<number | string>(props.value)
 const ranting = ref<HTMLElement | null>(null)
 const input = ref<HTMLInputElement | null>(null)
-const instanse = getCurrentInstance()
+const instanse = ref()
 const className = useCssModule()
 
 onMounted(() => {
@@ -76,7 +76,9 @@ onMounted(() => {
         ranting.value.addEventListener('mouseleave', onMouseleave)
         ranting.value.addEventListener('click', onClick)
     }
+    instanse.value = getCurrentInstance()
 })
+
 
 onBeforeUnmount(() => {
     if (!props.readonly && ranting.value instanceof HTMLElement) {

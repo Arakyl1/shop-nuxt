@@ -5,8 +5,7 @@
             ref="checkbox"
             role="switch"
             :name="name?.toString()"
-            :value="isValue"
-            @change.stop="onChange">
+            :value="isValue">
             <template v-if="mode === 'primary'">
                 <div :class="className['switch']">
                     <div :class="className['body']"></div>
@@ -60,11 +59,11 @@ function onClick() {
     }
 }
 
-function onChange({ target }: Event) {
-    if (target instanceof HTMLInputElement) {
-        isValue.value = target.checked
-    }
-}
+// function onChange({ target }: Event) {
+//     if (target instanceof HTMLInputElement) {
+//         isValue.value = target.checked
+//     }
+// }
 </script>
 
 

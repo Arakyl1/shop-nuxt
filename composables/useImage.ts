@@ -1,18 +1,17 @@
 export default () => {
-    const doowload = async (elem: File | FileList | string) => {
+    const download = async (elem: File | FileList | string) => {
         try {
             if (elem instanceof FileList) {
                 const promiseRes = Object.values(elem).map(async(_) => {
-                    const { data } = useFetch('/api/cloudinari/upload', {
+                    return $fetch('/api/cloudinari/upload', {
                         method: 'POST',
                         body: _,
                         params: { type: 'File'},
                         headers: { "Content-Type": "application/octet-stream" }
                     })
-                    return data.value
                 })
-                const res = await Promise.all(promiseRes)
-                console.log(res)
+                const res = (await Promise.all(promiseRes)).map(_ => _)
+                
                 return res.filter(_ => _ !== null) as NonNullable<typeof res[0]>[]
             } else if (elem instanceof File) {
                 const { data } = await useFetch('/api/cloudinari/upload', {
@@ -37,5 +36,5 @@ export default () => {
             return null
         }
     }
-    return { doowload }
+    return { download: download }
 }

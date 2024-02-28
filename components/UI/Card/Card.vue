@@ -1,5 +1,5 @@
 <template>
-    <div :class="rootClass" :data-card="instanse!.uid" :data-uid="instanse?.uid" ref="element">
+    <div :class="rootClass" :data-card="instanse?.uid" :data-uid="instanse?.uid" ref="card">
         <slot></slot>
     </div>
 </template>
@@ -24,8 +24,9 @@ export interface Props {
 const props = defineProps<Props>()
 
 // const _screen = useState<AppScreen>('APP_SCREEN')
-const instanse = getCurrentInstance()
+const instanse = ref()
 const className = useCssModule()
+const card = ref<HTMLElement | null>(null)
 
 // const isPadding = computed(() => {
 //   const sr = unref(_screen)
@@ -49,30 +50,34 @@ const rootClass = computed(() => {
         [`rounded-${props.rounded}-imp`]: props.rounded,
     }
 })
+onMounted(() => {
+    instanse.value = getCurrentInstance()
+})
+
+// defineExpose({ card })
 
 </script>
 
 <style lang="scss" module>
 .card {
-    
     background-color: var(--white);
 }
 
 .card-outline {
-    border: 1px solid var(--grey-700);
-    border-radius: 10px;
-    box-shadow: 0px 1px 3px 0px var(--grey-300);
+    border: 1px solid var(--gray-700);
+    border-radius: var(--rounded-lg);
+    box-shadow: 0px 2px 3px 0px var(--gray-300);
 }
 
 .card-primary{
     border-radius: var(--rounded-lg);
-    box-shadow: 0px 2px 9px 0px var(--grey-600);
+    box-shadow: 0px 2px 9px 0px var(--gray-300);
 }
 .card-white {
     background: var(--white);
 }
 .card-warning {
-    background: var(--card-bg-warning);
+    background: var(--invalid);
 }
 .card-gray{
     background: var(--gray-100)
@@ -114,6 +119,9 @@ const rootClass = computed(() => {
 }
 .card-2xl {
     padding: 2.5rem;
+}
+.card-3xl {
+    padding: 3rem 2rem;
 }
 
 

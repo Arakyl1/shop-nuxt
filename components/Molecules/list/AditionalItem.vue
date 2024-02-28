@@ -2,9 +2,9 @@
     <div>
         <div class="flex">
             <div class="flex items-center" v-show="data.children.length">
-                <AtomButtonStandart class="bg-black-500 mr-3 rounded p-1" @click="() => { active = !active }">
+                <!-- <AtomButtonStandart class="bg-black-500 mr-3 rounded p-1" @click="() => { active = !active }">
                     <CreateIcon name="add-plus_16_16" :att="{ class: 'fill-white' }" />
-                </AtomButtonStandart>
+                </AtomButtonStandart> -->
             </div>
             <div v-show="!data.children.length" class="w-9"></div>
             <NuxtLink class="text-white grow"

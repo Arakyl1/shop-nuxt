@@ -1,40 +1,69 @@
 <template>
     <section>
         <ContentDoc path="/contact/slader" v-slot="{ doc }">
-            <MoleculesSladerBase :data="doc.body" :container-class="style.container" class="relative">
-                <template #item="{ elem }">
-                    <div >
-                        <div>
-                            <ClientOnly>
-                                <img :src="elem.img" alt="market_foto" class="object-cover w-full">
-                            </ClientOnly>
-                            <p class="py-2 lg:text-sm md:text-base">{{ elem.adress }}</p>
-                        </div>
+            <CardGridScroll :data="doc.body" class="relative" :container="'lg'">
+                <template #default="{ elem }">
+                    <div>
+                        <ClientOnly>
+                            <img :src="elem.img" alt="market_foto" class="object-cover w-full">
+                        </ClientOnly>
+                        <p class="py-2 lg:text-sm md:text-base">{{ elem.adress }}</p>
                     </div>
                 </template>
-                <template #bottom="{ prevItem, nextItem, indexActiveButton, updateScrolLeftSlader }">
-                    <template class="block sm:hidden">
-                        <div class="absolute top-[42%] left-0 flex items-center -translate-y-1/2
-                        -translate-x-1/2 hover:-left-0.5 -scale-100 transition-all xl:-translate-x-1/4 lg:top-[35%]">
-                            <AtomButtonArround class="filter-none" @click="prevItem" />
-                        </div>
-                        <div class="absolute top-[42%] right-0 flex items-center -translate-y-1/2
-                        translate-x-1/2  hover:-right-0.5 transition-all xl:translate-x-1/4 lg:top-[35%]">
-                            <AtomButtonArround class="filter-none" @click="nextItem" />
-                        </div>
+                <template v-if="viewport.isGreaterOrEquals('sm')"
+                #center="{ prev, next, listValueScroll }" >
+                    <template v-if="listValueScroll.max > 0">
+                        <ButtonArrow
+                        :class="className['control-button--left']"
+                        :disabled="listValueScroll.current === 0"
+                        @click="prev"
+                        class="h-11"/>
+                        <ButtonArrow
+                        :class="className['control-button--right']"
+                        :disabled="listValueScroll.current >= listValueScroll.max"
+                        @click="next"
+                        class="h-11"/>
                     </template>
-                    <MoleculesSladerControlItem :indexActiveButton="indexActiveButton"
-                    :updateScrolLeftSlader="updateScrolLeftSlader" :data="doc.body.length"
-                    class="hidden sm:block "/>
                 </template>
-            </MoleculesSladerBase>
+                <template v-else #footer="{ prev, next, indexActiveButton, updateScrolLeft, listValueScroll }">
+                    <div :class="className['control-button--mobile']">
+                        <ControlItem
+                        class="gap-x-4"
+                        :data="data.body.length"
+                        :indexActiveButton="indexActiveButton"
+                        :updateScroll="updateScrolLeft" />
+                    </div>
+                </template>
+            </CardGridScroll>
         </ContentDoc>
     </section>
 </template>
 
 <script setup lang="ts">
+import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
+import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
+import ControlItem from "@/components/Templates/ControlElements/Item.vue";
 
-const style = {
-    container: '[grid-auto-columns:calc(100%/3)] md:[grid-auto-columns:calc(100%/2)] sm:[grid-auto-columns:calc(100%)]'
-}
+
+const viewport = useViewport()
+const className = useCssModule()
+
 </script>
+
+<style lang="css" module>
+.control-button--left {
+    position: absolute;
+    transform: translate(-50%, -50%) scale(-1);
+    top: 35%;
+    left: 0rem;
+}
+.control-button--right {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 35%;
+    left: 100%;
+}
+.control-button--mobile {
+    margin-top: 1rem;
+}
+</style>

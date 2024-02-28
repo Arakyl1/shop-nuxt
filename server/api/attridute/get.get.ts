@@ -35,7 +35,7 @@ function initFindParams(data: QueryObject) {
 
 export default defineEventHandler(async (event) => {
 
-    console.log(true)
+    
     const query = getQuery(event)
 
     const getStorageKey = Object.entries(query).map(_ => _.join(':')).join('/')
@@ -43,13 +43,13 @@ export default defineEventHandler(async (event) => {
 
     try {
         if (storageData) {
+            console.log('cache data')
             return storageData
         } else {
-            console.log('cache data')
             const findParams = initFindParams(query)
-            const categorAttriduteRes = await prisma.attribute.findMany(findParams)
-            await useStorage().setItem(getStorageKey, categorAttriduteRes)
-            return categorAttriduteRes
+            const categorAttributeRes = await prisma.attribute.findMany(findParams)
+            await useStorage().setItem(getStorageKey, categorAttributeRes)
+            return categorAttributeRes
         }
     } catch (error) {
         return null

@@ -1,5 +1,5 @@
 <template>
-    <div :class="className[props.mode]">
+    <div :class="[className[props.mode], className['panel']]">
         <slot></slot>
         <div v-if="mode === 'view'"></div>
     </div>
@@ -26,17 +26,21 @@ const className = useCssModule()
 .panel > [data-account-header] {
     margin-bottom: 1.875rem;
 } */
+.panel {
+    min-height: 40vh;
+}
+.panel:empty {
+    height: 60vh;
+}
 .view {
     display: flex;
     flex-direction: column;
     gap: 6.25rem;
-    min-height: 100vh;
 }
 .primary {
     display: flex;
     flex-direction: column;
     gap: 3.125rem;
-    min-height: 100vh;
     padding: 3.125rem 0 6.25rem 0;
 }
 @media (max-width: 768px) {

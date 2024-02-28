@@ -1,10 +1,10 @@
 <template>
-    <div :class="[className['body'], className[mode]]" @pointerdown="onPointerDown" @pointerup="onPointerUp">
+    <div ref="counter" :class="[className['body'], className[mode]]">
         <button
         class="w-4 aspect-ratio relative"
         :class="{ 'no-drop': minValue === count }"
         data-attribute="minus"
-        @click="count > minValue ? count-- : ''" >
+        @click="() => !props.readonly ? minus() : null" >
             <span ></span>
         </button>
 
@@ -16,7 +16,7 @@
         class="w-4 aspect-ratio relative"
         :class="{ 'no-drop': maxValue === count }"
         data-attribute="plus"
-        @click="count < maxValue ? count++ : ''">
+        @click="() => !props.readonly ? plus() : null">
             <span></span>
             <span data-vertical ></span>
         </button>
@@ -28,13 +28,15 @@ interface Props {
     value?: number
     maxValue?: number,
     minValue?: number,
-    mode?: 'primary'
+    mode?: 'primary',
+    readonly: boolean
 }
 const props = withDefaults(defineProps<Props>(),{
     minValue: 1,
     maxValue: 1,
     value: 1,
-    mode: 'primary'
+    mode: 'primary',
+    readonly: false
 })
 
 const emit = defineEmits<{
@@ -44,8 +46,52 @@ const emit = defineEmits<{
 const count = ref(props.value ? props.value : 1)
 const className = useCssModule()
 const activePointer = ref<boolean>(false)
+const counter = ref<HTMLElement | null>(null)
 const timer = ref()
 const timerPointer = ref()
+
+
+onMounted(() => {
+    if (props.readonly && counter.value instanceof HTMLElement) {
+        counter.value.addEventListener('pointerdown', onPointerDown)
+        counter.value.addEventListener('pointerup', onPointerUp)
+    }
+})
+
+onBeforeUnmount(() => {
+    if (props.readonly && counter.value instanceof HTMLElement) {
+        counter.value.removeEventListener('pointerdown', onPointerDown)
+        counter.value.removeEventListener('pointerup', onPointerUp)
+    } 
+})
+
+watch(() => count.value, (newCount) => emit('update:value', newCount))
+
+function minus() {
+    count.value = count.value > props.minValue ? count.value - 1  : count.value 
+}
+
+function plus() {
+    count.value = count.value < props.maxValue ? count.value + 1  : count.value
+}
+
+function activeCounter(key:string, time: number = 400) {
+    switch (key) {
+        case 'minus': {
+            minus()
+            break;
+        }
+        case 'plus': {
+            plus()
+            break;
+        }
+    } 
+    if (activePointer.value) {
+        timerPointer.value = setTimeout(()=> {
+            activeCounter(key, time > 50 ? time - 50 : time)
+        }, time)
+    }
+}
 
 function onPointerDown({ target }: PointerEvent) {
     if (target instanceof HTMLElement) {
@@ -64,27 +110,6 @@ function onPointerUp({ target }: PointerEvent) {
     clearTimeout(timer.value)
     activePointer.value = false
 }
-
-function activeCounter(key:string, time: number = 400) {
-    switch (key) {
-        case 'minus': {
-            count.value = count.value > props.minValue ? count.value - 1  : count.value
-            break;
-        }
-        case 'plus': {
-            count.value = count.value < props.maxValue ? count.value + 1  : count.value
-            break;
-        }
-    } 
-    if (activePointer.value) {
-        timerPointer.value = setTimeout(()=> {
-            activeCounter(key, time > 50 ? time - 50 : time)
-        }, time)
-    }
-}
-
-
-watch(() => count.value, (newCount) => emit('update:value', newCount))
 </script>
 
 <style lang="css" module>

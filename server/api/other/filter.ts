@@ -91,12 +91,16 @@ export default defineEventHandler<FilterData>(async(event) => {
 
                 if (findDataRes) {
 
+
+                    const FILTER_CATEGOR = { type: 'select', title: 'select', data: getSelectData(findDataRes, storageCategorData) } as FilterData['4']
+                    const FILTER_RATING = { type: 'star', title: "Рейтинг", name: 'rating', value: 0 } as FilterData['5']
+                    const FILTER_DISCOUNT = { type: 'radio', name: 'discount.gt', title: "Скидка", value: 1 } as FilterData['3']
+
                     switch (findDataRes.type) {
                         case 'CATEGOR': {
                             const fullfilterData: FilterData = [
-                                { type: 'select', title: 'select', data: getSelectData(findDataRes, storageCategorData) },
+                                FILTER_CATEGOR,
                                 { type: 'time', ms: Date.now() - s, state: 'create data' }
-                                // [findDataRes] as never
                             ]
                             return fullfilterData
                         }
@@ -113,13 +117,10 @@ export default defineEventHandler<FilterData>(async(event) => {
                             }
 
                             const fullfilterData: FilterData = [
-                                { type: 'select', title: 'select', data: getSelectData(findDataRes, storageCategorData) },
+                                FILTER_CATEGOR,
                                 getPriceData([...priseData]),
-                                { type: 'star', title: "Рейтинг", name: 'rating', value: 0 },
-                                [
-                                    { type: 'radio', name: 'discount.gt', title: "Скидка", value: 0 } as never,
-                                    ...otherAttributeData as never
-                                ],
+                                FILTER_RATING,
+                                [FILTER_DISCOUNT as never,...otherAttributeData as never],
                                 { type: 'time', ms: Date.now() - s, state: 'create data'  }
                                 // [findDataRes] as never
                             ]
@@ -188,15 +189,12 @@ export default defineEventHandler<FilterData>(async(event) => {
 
 
                             const fullfilterData: FilterData = [
-                                { type: 'select', title: 'select', data: getSelectData(findDataRes, storageCategorData) },
+                                FILTER_CATEGOR,
                                 getPriceData([...priseData]),
-                                { type: 'star', title: "Рейтинг", name: 'rating', value: 0 },
+                                FILTER_RATING,
                                 (makerData as HH),
                                 ...updateData,
-                                [
-                                    { type: 'radio', title: "Скидка", name: 'discount.gt', value: 0 },
-                                    ...otherAttributeData
-                                ],
+                                [FILTER_DISCOUNT, ...otherAttributeData],
                                 { type: 'time', ms: Date.now() - s, state: 'create data' }
                                 // [findDataRes] as never,
                             ] as FilterData

@@ -1,135 +1,180 @@
 <template>
-  <section>
-    <div class="flex md:flex-wrap">
-      <div :class="style.container" class="pl-0 5/12 md:w-full md:mb-8 relative">
-        <MoleculesSladerBase @change.stop="toDoImageMain"
-          v-if="image"
-          :data="image">
-          <template #item="{ elem, index }">
-            <div class="flex justify-center items-center h-full relative aspect-square">
-              <div class="absolute top-8 right-8">
-                <AtomButtonStandart class="after:content-none p-0.5 border border-gray-500"
-                  @click.stop="removeItem(index)">
-                  <CreateIcon name="close_20_20" :att="{ class: 'fill-gray-500' }" />
-                </AtomButtonStandart>
+  <Grid :container="'xs'" class="gap-8">
+      <Group class="gap-6">
+        <CardGridScroll v-if="image && image.length" :data="image"
+        :container="'xs'"
+        class="w-full"
+        @change.stop="toDoImageMain">
+          <template #default="{ elem, indexActiveButton }">
+            <Flex
+            :justify="'center'"
+            :class="className['img-item']"
+            class="w-full relative aspect-ratio">
+              <div :class="className['bt-remove']">
+                <Button
+                :appearance="'gray-icon'"
+                :iconLeft="{ 'key': 'close', 'size': '20_20' }"
+                @click.stop="removeItem(index)"/>
               </div>
-              <div class="absolute bottom-4 right-4 translate-y-1/2">
-                <div class="flex items-center">
+              <div :class="className['info-img']">
+                <Flex class="gap-x-4">
                   <Transition name="path">
                     <div v-if="indexMainImage === -1">
-                      <p class="text-white truncate bg-yellow-500 py-0 px-2 rounded-md mr-4 text-sm">Выбере главное изображение
-                      </p>
+                      <p class="text-white truncate bg-yellow-500 px-2 py-1 rounded-lg text-sm"
+                      >{{ common.MESSAGE_SELECT_MAIN_PHOTO }}</p>
                     </div>
                   </Transition>
-                  <input type="checkbox" class="w-6 h-6 cursor-pointer rounded-md" v-bind="{ [dataKey('index')]: index }"
-                    :checked="index === indexMainImage">
-                </div>
+                  <Checkbox v-bind="{ [dataKey('index')]: indexActiveButton }" :checked="indexActiveButton === indexMainImage"/>
+                </Flex>
               </div>
-              <img :src="changeValueImageSize(elem.link, { 'heigth': 'h_480' })" alt="Фото товар"
-                class="max-w-[80%] max-h-[80%]">
-            </div>
+              <img :src="changeValueImageSize(elem.link, { 'heigth': 'h_480' })" alt="Фото товар">
+            </Flex>
           </template>
-          <template #bottom="{ updateScrolLeftSlader, indexActiveButton }" v-if="image && image.length > 1">
-            <MoleculesSladerControlItem :data="image.length" :index-active-button="indexActiveButton"
-              :update-scrol-left-slader="updateScrolLeftSlader"
-              :item-class="'aspect-square mx-2 flex-1 max-w-[3rem] max-h-[3rem]'"><template #default="{ item }">
-                <div>
-                  <div class="border-2 rounded-lg transition p-0.5 aspect-square flex justify-center items-center"
-                    :class="[(item - 1) === indexActiveButton ? 'border-yellow-500 ' : 'border-blue-300']">
-                    <img :src="changeValueImageSize(image[(item - 1)].link, { 'heigth': 'h_48' })" alt=""
-                      class="rounded-md max-h-[95%] max-w-[95%]">
-                  </div>
-                </div>
+          <template #footer="{ updateScrolLeft,  indexActiveButton }">
+            <ControlElements
+            :data="image?.length || 0"
+            :indexActiveButton="indexActiveButton"
+            :updateScroll="updateScrolLeft"
+            :itemClass="'aspect-ratio'"
+            class="gap-x-3">
+              <template #default="{ item }">
+                <Flex :justify="'center'" class="rounded-lg p-0.5 aspect-ratio" :class="className['control-img']">
+                  <img :src="changeValueImageSize(image[(item - 1)].link, { 'heigth': 'h_48' })" alt=""
+                  class="rounded-lg">
+                </Flex>
               </template>
-            </MoleculesSladerControlItem>
+            </ControlElements>
           </template>
-        </MoleculesSladerBase>
-        <AtomFormDoowloadImage v-else :input-image="null" :multiple="true" @link-img="(e) => {
-          image = e.map(_ => ({ link: _.secretUrl, main: false }))
-        }">
-          <template #default>
-            <div
-              class="flex justify-center items-center h-full aspect-square bg-blue-100 opacity-30 rounded-md border-dashed border-2 cursor-pointer">
-              <p class=" text-black-900 text-center">Кликните, чтобы добавить фото</p>
-
+        </CardGridScroll>
+        <FileImage v-else
+        :input-image="null"
+        :multiple="true"
+        class="w-full"
+        @link-img="(e) => {image = e.map(_ => ({ link: _.secretUrl, main: false })) }">
+          <Flex :justify="'center'">
+            <div :class="className['file']">
+              <p class=" text-black-900 text-center">{{ commonInput.FILE_ADD_IMAGE.PLACEHOLDER  }}</p>
             </div>
+          </Flex>
+        </FileImage>
+        <slot></slot>
+      </Group>
+      <Card container="xl" :rounded="'xl'" :appearance="'gray'">
+        <Group class="gap-y-5">
+          <template v-if="dataSelect">
+            <template v-for="(item,index) in dataSelect" :key="index">
+              <Select  v-if="item"
+              :data="item"
+              :name="'CATEGOR__' + index"
+              :model-value="activeId[index] || undefined"
+              @update:model-value="(e) => addCategor(e, index)"
+              class="w-full"/>
+            </template>
           </template>
-        </AtomFormDoowloadImage>
-        <slot name="other-content">
-        </slot>
-      </div>
-      <ul :class="style.container" class="bg-gray-100 w-7/12 md:w-full" ref="inputlist">
-        <li>
-          <select v-model="categorId" :name="('CATEGOR' as AttributeType)" :class="[style.input]"
-            class="w-full input--validation">
-            <option v-for="categor in categorList" :key="categor.id" :value="categor.value">{{ categor.value }}</option>
-          </select>
-
-        </li>
-        <li>
-          <select v-if="subcategorData" v-model="subcategorId" :name="('SUBCATEGOR' as AttributeType)"
-            :class="[style.input]" class="w-full input--validation">
-            <option v-for="subcategor in subcategorData.children" :key="subcategor.id" :value="subcategor.value">{{
-              subcategor.value }}</option>
-          </select>
-        </li>
-        <li>
-          <select v-if="groupData" :name="('CLASS' as AttributeType)" :class="[style.input]"
-            class="w-full input--validation" v-model="groupId">
-            <option v-for="group in groupData.children" :key="group.id" :value="group.value">{{ group.value }}</option>
-          </select>
-        </li>
-        <li v-for="item in dataInput" :key="item.toString()">
-          <template v-if="Array.isArray(item)">
-            <p class="flex -mx-2">
-              <input v-for="elem in item" :key="elem.placeholder" :type="elem.type" :placeholder="elem.placeholder"
-                :name="elem.name || undefined" :class="[style.input]" v-bind="'arrt' in elem ? elem.arrt : null" required
-                class="w-1/2 mx-2 input--validation" />
-            </p>
+          <template v-for="item in dataInput" :key="item.toString()">
+            <Grid v-if="Array.isArray(item)" :container="'xs'" class="gap-5 w-full">
+              <FormField v-for="elem in item"
+              :key="elem.placeholder"
+              :valueMissing="elem.valueMissing"
+              class="grow">
+                <Input 
+                :type="elem.type"
+                :placeholder="elem.placeholder"
+                :name="elem.name"
+                :required="true"
+                class="w-full"/>
+              </FormField>
+            </Grid>
+            <div v-else-if="'decorLine' in item" class="decor-line"></div>
+            <FormField v-else-if="'type' in item"
+            :valueMissing="item.valueMissing"
+            class="w-full">
+              <Input
+              :type="(item.type as 'text')"
+              :placeholder="item.placeholder"
+              :name="item.name"
+              :required="true"
+              class="grow"/>
+            </FormField>
           </template>
-
-          <div v-else-if="'decorLine' in item" class="decor-line mb-4"></div>
-          <template v-else-if="'type' in item">
-            <p>
-              <input :type="item.type" :class="[style.input]" :placeholder="item.placeholder"
-                :name="item.name || undefined" v-bind="'arrt' in item ? item.arrt : null" required
-                class="w-full input--validation" />
-            </p>
-          </template>
-        </li>
-      </ul>
-    </div>
-  </section>
+        </Group>
+      </Card>
+    </Grid>
 </template>
 <script setup lang="ts">
-import { Attribute, Prisma , Image } from "@prisma/client";
-import { RecordOption, CategorDataItem, LoginJSONData } from "~~/type/intex";
-import CreateIcon from "@/content/icons/create";
+import Flex from "@/components/UI/Flex/Flex.vue";
+import Group from "@/components/UI/Group/Group.vue";
+import Grid from "@/components/UI/Grid/Grid.vue";
+import Button from "@/components/UI/Button/Button.vue";
+import Card from "@/components/UI/Card/Card.vue";
+import FormField from "@/components/UI/FormField/FormField.vue";
+import Input from "@/components/UI/Input/Input.vue";
+import Checkbox from "@/components/UI/Checkbox/Checkbox.vue";
+import Select from "@/components/UI/Select/SelectRelative.vue";
+import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
+import FileImage from "@/components/UI/File/Image.vue";
+import ControlElements from "@/components/Templates/ControlElements/Item.vue";
+import { Attribute, Prisma , Image as PrismaImage } from "@prisma/client";
+import { INPUT_CONTENT as commonInput, PAGE_ADD as common } from "@/common/C";
+import { CategorDataItem, LoginJSONData, _HTMLInputElement } from "@/type/intex";
+import { alert as _alert } from "@/stores/alert";
+
 type AttributeType = Attribute['type']
 
 const props = defineProps<{
-  create?: boolean,
-  categorList: CategorDataItem[] | null,
-  doowloadJsonData: LoginJSONData | null
+  downloadJsonData: LoginJSONData | null
 }>()
+
 const emit = defineEmits<{
   (e: 'image-data', data: typeof image.value): void
 }>()
 
-type ImageCreateData = Pick<Image, 'link' | 'main'>
-const { doowload: _doowloadImage } = useImage()
-const image = ref<ImageCreateData[] | null>(null)
-const categorId = ref<string | null>(null)
-const subcategorId = ref<string | null>(null)
-const groupId = ref<string | null>(null)
-const inputlist = ref<HTMLElement | null>(null)
 
-const subcategorData = computed(() => props.categorList && categorId.value ?
-  props.categorList.filter(_ => _.value === categorId.value!)[0] :
-  null)
-const groupData = computed(() => subcategorData.value && subcategorId.value ?
-  subcategorData.value.children.filter(_ => _.value === subcategorId.value!)[0] :
-  null)
+const className = useCssModule()
+const { download: _downloadImage } = useImage()
+const storeAlert = _alert()
+const activeId = ref<Array<number|string>>([])
+
+type ImageCreateData = Pick<PrismaImage, 'link' | 'main'>
+const image = ref<ImageCreateData[] | null>(null)
+const inputlist = ref<HTMLElement | null>(null)
+const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP")
+
+const dataSelect = computed(() => {
+  if (!CATEGOR_DATA.value) return null
+  if (!activeId.value.length) return [transformDataForSelect(CATEGOR_DATA.value)]
+
+  let nowActiveList: CategorDataItem[] | null = CATEGOR_DATA.value
+  const selectList = []
+
+  for (let i = 0, l = activeId.value.length; i < l; i++) {
+    const categor = activeId.value[i];
+    selectList.push(transformDataForSelect(nowActiveList))
+    const findRes = nowActiveList.find(_ => _.value === categor)!
+    if ('children' in findRes) {
+      nowActiveList = findRes.children as never
+    } else { nowActiveList = null as never }
+  }
+  return [...selectList, nowActiveList ? transformDataForSelect(nowActiveList) : undefined ]
+})
+
+
+onMounted(() => {
+  window.addEventListener('restore', onRestore)
+}) 
+
+onBeforeUnmount(() => {
+  window.removeEventListener('restore', onRestore)
+})
+
+watch(() => props.downloadJsonData, (newV) => {
+  if (newV) { parseJSONData(newV) }
+})
+
+
+watch(() => image.value && image.value.length, (newV) => {
+  if (newV && newV > 0) { emit('image-data', image.value) }
+})
 
 
 // methods
@@ -141,25 +186,34 @@ const dataKey = <T extends DataKey>(key: T) => `data-${key}`
 function toDoImageMain({ target, type, }: Event) {
 
   if (type === 'change' && image.value &&
-    (target as HTMLElement).tagName === 'INPUT') {
-
-    interface ModifiedHTMLElement extends HTMLInputElement {
-      dataset: DOMStringMap & RecordOption<DataKey, string>
-    }
-    let elem = target as ModifiedHTMLElement
-    let valueIndex: number = +elem.dataset.index
-    let valueChecked: boolean = elem.checked
-
-    if (valueIndex !== -1) {
-      image.value = image.value.map((_, i) => i === valueIndex ?
-        ({ ..._, main: true }) :({ ..._, main: false }))
-      indexMainImage.value = valueChecked ? valueIndex : -1
-      emit('image-data', image.value)
+  target instanceof HTMLInputElement) {
+    
+    const elem = target.closest('[data-index]') 
+    if (elem) {
+      
+      const _elem = elem as _HTMLInputElement<DataKey>
+        const valueIndex: number = parseInt(_elem.dataset.index)
+        const valueChecked: boolean = target.checked
+      
+      if (!isNaN(valueIndex) && valueIndex !== -1) {
+        image.value = image.value.map((_, i) => ({ ..._, main: i === valueIndex }))
+        indexMainImage.value = valueChecked ? valueIndex : -1
+        emit('image-data', image.value)
+      }
     }
   }
-
 }
 
+
+function addCategor(value: string | number | null, index: number) {
+  if (value) {
+    if (!activeId.value[index]) {
+      activeId.value.push(value);
+    } else {
+      activeId.value = activeId.value.map((_, i) => i === index ? value : _).slice(0, index + 1);
+    }
+  }
+}
 
 function removeItem(index: number) {
   if (image.value) {
@@ -167,30 +221,21 @@ function removeItem(index: number) {
   }
 }
 
+function transformDataForSelect(data: CategorDataItem[]): { id: string; value: string }[] {
+  return data.map(_ => ({ id: _.value, value: _.value }));
+}
 
-async function parceDoowloadJSONData<T extends { [kek: string]: any }>(data: T, listHTMLelem: HTMLElement | null) {
-  if (listHTMLelem) {
-    const fullCategor = 'categor' in data && isString(data.categor) ? data.categor.split('/') || [0, 0, 0] : [0, 0, 0]
-    const listInput = listHTMLelem.querySelectorAll('input')
-    for (const item of listInput) {
-      const name = item.name
-      if (Object.prototype.hasOwnProperty.call(data, name)) {
-        item.value = data[name]
-      }
-    }
-    if (fullCategor[0] && isString(fullCategor[0])) {
-      categorId.value = fullCategor[0].trim()
-      if (fullCategor[1] && isString(fullCategor[1])) {
-        subcategorId.value = fullCategor[1].trim()
-        if (fullCategor[2] && isString(fullCategor[2])) {
-          groupId.value = fullCategor[2].trim()
-        }
-      }
-    }
-    if (Object.prototype.hasOwnProperty.call(data, 'image') && Array.isArray(data.image)) {
+
+async function parseJSONData<T extends { [k: string]: any }>(data: T ) {
+    const categor = 'categor' in data ? data.categor.split('/').map(_ => _.trim()) : null
+
+    if (categor) {activeId.value = categor }
+  
+    if (Object.prototype.hasOwnProperty.call(data, 'image') && Array.isArray(data.image) && data.image.length) {
       const imageRes = []
+      storeAlert.create({ key: 'DOWNLOAD_IMAGE', state: 'loader' })
       for (const item of data.image) {
-        const res = await _doowloadImage(item.link)
+        const res = await _downloadImage(item.link)
         if (res) {
           imageRes.push({ link: res[0].secretUrl, main: false })
         }
@@ -199,38 +244,22 @@ async function parceDoowloadJSONData<T extends { [kek: string]: any }>(data: T, 
         image.value = [...imageRes]
       }
     }
-  }
 
 }
-watch(() => props.doowloadJsonData, (newV) => {
-  if (newV) { parceDoowloadJSONData(newV, unref(inputlist)) }
-})
-//watch
-watch(() => props.create, () => {
-  if (image.value) {
-    image.value = null
-    categorId.value = null
-    subcategorId.value = null
-    groupId.value = null
-    indexMainImage.value = -1
-    window.scroll({ top: 0, behavior: 'smooth' })
-  }
-})
 
-watch(() => image.value && image.value.length, (newV) => {
-  if (newV && newV > 0) { emit('image-data', image.value) }
-})
-
-const style = {
-  container: 'w-1/2 px-8 pt-8 pb-2 xl:px-6 xl:pt-6 xl:pb-0',
-  label: 'inline-block mb-3 text-2xl',
-  input: 'px-2 pb-1.5 pt-1 mb-6 rounded invalid:outline-invalid'
+function onRestore() {
+  image.value = null
+  activeId.value = []
+  indexMainImage.value = -1
 }
+
+
 
 interface Model {
   type: string,
   placeholder: string,
-  name: string
+  name: string,
+  valueMissing: string,
   arrt?: {
     min?: number,
     max?: number,
@@ -243,19 +272,22 @@ interface Model {
 const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
   {
     type: 'text',
-    placeholder: 'Название товара',
+    placeholder: commonInput.PRODUCT_CREATE_NAME.PLACEHOLDER,
+    valueMissing: commonInput.PRODUCT_CREATE_NAME.VALUE_MISSING,
     name: modelProp('ProductCard', 'name'),
     arrt: { 'minlength': 6 }
   },
   {
     type: 'text',
-    placeholder: 'Код продукта',
+    placeholder: commonInput.PRODUCT_CREATE_CODE.PLACEHOLDER,
+    valueMissing: commonInput.PRODUCT_CREATE_CODE.VALUE_MISSING,
     name: modelProp('ProductCard', 'art'),
     arrt: { 'minlength': 6 }
   },
   {
     type: 'text',
-    placeholder: 'Производитель',
+    placeholder: commonInput.PRODUCT_CREATE_MAKER.PLACEHOLDER,
+    valueMissing: commonInput.PRODUCT_CREATE_MAKER.VALUE_MISSING,
     name: "maker"
   },
   {
@@ -264,13 +296,15 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
   [
     {
       type: 'text',
-      placeholder: 'Артикул',
+      placeholder: commonInput.PRODUCT_CREATE_ARTICLE.PLACEHOLDER,
+      valueMissing: commonInput.PRODUCT_CREATE_ARTICLE.VALUE_MISSING,
       name: modelProp('ProductCard', 'itemArt'),
       arrt: { 'minlength': 6 }
     },
     {
       type: 'text',
-      placeholder: 'Код модели',
+      placeholder: commonInput.PRODUCT_CREATE_MODEL.PLACEHOLDER,
+      valueMissing: commonInput.PRODUCT_CREATE_MODEL.VALUE_MISSING,
       name: modelProp('ProductCard', 'itemMod'),
       arrt: { 'minlength': 6 }
     }
@@ -281,16 +315,58 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
   [
     {
       type: 'number',
-      placeholder: 'Цена',
+      placeholder: commonInput.PRODUCT_CREATE_PRICE.PLACEHOLDER,
+      valueMissing: commonInput.PRODUCT_CREATE_PRICE.VALUE_MISSING,
       name: modelProp('ProductCard', 'price'),
       arrt: { min: 0, step: 0.01 }
     },
     {
       type: 'number',
-      placeholder: 'Количество товара на складе',
+      placeholder: commonInput.PRODUCT_CREATE_QUANTITY.PLACEHOLDER,
+      valueMissing: commonInput.PRODUCT_CREATE_QUANTITY.VALUE_MISSING,
       name: modelProp('ProductCard', 'quantity'),
       arrt: { min: 0 }
     }
   ]
 ]
 </script>
+
+<style lang="css" module>
+.file {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 70%;
+ aspect-ratio: 1/1;
+ background-color: var(--blue-100);
+ opacity: 0.3;
+ border-radius: var(--rounded-xl);
+ border: 2px dashed var(--blue-500);
+ cursor: pointer;
+}
+
+.img-item > img {
+  max-width: 80%;
+  height: 80%;
+}
+.bt-remove {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+.info-img {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+}
+.control-img {
+  border: 2px solid var(--yellow-500);
+  width: 4rem;
+}
+.control-img > img {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+}
+</style>
+

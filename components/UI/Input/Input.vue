@@ -1,21 +1,21 @@
 <template>
     <div :class="rootClass" ref="element" :data-elem-status="status">
-        <input v-bind="{ ...confingInput, step, min, max, placeholder }"
+        <input v-bind="{ ...confingInput, step, min, max, placeholder, autocomplete, ...ariaAttr }"
+        ref="elem"
         :type="isType"
         :value="value"
         :data-value="value || false"
-        ref="elem"
-        :readonly="props.readonly && Boolean(modelValue)"  
-        @blur="onFocus"
+        :readonly="props.readonly && Boolean(value)"  
+        @blur="onBlur"
         @focus="onFocus"
         @input="onInput"
-        :tabindex="props.readonly && Boolean(modelValue) ? -1 : 1">
-
+        :tabindex="props.readonly || Boolean(value) ? -1 : 1">
         <span v-if="span && !placeholder"
-        :class="[ focus || value ? className['focus'] : '']"
+        :class="[value ? className['active'] : '']"
         @click="() => elem ? elem.focus() : null">{{ span }}
             <span v-if="required" :class="[ className['required']]">&#10035;</span>
         </span>
+
         <i :class="[ className['icon']]">
             <CreateIcon v-if="icon"
             :name="`${icon.key}_${icon.size}`"
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { default as CreateIcon, NameIcon } from "@/content/icons/create.ts";
+import { default as CreateIcon, NameIcon } from "@/utils/icon/create";
 
 // родитель может отлавливать событие клика по иконке через @icon-click=""
 // при условие что установлена иконка и включена функция клика по иконке
@@ -35,12 +35,13 @@ export interface Props {
     // тип input
     type?: 'text'|'number'|'email'|'password'|'search'|'tel', 
     // стили оформления input
-    mode?: 'primary'|'secondary'|'outline', 
+    mode?: 'primary'|'secondary'|'outline'|'none', 
     // имя input
     name?: string,
     step?: number,
     min?: number,
     max?: number,
+    autocomplete?: string,
     // анимерованный placeholder вместо базового
     // если было передано значение для базового placeholder (эт пропс placeholder)
     // то приоритет отдается базовому 
@@ -69,6 +70,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const emit = defineEmits(['update:modelValue', 'icon-click'])
 
+
 const confInput = {
     email: {
         pattern: '^([^ ]+@[^ ]+\.[a-z]{2,6}|)$'
@@ -78,16 +80,18 @@ const confInput = {
     },
     text: {}
 }
-const listPropDoNotCheck = ['mode', 'icon', 'modelValue', 'type']
+const listPropDoNotCheck: Array<keyof Props> = ['mode', 'icon', 'modelValue', 'type', 'ariaRequired']
 
 const value = ref(props.modelValue)
 const status = ref<'empty'|'invalid'|'valid'>('empty')
 const elem = ref<HTMLInputElement | null>(null)
 const focus = ref<boolean>(false)
 const className = useCssModule()
+const attr = useAttrs()
 const observer = ref<MutationObserver | null>(null)
 
 
+const ariaAttr = computed(() => Object.fromEntries(Object.entries(attr).filter(_ => _[0].startsWith('aria-'))))
 const confingInput = computed(() => {
     const propsConfig = Object.fromEntries(Object.entries(props).filter(_ => !listPropDoNotCheck.includes(_[0]) && _[1]))
     return Object.assign({ ...confInput[props.type] }, propsConfig)
@@ -99,7 +103,8 @@ const rootClass = computed(() => {
         [className[props.mode]]: props.mode,
         [className['span-active']]: props.span && !props.placeholder,
         [className['icon']]: props.icon,
-        [className['readonly']]: props.readonly && Boolean(props.modelValue)
+        [className['readonly']]: props.readonly && Boolean(value.value),
+        [className['focus']]: focus.value 
     }
 })
 
@@ -115,7 +120,7 @@ onMounted(() =>{
     }
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
     if (elem.value && observer.value) {
         observer.value.disconnect()
     }
@@ -126,7 +131,7 @@ watch(() => props.modelValue, () => {
     value.value = props.modelValue
     if (elem.value) {
         nextTick(() => {
-            elem.value.dispatchEvent(new Event('input', { bubbles: true }));
+            elem.value!.dispatchEvent(new Event('input', { bubbles: true }));
         })
     }
 })
@@ -140,20 +145,16 @@ function onInput({ target }) {
 }
 
 function onFocus() {
-    focus.value = !focus.value
+    focus.value = true
+}
+
+function onBlur() {
+    focus.value = false
 }
 
 function onIconClick(event) {
     emit('icon-click', event)
 }
-
-// function checkValid(target: any) {
-//     if (target instanceof HTMLInputElement) {
-//         console.log(true)
-//         status.value = 
-//     }
-// } elem && elem.value.length > 0 ? (elem.validity.valid  ? 'valid' : 'invalid') :
-
 </script>
 
 <style lang="css" module>
@@ -172,9 +173,9 @@ function onIconClick(event) {
 --transition - настройка transition input и иконки
 --color-readonly - цвет текста при статусе readonly
 --bg-color-readonly - цвет заднего фона при статусе readonly
---fill-readonly - цвет при иконки статусе readonly
---border-readonly - цвет при обводки статусе readonly
-
+--fill-readonly - цвет иконки при статусе readonly
+--border-readonly - цвет обводки при статусе readonly
+--focus-border - цвет обводки при статусе focus
 
 // ВНИМАНИЕ!!! ПЕРМЕННЫЕ КОТОРЫЕ НИЖЕ В СПИСКЕ НЕ ИСПОЛЬЗУЮТЬСЯ!!!!!!
 --bg-color--hover - задний фон в hover состояние
@@ -192,6 +193,8 @@ function onIconClick(event) {
     border-radius: var(--border-rounded, var(--rounded-xl));
     border: var(--border);
     transition: var(--input-transition);
+    display: flex;
+    align-items: center;
 }
 .input:hover:not(.readonly) {
     border-color: var(--border-hover);
@@ -203,9 +206,10 @@ function onIconClick(event) {
     color: var(--color);
     font-size: var(--text-sm);
     line-height: 1.1;
+    vertical-align: baseline;
 }
 .input input:not([type=number]) {
-    min-width: 200px;
+    min-width: 100px;
 }
 .input input:-internal-autofill-selected{
     background: transparent !important;
@@ -241,7 +245,7 @@ function onIconClick(event) {
     stroke: var(--fill-color, var(--gray-700));
     transition: var(--transition, var(--input-transitions--sm));
 }
-.input > span.focus {
+.input.focus > span, .input > span.active {
     font-size: 10px;
     top: 0.75rem;
 }
@@ -287,7 +291,20 @@ function onIconClick(event) {
 .input[data-elem-status='valid']:not(.readonly) {
     border-color: var(--valid);
 }
+/* Focus style */
+.input.focus:not(.input.readonly) {
+    border-color: var(--focus-border, var(--blue-500));
+    box-shadow: var(--focus-shadow, 0 0 0 2px #e7f3ff);
+    caret-color: var(--focus-border, var(--blue-500));
+}
 
+/* MEDIA STYLE */
+
+@media screen and (min-width: 768px) {
+    .input input:not([type=number]) {
+        min-width: 200px;
+    }
+}
 
 .secondary {
     --bg-color: var(--gray-100);
@@ -311,67 +328,4 @@ function onIconClick(event) {
 
 
 
-    // тип input
-    type: {
-        type: String,
-        default: 'text',
-        validator(value) {
-            return ['text', 'number', 'email', 'password', 'search', 'tel'].includes(value)
-        }
-    },
-    // стиль оформления input
-    mode: {
-        type: String,
-        validator(value) {
-            return ['primary', 'secondary', 'outline'].includes(value)
-        }
-    },
-    // имя input, 
-    name: {
-        type: String
-    },
-    // анимерованный placeholder вместо базового
-    // если была передано значание для базовго placeholder (эт пропс placeholder)
-    // то приоритет отдается базовому 
-    span: {
-        type: String
-    },
-    // регулярное выражение для проверки валидности текста в импуте
-    pattern: {
-        type: String
-    },
-
-    modelValue: {
-        type: [Number, String]
-    },
-    // базовый placeholder
-    placeholder: {
-        type: String
-    },
-    // сделать поле обязательный
-    required: {
-        type: Boolean
-    },
-    // сделать доступным только для чтения
-    readonly: {
-        type: Boolean
-    },
-    // сделать неактивным
-    disabled: {
-        type: Boolean
-    },
-    // установить иконку в инпуте справа
-    // иконка из библеотеки  element-plus
-    // если передан тип date, то автоматически устанавливается иконка кадендаря
-    icon: { type: Object },
-    // размер иконки число
-    iconSize: {
-        type: Number,
-        default: 16
-    },
-    // сделать чтобы значко был кликабельным
-    iconClickable: { type: Boolean }
-    // valid: { type: Boolean },
-    // invalid: { type: Boolean },
-    // info: { type: Boolean },
-}) -->
+  

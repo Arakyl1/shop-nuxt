@@ -1,8 +1,9 @@
 <template>
   <div>
     <div>
-      <AtomOtherAlert/>
-      <Header/>
+      <Alert/>
+      <Header class="none --md:block"/>
+      <HeaderMobile class="--md:hidden"/>
       <!-- <OrganismsHeader class="mb-4 block md:hidden" />
       <OrganismsHeaderMobaile class="mb-4 md:block hidden"/> -->
     </div>
@@ -13,68 +14,53 @@
       <NuxtPage ></NuxtPage>
     </div>
     <Footer/>
-    <!-- <TemplatesModalFavorite/>
-    <TemplatesModalBasket/>  
-
-    <OrganismsAuth />  -->
     <ModalRoot/>
   </div>
 </template>
 
 <script setup lang="ts">
 import { user as _user } from "@/stores/user";
-import { Cached, CategorDataItem, Content } from "@/type/intex";
+import type { Cached, CategorDataItem, Content } from "@/type/intex";
 import Footer from "@/components/Templates/Footer/Footer.vue";
 import Header from "@/components/Templates/Header/Header.vue";
+import HeaderMobile from "@/components/Templates/Header/mobile.vue";
 import ModalRoot from '@/components/Templates/modal/ModalRoot.vue'
+import Alert from '@/components/Templates/Alert/Alert.vue'
 
 const config = useRuntimeConfig()
 const route = useRoute()
 const storeUser = _user()
-const { data: _userData } = storeToRefs(storeUser)
+const { data: userData } = storeToRefs(storeUser)
 
 
-const _content = useState<Content | null>('CONTENT_APP', () => null)
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
+
 const event = useRequestEvent()
-
-
-type useAuth = ReturnType<typeof useAuth>
-type InitAuthResponse = Cached<useAuth['initAuth']>
-
-
-
-onServerPrefetch(async() => {
-  useAsyncData(() => fetchWithCookie(event, '/api/auth/anonim', {
+await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
+    retry: 3,
     onResponse({ response }) {
       if (response._data && response._data.data && !response._data.message) {
         storeUser.update(response._data.data)
       }
     },
-    retry: 3
-  }))
-  import('@/content/language/ru.js').then(res => _content.value = res.content)
- 
-  useFetch('/api/attridute/get', {
-        server: true,
-        method: 'GET',
-        params: { type: 'CATEGOR' },
-        key: 'attridute:CATEGOR',
-        retry: 5,
-        onResponse({ response }) {
-            if (response.status < 400) {
-              CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
-            }
-        }
-    })
-    
-  
-  
-  //const { initAuth } = useAuth()
+}))
 
-  
-  // await checkRes(await initAuth(headers))
-  
+
+await useFetch('/api/attridute/get', {
+    server: true,
+    method: 'GET',
+    params: { type: 'CATEGOR' },
+    key: 'attridute:CATEGOR',
+    retry: 5,
+    onResponse({ response }) {
+        if (response.status < 400) {
+          CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
+        }
+    }
+})
+
+onServerPrefetch(async() => { 
+
 
   // if (Object.prototype.hasOwnProperty.call(headers, 'accept-language')) {
   //   const userLocalLanguage = getLanguageUser(headers['accept-language']!)
@@ -104,23 +90,23 @@ onServerPrefetch(async() => {
 })
 
 
-async function checkRes(res: InitAuthResponse) {
-  if (res) {
+// async function checkRes(res: InitAuthResponse) {
+//   if (res) {
    
-    if ('data' in res && res.data) {
-      storeUser.update(res.data)
-    } else if ('message' in res && res.message && _content.value) {
-      console.log(res.message in _content.value ? _content.value?.[res.message as never] : res.message)
-    }
-  }
-}
+//     if ('data' in res && res.data) {
+//       storeUser.update(res.data)
+//     } else if ('message' in res && res.message && _content.value) {
+//       console.log(res.message in _content.value ? _content.value?.[res.message as never] : res.message)
+//     }
+//   }
+// }
 
 
 
 useSeoMeta({
-  title: () => route.meta.title ? `${config.public.NAME_APP} - ${route.meta.title}` : config.public.NAME_APP
+  title: () => route.meta.title ? `${config.public.NAME_APP} - ${route.meta.title}` : config.public.NAME_APP,
 })
-onMounted(() => console.log(document.cookie))
+onMounted(() => console.log('App mounted'))
 
 // user data
 // name PPPPPPPP
@@ -145,17 +131,5 @@ onMounted(() => console.log(document.cookie))
   transform: translateX(30px);
   opacity: 0;
 }
-// /* .page-transition-enter-active {
-//   transition: all 0.15s ease-out;
-// }
 
-// .page-transition-leave-active {
-//   transition: all 0.15s ease-in-out;
-// }
-
-// .page-transition-enter-from,
-// .page-transition-leave-to {
-//   transform: translateX(20px);
-//   opacity: 0;
-// } */
 </style>

@@ -5,11 +5,10 @@ export const modal = defineStore('modal', () => {
     // нужно передать id модального окна
     // какие бывают id можно посмотреть ниже
     function changeActiveModal(value) {
-        console.log(value)
         activeModal.value = value || null
     }
     
     return { activeModal, changeActiveModal }
 })
 
-// type ActiveModalID = 'add-reviews'
+// type ActiveModalID = 'add-reviews'|'auth-user'

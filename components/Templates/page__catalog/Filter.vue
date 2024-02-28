@@ -31,7 +31,7 @@
                         <Group v-else-if="section.type === 'number-range'" :tag="'fieldset'" class="gap-y-2" >
                             <div class="decor-line"></div>
                             <Title :tag="'h5'" class="truncate">{{ section.title }}</Title>
-                            <RangeNumber :section="section" :mode="'outline'" @change="() => { console.log(true) }"/>
+                            <RangeNumber :section="section" :mode="'outline'"/>
                         </Group>
 
                         <Group v-else-if="section.type === 'star'" :tag="'fieldset'" class="gap-y-2">

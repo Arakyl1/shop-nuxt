@@ -10,6 +10,9 @@
 // @import url('@/assets/css/ui.scss');
 
 
+html {
+  font-size: 16px;
+}
 
 *,::after, ::before{
     line-height: 1.2;
@@ -67,6 +70,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overflow-y: scroll;
 }
 
 @-moz-document url-prefix() {

@@ -115,3 +115,78 @@
   opacity: 0;
 
 }
+
+
+.modal_search-enter-to,
+.modal_search-leave-from {
+  opacity: 0;
+  transition: all ease-in-out 0.17s;
+}
+
+.modal_search-enter-from,
+.modal_search-leave-to{
+  transform: translateY(-10px) scaleY(0);
+}
+.modal_search-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* анимация модального окна */
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+@media (min-width: 769px) {
+  .modal-enter-from,
+  .modal-leave-to{
+    -webkit-transform: translate(-50%, -50%) scale(1.02);
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0;
+    transition: all ease-in-out 0.36s;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-enter-from,
+  .modal-leave-to {
+      opacity: 0;
+      transform: translateY(120%);
+      
+  }
+}
+// анимация смены окон между login и registration
+
+.auth-enter-active,
+.auth-leave-active {
+  transition: all 0.25s ease;
+}
+
+@media (min-width: 769px) { 
+  .auth-enter-from,
+  .auth-leave-to {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+}
+@media (max-width: 768px)  {
+  .auth-enter-from,
+  .auth-leave-to {
+    opacity: 0;
+    transform: translateY(90%);
+  }
+}
+
+
+// CONFIRM ANIMATION
+.confirm-enter-from,
+.confirm-leave-to{
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 0;
+  transition: all ease-in-out 0.36s;
+}
+
+.confirm-enter-active,
+.confirm-leave-active {
+  transition: all 0.25s ease-out;
+}

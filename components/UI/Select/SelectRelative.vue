@@ -5,8 +5,8 @@
 -->
 <template>
     <div
-    :data-select="instanse.uid"
-    :data-uid="instanse.uid"
+    :data-select="instanse?.uid"
+    :data-uid="instanse?.uid"
     class="relative"
     ref="body"
     :class="{ 'gap-3': isActive }" tabindex="-1" >
@@ -64,7 +64,9 @@ import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Group from "@/components/UI/Group/Group.vue";
-import { initSize } from '#imports'
+import { watchEvent } from "@/utils/elemHelper";
+import { initSize } from '@/utils/elemHelper'
+import useShow from '@/composables/useShow'
 
 const props = defineProps({
     active: {
@@ -121,9 +123,9 @@ const props = defineProps({
         type: Object,
         default: [],
     },
-    // выбранный по умолчанию, передавать id нужного элемента
+    // выбранный по умолчанию
     modelValue: {
-        type: Number,
+        type: [Number, String],
     },
     name: {
         type: String
@@ -138,7 +140,7 @@ const select = ref(null)
 const trigger = ref(null)
 const body = ref(null)
 const container = ref(null)
-const instanse = getCurrentInstance()
+const instanse = ref()
 const { size, refrech } = initSize(container)
 //position = 'top'|'bottom'|'right'|'left'
 const position = ref('bottom')
@@ -161,6 +163,7 @@ onMounted(() => {
         window.addEventListener('scroll', onEvent)
     }
     updateOptionId(props.modelValue)
+    instanse.value = getCurrentInstance()
 })
 
 onBeforeUnmount(() => {
@@ -177,7 +180,7 @@ onBeforeUnmount(() => {
 // })
 
 watch(() => props.modelValue, (newV, oldV) => {
-    if (newV !== oldV && (isNumber(newV) || isNumeric(newV))) {
+    if (newV !== oldV ) {
         updateOptionId(newV)
     }
 })
@@ -192,6 +195,7 @@ function changeActive({ target }) {
         const _target = target.closest('[data-select-item]')
         if (_target) {
             const value = _target.dataset.selectItem
+            
             close()
             updateOptionId(value)
             emit('update:modelValue', activeOptionId.value)
@@ -203,7 +207,7 @@ function changeActive({ target }) {
 function updateOptionId(newVal) {
     activeOptionId.value = newVal && isNumber(newVal) ?
         newVal : isNumeric(newVal) ?
-        Number(newVal) : activeOptionId.value
+        Number(newVal) : newVal
 }
 
 function onClick({ target }) {
@@ -249,7 +253,7 @@ function sendEvent() {
     z-index: 200;
     max-height: 200px;
     --value-indent: 0.75rem;
-    border-radius: var(--rounded-xl);
+    border-radius: var(--rounded-lg);
     box-shadow: 0 2px 3px -2px var(--gray-300), 0 2px 3px -2px var(--gray-300);
 }
 .card {

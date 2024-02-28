@@ -216,16 +216,9 @@ function getPage(num, options = {}) {
 
 function getAriaPageLabel(pageNumber, isCurrent) {
     if (props.ariaPageLabel && (!isCurrent || !props.ariaCurrentLabel)) {
-        return props.ariaPageLabel + ' ' + pageNumber + '.'
+        return `${props.ariaPageLabel} ${pageNumber}.`
     } else if (props.ariaPageLabel && isCurrent && props.ariaCurrentLabel) {
-        return (
-            props.ariaCurrentLabel +
-            ', ' +
-            props.ariaPageLabel +
-            ' ' +
-            pageNumber +
-            '.'
-        )
+        return (`${props.ariaCurrentLabel}, ${props.ariaPageLabel} ${pageNumber}.`)
     }
     return null
 }

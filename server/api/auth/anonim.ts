@@ -20,14 +20,14 @@ const includeElemSelectParams: ThisMainTypeInclude = {
 
 export default defineEventHandler(async(event) => {
 
+    console.log(parseCookies(event))
     const sessionId = getCookie(event, 'anonim_session_id')
-    console.log(sessionId)
 
 
     if (!sessionId) {
         const key = generateSessionId()
         _setCookie(event, 'anonim_session_id', key)
-        const createData = await prisma.anonim.create({ 
+        const createData = await prisma[modelName].create({ 
             data: { 'sessionId': key, basket: { 'create': {} } }, 
             include: includeElemSelectParams
         })
@@ -38,7 +38,7 @@ export default defineEventHandler(async(event) => {
         try {
             type IP = Prisma.StringFilter<"Anonim">
             
-            const data = await prisma.anonim.findUnique({
+            const data = await prisma[modelName].findUnique({
                 where: { 'sessionId': String(sessionId) },
                 include: includeElemSelectParams
             })

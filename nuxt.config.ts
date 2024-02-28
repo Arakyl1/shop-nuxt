@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/device',
+    '@nuxt/devtools',
     "nuxt-vercel-analytics",
     'nuxt-viewport',
     ['@kevinmarrec/nuxt-pwa', {
@@ -18,18 +19,16 @@ export default defineNuxtConfig({
       }
     }],
     ['@pinia/nuxt', {
-            autoImports: ['defineStore', 'acceptHMRUpdate', 'storeToRefs'],
+            autoImports: ['defineStore', 'storeToRefs'],
         }
     ],
   ],
+  devtools: { enabled: true },
   // postcss: {
   //   plugins:{
   //     autoprefixer: {},
   //   }
   // },
-  device: {
-    refreshOnResize: true
-  },
   runtimeConfig: {
     cloudinaryName: process.env.CLOUDINARY__NAME,
     cloudinaryApiKey: process.env.CLOUDINARY__KEY,
@@ -44,7 +43,8 @@ export default defineNuxtConfig({
     },
     public: {
       linkPhotoUserBase: 'https://res.cloudinary.com/dmxetw6p8/image/upload/v1675156698/upload-examples/w7xbdugi7bgqt0psz3kg.webp',
-      NAME_APP: 'GOOSE'
+      emptyImage: '/img/webp/base/empty_photo.webp',
+      NAME_APP: 'GOOSE',
     }
   },
   routeRules: {

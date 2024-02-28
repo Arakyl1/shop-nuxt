@@ -7,14 +7,14 @@
 
                     <div class="h-14 lg:h-12 flex bg-blue-500">
 
-                        <AtomButtonStandart @mouseenter.stop="onMouseenter"
+                        <!-- <AtomButtonStandart @mouseenter.stop="onMouseenter"
                             class="text-white flex items-center h-full after:content-none py-4">
                             <CreateIcon :name="'menu_20_20'" class="group is-icon-white mr-3"
                                 :att="{ class: 'fill-white', 'stroke-linecap': 'round' }" />
                             <NuxtLink to="/catalog">
                                 Каталог
                             </NuxtLink>
-                        </AtomButtonStandart>
+                        </AtomButtonStandart> -->
                     </div>
 
                     <Transition name="categor">
@@ -51,14 +51,14 @@
         </AtomModalMask>
         <div class="h-14 w-full bg-gray-100 relative lg:h-12 flex flex-nowrap">
             <div class="h-full flex transition-all" ref="menubutton">
-                <AtomButtonStandart @mouseenter.stop="onMouseenter"
+                <!-- <AtomButtonStandart @mouseenter.stop="onMouseenter"
                     class="min-w-min text-white flex items-center bg-blue-500 ">
                     <CreateIcon :name="'menu_20_20'" class="group is-icon-white mr-3"
                         :att="{ class: 'fill-white', 'stroke-linecap': 'round' }" />
                     <NuxtLink to="/catalog">
                         Каталог
                     </NuxtLink>
-                </AtomButtonStandart>
+                </AtomButtonStandart> -->
             </div>
             <div class="hidden">
                 <ul class="flex flex-nowrap overflow-x-scroll scroll-smooth header__aditional" ref="list">

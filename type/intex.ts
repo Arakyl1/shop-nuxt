@@ -2,6 +2,8 @@ import { Attribute, Prisma, User } from "@prisma/client";
 
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
 import { KEY_ICON } from "content/icons/1";
+import { SERVER_RESPONSE_CONTENT } from "common/C";
+
 
 
 export type NAMEAPP = 'MARKET_5kv'
@@ -21,7 +23,8 @@ export type NumericRange<
     NumericRange<START, END, [...ARR, 1], ARR[START] extends undefined ? ACC : ACC | ARR['length']>
 
 export type Enumerable<T> = T | Array<T>;
-export type checkArray<T> = T extends any[] ? T[number] : T
+export type checkArray<T> = T extends any[] ? T[number] : T;
+export type anyFunction = (...arg: any[]) => any;
 
 export type RecordOption<T extends PropertyKey, U> = { [K in T]: U }
 export type Cached<T extends (...args: any) => any> = ReturnType<T> extends Promise<infer Y> ? Y : ReturnType<T>
@@ -33,6 +36,10 @@ type DeepKeys<T> = T extends string ? never : {
     [K in keyof T & string]: T[K] extends boolean ? true : DeepKeys<T[K]>;
 }[keyof T & string];
 
+export type _HTMLInputElement<T extends string> = HTMLInputElement & {
+    dataset: DOMStringMap & RecordOption<T, string>
+}
+
 export type ReplaceDate<T extends object> = {
     [K in keyof T]:
     T[K] extends Date ? string :
@@ -41,7 +48,16 @@ export type ReplaceDate<T extends object> = {
     T[K] extends (infer U)[] ? U extends object ? Array<ReplaceDate<U>> : ReplaceDate<T[K]> : unknown : unknown
 }
 
+export type AlertItem = { text: string | number, state: 'info' | 'error' | 'success' | 'base'| 'loader', active: boolean, createAt: number }
+export type AlertItemStateKey = Pick<AlertItem, 'state'>['state']
+export type AlertItemCreate<T = string> = Pick<AlertItem, 'state'> & { key: T, skip?: boolean }
 
+// COMPOSABLE TYP
+
+export interface useShowProps {
+    autoClose?: boolean,
+    triggers?: Array<'hover'|'click'|'focus'|'contextmenu'>
+}
 
 
 // SERVER PARSER URL FOR GET METHOD  
@@ -309,18 +325,7 @@ export interface CategorDataItem {
     value: string;
     type: string;
     name: string;
-    children: {
-        id: number;
-        value: string;
-        type: string;
-        name: string;
-        children: {
-            id: number;
-            value: string;
-            type: string;
-            name: string;
-        }[];
-    }[];
+    children?: CategorDataItem[]
 }
 export type CategorItem = { name: string, children: (CategorItem | { name: string })[] }
 export type CategorSelect = { select: CategorItem[] }
@@ -329,6 +334,7 @@ export type CategorSelect = { select: CategorItem[] }
 export type ImageInfo = { link: string }
 export type CharacteristicItem = { name: string, value: string }
 export type CharacteristicBlock = { title: string, content: CharacteristicItem[] }
+export type CharacteristicSection = { title: string, children: { name:string, value: string }[] }
 
 export interface LoginJSONData {
     char: {
@@ -366,6 +372,10 @@ export interface UserCreateCommit {
 type UserLocationDateKey = 'ip' | 'city' | 'region' | 'country' | 'loc' | 'org' | 'postal' | 'timezone'
 export interface UserLocationDate extends Record<UserLocationDateKey, string> { }
 
+
+
+// SERVER_RESPONSE_CONTENT_KEY
+export type SERVER_RESPONSE_CONTENT_KEY = keyof typeof SERVER_RESPONSE_CONTENT
 
 
 // Content key

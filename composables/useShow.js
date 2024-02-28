@@ -35,13 +35,18 @@ export default (props, watchFun) => {
         }
         window.removeEventListener('resize', onResize)
     })
+
+    // watch(() => route.fullPath, () => {
+    //     if (isActive.value) {
+    //         // close()
+    //         console.log(true)
+    //     }
+    // })
     
 
     function open() {
-        
         if (props.delay || props.delay === 0) {
             timer.value = setTimeout(() => {
-                
                 isActive.value = true
                 timer.value = null
             }, props.delay)
@@ -55,6 +60,7 @@ export default (props, watchFun) => {
     
         if (props.closeDelay || props.closeDelay === 0) {
             timer.value = setTimeout(() => {
+                
                 isActive.value = false
                 timer.value = null
             }, props.closeDelay)
@@ -64,13 +70,13 @@ export default (props, watchFun) => {
     }
     
     function onClick() {
+        console.log(props)
         if (!props.triggers.includes('click')) return
         nextTick(() => setTimeout(() => open()))
     }
     
     function onHover(e) {
         if (!props.triggers.includes('hover')) return
-        
         open()
     }
     

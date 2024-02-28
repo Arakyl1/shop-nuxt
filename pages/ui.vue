@@ -53,6 +53,11 @@
                 </template>
             </div>
         </div> -->
+        <div class="flex gap-2" :style="{ 'flex-wrap': 'wrap' }">
+                
+                <Button :icon-left="{ key: 'loader', size: '36_36' }" class="h-12"  :size="'xs'" :appearance="'blue'" />
+                <Button :icon-left="{ key: 'loader-circles', size: '36_36' }" class="h-12"  :size="'xs'" :appearance="'blue'" />
+            </div>
     </div>
 </div>
 </template>
@@ -63,6 +68,7 @@ import Input from "@/components/UI/Input/Input.vue";
 import RangeNumber from "@/components/UI/Range/Number.vue";
 import Password from "@/components/UI/Input/Password.vue";
 import Pagination from "@/components/UI/Pagination/Pagination.vue";
+import Button from "@/components/UI/Button/Button.vue";
 import { paggination } from '#imports'
 
 const { activePage, updatePage, getInfoPagination } = paggination()

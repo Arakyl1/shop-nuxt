@@ -3,7 +3,9 @@
         :class="rootClass"
         :data-button-id="instanse?.uid"
         :data-uid="instanse?.uid"
-        :tabindex="disabled || $attrs?.disabled ? -1 : 1">
+        :tabindex="disabled || $attrs?.disabled ? -1 : 1"
+        :disabled="disabled"
+        ref="button">
 
         <template v-if="iconLeft">
             <Transition v-if="iconTransition" :name="iconTransition" mode="out-in">
@@ -33,7 +35,7 @@
 
 <script setup lang="ts">
 import { NuxtLink } from '#components';
-import { default as CreateIcon, type Props as CreateIconProps, NameIcon } from "@/content/icons/create.ts";
+import { default as CreateIcon, type Props as CreateIconProps, type NameIcon } from "@/utils/icon/create";
 
 // элемент кнопка, через пропс можно передать текс, установить иконки справа или слева от текста
 // задать различный стили кнопки, если будет недостаточно просов для текста
@@ -167,7 +169,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 
 const className = useCssModule()
-const instanse = getCurrentInstance()
+const instanse = ref()
+const button = ref<HTMLElement | null>(null)
 
 const isType = computed(() => props.tag === ('button' || 'input') ?
     (['button', 'reset', 'submit'].includes(props.type) ? props.type : 'button') :
@@ -197,6 +200,12 @@ const rootClass = computed(() => {
         }
     ]
 })
+
+onMounted(() => {
+    instanse.value = getCurrentInstance()
+})
+
+defineExpose({ button })
 
 </script>
 
@@ -230,7 +239,9 @@ const rootClass = computed(() => {
     text-wrap: nowrap;
     display: flex;
     align-items: center;
-    gap: 0 0.375rem;
+    justify-content: space-around;
+    gap: 0 0.25rem;
+    font-size: 1rem;
     flex-wrap: nowrap;
     outline: none;
     background-color: var(--bg-color);
@@ -326,13 +337,9 @@ const rootClass = computed(() => {
 
 // button link 
 .link {
-    color: var(--black-500);
-    position: relative;
-    transition: var(--bt-transition);
-
     --bg-color: none;
-    --color: var(--black-300);
-    --fill-color: var(--black-300);
+    --color: var(--black-500);
+    --fill-color: var(--black-500);
     --bg-color--hover: none;
     --color--hover: var(--blue-500)
 }

@@ -1,6 +1,6 @@
 <template>
     <Flex :tag="'article'" class="h-full">
-        <Flex :direction="'column'" class="w-full gap-4">
+        <Flex :direction="'column'" class="w-full h-full gap-4">
             <div class="w-full aspect-ratio rounded-xl relative animate-loader-data "
                 :class="[!content ? 'liner__gradient-loader' : 'bg-gray-100']"
                 :style="{ '--lin-grad-loader--deg': '90deg' }">
@@ -57,16 +57,13 @@
                     :icon-left="{ key: 'static', size: '24_24' }"/>
                 </Flex>
             </Flex>
-            <slot name="bt-basket" v-bind="{ content, addBasket }">
+            <slot name="bt-basket" v-bind="{ content, add }">
                 <Button v-if="content && !isNumber(content)"
                 :icon-left="{ key: 'basket', size: viewport.isGreaterOrEquals('lg') ? '25_25' : '20_20' }"
                 :text="common.BASKET_ADD|| 'add basket'"
                 :appearance="'blue'"
                 :disabled="content.quantity === 0"
-                @click.stop="addBasket({
-                    data: { ...content },
-                    quantity: 1
-                })"
+                @click.stop="add({ 'card_id': content.id, count: 1 })"
                 :class="className['button-basket']"
                 class="h-12"/>
             </slot> 
@@ -94,23 +91,12 @@ const props = withDefaults(defineProps<{
 }>(), { data: null })
 
 
-// const _content = useState<Content | null>('CONTENT_APP')
-const storeAlert = _alert()
-// const storeBasket = _basket()
+
 const storeFavorite = _favorite()
 const className = useCssModule()
+const { add } = useBasket()
 
 const content = computed<ProductCardBase | null>(() => props.data)
-
-function addBasket(item: any) {
-    // if (storeBasket.findItem(item.data.id)) {
-    //     storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info' })
-    // } else {
-    //     storeBasket.addItem({ quantity: item.quantity, data: item.data })
-    //     storeAlert.create({ 'text': _content.value?.ALERT_BASKET_ADD_ITEM || null, state: 'info' })
-    // }
-}
-
 
 </script>
 
@@ -140,7 +126,7 @@ function addBasket(item: any) {
     max-height: 100%;
 }
 .button-link {
-    font-size: var(--text-lg);
+    font-size: var(--text-md);
 }
 .button-link > p {
     text-wrap: wrap;
@@ -156,7 +142,7 @@ function addBasket(item: any) {
 }
 
 .price {
-    font-size: var(--text-2xl);
+    font-size: var(--text-lg);
 }
 .skeleton-elem {
     font-size: var(--text-base);

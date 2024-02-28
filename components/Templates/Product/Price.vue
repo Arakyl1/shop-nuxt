@@ -42,7 +42,7 @@ function transformPrice(reg:string, option: object, price:number):string {
     font-size: 0.85em;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
     .body {
         gap: 0.75rem;
     }

@@ -1,9 +1,10 @@
 import { H3Event } from "h3"
 import prisma from "~~/server/db"
 import { Prisma } from "@prisma/client";
-import { getWhereParamsCons, initFindParams, parceIncludeParams, parceOrderByParams, parseOtherArgs, parseSearchParams } from "@/server/utils/parseUrl";
+import {  } from "@/server/utils/parseUrl";
 import { selectAttridute, selectCharacteristic, selectImage, selectComment, selectProductCard, selectCharacteristicItem, selectUser } from "@/server/utils/selectData";
 import { KeysMatchingWrite, getModelName } from "@/type/intex";
+import { default as useParceParamsForPrisma, type initFindParams } from "@/server/utils/useParceParamsForPrisma";
 
 type modelName = getModelName<'ProductCard'>
 const modelName: Uncapitalize<modelName> = 'productCard'
@@ -46,11 +47,21 @@ const ElemFullDataKey: ThisMainTypeSelect = {
     ...includeElemSelectParams
 }
 
+
+const MODEL_DATA = {
+    FULL_KEY: ElemFullDataKey,
+    INT_KEY: PropertyElemInt,
+    STRING_KEY: PropertyElemString,
+    DATE_KEY: PropertyElemDate,
+    RELATION_KEY: keyPropElemRelation,
+    ORDERBY_KEY: propertyElemOrderBy,
+    RELATION_SELECT: includeElemSelectParams,
+    SEARCH_KEY: propertyElem
+}
+
 function initProductCardFindParams(...arg: Parameters<initFindParams>) {
-    const key = arg[0]
-    const value = arg[1]
-    const addParams = arg[2]
-    const addError = arg[3]
+    const [key, value, addParams, addError, checkForErrors, handleDefaultCase] = arg
+
 
     const _key = key as PropertyElemInt | PropertyElemString | PropertyElemDate |
         'limit' | 'page' | 'include' | 'orderBy' | 'categor' | 'search' | 'maker' | 'rating' | 'other' | `chr-${string}`
@@ -60,51 +71,6 @@ function initProductCardFindParams(...arg: Parameters<initFindParams>) {
             const _value = { attribute: { some: { id: parseInt(value as string) } } }
             addParams('where', _value)
             break;
-        }
-        case 'search': {
-            const res = parseSearchParams(value, propertyElem)
-            if (res.OR.length) {
-                addParams('where', res)
-            }
-            break;
-        }
-        case 'limit': {
-            const resParse = parseOtherArgs('take' as never, value)
-            console.log(resParse)
-            if (resParse.error.length) {
-                resParse.error.forEach(_ => addError(_))
-            } else {
-                addParams('take', resParse.data.take)
-            }
-            break;
-        }
-        case 'page': {
-            const resParse = parseOtherArgs('skip' as never, value)
-            if (resParse.error.length) {
-                resParse.error.forEach(_ => addError(_))
-            } else {
-                addParams('skip', resParse.data.skip)
-            }
-            break;
-        }
-
-        case 'orderBy': {
-            const res = parceOrderByParams(value, propertyElemOrderBy)
-            if (res.error.length) {
-                res.error.forEach(_ => addError(_))
-            } else {
-                addParams('orderBy', res.data)
-            }
-            break;
-        }
-        case 'include': {
-            const res = parceIncludeParams<typeof includeElemSelectParams>(value, includeElemSelectParams)
-            if (res.error.length) {
-                res.error.forEach(_ => addError(_))
-            } else {
-                addParams('include', res.data)
-            }
-            break
         }
         case 'maker': {
             const _value = value.split(',').map(_ => ({
@@ -122,132 +88,76 @@ function initProductCardFindParams(...arg: Parameters<initFindParams>) {
             break;
         }
         case 'other': {
-            const arrValue = (value as string).split(',')
-            for (let i = 0, l = arrValue.length; i < l; i++) {
-                const value = arrValue[i];
-                addParams('where', { attribute: { some: { name: value } } } as never)
-            }
+            const _value = (value).split(',')
+            _value.forEach(_ => {
+                addParams('where', { attribute: { some: { name: _ } } })
+            })
             break;
         }
-        case 'id':
-        case 'discount':
-        case 'views':
-        case 'price':
-        case 'quantity':{
-            const res = getWhereParamsCons(value, getWhereParamsForInt)
-            if (res.error.length) {
-                res.error.forEach(_ => addError(_))
-            } else {
-                // console.log(res.data)
-                addParams('where', { [key]: res.data === value ? Number(res.data) : res.data })
-            }
-            break;
-        }
-        case 'name':
-        case 'art':
-        case 'description':
-        case 'itemArt':
-        case 'itemMod':{
-            const res = getWhereParamsCons(value, getWhereParamsForString)
-            if (res.error.length) {
-                res.error.forEach(_ => addError(_))
-            } else {
-                addParams('where', { [key]: res.data })
-            }
-            break;
-        }
-        case 'createAt':{
-            const res = getWhereParamsCons(value, getWhereParamsForDate)
-            if (res.error.length) {
-                res.error.forEach(_ => addError(_))
-            } else {
-                addParams('where', { [key]: res.data === value ? new Date(parseInt(res.data)) : res.data })
-            }
-            break;
-        }
-        default: {
+        default:
             if (_key.startsWith('chr-')) {
                 const name = key.replace('chr-', '').split('_').join(" ")
-                const arrValue = (value as string).split(',').map(_ => _.split('__').join(' '))
+                const _value = (value).split(',').map(_ => _.split('__').join(' '))
                 const params: Prisma.Enumerable<Prisma.ProductCardWhereInput> = []
-                for (let i = 0, l = arrValue.length; i < l; i++) {
-                    const value = arrValue[i];
-                    params.push({ characteristic: { some: { content: { some: { name: name, value: value } } } } })
-                }
+                _value.forEach(_ => {
+                    params.push({ characteristic: { some: { content: { some: { name: name, value: { contains: _, 'mode': 'insensitive' } } } } } })
+                })
                 addParams('where', { OR: params })
-                break;
+        
             } else {
-                addError({ message: `unknown operator "${key}"` , type: 'error' })
+                handleDefaultCase(_key, value, addParams)
             }
-        }
+            break;
     }
+}
+
+async function findUniqueData(params: FindParams, modelName: string) {
+    return await prisma[modelName].findUnique({
+        where: params.where,
+        select: params.select
+    });
+}
+
+async function findManyData(params: FindParams, modelName: string) {
+    const allItem = await prisma[modelName].findMany({
+        where: params.where,
+        select: { id: true }
+    });
+
+    const resData = await prisma[modelName].findMany({
+        ...params,
+        select: {
+            ...selectProductCard({ 'description': false }),
+            ...params.include,
+            image: { select: { ...selectImage() } }
+        },
+        skip: params.skip <= 0 ? 0 : (params.skip - 1) * params.take,
+        include: false
+    });
+
+    return { resData, allItem };
 }
 
 
 
 export default defineEventHandler(async (event) => {
     const query = getQuery(event)
+    const { handleQueryParams } = useParceParamsForPrisma(query as { [k: string]: any }, MODEL_DATA)
     try {
-        const resParseData = initFindParams(
-            query as { [k: string]: string },
-            initProductCardFindParams,
-            ElemFullDataKey,
-            keyPropElemRelation
-        )
+        const res = handleQueryParams(initProductCardFindParams)
+      
+        if (res.error && res.error.length > 0) return { data: null, error: res.error[0] }
 
-        if (resParseData.error.length) {
-            return { data: null, error: resParseData.error[0] }
+        if (res.unique) {
+            const resData = await findUniqueData(res.params, modelName);
+            return { data: resData, error: null };
         } else {
-            if (resParseData.unique) {
-                const resData = await prisma[modelName].findUnique({
-                    where: resParseData.params.where,
-                    select: resParseData.params.select
-                } as never)
-                return { data: resData }
-            } else {
-                const allItem = await prisma[modelName].findMany({
-                    where: resParseData.params.where,
-                    select: { id: true }
-                })
-
-                const resData = await prisma[modelName].findMany({
-                    ...resParseData.params,
-                    select: {
-                        ...selectProductCard({ 'description': false }),
-                        ...resParseData.params.include,
-                        image: { select: { ...selectImage() } }
-                    },
-                    skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take,
-                    include: false
-                } as never)
-
-                return {
-                    data: resData,
-                    nextPageLength: 0,
-                    countItem: allItem.length
-                    // findParams: {
-                    //     ...resParseData.params,
-                    //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
-                    // }
-                }
-
-                // if (resData.length === resParseData.params.take) {
-                //     const resDataNext = await prisma[modelName].findMany({
-                //         where: resParseData.params.where,
-                //         select: { id: true }
-                //     })
-                //     return {
-                //         data: resData,
-                //         nextPageLength: resDataNext.length ? resDataNext.length : 0,
-                //         countItem: resDataNext.length ? resDataNext.length : 0,
-                //         // findParams: {
-                //         //     ...resParseData.params,
-                //         //     skip: resParseData.params.skip <= 0 ? 0 : (resParseData.params.skip - 1) * resParseData.params.take
-                //         // }
-                //     }
-                // } else {
-                   
-                // }
+            const { resData, allItem } = await findManyData(res.params, modelName);
+            return {
+                data: resData,
+                nextPageLength: 0,
+                countItem: allItem.length,
+                error: null
             }
         }
 

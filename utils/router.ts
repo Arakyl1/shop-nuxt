@@ -1,6 +1,6 @@
 export const ROOTER = {
-    1: { title: 'Доставка', href: '/delivery' },
-    2: { title: 'Оплата', href: '/delivery' },
+    1: { title: 'Доставка и Оплата', href: '/delivery' },
+    2: { title: 'Контакты', href: '/contact' },
     3: { title: 'Производители', href: '/catalog' },
     4: { title: 'Подарочные сертификаты', href: '/delivery' },
     5: { title: 'Партнерская программа', href: '/contact' },
@@ -43,7 +43,7 @@ export const FOOTER_ROUTER = [
     },
 ]
 
-export const HEADER_ROOTER = {
+export const HEADER_ROUTER = {
     1: ROOTER[1],
     2: ROOTER[2],
 }

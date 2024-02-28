@@ -1,5 +1,9 @@
 <template>
-    <div ref="tooltip" :data-tooltip="instanse.uid" :data-uid="instanse?.uid" :class="className['tooltip']" @blur.capture="close"
+    <div ref="tooltip"
+    :data-tooltip="instanse?.uid"
+    :data-uid="instanse?.uid"
+    :class="className['tooltip']"
+    @blur.capture="close"
         @mouseleave="close">
         <transition :name="props.animated">
             <div v-show="active && (isActive || always)" :class="rootClass">
@@ -20,8 +24,10 @@
 </template>
 
 <script setup lang="ts">
+import { watchEvent } from "@/utils/elemHelper";
+import type { useShowProps } from '~~/type/intex';
 
-interface Props {
+interface Props extends useShowProps {
     rounded?: 'none' | 'xs' | 'sm' | 'base' | 'lg' | 'xl' | 'full',
     active?: boolean,
     // Тип подсказки
@@ -38,9 +44,6 @@ interface Props {
     // подсказка будет иметь анимацию
     // по умолчанию затухания
     animated?: string,
-    // закрывать подсказку когда активен другая подсказка
-    autoClose?: boolean,
-    triggers?: Array<'click' | 'hover' | 'focus' | 'contextmenu'>,
     delay?: number,
     closeDelay?: number,
 }
@@ -63,7 +66,7 @@ const emit = defineEmits(['open', 'close'])
 
 const tooltip = ref(null)
 const className = useCssModule()
-const instanse = getCurrentInstance()
+const instanse = ref()
 const _watchEvent = watchEvent('data-tooltip', instanse, () => { isActive.value = false })
 const { isActive, close, onClick, onHover, onFocus } = useShow(props, _watchEvent)
 
@@ -84,6 +87,9 @@ watch(() => isActive.value, (newV) => {
     emit(newV ? 'open' : 'close')
 })
 
+onMounted(() => {
+    instanse.value = getCurrentInstance()
+})
 </script>
 
 <style lang="css" module>

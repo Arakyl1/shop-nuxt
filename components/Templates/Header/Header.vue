@@ -1,10 +1,10 @@
 <template>
-    <header class="header">
+    <header>
         <div class="bg-gray-100 w-full">
             <div class="container">
                 <Flex :justify="'between'" class="w-full py-2">
                     <Flex class="gap-x-4">
-                        <template v-for="button,key in [HEADER_ROOTER[1], HEADER_ROOTER[2]]" :key="key">
+                        <template v-for="button,key in [HEADER_ROUTER[1], HEADER_ROUTER[2]]" :key="key">
                             <Button 
                             tag="nuxt-link"
                             :mode="'link'"
@@ -13,17 +13,19 @@
                             class="text-black-300"/>
                         </template>
                     </Flex>
-                    
-                    <Flex :justify="'center'" class="grow gap-x-8">
-                        <p class="text-gray-300">Построй и обустрой</p>
-                        <Flex class="gap-x-2" >
-                            <svg v-for="item in 3" :key="item"
-                            height="12" width="12px" xmlns="http://www.w3.org/2000/svg">
-                                <circle r="5" cx="6" cy="6" class="fill-blue-500"></circle>
-                            </svg>
+
+                    <div class="none --lg:block">
+                        <Flex :justify="'center'" class="grow gap-x-8">
+                            <p class="text-gray-300">Построй и обустрой</p>
+                                <Flex class="gap-x-2" >
+                                    <svg v-for="item in 3" :key="item"
+                                    height="12" width="12px" xmlns="http://www.w3.org/2000/svg">
+                                    <circle r="5" cx="6" cy="6" class="fill-blue-500"></circle>
+                                </svg>
+                            </Flex>
+                            <p>Всё для дома, дачи и стройки!</p>
                         </Flex>
-                        <p>Всё для дома, дачи и стройки!</p>
-                    </Flex>
+                    </div>
                     
                     <Flex class="gap-x-4">
                         <Button 
@@ -35,14 +37,18 @@
                     <ClientOnly>
 
                         <Indicator :text="favoriteData.size" :active="Boolean(favoriteData.size)">
-                            <ButtonLike :check-hover-parent="true" :active="Boolean(favoriteData.size)"/>
+                            <ButtonLike
+                            :check-hover-parent="true"
+                            :active="Boolean(favoriteData.size)"
+                            @click="storeModal.changeActiveModal('favorite-user')"/>
                         </Indicator>
                         <Indicator :text="basketLength" :active="Boolean(basketLength)">
                             <Button
                             :appearance="'gray-icon'"
                             :icon-left="{ key: 'basket', size: '30_30' }"
                             :check-hover-parent="true"
-                            :active="Boolean(basketLength)"/>
+                            :active="Boolean(basketLength)"
+                            @click="storeModal.changeActiveModal('basket-user')"/>
                         </Indicator>
                     </ClientOnly>
                     </Flex>
@@ -61,9 +67,9 @@
                 <Button tag="a"
                 :href="`tel:${common.TELEPHONE}`"
                 :mode="'none'"
-                :text="common.TELEPHONE" class="text-2xl text-bold"/>
+                :text="common.TELEPHONE" class="text-lg text-bold"/>
 
-                <OrganismsSearch class="lg:mx-6" />
+                <Search class="none --lg:block" />
                 
                 <SocialIcon/>
 
@@ -71,14 +77,16 @@
                 :tag="'nuxt-link'"
                 :appearance="'yellow'"
                 :size="'lg'"
-                class="h-10 text-bold"
+                class="h-10 text-bold --md:hidden"
                 :text="common.BUTTON_ADDRESS_MARKER"/>
-
+                
                 <Button
                 :appearance="'blue'"
                 :size="'xs'"
-                :active="isBoolean(anonim) && anonim"
-                :icon-left="{ key: 'user', size: '24_24' }"/>
+                class="h-10"
+                :active="isBoolean(anonim) && !anonim"
+                :icon-left="{ key: 'user', size: '24_24' }"
+                @click="storeModal.changeActiveModal('auth-user')"/>
             </Flex>
         </div>
         <Bottom/>
@@ -91,15 +99,17 @@ import Button from "@/components/UI/Button/Button.vue";
 import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
 import Indicator from "@/components/UI/Indicator/Indicator.vue";
 import SocialIcon from "@/components/Templates/Other/SocialIcon";
-import CreateIcon from "@/content/icons/create";
+import Search from "@/components/Templates/Search/Search.vue";
 import Bottom from "./Bottom.vue";
 import { user as _user } from "@/stores/user";
+import { modal as _modal } from "@/stores/modal";
 import { favorite as _favorite } from "@/stores/favorite";
-import { HEADER_ROOTER } from "#imports";
+import { HEADER_ROUTER } from "#imports";
 import { HEADER as common } from "@/common/C";
 
 const storeUser = _user()
 const storeFavorite = _favorite()
+const storeModal = _modal()
 const { data, basketLength, anonim } = storeToRefs(storeUser)
 const { data: favoriteData } = storeToRefs(storeFavorite)
 const config = useRuntimeConfig()

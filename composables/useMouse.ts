@@ -10,8 +10,6 @@ export default function useMouse<T extends HTMLElement, U extends MouseKey>(el: 
     const mouseCords = reactive<mouseCords>(createBaseCords())
   
     function updateMouseCords(event:MouseEvent) {
-        console.log(event);
-        
         mouseCords.x = event.pageX
         mouseCords.y = event.pageY
         mouseCords.clientX = event.clientX 

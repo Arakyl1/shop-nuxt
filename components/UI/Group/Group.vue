@@ -1,6 +1,6 @@
 <template>
     
-  <Flex :direction="'column'" :align="'flex-start'" ref="group" v-bind="{ ...props }">
+  <Flex :direction="'column'" :align="'align'" ref="group" v-bind="{ ...props }">
       <slot></slot>
   </Flex>
 </template>
@@ -8,10 +8,9 @@
 <script setup lang="ts">
 import { default as Flex, type Props as FlexProps } from "@/components/UI/Flex/Flex.vue";
 
-interface Props extends Omit<FlexProps, 'align'|'direction'> {}
+interface Props extends Partial<Omit<FlexProps, |'direction'>> {}
 
-const props = defineProps<Props>()
-
+const props = withDefaults(defineProps<Props>(), { align: 'flex-start' })
 // const flex = ref<InstanceType<typeof FlexCard> | null>(null)
 // const instanse = getCurrentInstance()
 //const group = ref<HTMLElement | null>()
