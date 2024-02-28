@@ -36,14 +36,14 @@ const { data: userData } = storeToRefs(storeUser)
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
 
 const event = useRequestEvent()
-await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
-    retry: 3,
-    onResponse({ response }) {
-      if (response._data && response._data.data && !response._data.message) {
-        storeUser.update(response._data.data)
-      }
-    },
-}))
+// await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
+//     retry: 3,
+//     onResponse({ response }) {
+//       if (response._data && response._data.data && !response._data.message) {
+//         storeUser.update(response._data.data)
+//       }
+//     },
+// }))
 
 
 await useFetch('/api/attridute/get', {
