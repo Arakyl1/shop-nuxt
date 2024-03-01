@@ -1,25 +1,21 @@
 export function checkThisComponent(target, instanse) {
     const elem = unref(target).closest('[data-uid')
     if (elem instanceof HTMLElement) {
-        return parseInt(elem.dataset.uid) === instanse.uid
+        return parseInt(elem.dataset.uid) === instanse.value.uid
     } return false
 }
 
 export function watchEvent(key, instanse, fun) {
     if (!key && !instanse && !fun) return null
-    const _key = key
-    const _instanse = instanse
-    const _fun = fun
     return ({ target }) => {
         if (target instanceof Element) {
-            const _target = target.closest(`[${_key}]`)
-
+            const _target = target.closest(`[${key}]`)
             if (_target) {
-                if (!checkThisComponent(_target, _instanse)) {
-                    _fun()
+                if (!checkThisComponent(_target, instanse)) {
+                    fun()
                 }
             } else {
-                _fun()
+                fun()
             }
         }
     }

@@ -3,7 +3,8 @@
         <template v-if="true">
             <div :class="className['button']" ref="modalbutton">
                 <Button :appearance="'white'"
-                class="text-2xl h-12 px-6 text-gray-500"
+                :size="'lg'"
+                class="text-xl h-14 text-gray-500"
                 @click="update(true)"
                 :text="common.BUTTON_MODAL"/>
             </div>

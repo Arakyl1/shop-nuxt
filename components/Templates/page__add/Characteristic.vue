@@ -6,14 +6,14 @@
           <Button
           :appearance="'blue'"
           :size="'sm'"
-          class="h-10 text-base grow"
+          class="h-10 text-base grow justify-center"
           @click="addSection"
           :text="commonButton.ADD_SECTION"/>
 
           <Button
           :appearance="'red'"
           :size="'sm'"
-          class="h-10 text-base grow"
+          class="h-10 text-base grow justify-center"
           :disabled="!characteristicSection"
           @click="() => setStatus('cancel-create')"
           :text="commonButton.DELETE_SECTION"/>
@@ -61,12 +61,12 @@
             :size="'sm'"
             @click="addItem"
             :text="commonButton.ADD_FIELD"
-            class="h-10 text-base grow"/>
+            class="h-10 text-base grow justify-center"/>
 
             <Button
             :appearance="'yellow'"
             :size="'sm'"
-            class="h-10 text-base grow"
+            class="h-10 text-base grow justify-center"
             @click="() => editActive ? setStatus('apply-change') : createSection()"
             :text="editActive ? commonButton.APPLY_CHANGES : commonButton.CREATE_SECTION"/>
           </Flex>
@@ -77,10 +77,12 @@
           <Group class="gap-y-3 w-full">
             <Flex class="gap-x-8 w-full">
               <Title :tag="'h3'" :text="item.title" class="grow truncate"/>
-              <Button :appearance="'gray-icon'"
+              <Button
+              :appearance="'gray-icon'"
               :icon-left="{ key: 'edit', size: '24_24' }"
               @click="makeEditingActive(index)"/>
-              <Button :appearance="'gray-icon'"
+              <Button
+              :appearance="'gray-icon'"
               :icon-left="{ key: 'delete', size: '24_24' }"
               @click="initDeleteGroup(index)"/>
             </Flex>

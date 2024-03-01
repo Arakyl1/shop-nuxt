@@ -4,9 +4,11 @@
             {{ captionFirst }}
         </figcaption>
 
-        <Transition>
-            <img :src="imgSrc" @error="onError" :alt="props.alt" :class="rootClass">
-        </Transition>
+        <ClientOnly>
+            <Transition>
+                <img :src="imgSrc" @error="onError" :alt="props.alt" :class="rootClass">
+            </Transition>
+        </ClientOnly>
 
         <figcaption v-if="captionLast">
             {{ captionLast }}
@@ -71,6 +73,7 @@ const imgSrc = computed(() => {
 
 
 function onError() {
+    console.log(true)
     checkPropImage.value = false
 }
 </script>

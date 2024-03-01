@@ -65,13 +65,13 @@
                 :disabled="content.quantity === 0"
                 @click.stop="add({ 'card_id': content.id, count: 1 })"
                 :class="className['button-basket']"
-                class="h-12"/>
+                class="h-12 justify-center"/>
             </slot> 
         </Flex>
     </Flex>
 </template>
 <script setup lang="ts">
-import { Content, ProductCardBase } from "~~/type/intex";
+import { ProductCardBase } from "~~/type/intex";
 import { basket as _basket } from "@/stores/basket";
 import { alert as _alert } from "@/stores/alert";
 import { favorite as _favorite } from "@/stores/favorite";
@@ -137,7 +137,6 @@ const content = computed<ProductCardBase | null>(() => props.data)
 }
 .button-basket {
     width: 100%;
-    justify-content: center;
     font-size: var(--text-base);
 }
 

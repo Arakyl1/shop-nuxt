@@ -239,7 +239,6 @@ defineExpose({ button })
     text-wrap: nowrap;
     display: flex;
     align-items: center;
-    justify-content: space-around;
     gap: 0 0.25rem;
     font-size: 1rem;
     flex-wrap: nowrap;

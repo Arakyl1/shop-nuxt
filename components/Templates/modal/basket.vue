@@ -13,8 +13,8 @@
                             <Button :to="`/catalog/data.id`"
                             :text="'data.name'"
                             :mode="'link'"
-                            class="text-lg"/>
-                            <p class="text-gray-500 text-lg ">data.art</p>
+                            class="text-md"/>
+                            <p class="text-gray-500 text-md ">data.art</p>
                         </div>
                         <div class="">
                             <ProductPrice
@@ -33,10 +33,10 @@
                 </article>
             </Group>
             <div class="decor-line"></div>
-            <p class="text-2xl font-medium text-blue-500"
+            <p class="text-md font-medium text-blue-500"
             >Общая сумма заказа: {{ transformPrice('ru', { currency: 'BYN', style: 'currency' }, totalOrderAmount) }}</p>
         </Group>
-        <p v-else class="text-2xl text-gray-700">Ваша корзина пуста</p>
+        <p v-else class="text-lg text-gray-700">Ваша корзина пуста</p>
     </Group>
 </template>
 

@@ -7,7 +7,7 @@
                 <ProductCard v-for="item in 0" :key="item" :data="item"/>
             </div>
         </Group>
-        <p v-else class="text-2xl text-gray-700"> У вас пока нет избранных товаров</p>
+        <p v-else class="text-lg text-gray-700"> У вас пока нет избранных товаров</p>
     </Group>
 </template>
 

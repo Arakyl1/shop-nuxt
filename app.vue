@@ -102,7 +102,6 @@ onServerPrefetch(async() => {
 // }
 
 
-
 useSeoMeta({
   title: () => route.meta.title ? `${config.public.NAME_APP} - ${route.meta.title}` : config.public.NAME_APP,
 })

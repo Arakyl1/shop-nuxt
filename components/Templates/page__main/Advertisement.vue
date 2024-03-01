@@ -9,13 +9,14 @@
             :direction="'column'"
             class="gap-6"
             :align="'flex-start'">
-                <p class="text-white text-2xl" :class="className['text']"
+                <p class="text-white text-lg" :class="className['text']"
                 >Стабилизаторы и Источникибесперебойного питания энергии</p>
                 <div class="w-16 h-0.5 bg-white"></div>
                 <div>
                     <Button :appearance="'white'"
                     :text="'Перейти в каталог'"
-                    class="px-10 py-4 text-base"
+                    class="h-10 text-base"
+                    :size="'2xl'"
                     :class="className['button']"
                     :style="{ '--color': 'var(--blue-500)' }"/>
                 </div>
@@ -27,7 +28,6 @@
 <script setup lang="ts">
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Button from "@/components/UI/Button/Button.vue";
-import Title from "@/components/UI/Title/Title.vue";
 
 const className = useCssModule()
 </script>
@@ -61,7 +61,7 @@ const className = useCssModule()
         padding-right: 1rem;
     }
     .text {
-        font-size: var(--text-2xl);
+        font-size: var(--text-xl);
     }
 }
 @media (max-width: 640px) {
@@ -69,7 +69,7 @@ const className = useCssModule()
         width: calc((100% / 12) * 10);
     } 
     .text {
-        font-size: var(--text-lg);
+        font-size: var(--text-md);
     }
 }
 

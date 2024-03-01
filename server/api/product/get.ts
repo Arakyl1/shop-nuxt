@@ -75,7 +75,7 @@ function initProductCardFindParams(...arg: Parameters<initFindParams>) {
         case 'maker': {
             const _value = value.split(',').map(_ => ({
                 attribute: { some: {
-                    value: { contains: _, mode: 'insensitive' },
+                    value: { contains: _.split('__').join(' '), mode: 'insensitive' },
                     type: 'MAKER'
                 } }
             }))

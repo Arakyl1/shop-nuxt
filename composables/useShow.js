@@ -13,13 +13,12 @@ export default (props, watchFun) => {
     onMounted(() => {
         if (!('triggers' in props && props.triggers && props.autoClose)) return
 
-        for (let i = 0, l = props.triggers.length; i < l; i++) {
-            const trigger = props.triggers[i];
+        props.triggers.forEach(trigger => {
             if (trigger in mapEvent) {
                 const event = mapEvent[trigger]
                 window.addEventListener(event.name, watchElements, { ...event.opt })
             }
-        }
+        })
 
         window.addEventListener('resize', onResize)
     })
@@ -27,21 +26,14 @@ export default (props, watchFun) => {
     onBeforeUnmount(() => {
         if (!('triggers' in props && props.triggers && props.autoClose)) return
         
-        for (let i = 0, l = props.triggers.length; i < l; i++) {
-            const trigger = props.triggers[i];
+        props.triggers.forEach(trigger => {
             if (trigger in mapEvent) {
-                window.addEventListener(mapEvent[trigger], watchElements)
+                window.removeEventListener(mapEvent[trigger].name, watchElements)
             }
-        }
+        })
+
         window.removeEventListener('resize', onResize)
     })
-
-    // watch(() => route.fullPath, () => {
-    //     if (isActive.value) {
-    //         // close()
-    //         console.log(true)
-    //     }
-    // })
     
 
     function open() {

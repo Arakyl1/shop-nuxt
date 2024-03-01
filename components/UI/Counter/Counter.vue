@@ -8,7 +8,7 @@
             <span ></span>
         </button>
 
-        <p class="text-lg"
+        <p class="text-md"
         :class="[minValue === maxValue ? 'text-gray-500' : 'text-blue-300', className['value']]"
         >{{ count }}</p>
 

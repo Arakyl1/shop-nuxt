@@ -90,7 +90,6 @@
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import localState from "@/utils/localState";
-import CreateIcon from "@/content/icons/create";
 import { CategorDataItem } from "~~/type/intex";
 import Mask from "@/components/UI/Mask/Mask.vue";
 

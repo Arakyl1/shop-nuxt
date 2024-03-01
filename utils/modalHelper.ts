@@ -6,16 +6,12 @@ export async function handlerPromise(
 ): Promise<void> {
     const _elem = unref(elem);
 
-
-    
-
     if (!(_elem instanceof HTMLElement)) {
         return Promise.reject(new Error('Element is not valid'));
     }
 
 
     return new Promise<any>((resolve) => {
-        
 
         function onClick({ target }: MouseEvent) {
             

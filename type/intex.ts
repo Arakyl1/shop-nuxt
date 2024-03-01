@@ -211,7 +211,7 @@ export type HH =
     Enumerable<{ type: 'checkbox', title: string, data: (string | number | undefined)[], length?: number, name: string }> |
     Enumerable<{ type: 'number-range', title: string, from: InputProp, to: InputProp }> |
     Enumerable<{ type: 'radio', title: string, name: string, value: string | number, id?: number | string }> |
-    Enumerable<{ type: 'select', title: string, data: { title: string, value: string | number, name: string }[] }> |
+    Enumerable<{ type: 'select', title: string, data: { title: string, value?: string | number, name: string, id?: string | number }[] }> |
     Enumerable<{ type: 'star', title: string, name: string, value: string | number }> |
     { type: 'time', ms: number, state: string }
 

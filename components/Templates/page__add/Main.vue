@@ -118,6 +118,7 @@ import { Attribute, Prisma , Image as PrismaImage } from "@prisma/client";
 import { INPUT_CONTENT as commonInput, PAGE_ADD as common } from "@/common/C";
 import { CategorDataItem, LoginJSONData, _HTMLInputElement } from "@/type/intex";
 import { alert as _alert } from "@/stores/alert";
+import selectCategorHelper from "@/utils/selectCategorHelper";
 
 type AttributeType = Attribute['type']
 
@@ -133,30 +134,10 @@ const emit = defineEmits<{
 const className = useCssModule()
 const { download: _downloadImage } = useImage()
 const storeAlert = _alert()
-const activeId = ref<Array<number|string>>([])
-
 type ImageCreateData = Pick<PrismaImage, 'link' | 'main'>
 const image = ref<ImageCreateData[] | null>(null)
-const inputlist = ref<HTMLElement | null>(null)
-const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP")
+const { activeId, dataSelect, updateActiveId, resetSelect, addCategor } = selectCategorHelper()
 
-const dataSelect = computed(() => {
-  if (!CATEGOR_DATA.value) return null
-  if (!activeId.value.length) return [transformDataForSelect(CATEGOR_DATA.value)]
-
-  let nowActiveList: CategorDataItem[] | null = CATEGOR_DATA.value
-  const selectList = []
-
-  for (let i = 0, l = activeId.value.length; i < l; i++) {
-    const categor = activeId.value[i];
-    selectList.push(transformDataForSelect(nowActiveList))
-    const findRes = nowActiveList.find(_ => _.value === categor)!
-    if ('children' in findRes) {
-      nowActiveList = findRes.children as never
-    } else { nowActiveList = null as never }
-  }
-  return [...selectList, nowActiveList ? transformDataForSelect(nowActiveList) : undefined ]
-})
 
 
 onMounted(() => {
@@ -204,32 +185,16 @@ function toDoImageMain({ target, type, }: Event) {
   }
 }
 
-
-function addCategor(value: string | number | null, index: number) {
-  if (value) {
-    if (!activeId.value[index]) {
-      activeId.value.push(value);
-    } else {
-      activeId.value = activeId.value.map((_, i) => i === index ? value : _).slice(0, index + 1);
-    }
-  }
-}
-
 function removeItem(index: number) {
   if (image.value) {
     image.value.splice(index, 1)
   }
 }
 
-function transformDataForSelect(data: CategorDataItem[]): { id: string; value: string }[] {
-  return data.map(_ => ({ id: _.value, value: _.value }));
-}
-
-
 async function parseJSONData<T extends { [k: string]: any }>(data: T ) {
     const categor = 'categor' in data ? data.categor.split('/').map(_ => _.trim()) : null
 
-    if (categor) {activeId.value = categor }
+    if (categor) { updateActiveId(categor) }
   
     if (Object.prototype.hasOwnProperty.call(data, 'image') && Array.isArray(data.image) && data.image.length) {
       const imageRes = []
@@ -249,10 +214,9 @@ async function parseJSONData<T extends { [k: string]: any }>(data: T ) {
 
 function onRestore() {
   image.value = null
-  activeId.value = []
+  resetSelect()
   indexMainImage.value = -1
 }
-
 
 
 interface Model {

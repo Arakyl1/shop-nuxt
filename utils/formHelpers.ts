@@ -41,13 +41,12 @@ export function setValueInput(elem: FORM, setData: Map<string, string[]> ) {
     const _form = unref(elem)
     
     if (_form instanceof HTMLFormElement) {
-        const elms = _form.elements
         const event = new Event('change', { bubbles: true })
 
         function dispatchEvent(elem: HTMLInputElement | HTMLTextAreaElement) {
             elem.dispatchEvent(event)
         }
-        for (const elem of elms) {
+        for (const elem of _form.elements) {
             const elemName = elem.getAttribute('name') || ''
             const elemValid = setData.has(elemName) ? setData.get(elemName) : null;
      

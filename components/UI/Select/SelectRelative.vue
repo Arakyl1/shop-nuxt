@@ -60,12 +60,11 @@
 </template>
 
 <script setup>
-import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Group from "@/components/UI/Group/Group.vue";
-import { watchEvent } from "@/utils/elemHelper";
-import { initSize } from '@/utils/elemHelper'
+import { watchEvent, initSize, checkThisComponent } from "@/utils/elemHelper";
+import { isNumber, isNumeric, getScreenSize } from '@/utils/other'
 import useShow from '@/composables/useShow'
 
 const props = defineProps({
@@ -148,7 +147,7 @@ const position = ref('bottom')
 
 const watchElement = watchEvent('data-select', instanse, () => close())
 const { isActive, open, close } = useShow(props, watchElement)
-const activeOptionId = ref(props.modelValue || props.data[0].id)
+const activeOptionId = ref(props.modelValue || props.data[0]?.id)
 
 
 const activeOption = computed(() => {
