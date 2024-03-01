@@ -46,7 +46,7 @@ const event = useRequestEvent()
 // }))
 
 
-await useFetch('/api/attridute/get', {
+useFetch('/api/attridute/get', {
     server: true,
     method: 'GET',
     params: { type: 'CATEGOR' },

@@ -14,6 +14,7 @@
     "@nuxt/postcss8": "^1.1.3",
     "@nuxt/test-utils-edge": "^3.8.0-28284309.b3d3d7f4",
     "@nuxtjs/device": "^3.0.0",
+    "@nuxtjs/web-vitals": "^0.2.6",
     "@types/bcryptjs": "^2.4.2",
     "@types/node": "^20.10.4",
     "@types/uuid": "^9.0.7",

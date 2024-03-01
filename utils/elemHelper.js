@@ -1,6 +1,6 @@
 export function checkThisComponent(target, instanse) {
     const elem = unref(target).closest('[data-uid')
-    if (elem instanceof HTMLElement) {
+    if (elem instanceof HTMLElement && instanse) {
         return parseInt(elem.dataset.uid) === instanse.value.uid
     } return false
 }

@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/device',
-    '@nuxt/devtools',
     "nuxt-vercel-analytics",
+    '@nuxtjs/web-vitals',
     'nuxt-viewport',
     ['@kevinmarrec/nuxt-pwa', {
       icon: {
@@ -23,12 +23,6 @@ export default defineNuxtConfig({
         }
     ],
   ],
-  devtools: { enabled: true },
-  // postcss: {
-  //   plugins:{
-  //     autoprefixer: {},
-  //   }
-  // },
   runtimeConfig: {
     cloudinaryName: process.env.CLOUDINARY__NAME,
     cloudinaryApiKey: process.env.CLOUDINARY__KEY,
@@ -80,6 +74,11 @@ export default defineNuxtConfig({
 
     fallbackBreakpoint: 'lg'
   },
+  webVitals: {
+    provider: 'log',
+    debug: true, // debug enable metrics reporting on dev environments
+    disabled: false
+  }
 });
 
 // const viewport = useViewport() v-if="viewport.isGreaterOrEquals('sm')"

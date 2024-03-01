@@ -73,7 +73,6 @@ const imgSrc = computed(() => {
 
 
 function onError() {
-    console.log(true)
     checkPropImage.value = false
 }
 </script>
