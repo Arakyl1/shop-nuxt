@@ -1,0 +1,1 @@
+export const transformPx = (value: number) => value + 'px'

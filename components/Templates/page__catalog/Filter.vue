@@ -1,74 +1,77 @@
 <template>
     <div @input.stop @change.stop>
-        <form ref="formCategory" @input="changeCategor" @change="changeCategor">
-            <template v-if="selectData">
-                <fieldset>
-                    <SelectCategor :data="selectData" :style="{ width: '250px' }"/>
-                </fieldset>
-            </template>
-        </form>
-        <form ref="form" class="flex flex-column gap-y-3" @input="getParamsFilter" @change="getParamsFilter">
-            <template v-if="dataFilterList">
-                <template v-for="section, i in dataFilterList"
-                :key="Array.isArray(section) ? i : section.title">
-                <template v-if="Array.isArray(section)">
-                        <Group :tag="'fieldset'" class="w-full gap-y-2">
-                            <div class="decor-line"></div>
-                            <Group class="gap-y-2 w-full">
-                                <template v-for="item in section">
-                                    <Flex v-if="item.type === 'radio'" :justify="'between'" class="w-full">
-                                        <span class="text-md">{{ item.title }}</span>
-                                        <Switch :name="item.name!"
-                                        :value="item.value!" />
-                                    </Flex>
-                                </template>
-                            </Group>
-                        </Group>
-                    </template>
-                    <template v-else>
-                        <div v-if="section.type === 'select'"></div>
-
-                        <Group v-else-if="section.type === 'number-range'" :tag="'fieldset'" class="gap-y-2" >
-                            <div class="decor-line"></div>
-                            <Title :tag="'h4'" class="truncate">{{ section.title }}</Title>
-                            <RangeNumber :section="section" :mode="'outline'"/>
-                        </Group>
-
-                        <Group v-else-if="section.type === 'star'" :tag="'fieldset'" class="gap-y-2">
-                            <Title tag="h4" class="truncate" :text="section.title"/>
-                            <div class="decor-line"></div>
-                            <Rating
-                            :value="ratingStar"
-                            :name="section.name"
-                            :readonly="false"
-                            :step="1"
-                            :width="25"
-                            class="justify-between w-full"/>
-                        </Group>
-
-                        <Group v-else-if="section.type === 'checkbox'" :tag="'fieldset'" class="gap-y-2">
-                            <Title tag="h4" class="truncate" :text="section.title"/>
-                            <div class="decor-line"></div>
-                            <ListCheckBox :content="section" />
-                        </Group>
-
-                        <Flex v-else-if="section.type === 'radio'" :justify="'between'" class="gap-x-2">
-                            <span>{{ section.title }}</span>
-                            <Switch :name="section.name!" :value="section.value!" />
-                        </Flex>
-                    </template>
+        <div v-show="!pending">
+            <form ref="formCategory" @input="changeCategor" @change="changeCategor">
+                <template v-if="selectData">
+                    <fieldset>
+                        <SelectCategor :data="selectData" :style="{ width: '250px' }"/>
+                    </fieldset>
                 </template>
+            </form>
+            <form ref="form" class="flex flex-column gap-y-3" @input="getParamsFilter" @change="getParamsFilter">
+                <template v-if="dataFilterList">
+                    <template v-for="section, i in dataFilterList"
+                    :key="Array.isArray(section) ? i : section.title">
+                    <template v-if="Array.isArray(section)">
+                            <Group :tag="'fieldset'" class="w-full gap-y-2">
+                                <div class="decor-line"></div>
+                                <Group class="gap-y-2 w-full">
+                                    <template v-for="item in section">
+                                        <Flex v-if="item.type === 'radio'" :justify="'between'" class="w-full">
+                                            <span class="text-md">{{ item.title }}</span>
+                                            <Switch :name="item.name!"
+                                            :value="item.value!" />
+                                        </Flex>
+                                    </template>
+                                </Group>
+                            </Group>
+                        </template>
+                        <template v-else>
+                            <div v-if="section.type === 'select'"></div>
 
-                <Flex :justify="'end'" class=" pt-3">
-                    <Button
-                    :appearance="'blue'"
-                    :size="'base'"
-                    :text="commonButton.FILTER_RESET"
-                    :icon-left="{ key: 'reload', size: '20_20' }"
-                    @click.prevent="resetData" class="text-md h-10"/>
-                </Flex>
-            </template>
-        </form>
+                            <Group v-else-if="section.type === 'number-range'" :tag="'fieldset'" class="gap-y-2" >
+                                <div class="decor-line"></div>
+                                <Title :tag="'h4'" class="truncate">{{ section.title }}</Title>
+                                <RangeNumber :section="section" :mode="'outline'"/>
+                            </Group>
+
+                            <Group v-else-if="section.type === 'star'" :tag="'fieldset'" class="gap-y-2">
+                                <Title tag="h4" class="truncate" :text="section.title"/>
+                                <div class="decor-line"></div>
+                                <Rating
+                                :value="ratingStar"
+                                :name="section.name"
+                                :readonly="false"
+                                :step="1"
+                                :width="25"
+                                class="justify-between w-full"/>
+                            </Group>
+
+                            <Group v-else-if="section.type === 'checkbox'" :tag="'fieldset'" class="gap-y-2">
+                                <Title tag="h4" class="truncate" :text="section.title"/>
+                                <div class="decor-line"></div>
+                                <ListCheckBox :content="section" />
+                            </Group>
+
+                            <Flex v-else-if="section.type === 'radio'" :justify="'between'" class="gap-x-2">
+                                <span>{{ section.title }}</span>
+                                <Switch :name="section.name!" :value="section.value!" />
+                            </Flex>
+                        </template>
+                    </template>
+
+                    <Flex :justify="'end'" class=" pt-3">
+                        <Button
+                        :appearance="'blue'"
+                        :size="'base'"
+                        :text="commonButton.FILTER_RESET"
+                        :icon-left="{ key: 'reload', size: '20_20' }"
+                        @click.prevent="resetData" class="text-md h-10"/>
+                    </Flex>
+                </template>
+            </form>
+        </div>
+        <FilterSkeleton v-show="pending"/>
     </div>
 </template>
 
@@ -82,6 +85,7 @@ import RangeNumber from "@/components/UI/Range/Number.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import SelectCategor from '@/components/Templates/Form/Categor.vue'
 import ListCheckBox from "@/components/UI/List/Checkbox.vue";
+import FilterSkeleton from '@/components/Templates/page__catalog/filterSkeleton.vue'
 import { FilterData } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
 import { BASE_BUTTON as commonButton } from "@/common/C";
@@ -91,6 +95,7 @@ import { resetForm, setValueInput } from "#imports";
 const route = useRoute()
 const router = useRouter()
 const storeAlert = _alert()
+const pending = ref<boolean>(false)
 const formCategory = ref<HTMLFormElement | null>(null)
 const form = ref<HTMLFormElement | null>(null)
 const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
@@ -102,40 +107,55 @@ const sizePage = computed(() => 'limit' in route.query ? { limit: route.query.li
 const selectData = computed(() => dataFilterList.value ? dataFilterList.value.find(_ => _.type === 'select' )?.data.map(_ => _.id) : [])
 
 
-if (!dataFilterList.value) {
-    initFilterData()
-}
+initFilterData()
 
 onMounted(() => {
-    if (form.value) {
-        const params = getFilterActiveParamsByRouteQuery()       
-        setValueInput(form.value, params)
-    }
+    getFilterData()
+    nextTick(() => initFilter())
     window.addEventListener('restore', getParamsFilter, { passive: true })
 })
+
 
 onBeforeUnmount(() => {
     window.removeEventListener('restore', getParamsFilter)
 })
 
 watch(() => routeCategorId.value, () => {
-    if (form.value) resetForm(form.value)
-
-    initFilterData()
+    if (form.value) {
+        resetForm(form.value)   
+        getFilterData()
+    }
 })
 
 
-// methods
 function initFilterData() {
+    if (!dataFilterList.value) {
+        getFilterData()
+    }
+}
+
+function initFilter() {
+    if (form.value) {
+        const params = getFilterActiveParamsByRouteQuery()       
+        setValueInput(form.value, params)
+    }   
+}
+
+// methods
+function getFilterData() {
     useFetch('/api/other/filter', {
         server: true,
         params: { ...route.query },
         retry: 1,
         lazy: false,
+        onRequest() {
+            pending.value = true
+        },
         onResponse({ response }) {
             if (response.status < 400) {
                 dataFilterList.value = response._data
             }
+            pending.value = false
         }
     })
 }

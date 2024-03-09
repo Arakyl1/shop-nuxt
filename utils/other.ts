@@ -86,6 +86,8 @@ export function getScreenSize(window: Window) {
 }
 
 
+export const toFixed = (value: number, size?: number) => parseFloat(value.toFixed(size || 2))
+
 
 export const sessionGet = (key: string) => sessionStorage.getItem(key)
 export const sessionSet = (key: string, elem: any) => sessionStorage.setItem(key, JSON.stringify(elem))

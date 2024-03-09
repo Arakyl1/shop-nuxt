@@ -1,40 +1,40 @@
 <template>
     <div :data-accordion="instanse?.uid" :data-uid="instanse?.uid" class="relative">
-        <div>
-            <div v-if="content === 'after'">
-                <slot name="trigger" v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }">
-                    <div :class="[className['bt'], className['bt--' + btMode], btClass]">
-                        <template v-if="text">{{ text }}</template>
-                        <slot name="button" v-else v-bind="{ onClick }"></slot>
-                        <Button
-                        :icon-left="icon ? icon : { key: 'arrow', size: '24_24' }"
-                        @click="() => isActive ? close() : onClick()"
-                        :class="iconClass"
-                        :size="'none'"
-                        :mode="'none'" />
-                    </div>
-                </slot>
-            </div>
-            <div v-if="separator" :class="className['separator']"></div>
-            <Transition :name="animated">
-                <div :style="[isActive ? { height: size.h } : {}]" :class="className['body']" ref="accordion">
-                    <slot v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }"></slot>
+        <div v-if="content === 'after'">
+            <slot name="trigger" v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }">
+                <div :class="[className['bt'], className['bt--' + btMode], btClass]">
+                    <template v-if="text">{{ text }}</template>
+                    <slot name="button" v-else v-bind="{ onClick }"></slot>
+                    <Button
+                    :icon-left="icon ? icon : { key: 'arrow', size: '24_24' }"
+                    @click="() => isActive ? close() : onClick()"
+                    :class="iconClass"
+                    :size="'none'"
+                    :mode="'none'" />
                 </div>
-            </Transition>
-            <div v-if="separator" :class="className['separator']"></div>
-            <div v-if="content === 'before'">
-                <slot name="trigger" v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }">
-                    <div :class="[className['bt'], className['bt--' + btMode], btClass]">
-                        <template v-if="text">{{ text }}</template>
-                        <slot name="button" v-else v-bind="{ onClick }"></slot>
-                        <Button
-                        :icon-left="icon ? icon : { key: 'arrow', size: '24_24' }"
-                        @click="onClick"
-                        :class="iconClass"
-                        :mode="'none'" />
-                    </div>
-                </slot>
+            </slot>
+        </div>
+        <div v-if="separator" :class="className['separator']"></div>
+        <Transition :name="animated">
+            <div
+            :style="[isActive ? { height: size && animated !== 'none' ? size.h : 'auto' } : {}]"
+            :class="className['body']" ref="accordion">
+                <slot v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }"></slot>
             </div>
+        </Transition>
+        <div v-if="separator" :class="className['separator']"></div>
+        <div v-if="content === 'before'">
+            <slot name="trigger" v-bind="{ isActive, close, onClick, open, onFocus, onHover, onContextMenu, iconClass }">
+                <div :class="[className['bt'], className['bt--' + btMode], btClass]">
+                    <template v-if="text">{{ text }}</template>
+                    <slot name="button" v-else v-bind="{ onClick }"></slot>
+                    <Button
+                    :icon-left="icon ? icon : { key: 'arrow', size: '24_24' }"
+                    @click="onClick"
+                    :class="iconClass"
+                    :mode="'none'" />
+                </div>
+            </slot>
         </div>
     </div>
 </template>
@@ -51,7 +51,7 @@ interface Props extends useShowProps {
     text?: string,
     // Accordion будет иметь анимацию
     // по умолчанию затухания
-    animated?: string,
+    animated?: string | 'none',
     // показать разделитель
     separator?: boolean,
     ariaId?: string,
@@ -84,7 +84,10 @@ const accordion = ref<HTMLElement | null>(null)
 const instanse = ref()
 const watchElement = watchEvent('data-accordion', instanse.value, () => { isActive.value = false })
 const { isActive, close, onClick, open, onFocus, onHover, onContextMenu } = useShow(props, watchElement)
-const size = useHeight(accordion)
+let size: ReturnType<typeof useHeight> | undefined
+if (props.animated !== 'none') {
+   size = useHeight(accordion)
+}
 
 const iconClass = computed(() => {
     return props.icon ? '' :
@@ -95,6 +98,7 @@ const iconClass = computed(() => {
 
 onMounted(() => {
     instanse.value = getCurrentInstance()
+   
 })
 watch(() => isActive.value, (newV) => emit('message', newV ? 'open' : 'close'))
 

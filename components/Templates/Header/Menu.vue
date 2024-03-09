@@ -27,7 +27,7 @@
                     </li>
                 </Group>
             </Group>
-            <Transition name="slide-right" mode="in-out">
+            <Transition name="slide-right">
                 <Group v-if="groupSubcategory" :align="'flex-start'" :class="className['subcategory-list']">
                     <div :class="className['header']"></div>
                     <Flex :align="'flex-start'"  class="w-full h-full scrollbar-v1 px-3">

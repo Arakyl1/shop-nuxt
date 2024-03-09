@@ -96,7 +96,6 @@ const className = useCssModule()
 <style lang="css" module>
 .body {
     /* max-width: 900px; */
-    width: 400px;
     height: min-content;
     /* min-width: 100%; */
 }
@@ -112,31 +111,10 @@ const className = useCssModule()
 .textarea:focus-visible {
     outline: 0;
 }
+
+@media screen and (min-width: 769px) {
+    .body {
+        width: 400px;
+    } 
+}
 </style>
-
-<!-- <div class="bg-white rounded-md py-8 px-6 sm:py-6 sm:px-4">
-     <div class="flex items-center mb-4" v-if="userData">
-        <img :src="userData.profileImage" alt="user-image" class="w-12 aspect-square">
-        <p class="text-lg text-gray-900 ml-4">{{ userData.username }}</p>
-    </div>
-    <div class="decor-line mb-6 sm:mb-4"></div>
-    <form>
-         <div class="flex mb-3">
-            <p class="texl-lg text-black-500 ">{{ data.name }}
-                <span class="texl-lg text-gray-500 pl-3 ">{{ data.art }}</span>
-            </p>
-        </div>
-
-         <div class="mb-4">
-            <AtomFormRating :quantity-star="userCommit.ranting" @number-star="(e) => { userCommit.ranting = e }"
-                :reset="reset" class="justify-start" />
-        </div> 
-        <textarea rows="10" v-model="userCommit.text" class="w-full border border-yellow-500 rounded-md
-        p-4 mb-6 focus-visible:outline-0 sm:p-2"></textarea>
-        <div class="text-right">
-            <AtomButtonStandart @click="onClick()" class="bg-yellow-500 text-white sm:py-2">
-                Опубликовать
-            </AtomButtonStandart> 
-        </div>
-    </form>
-</div> -->

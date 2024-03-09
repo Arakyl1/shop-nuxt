@@ -23,7 +23,7 @@
                 </Grid>
                 <Transition name="opacity" >
                     <div v-show="!pending && data && !dataLength">
-                        <p class="text-lg p-8 text-gray-500">{{ 'nothing found'  }}</p>
+                        <p class="text-lg p-8 text-gray-500">{{ PAGE_CATALOG.EMPTY_RESULT_FOR_PRODUCT  }}</p>
                     </div>
                 </Transition>
             </div>
@@ -55,12 +55,13 @@ import Panel from "@/components/UI/Panel/Panel.vue";
 import CardProduct from '@/components/Templates/Card/Product.vue'
 import Filter from '@/components/Templates/page__catalog/Filter.vue'
 import Pagination from "@/components/UI/Pagination/Pagination.vue";
-import { PAGE_META as META } from "@/common/C";
+import { PAGE_META as META, PAGE_CATALOG } from "@/common/C";
 
 
 definePageMeta({
     middleware: ['catalog'],
     title: META.CATALOG.TITLE,
+    keepalive: true
 })
 
 const { state, update } = localState({ watch: false })
@@ -69,7 +70,7 @@ const toucheData = toucheElemPosition(filter)
 const mouseData = mouseElemPosition(filter)
 const route = useRoute()
 const className = useCssModule()
-const { activePage, updatePage, getInfoPagination } = paggination()
+const { activePage, updatePage } = paggination()
 
 
 const sizePage = computed(() =>'limit' in route.query ? Number(route.query.limit) : 12)
@@ -131,7 +132,7 @@ function visibleFilter(state: boolean) {
 <style lang="css" module>
 .filter {
     min-width: 300px;
-    max-width: min-content;
+    max-width: 300px;
     width: 100%;
 }
 .filter > * {

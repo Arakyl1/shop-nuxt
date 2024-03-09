@@ -1,7 +1,7 @@
 <template>
     <section>
         <Flex class="w-full">
-            <div class="relative" :class="className['photo']">
+            <div class="relative w-1/2" :class="className['photo']">
                 <Flex :justify="'center'" class="px-16 xl:px-12">
                     <CardGridScroll :data="data.image" :container="'xs'">
                         <template #default="{ elem }">
@@ -31,7 +31,7 @@
                 </Flex>
                 <Status :status="getStatus(data)" data-left :class="className['status']"  />
             </div>
-            <Card :appearance="'gray'" :container="'xl'" :class="className['info']" class="h-full">
+            <Card :appearance="'gray'" :container="'xl'" class="h-full w-1/2">
                 <Flex class="relative gap-y-6" :direction="'column'" :align="'flex-start'">
                     <div :class="className['button-like']">
                         <ClientOnly>
@@ -68,7 +68,7 @@
                     <div class="decor-line"></div>
                     <Flex :justify="'between'" class="w-full">
                         <ProductPrice :price="data.price" :discount="data.discount"
-                            class="text-4xl xl:text-3xl lg:text-2xl" />
+                            class="text-xl " />
                         <Counter :max-value="data.quantity"
                             @update:value="(e: number) => numberOfProduct = e" class="lg:py-1.5 lg:px-3" />
                     </Flex>
@@ -145,17 +145,14 @@ function addBasket(item: any) {
 </script>
 
 <style lang="css" module>
-.photo {
-    width: 50%;
-}
+
 .photo [ data-card-grid-scroll] > ul {
     aspect-ratio: 9/8;
 }
-.info {
-    width: 50%;
-}
+
 .picture {
-    height: 80%;
+    max-width: 80%;
+    max-height: 80%;
     aspect-ratio: 1;
     object-fit: contain;
 }

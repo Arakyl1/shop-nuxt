@@ -55,7 +55,7 @@ export interface Props {
     rounded?: 'none'|'xs'|'sm'|'base'|'lg'|'xl'|'full',
     mode?: 'primary'|'secondary'|'outline'|'link'|'none',
     appearance?: 'white'|'black'|'gray'|'red'|'blue'|'green'|'yellow'|
-    'black-icon'|'gray-icon'|'red-icon'|'blue-icon'|'green-icon'|'yellow-icon',
+    'white-icon'|'black-icon'|'gray-icon'|'red-icon'|'blue-icon'|'green-icon'|'yellow-icon',
     tag?: 'button'|'a'|'input'|'nuxt-link',
     type?: 'button'|'reset'|'submit',
     focus?: boolean,
@@ -413,6 +413,11 @@ defineExpose({ button })
 .green {
     --bg-color: var(--green-500);
     --bg-color--hover: var(--green-300);
+}
+
+.white-icon {
+    --fill-color: var(--white);
+    --fill-hover: var(--yellow-100);
 }
 
 .black-icon {

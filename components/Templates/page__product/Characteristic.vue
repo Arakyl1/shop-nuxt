@@ -2,14 +2,10 @@
     <Card :appearance="'gray'" :container="'xl'" :class="className['body']">
         <Flex :direction="'column'" :align="'flex-start'" class="gap-y-6">
             <Title :text="common.TEXT_SPECIFICATIONS" :tag="'h3'" class="text-black-100" />
-            <!-- <h3 class="text-2xl  mb-4
-    xl:text-xl xl:mb-3 sm:text-lg sm:mb-2">Характеристики</h3> -->
             <div class="decor-line"></div>
             <Flex :direction="'column'" class="gap-y-4 w-full">
                 <div v-for="item in data" class="w-full">
                     <Title :tag="'h4'" :text="item.title" class="text-black-100" :class="className['title']" />
-                    <!-- <h4 class="text-xl text-black-100 xl:text-lg sm:text-base
-            ">{{ item.title }}</h4>    class=" justify-between py-1.5 xl:py-1" -->
                     <Flex :tag="'ul'" :direction="'column'" class="gap-y-3 w-full">
                         <Flex v-for="elem in item.content" :tag="'li'" :justify="'between'" class="w-full">
                             <p class="text-gray-500 sm:text-sm">{{ elem.name }}</p>
@@ -34,12 +30,12 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
-/* xl:w-9/12 xl:p-6 lg:w-10/12
-    md:w-full sm:p-4 */
-.body {
-    width: calc((100%/3)*2);
-}
 
+@media screen and  (min-width: 768px) {
+    .body {
+        width: 75%;
+    }
+}
 .title {
     margin-bottom: 0.75rem;
 }

@@ -1,6 +1,6 @@
 <template>
     <footer class="bg-black-300" :class="className['body']">
-        <div class="container">
+        <div class="container" v-if="common">
             <!-- Mobile Footer start -->
             <div class="--md:hidden">
                 <Group class="gap-y-8 w-full ">
@@ -14,7 +14,7 @@
                     <Group class="w-full">
                         <template v-for="section in FOOTER_ROUTER">
                             <div class="decor-line"></div>
-                            <Accordion class="w-full">
+                            <Accordion class="w-full" >
                                 <template #trigger="{ isActive, close, onClick }">
                                     <Flex :justify="'between'" class=" py-4">
                                         <Paragraph :text="section.title" class="text-white" />

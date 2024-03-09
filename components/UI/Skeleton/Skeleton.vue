@@ -10,7 +10,6 @@
 
 interface Props {
     tag?: string,
-    class?: string,
     animated?: boolean,
     loader?: boolean,
     baseColor?: string

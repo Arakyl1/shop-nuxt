@@ -22,6 +22,7 @@
                         @click="onClick"
                         :appearance="'gray-icon'"
                         :class="className['bt-close']"
+                        class="none --md:block"
                         data-modal-bt-close="true"/>
                         <slot></slot>
                     </Card>
@@ -158,6 +159,8 @@ function onClick() {
     .modal [data-card] {
         border-bottom-left-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
+        padding-top: 3rem;
+        padding-bottom: 2rem;
     }
 }
 </style>
