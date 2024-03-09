@@ -15,7 +15,8 @@
                 :class="className['list-categor']"
                 class="w-full grow scrollbar-v1"
                 @mouseout.stop="onMouseout">
-                    <li v-for="item in CATEGOR_DATA" :key="item.id" class="w-full" :data-categor-id="item.id">
+                    <li v-for="item in CATEGOR_DATA" :key="item.id" class="w-full"
+                    :data-categor-id="item.id">
                         <Button
                         :text="item.value"
                         :tag="'nuxt-link'"
@@ -31,7 +32,7 @@
                 <Group v-if="groupSubcategory" :align="'flex-start'" :class="className['subcategory-list']">
                     <div :class="className['header']"></div>
                     <Flex :align="'flex-start'"  class="w-full h-full scrollbar-v1 px-3">
-                        <Group tag="ul" class="grow w-1/2 gap-3" v-for="group in groupSubcategory">
+                        <Group tag="ul" class="grow w-1/2 gap-3 py-3" v-for="group in groupSubcategory">
                             <li v-for="item in group"
                                 :key="item.id" class="w-full">
                                 <Accordion :animated="'none'" class="w-full">
@@ -83,14 +84,14 @@ import Button from "@/components/UI/Button/Button.vue";
 import Accordion from "@/components/UI/Accordion/Accordion.vue";
 import { CategorDataItem } from '@/type/intex';
 
+const props = defineProps<{ activeMenu: boolean }>()
+
 const activeCategor = ref<number | null>(null)
 const route = useRoute()
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP")
 const className = useCssModule()
 
-
 const groupSubcategory = computed(() => {
-    let s = Date.now()
     if (activeCategor.value && CATEGOR_DATA.value) {
         const findRes = CATEGOR_DATA.value.find(_ => _.id === activeCategor.value)!.children
         if (!findRes) return null
@@ -98,15 +99,14 @@ const groupSubcategory = computed(() => {
         const lengthGroup = findRes.length / 2
         const numInteger = Number.isInteger(lengthGroup)
         const mudI = numInteger ? lengthGroup - 1 : Math.floor(lengthGroup)
-        const res =  [findRes.slice(0, mudI),findRes.slice(mudI)]
-
-        console.log(res, 'time: ' + (Date.now() - s) )
-        return res
+        return [findRes.slice(0, mudI),findRes.slice(mudI)]
     }
 })
 
+watch(() => props.activeMenu, (newV) => newV ? resetData() : null)
+
+
 function onMouseout({ target, type }: MouseEvent) {
-    console.log('mouseout')
     if (type === 'mouseout') {
         const elem = target as HTMLElement
         const elemCategor = elem.closest('[data-categor-id]')
@@ -117,6 +117,10 @@ function onMouseout({ target, type }: MouseEvent) {
             }
         }
     }
+}
+
+function resetData() {
+    activeCategor.value = null
 }
 </script>
 

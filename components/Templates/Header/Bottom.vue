@@ -2,7 +2,10 @@
     <div class="">
         <Mask :active="state" :fun="update">
             <Transition name="categor">
-                <Menu v-if="state" :style="{ top: positionMenu.top, left: positionMenu.left }"/>
+                <Menu v-show="state"
+                :activeMenu="state"
+                :style="{ top: positionMenu.top, left: positionMenu.left }"
+                @mouseleave="onMouseleave"/>
             </Transition>
         </Mask>
         
@@ -68,23 +71,17 @@ function onMouseenter(): void {
 }
 
 
-
 function onMouseleave(): void {
     if (menubutton.value) {
         update(false)
-        // let firstElem = menubutton.value.firstElementChild
-        // if (firstElem) {
-        //     menubutton.value.style.minWidth = firstElem.clientWidth + 'px'
-        // }
     }
-    // activeCategor.value = null
 }
 
-watch(() => state.value, (newV) => {
-    if (!newV) {
-        onMouseleave()
-    }
-})
+// watch(() => state.value, (newV) => {
+//     if (!newV) {
+//         onMouseleave()
+//     }
+// })
 
 function listOffset(): void {
     if (list.value && list.value.flex) {
