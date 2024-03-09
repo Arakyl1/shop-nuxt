@@ -3,22 +3,22 @@
         <ClientOnly>
             <TransitionGroup tag="ul" name="list" @click.stop="onClick" class="flex flex-column gap-y-2">
                 <template v-for="item in alertData" :key="item.createAt">
-                    <Flex :tag="'li'" :justify="'end'"
-                    :data-alert-id="item.createAt">
-                    <Flex class="rounded-base py-1 px-2 gap-1"
-                    :class="{
-                        'text-blue-500 bg-white': item.state === 'base',
-                        'bg-invalid text-white': item.state === 'error',
-                        'bg-valid text-white': item.state === 'success',
-                        'bg-yellow-500 text-white': item.state === 'info' || item.state === 'loader'
-                    }" :style="{
-                        '--tw-bg-opacity': ['base','error','loader'].includes(item.state) ? 0.55 : item.state === 'info' ? 0.85 : 0.75
+                    <Flex :tag="'li'" :justify="'end'" :data-alert-id="item.createAt">
+                        <Flex class="rounded-base py-1 px-2 gap-1"
+                        :class="{
+                            'text-blue-500 bg-white': item.state === 'base',
+                            'bg-invalid text-white': item.state === 'error',
+                            'bg-valid text-white': item.state === 'success',
+                            'bg-yellow-500 text-white': item.state === 'info' || item.state === 'loader'
+                        }"
+                        :style="{ '--tw-bg-opacity':
+                            ['base', 'error', 'loader'].includes(item.state) ? 0.55 : item.state === 'info' ? 0.85 : 0.75
                         }">
-                        <CreateIcon v-if="item.state === 'loader'" :name="'loader_24_24'"/>
-                        <p class="color-inherit text-sm">{{ item.text }}</p>
+                            <CreateIcon v-if="item.state === 'loader'" :name="'loader_24_24'" />
+                            <p class="color-inherit text-sm">{{ item.text }}</p>
+                        </Flex>
                     </Flex>
-                </Flex>
-            </template>
+                </template>
             </TransitionGroup>
         </ClientOnly>
     </div>
@@ -46,13 +46,12 @@ function onClick({ target }: MouseEvent) {
 </script>
 
 <style lang="css" module>
-
 .body {
     position: fixed;
     z-index: 1000;
     top: 0.75rem;
     right: 0.75rem;
-    max-width: 50%; 
+    max-width: 50%;
 }
 
 @media screen and (max-width: 1024px) {
