@@ -140,6 +140,9 @@ export const PAGE_MAIN = {
     CAROUSEL_TITLE_3: 'Товары месяца',
 }
 
+export const PAGE_CATALOG = {
+    EMPTY_RESULT_FOR_PRODUCT: 'По вашему запросу ничего не найденно'
+}
 export const PAGE_CATALOG_ID = {
     CAROUSEL_TITLE: 'Новинки',
     BUTTON_BASKET_ADD: BASE_BUTTON.BASKET_ADD,
