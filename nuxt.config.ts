@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/device',
-    "nuxt-vercel-analytics",
-    '@nuxtjs/web-vitals',
+    // "nuxt-vercel-analytics",
+    // '@nuxtjs/web-vitals',
     'nuxt-viewport',
     ['@kevinmarrec/nuxt-pwa', {
       icon: {
