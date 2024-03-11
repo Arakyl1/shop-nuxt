@@ -27,7 +27,7 @@ const className = useCssModule()
     margin-bottom: 1.875rem;
 } */
 .panel {
-    min-height: 40vh;
+    min-height: 60vh;
 }
 .panel:empty {
     height: 60vh;

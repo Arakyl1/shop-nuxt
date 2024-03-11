@@ -4,7 +4,7 @@
             <form ref="formCategory" @input="changeCategor" @change="changeCategor">
                 <template v-if="selectData">
                     <fieldset>
-                        <SelectCategor :data="selectData" :style="{ width: '250px' }"/>
+                        <SelectCategor :data="selectData" />
                     </fieldset>
                 </template>
             </form>

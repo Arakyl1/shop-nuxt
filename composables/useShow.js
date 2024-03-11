@@ -62,7 +62,6 @@ export default (props, watchFun) => {
     }
     
     function onClick() {
-        console.log(props)
         if (!props.triggers.includes('click')) return
         nextTick(() => setTimeout(() => open()))
     }

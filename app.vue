@@ -4,8 +4,6 @@
       <Alert/>
       <Header class="none --md:block"/>
       <HeaderMobile class="--md:hidden"/>
-      <!-- <OrganismsHeader class="mb-4 block md:hidden" />
-      <OrganismsHeaderMobaile class="mb-4 md:block hidden"/> -->
     </div>
     <div class="container">
       <!-- <Transition name="path" mode="out-in">
@@ -20,7 +18,7 @@
 
 <script setup lang="ts">
 import { user as _user } from "@/stores/user";
-import type { Cached, CategorDataItem, Content } from "@/type/intex";
+import type { CategorDataItem } from "@/type/intex";
 import Footer from "@/components/Templates/Footer/Footer.vue";
 import Header from "@/components/Templates/Header/Header.vue";
 import HeaderMobile from "@/components/Templates/Header/mobile.vue";
@@ -36,14 +34,14 @@ const { data: userData } = storeToRefs(storeUser)
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
 
 const event = useRequestEvent()
-// await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
-//     retry: 3,
-//     onResponse({ response }) {
-//       if (response._data && response._data.data && !response._data.message) {
-//         storeUser.update(response._data.data)
-//       }
-//     },
-// }))
+await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
+    retry: 3,
+    onResponse({ response }) {
+      if (response._data && response._data.data && !response._data.message) {
+        storeUser.update(response._data.data)
+      }
+    },
+}))
 
 
 useFetch('/api/attridute/get', {

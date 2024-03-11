@@ -12,12 +12,14 @@
 
         <Input
         class="w-full h-12"
+        type="email"
         :span="'Username'"
         required
         aria-required="true"
         autocomplete="username"
         aria-autocomplete="list"
-        :name="modelProp('User', 'username')" />
+        :name="modelProp('User', 'username')"
+        @invalid.capture="() => { console.log('invliad') }" />
 
         <Input
         class="w-full h-12"

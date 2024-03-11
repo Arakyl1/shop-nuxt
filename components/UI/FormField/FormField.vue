@@ -1,5 +1,5 @@
 <template>
-    <div @input="onCheckValid" @change="onCheckValid" @invalid.capture.prevent="onCheckValid" :class="className['field']">
+    <div @input="onCheckValid" @change="onCheckValid" ref="elem" :class="className['field']">
         <label for="" v-if="label">{{ label }}</label>
         <slot v-bind="{ typeValid, messadge }"></slot>
         <span v-if="spanShow" v-show="messadge"
@@ -72,21 +72,24 @@ const props = defineProps({
 const messadge = ref(null)
 const typeValid = ref(null)
 const className = useCssModule()
+const elem = ref()
 
-function onCheckValid({ target }) {
-    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
-        const valid = target.validity
+function onCheckValid(e) {
+    e.preventDefault()
+    const _target = e.target
+    if (_target instanceof HTMLInputElement || _target instanceof HTMLTextAreaElement) {
+        const valid = _target.validity
         const skipKey = ['customError']
 
         for (const key in valid) {
             const value = valid[key];
-            target.setCustomValidity('')
+            _target.setCustomValidity('')
             if (!skipKey.includes(key)) {
                 if (value && key in props && props[key]) {
                     messadge.value = props[key]
                     typeValid.value = key
                     
-                   key !== 'valid' ? target.setCustomValidity(props[key]) : ''
+                   key !== 'valid' ? _target.setCustomValidity(props[key]) : ''
                     return
                 }
 
@@ -101,8 +104,12 @@ function resetValidData(params) {
     typeValid.value = null
 }
 
-// onMounted(() => window.addEventListener('validValue', (e) => onValid(e)))
-// onMounted(() => window.removeEventListener('validValue', onValid))
+function checkMessage() {
+    return props.badInput || props.patternMismatch || props.rangeOverflow || props.rangeUnderflow || props.stepMismatch || props.tooLong || props.tooShort || props.valueMissing || props.valid || false
+}
+
+onMounted(() => checkMessage() && elem.value ? elem.value.addEventListener('invalid', onCheckValid, { capture: true, }) : null)
+onMounted(() => checkMessage() && elem.value ? elem.value.removeEventListener('invalid', onCheckValid) : null)
 </script>
 
 <style lang="css" module>
