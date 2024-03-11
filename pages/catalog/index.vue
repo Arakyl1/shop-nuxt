@@ -1,6 +1,17 @@
 <template>
     <Panel :mode="'primary'">
-        <TemplatesPageCatalogHeader />
+        <Flex :justify="'between'" >
+            <Title :tag="'h2'" :text="'Каталог товаров'" class="grow"/>
+            <div class="none --md:block">
+                <SelectSize />
+            </div>
+            <Button
+            :appearance="'blue'"
+            :square="true"
+            :icon-left="{ key: 'filter', size: '24_24' }"
+            class="h-10 --md:hidden justify-center"
+            @click="() => update(true)"/>
+        </Flex>
         <Flex :align="'flex-start'" class="gap-8">
             <!-- <div class=" fixed top-1/2 left-0 z-40 transition-all hidden md:block"
                 :class="[state ? 'opacity-0' : ' opacity-100']">
@@ -9,8 +20,8 @@
                     <CreateIcon name="filter_20_20" :att="{ class: 'fill-white' }" />
                 </AtomButtonStandart>
             </div> -->
-            <div ref="filter" 
-            :class="[className['filter']]">
+            <div ref="filter"
+            :class="[className['filter']]" :data-show-filter=state>
                 <Card :container="'xl'" :appearance="'gray'" @scroll.prevent>
                     <Filter/>
                 </Card>
@@ -30,7 +41,7 @@
 
         </Flex>
         <Flex :justify="'center'">
-            <Card class="visible px-8"><div :style="{ width: '250px' }"></div></Card>
+            <Card class="visible px-8 none --md:block"><div :style="{ width: '250px' }"></div></Card>
             <Pagination v-if="countItem"
             :total="countItem"
             :range-before="1"
@@ -52,8 +63,11 @@ import Grid from "@/components/UI/Grid/Grid.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Panel from "@/components/UI/Panel/Panel.vue";
+import Title from "@/components/UI/Title/Title.vue";
 import CardProduct from '@/components/Templates/Card/Product.vue'
 import Filter from '@/components/Templates/page__catalog/Filter.vue'
+import Button from "@/components/UI/Button/Button.vue";
+import SelectSize from '@/components/Templates/page__catalog/SelectSize.vue'
 import Pagination from "@/components/UI/Pagination/Pagination.vue";
 import { PAGE_META as META, PAGE_CATALOG } from "@/common/C";
 
@@ -140,5 +154,22 @@ function visibleFilter(state: boolean) {
 }
 .main {
     min-height: 100%;
+}
+@media screen and (max-width: 768px) {
+    .filter {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        max-width: 100vh;
+        height: 100vh;
+        z-index: 40;
+        overflow: hidden scroll;
+        transform: translateX(-110%);
+        transition: transform ease-in-out 0.3s;
+    }
+    .filter[data-show-filter=true] {
+        transform: translateX(0);
+    }
 }
 </style>
