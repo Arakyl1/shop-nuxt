@@ -1,25 +1,27 @@
-import prisma from '~/server/db'
-import { _setCookie, isObject } from "../../utils/other";
+import { _setCookie } from "../../utils/other";
 import { GET_CONTENT_KEY } from "../../utils/other";
-import { Prisma } from '@prisma/client';
-import { Anonim, getModelName } from '@/type/intex';
-import { selectProductCard, selectAnonim } from '@/server/utils/selectData';
-import { generateSessionId } from '@/server/utils/session';
-import { fetchWithCookie } from '@/composables/fetchWithCookie'
-
+import { CookieKey } from '@/type/intex';
 
 
 export default defineEventHandler(async(event) => {
 
-    type f = HeadersInit 
+    const body = await readBody(event)
+    const keyCookie = (k: CookieKey) => k
+    const userRefrechToken = getCookie(event, keyCookie('refrech_token'))
+    const sessionId = getCookie(event, keyCookie('anonim_session_id'))
 
-    const cookie = getCookie(event, 'anonim_session_id')
-//'anonim_session_id'
-    console.log(cookie)
-    const res = await $fetch.raw('/api/auth/anonim', { headers: { set: {
-        'set-cookie': cookie
-    } }})
-    // const res =  await $fetch('/api/auth/anonim', { headers: { 'getSetCookie': cookie } })
-    return null   
+    try {
+        if (userRefrechToken) {
+            // return {
+            //     access_token: accessToken,
+            //     user: userTransform(user)
+            // }
+        } else {
+            return await authUserAnonim(event, sessionId)
+        }
+    } catch (error) {
+        return { data: null, message: GET_CONTENT_KEY('AUTH_ERROR') }
+    }
+     
 })
 
