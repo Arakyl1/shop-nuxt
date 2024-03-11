@@ -36,10 +36,10 @@
                         to="/add"/>
                     <ClientOnly>
 
-                        <Indicator :text="favoriteData.size" :active="Boolean(favoriteData.size)">
+                        <Indicator :text="4" :active="Boolean(4)">
                             <ButtonLike
                             :check-hover-parent="true"
-                            :active="Boolean(favoriteData.size)"
+                            :active="Boolean(4)"
                             @click="storeModal.changeActiveModal('favorite-user')"/>
                         </Indicator>
                         <Indicator :text="basketLength" :active="Boolean(basketLength)">

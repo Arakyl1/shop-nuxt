@@ -15,10 +15,10 @@
                         :appearance="'gray-icon'"
                         :icon-left="{ key: 'static', size: '24_24' }"/>
                         <ClientOnly>
-                            <Indicator :text="favoriteData.size" :active="Boolean(favoriteData.size)">
+                            <Indicator :text="4" :active="Boolean(4)">
                                 <ButtonLike
                                 :check-hover-parent="true"
-                                :active="Boolean(favoriteData.size)"
+                                :active="Boolean(44)"
                                 @click="storeModal.changeActiveModal('favorite-user')"/>
                             </Indicator>
                             <Indicator :text="basketLength" :active="Boolean(basketLength)">
@@ -41,7 +41,8 @@
                         :size="'xs'"
                         class="h-10"
                         :active="isBoolean(anonim) && !anonim"
-                        :icon-left="{ key: 'menu', size: '24_24' }"/>
+                        :icon-left="{ key: 'menu', size: '24_24' }"
+                        @click="() => update(true)"/>
                     </Flex>
                 </Flex>
                 <div class="decor-line"></div>
@@ -80,8 +81,7 @@
             </Group>
         </div>
       
-        
-        <!-- <OrganismsMenuMobaile :class="[state ? 'translate-x-0' : 'translate-x-full']" :updateFun="update" /> -->
+        <MenuMobile :class="className['menu']" :data-show-menu="state" :close-fun="update"/>
         </header>
 </template>
 <script setup lang="ts">
@@ -92,6 +92,7 @@ import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
 import Indicator from "@/components/UI/Indicator/Indicator.vue";
 import Search from "@/components/Templates/Search/Search.vue";
 import Input from "@/components/UI/Input/Input.vue";
+import MenuMobile from './Menu/Mobile.vue';
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
 import { favorite as _favorite } from "@/stores/favorite";
@@ -99,13 +100,12 @@ import { HEADER as common } from "@/common/C";
 
 // import localState from "@/utils/localState";
 
-// const { state, update } = localState()
-
+const { state, update } = localState()
 const storeUser = _user()
 const storeFavorite = _favorite()
 const storeModal = _modal()
 const { data, basketLength, anonim } = storeToRefs(storeUser)
-const { data: favoriteData } = storeToRefs(storeFavorite)
+// const { data: favoriteData } = storeToRefs(storeFavorite)
 const config = useRuntimeConfig()
 const className = useCssModule()
 
@@ -117,6 +117,14 @@ const className = useCssModule()
         gap: 1.5rem;
         justify-content: flex-end !important;
     }
+}
+
+.menu {
+    transition: transform ease-in-out 0.35s;
+    transform: translateX(110%);
+}
+.menu[data-show-menu=true] {
+    transform: translateX(0);  
 }
 
 </style>

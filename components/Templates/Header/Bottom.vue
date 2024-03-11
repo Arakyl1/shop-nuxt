@@ -48,7 +48,7 @@ import Flex from "@/components/UI/Flex/Flex.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import localState from "@/utils/localState";
 import Mask from "@/components/UI/Mask/Mask.vue";
-import Menu from './Menu.vue'
+import Menu from './Menu/Menu.vue'
 import { CategorDataItem } from "@/type/intex";
 
 const { state, update } = localState()
