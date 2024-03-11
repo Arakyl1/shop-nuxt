@@ -16,13 +16,13 @@ model User {
   password     String
   profileImage String
   createAt     DateTime       @default(now())
-  admin        Boolean        @default(false)
+  sessionId    String         @unique
   reviews      Comment[]
   refrechToken RefrechToken[]
   basket       Basket?
 }
 
-model Anonim {
+model Anonim  {
   id        Int      @id @default(autoincrement())
   createAt  DateTime @default(now())
   sessionId String   @unique
