@@ -1,16 +1,22 @@
 import { H3Event } from "h3";
 import jwt from "jsonwebtoken";
-import { RuntimeConfig } from "@nuxt/schema";
 
-const generateAccessToken = <T extends RuntimeConfig, U extends { id: PropertyKey }>(data: U, config: T) => {
+type GenerateToken = <T extends ReturnType<typeof useRuntimeConfig>, U extends { id: PropertyKey }>(data: U, config: T) => string
+const generateAccessToken: GenerateToken = (data, config) => {
     return jwt.sign({ id: data.id}, config.jwtAccessSecret, {
         expiresIn: '1h'
     })
 }
-const generateRefrechToken = <T extends RuntimeConfig, U extends { id: PropertyKey }>(data: U, config: T) => {
+const generateRefrechToken: GenerateToken = (data, config) => {
     return jwt.sign({ id: data.id}, config.jwtRefrechSecret, {
         expiresIn: '4h'
     })
+}
+
+type generateToken = (data: { id: PropertyKey }) => string
+export const generateToken: generateToken = (data) => {
+    const config = useRuntimeConfig()
+    return jwt.sign({ id: data.id}, config.jwtRefrechSecret, { expiresIn: '7d' })
 }
 
 export const decodeRefrechToken = (token: string) => {
@@ -31,6 +37,16 @@ export const decodeAccessToken = (token: string) => {
     }
 }
 
+export const decodeToken = (token: string, type: 'access' | 'refrech') => {
+    const config = useRuntimeConfig()
+    const secret = type === 'access' ? config.jwtAccessSecret : config.jwtRefrechSecret
+    try {
+        return jwt.verify(token, secret)
+    } catch (error) {
+        return null
+    }
+}
+
 export const generateTokens = async<U extends { id: PropertyKey }>(data: U) => {
     const config = useRuntimeConfig()
     const accessToken = generateAccessToken(data, config)
@@ -40,12 +56,4 @@ export const generateTokens = async<U extends { id: PropertyKey }>(data: U) => {
         accessToken,
         refrechToken
     }
-}
-
-export const sendRefrechToken = async (event: H3Event, token: string | null) => {
-    if (!token) return
-    setCookie(event, "refrech_token", token, {
-        httpOnly: true,
-        sameSite: true
-    })
 }
