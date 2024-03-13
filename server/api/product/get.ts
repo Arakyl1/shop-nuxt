@@ -21,14 +21,13 @@ const PropertyElemString: PropertyElemString[] = ['name','art','description','it
 type PropertyElemDate = KeysMatchingWrite<ThisMainTypeWhereInput, Prisma.DateTimeFilter>
 const PropertyElemDate: PropertyElemDate[] = ['createAt']
 type keyPropElemRelation = keyof Pick<ThisMainTypeInclude, 'attribute' | 'characteristic' | 'image' | 'reviews'|'basket'>
-const keyPropElemRelation: keyPropElemRelation[] = ['attribute','characteristic','image','reviews']
+const keyPropElemRelation: keyPropElemRelation[] = ['attribute','characteristic','reviews']
 
 
 type GG<T extends keyof ThisMainTypeSelect> = { [P in T]: { [L in keyof ThisMainTypeSelect[P]]: any } }
 const includeElemSelectParams: ThisMainTypeInclude = {
     'attribute': { select : { ...selectAttridute() } },
     'characteristic': { select: { ...selectCharacteristic({ 'content': { 'select': { ...selectCharacteristicItem() } } }) } },
-    'image': { select: { ...selectImage() } },
     'reviews': { select: { ...selectComment({ 'user': { select: { ...selectUser() } } }) } },
 }
 
@@ -44,6 +43,7 @@ const ElemFullDataKey: ThisMainTypeSelect = {
     'quantity': true,
     'views': true,
     'createAt': true,
+    'image': { select: { ...selectImage() } },
     ...includeElemSelectParams
 }
 
@@ -123,13 +123,11 @@ async function findManyData(params: FindParams, modelName: string) {
         where: params.where,
         select: { id: true }
     });
-
     const resData = await prisma[modelName].findMany({
         ...params,
         select: {
             ...selectProductCard({ 'description': false }),
             ...params.include,
-            image: { select: { ...selectImage() } }
         },
         skip: params.skip <= 0 ? 0 : (params.skip - 1) * params.take,
         include: false
@@ -152,6 +150,7 @@ export default defineEventHandler(async (event) => {
             const resData = await findUniqueData(res.params, modelName);
             return { data: resData, error: null };
         } else {
+            
             const { resData, allItem } = await findManyData(res.params, modelName);
             return {
                 data: resData,

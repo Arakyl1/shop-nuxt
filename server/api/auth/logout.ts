@@ -1,7 +1,6 @@
 
 import { CookieKey } from "~/type/intex"
 import prisma from "../../db"
-import { sendRefrechToken } from "../../utils/jwt"
 
 export default defineEventHandler(async(event) => {
     try {
@@ -14,6 +13,6 @@ export default defineEventHandler(async(event) => {
     } catch (error) {
         return error
     }
-    sendRefrechToken(event, null)
+    _setCookie(event,'refrech_token', '')
     return { message: "Done"}
 })

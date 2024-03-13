@@ -4,7 +4,7 @@ import prisma from "../../db";
 import { Prisma } from "@prisma/client";
 import { CookieKey } from "~/type/intex";
 import { userPersonalData, userTransform } from "~/server/utils/userTransform";
-import { generateTokens, sendRefrechToken } from "~~/server/utils/jwt";
+import { generateTokens } from "~~/server/utils/jwt";
 import { GET_CONTENT_KEY } from "../../utils/other";
 
 export default defineEventHandler(async (event: H3Event) => {
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event: H3Event) => {
     const { accessToken, refrechToken } = await generateTokens(user)
     await prisma.refrechToken.create({ data: { 'token': refrechToken, 'userId': user.id } })
     // Set refrech token in cookie
-    sendRefrechToken(event, refrechToken)
+    _setCookie(event,'refrech_token', refrechToken)
 
     return {
         access_token: accessToken,

@@ -109,11 +109,8 @@ export default defineEventHandler(async(event) => {
                     checkAttribute(res, _keyAttribute)
                 }
             } else { 
-                {
-                    const findRes = otherListAttribute.find(_ => _.name === key.trim())
-                    if (findRes) handlerConnectAttribute({ id: findRes!.id })
-   
-                }
+                const findRes = otherListAttribute.find(_ => _.name === key.trim())
+                if (findRes) handlerConnectAttribute({ id: findRes!.id })
             }
         }
     }

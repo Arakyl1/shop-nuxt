@@ -14,15 +14,15 @@ export const alert = defineStore('alert', () => {
                 active: true,
                 createAt: Date.now()
             }
-            data.value.push(createItem)
+            data.value = [createItem, ...data.value]
         }
     }
 
     function updateData() {
         if (data.value.length) {
-            const valueTime = Date.now() - data.value.find((_,i,a) => i === (a.length - 1))!.createAt - 6000
+            const valueTime = Date.now() - data.value[data.value.length - 1]!.createAt - 6000
             setTimeout(() => {
-                const newData = data.value.slice(0, -1)
+                const newData = data.value.slice(0,-1)
                 data.value = newData
                 if (newData.length) {
                     updateData()

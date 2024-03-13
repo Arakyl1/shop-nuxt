@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { ComponentInternalInstance, Events } from "nuxt/dist/app/compat/capi";
-import { NAMEAPP, CONTENT_KEY, ProductCardBase } from "~~/type/intex";
+import { NAMEAPP, ProductCardBase } from "~~/type/intex";
 import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
 
 
@@ -99,7 +99,7 @@ export const localSet = (key: KeyLocalStorage, elem: any) => localStorage.setIte
 export const localRemove = (key: KeyLocalStorage) => localStorage.removeItem(key)
 
 
-export const GET_CONTENT_KEY = (key: CONTENT_KEY) => key
+export const GET_CONTENT_KEY = (key: string) => key
 
 export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.split(';')).filter(_ => _.length > 1 && _[0].split('-').length === 1).map(_ => [_[0],parseFloat(_[1].replace('q=','')) ])//.map(_ => _[0])
 

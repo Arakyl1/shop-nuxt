@@ -42,6 +42,7 @@ export default defineEventHandler(async(event: H3Event) => {
                         await prisma.basketItem.delete({
                             where: { id: Number(query.item_id) },
                         })
+                        message = { key: GET_SERVER_RESPONSE_KEY('BASKET_REMOVE_SUCCESSFULLY'), state: 'info' }
                     }
                     res = null
                     message = null

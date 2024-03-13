@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { Prisma } from "@prisma/client";
 import prisma from "~/server/db";
 import { userPersonalData, userTransform } from "~/server/utils/userTransform";
-import { generateTokens, sendRefrechToken } from "~~/server/utils/jwt";
+import { generateTokens } from "~~/server/utils/jwt";
 import { GET_CONTENT_KEY } from "../../utils/other";
 
 export default defineEventHandler(async(event: H3Event) => {
@@ -32,7 +32,7 @@ export default defineEventHandler(async(event: H3Event) => {
             if (user) {
                 const { accessToken, refrechToken } = await generateTokens({ id: user.id })
                 await prisma.refrechToken.create({ data: { token: refrechToken, userId: user.id }})
-                sendRefrechToken(event, refrechToken)
+                _setCookie(event,'refrech_token', refrechToken)
                 return {
                     access_token: accessToken,
                     user: userTransform(user)
