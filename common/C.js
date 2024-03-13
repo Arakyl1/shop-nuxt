@@ -33,7 +33,9 @@ export const NOTIFICATIONS_MESSAGE = {
     CREATE_EMPTY_CHARACTERISTIC: 'В секции должно быть одна и более характеристик',
     CREATE_DOWNLOAD_PHOTO: 'Загрузите фото',
     CREATE_PRODUCT_SELECT_MAIN_PHOTO: 'Выбирете главное фото',
-    DOWNLOAD_IMAGE: 'Загрузка фотографий'
+    DOWNLOAD_IMAGE: 'Загрузка фотографий',
+    ADD_PRODUCT_IN_FAVORITE: 'Товар добавлен в избранные',
+    REMOVE_PRODUCT_IS_FAVORITE: 'Товар удален из избранных',
 }
 
 export const CONFIRM_TITLE = {
@@ -113,6 +115,8 @@ export const INPUT_CONTENT = {
 
 export const EMPTY_CONTENT = {
     NOTHING_WAS_FOUND: 'Ничего не найдено',
+    MODAL_EMPTY_FAVORITES: 'У вас пока нет избранных товаров',
+    MODAL_EMPTY_BASKET: 'Ваша корзина пуста',
 }
 
 export const FOOTER = {
@@ -203,6 +207,18 @@ export const SEARCH_COMPONENT = {
 }
 
 
+export const MODAL_FAVORITE = {
+    TITLE: 'Ваши избранный',
+    EMPTY_CONTENT: EMPTY_CONTENT.MODAL_EMPTY_FAVORITES
+}
+
+
+export const MODAL_BASKET = {
+    TITLE: 'Ваша корзина',
+    TOTAL_SUM: 'Общая сумма заказа: ',
+    EMPTY_CONTENT: EMPTY_CONTENT.MODAL_EMPTY_BASKET
+}
+
 
 // SERVER RESPONSE CONTENT
 
@@ -213,6 +229,7 @@ export const SERVER_RESPONSE_CONTENT = {
     // BASKET MESSAGE
     BASKET_ADD_SUCCESSFULLY: 'Товар добавлен в корзину',
     BASKET_ALREADY_AVAILABLE_SUCCESSFULLY: 'Товар уже в вашей корзине',
+    BASKET_REMOVE_SUCCESSFULLY: 'Товар удален из вашей корзины',
     BASKET_ADD_ERROR_BASKET_ID: 'absent or invalid params "basket_id"',
     BASKET_TYPE_ERROR: 'absent or invalid params "type"',
     // AUTH MESSAGE
