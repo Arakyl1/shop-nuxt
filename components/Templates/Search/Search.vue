@@ -75,7 +75,7 @@ import { changeValueImageSize } from "@/utils/other";
 import { SEARCH_COMPONENT as common } from "@/common/C";
 
 
-interface Props extends /* @vue-ignore */ useShowProps {
+interface Props extends useShowProps {
     input?: string
 }
 
