@@ -1,7 +1,6 @@
 import { H3Event } from "h3"
 import prisma from "~~/server/db"
 import { Prisma } from "@prisma/client";
-import {  } from "@/server/utils/parseUrl";
 import { selectAttridute, selectCharacteristic, selectImage, selectComment, selectProductCard, selectCharacteristicItem, selectUser } from "@/server/utils/selectData";
 import { KeysMatchingWrite, getModelName } from "@/type/intex";
 import { default as useParceParamsForPrisma, type initFindParams } from "@/server/utils/useParceParamsForPrisma";
