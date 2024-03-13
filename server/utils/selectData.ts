@@ -21,7 +21,8 @@ export const selectProductCard= (obj?:Prisma.ProductCardSelect) => ({
     itemMod: true,
     quantity: true,
     discount: true,
-    views: true
+    views: true,
+    image: { select: { ...selectImage() } }
 })
 
 export const selectCharacteristic = (obj?:Prisma.CharacteristicSelect) => ({
@@ -66,12 +67,6 @@ export const selectRefrechToken = (obj?:Prisma.RefrechTokenSelect) => ({
     createAt: true,
 })
 
-export const selectAnonim = (obj?:Prisma.AnonimSelect): Prisma.AnonimSelect => ({
-    ...obj,
-    id: true,
-    'createAt': true,
-    'basket': { include: { 'item': { select: { 'card': { select: { ...selectProductCard({}) } } } }} }
-})
 
 export const selectBasketItem = (obj?:Prisma.BasketItemSelect): Prisma.BasketItemSelect => ({
     ...obj,
@@ -79,5 +74,14 @@ export const selectBasketItem = (obj?:Prisma.BasketItemSelect): Prisma.BasketIte
     count: true,
     'createAt': true,
     'basketId': true,
+    'card': { select: selectProductCard() }
+})
+
+export const selectFavoriteItem = (obj?:Prisma.UserFavoriteProductItemSelect): Prisma.UserFavoriteProductItemSelect => ({
+    ...obj,
+    id: true,
+    'createAt': true,
+    'favoriteId': true,
+    'cardId': true,
     'card': { select: selectProductCard() }
 })
