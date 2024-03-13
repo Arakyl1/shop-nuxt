@@ -14,7 +14,6 @@ export const fetchWithCookie = async<T extends unknown>(_event: H3Event, url: st
                 appendResponseHeader(_event, 'set-cookie', cookie)
             }
         } catch (error) {
-            console.error(error)
             console.log('cookie installation error in fetchWithCookie')
         } 
     }

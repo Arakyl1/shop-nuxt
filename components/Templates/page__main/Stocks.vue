@@ -31,7 +31,6 @@
                         </div>
                     </div>
                 </template>
-                <MoleculesCardBase v-else class="aspect-[3/2]" />
             </template>
             <template #footer="{ next, prev }">
                 <div v-if="viewport.isLessThan('md')">

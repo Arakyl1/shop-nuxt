@@ -42,7 +42,6 @@
 <script setup lang="ts">
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
-import ControlItem from "@/components/Templates/ControlElements/Item.vue";
 
 
 const viewport = useViewport()

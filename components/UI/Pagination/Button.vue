@@ -4,7 +4,6 @@
     :aria-label="page['aria-label']"
     :aria-current="page.isCurrent"
     :disabled="(disabled || page.disabled) && page.isCurrent"
-    :class="rootClass"
     :appearance="'white'"
     :text="page.number"
     :square="true"
@@ -42,13 +41,6 @@ const props = defineProps({
         default: false
     },
 })
-
-// const rootClass = computed(() => {
-//     return [
-//         { 'button-white--active': props.page.isCurrent },
-//         props.page.class
-//     ]
-// })
 
 </script>
 

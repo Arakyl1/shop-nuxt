@@ -24,7 +24,7 @@
             <Transition name="dropdown">
                 <Card :mode="'primary'" v-show="isActive">
                     <div class="p-3 scrollbar-v1" :class="className['container']">
-                        <ul v-if="dataSearch.length">
+                        <ul v-if="dataSearch?.length">
                             <li v-for="item in dataSearch" :key="item.id" class="py-1">
                                 <Flex class="gap-x-2">
                                     <Image
@@ -75,7 +75,7 @@ import { changeValueImageSize } from "@/utils/other";
 import { SEARCH_COMPONENT as common } from "@/common/C";
 
 
-interface Props extends useShowProps {
+interface Props extends /* @vue-ignore */ useShowProps {
     input?: string
 }
 
@@ -132,24 +132,6 @@ onMounted(() => {
 //     })
 // }
 
-
-//onMounted(() => window.addEventListener('click', checkClick))
-// onUnmounted(() => window.removeEventListener('click', checkClick))
-
-// function checkClick({ type, target }: Event) {
-//     const elem = (target as HTMLElement).closest('.search-modul')
-//     if (dataSearch.value && !elem) {
-//         updateState(false)
-//     }
-// }
-
-// watch(() => props.input ? props.input : inputText.value, (newData) => {
-//     if (newData) {
-//         getSearch(newData)
-//     }
-// })
-
-// watch(() => route.fullPath, () => updateState(false))
 
 </script>
 

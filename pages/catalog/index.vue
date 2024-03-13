@@ -13,13 +13,6 @@
             @click="() => update(true)"/>
         </Flex>
         <Flex :align="'flex-start'" class="gap-8">
-            <!-- <div class=" fixed top-1/2 left-0 z-40 transition-all hidden md:block"
-                :class="[state ? 'opacity-0' : ' opacity-100']">
-                <AtomButtonStandart class="bg-blue-500 aspect-square
-                sm:px-2 sm:py-1" @click="visibleFilter(true)">
-                    <CreateIcon name="filter_20_20" :att="{ class: 'fill-white' }" />
-                </AtomButtonStandart>
-            </div> -->
             <div ref="filter"
             :class="[className['filter']]" :data-show-filter=state>
                 <Card :container="'xl'" :appearance="'gray'" @scroll.prevent>
@@ -145,9 +138,13 @@ function visibleFilter(state: boolean) {
 
 <style lang="css" module>
 .filter {
-    min-width: 300px;
-    max-width: 300px;
+    --widget-filter-width: 300px;
+    min-width: var(--widget-filter-width);
+    max-width: var(--widget-filter-width);
     width: 100%;
+}
+.filter fieldset > * {
+    width: calc(var(--widget-filter-width) - 2rem - 2rem);
 }
 .filter > * {
     min-height: 300px;
@@ -170,6 +167,9 @@ function visibleFilter(state: boolean) {
     }
     .filter[data-show-filter=true] {
         transform: translateX(0);
+    }
+    .filter fieldset > * {
+        width: 100%;
     }
 }
 </style>

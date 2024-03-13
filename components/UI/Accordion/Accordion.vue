@@ -46,7 +46,7 @@ import { useShowProps } from '~~/type/intex';
 import useShow from '@/composables/useShow';
 import useHeight from '@/composables/useHeight';
 
-interface Props extends useShowProps {
+interface Props extends /* @vue-ignore */ useShowProps {
     active?: boolean,
     text?: string,
     // Accordion будет иметь анимацию
