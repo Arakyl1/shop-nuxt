@@ -70,18 +70,16 @@
                 :appearance="'blue'"
                 :icon-left="{ key: 'basket', size: '25_25' }"
                 :disabled="data.quantity === 0"
-                @click="addBasket({
-                    data: { ...props.data, characteristic: [], reviews: [] },
-                    quantity: numberOfProduct
-                })"/>
+                @click="add({ card_id: data.id, count: numberOfProduct })"/>
                 <ClientOnly>
                     <Button
                     class="h-12 justify-center"
                     :appearance="'blue'"
                     :square="true"
-                    :active="true"
                     :icon-left="{ key: 'like', size: '25_25' }"
-                    :style="{ '--bg-color-active': 'var(--blue-500)', '--fill-active': 'var(--red-500)'}"/>
+                    :style="{ '--bg-color-active': 'var(--blue-500)', '--fill-active': 'var(--red-500)'}"
+                    :active="checkAvailabilityItemInFavorites(data.id)"
+                    @click="toggle({ card_id: data.id })"/>
                 </ClientOnly>
                 <Button
                 class="h-12 justify-center"
@@ -95,8 +93,6 @@
 </template>
 <script setup lang="ts">
 import type { ProductCardFull } from '~~/type/intex';
-import { basket as _basket } from "@/stores/basket";
-import { favorite as _favorite } from "@/stores/favorite";
 import { alert as _alert } from "@/stores/alert";
 import { getStatus } from '#imports';
 import { PAGE_CATALOG_ID as common } from "@/common/C";
@@ -109,11 +105,12 @@ import Group from "@/components/UI/Group/Group.vue";
 import Counter from "@/components/UI/Counter/Counter.vue";
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import ProductPrice from "@/components/Templates/Product/Price.vue";
-import { default as Status, type Props as StatusProps } from "@/components/UI/Status/Status.vue";
+import { default as Status } from "@/components/UI/Status/Status.vue";
 
 
 const props = defineProps<{ data: ProductCardFull }>()
-const storeFavorite = _favorite()
+const { add } = useBasket()
+const { toggle, checkAvailabilityItemInFavorites } = useFavorite()
 const { copy } = useShare()
 const storeAlert = _alert()
 const numberOfProduct = ref<number>(1)
@@ -134,44 +131,6 @@ function copyArticle(key: string) {
     storeAlert.create({ key: 'COPY_ARTICLE', state: 'info' })
 }
 
-function addBasket(item: any) {
-    // if (storeBasket.findItem(item.data.id)) {
-    //     storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
-    // } else {
-    //     storeBasket.addItem({ quantity: item.quantity, data: item.data })
-    //     storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
-    // }
-}
-
-// import type { Content, ProductCardFull } from '~~/type/intex';
-// import CreateIcon from "@/content/icons/create";
-// import { basket as _basket } from "@/stores/basket";
-// import { favorite as _favorite } from "@/stores/favorite";
-// import { alert as _alert } from "@/stores/alert";
-
-// const props = defineProps<{ data: ProductCardFull }>()
-// const storeBasket = _basket()
-// const storeFavorite = _favorite()
-// const { copyLink } = useShare()
-// const numberOfProducts = ref<number>(1)
-// const storeAlert = _alert()
-// const _content = useState<Content | null>('CONTENT_APP')
-
-// const middleRating = computed(() => props.data.reviews.reduce((s,_) => s + (_.ranting || 0),0) / props.data.reviews.length)
-
-// function onClick() {
-//     copyLink()
-//     storeAlert.create({ text: _content.value?.ALERT_COPE_LINK_INFO_TEXT || null, state: 'info' })
-// }
-
-// function addBasket(item: Parameters<typeof storeBasket['addItem']>[0]) {
-//     if (storeBasket.findItem(item.data.id)) {
-//         storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
-//     } else {
-//         storeBasket.addItem({ quantity: item.quantity, data: item.data })
-//         storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
-//     }
-// }
 </script>
 
 

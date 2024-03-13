@@ -36,18 +36,18 @@
                         to="/add"/>
                     <ClientOnly>
 
-                        <Indicator :text="4" :active="Boolean(4)">
+                        <Indicator :text="favoriteLength" :active="!!favoriteLength">
                             <ButtonLike
                             :check-hover-parent="true"
-                            :active="Boolean(4)"
+                            :active="!!favoriteLength"
                             @click="storeModal.changeActiveModal('favorite-user')"/>
                         </Indicator>
-                        <Indicator :text="basketLength" :active="Boolean(basketLength)">
+                        <Indicator :text="basketLength" :active="!!basketLength">
                             <Button
                             :appearance="'gray-icon'"
                             :icon-left="{ key: 'basket', size: '30_30' }"
                             :check-hover-parent="true"
-                            :active="Boolean(basketLength)"
+                            :active="!!basketLength"
                             @click="storeModal.changeActiveModal('basket-user')"/>
                         </Indicator>
                     </ClientOnly>
@@ -103,15 +103,12 @@ import Search from "@/components/Templates/Search/Search.vue";
 import Bottom from "./Bottom.vue";
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
-import { favorite as _favorite } from "@/stores/favorite";
 import { HEADER_ROUTER } from "#imports";
 import { HEADER as common } from "@/common/C";
 
 const storeUser = _user()
-const storeFavorite = _favorite()
 const storeModal = _modal()
-const { data, basketLength, anonim } = storeToRefs(storeUser)
-const { data: favoriteData } = storeToRefs(storeFavorite)
+const { basketLength, anonim, favoriteLength } = storeToRefs(storeUser)
 const config = useRuntimeConfig()
 
 </script>

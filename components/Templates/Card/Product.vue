@@ -9,9 +9,9 @@
                     <div :class="className['button-like']">
                         <slot name="bt-favorite" v-bind="{ content }">
                             <ClientOnly>
-                                <ButtonLike v-if="content && !isNumber(content)"
-                                :active="storeFavorite.findItem(content.id).value"
-                                @click="storeFavorite.toggleItem(content.id)"/>
+                                <ButtonLike
+                                :active="checkAvailabilityItemInFavorites(content.id)"
+                                @click="toggle({ 'card_id': content.id })"/>
                             </ClientOnly>
                         </slot>
                     </div>
@@ -72,9 +72,6 @@
 </template>
 <script setup lang="ts">
 import { ProductCardBase } from "~~/type/intex";
-import { basket as _basket } from "@/stores/basket";
-import { alert as _alert } from "@/stores/alert";
-import { favorite as _favorite } from "@/stores/favorite";
 import Button from "@/components/UI/Button/Button.vue";
 import Flex from "@/components/UI/Flex/Flex.vue";
 import ProductPrice from "@/components/Templates/Product/Price.vue";
@@ -84,20 +81,17 @@ import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
 import { getStatus } from '#imports';
 import { BASE_BUTTON as common } from "@/common/C";
 
-const viewport = useViewport()
 
 const props = withDefaults(defineProps<{
     data: ProductCardBase | null
 }>(), { data: null })
 
-
-
-const storeFavorite = _favorite()
+const viewport = useViewport()
 const className = useCssModule()
 const { add } = useBasket()
+const { toggle, checkAvailabilityItemInFavorites } = useFavorite()
 
 const content = computed<ProductCardBase | null>(() => props.data)
-
 </script>
 
 <style lang="css" module>

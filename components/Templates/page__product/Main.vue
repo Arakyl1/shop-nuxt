@@ -35,7 +35,8 @@
                 <Flex class="relative gap-y-6" :direction="'column'" :align="'flex-start'">
                     <div :class="className['button-like']">
                         <ClientOnly>
-                            <ButtonLike/>
+                            <ButtonLike :active="checkAvailabilityItemInFavorites(data.id)"
+                            @click="toggle({ card_id: data.id })"/>
                         </ClientOnly>
                     </div>
                     <Title :tag="'h2'"
@@ -80,10 +81,8 @@
                         :appearance="'blue'"
                         :icon-left="{ key: 'basket', size: '25_25' }"
                         :disabled="data.quantity === 0"
-                        @click="addBasket({
-                            data: { ...props.data, characteristic: [], reviews: [] },
-                            quantity: numberOfProduct
-                        })"/>
+                        @click="add({ card_id: data.id, count: numberOfProduct })"/>
+
                         <p class="text-md font-medium" :class="[data.quantity === 0 ? 'text-red-500' : 'text-yellow-500 ']">
                             {{ data.quantity > 0 ? `${common.AVAILABLE}: ${data.quantity}` : common.NOT_AVAILABLE }}</p>
                     </Flex>
@@ -94,8 +93,6 @@
 </template>
 <script setup lang="ts">
 import type { ProductCardFull } from '~~/type/intex';
-import { basket as _basket } from "@/stores/basket";
-import { favorite as _favorite } from "@/stores/favorite";
 import { alert as _alert } from "@/stores/alert";
 import { getStatus } from '#imports';
 import { PAGE_CATALOG_ID as common } from "@/common/C";
@@ -113,9 +110,10 @@ import { default as Status, type Props as StatusProps } from "@/components/UI/St
 
 
 const props = defineProps<{ data: ProductCardFull }>()
-const storeFavorite = _favorite()
 const { copy } = useShare()
 const storeAlert = _alert()
+const { add } = useBasket()
+const { toggle, checkAvailabilityItemInFavorites } = useFavorite()
 const numberOfProduct = ref<number>(1)
 const className = useCssModule()
 
@@ -134,14 +132,6 @@ function copyArticle(key: string) {
     storeAlert.create({ key: 'COPY_ARTICLE', state: 'info' })
 }
 
-function addBasket(item: any) {
-    // if (storeBasket.findItem(item.data.id)) {
-    //     storeAlert.create({ 'text': _content.value?.ALERT_BASKET_PRODUCT_IS_ALREADY_THERE || null, state: 'info'  })
-    // } else {
-    //     storeBasket.addItem({ quantity: item.quantity, data: item.data })
-    //     storeAlert.create({ 'text':  _content.value?.ALERT_BASKET_ADD_ITEM || null , state: 'info'  })
-    // }
-}
 </script>
 
 <style lang="css" module>

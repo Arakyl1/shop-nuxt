@@ -95,17 +95,14 @@ import Input from "@/components/UI/Input/Input.vue";
 import MenuMobile from './Menu/Mobile.vue';
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
-import { favorite as _favorite } from "@/stores/favorite";
 import { HEADER as common } from "@/common/C";
 
-// import localState from "@/utils/localState";
+
 
 const { state, update } = localState()
 const storeUser = _user()
-const storeFavorite = _favorite()
 const storeModal = _modal()
 const { data, basketLength, anonim } = storeToRefs(storeUser)
-// const { data: favoriteData } = storeToRefs(storeFavorite)
 const config = useRuntimeConfig()
 const className = useCssModule()
 
