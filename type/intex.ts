@@ -1,13 +1,14 @@
-import { Attribute, Prisma, User } from "@prisma/client";
-
+import { Attribute, Prisma, Role, User } from "@prisma/client";
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
-import { KEY_ICON } from "content/icons/1";
-import { SERVER_RESPONSE_CONTENT } from "common/C";
+import { KEY_ICON } from "@/content/icons/1";
+import { SERVER_RESPONSE_CONTENT } from "@/common/C";
+import { UserAnonim } from "@/server/api/auth/anonim";
+import { UserBuyer } from "server/api/auth/user.get";
 
 
 
 export type NAMEAPP = 'MARKET_5kv'
-export type CookieKey = 'refrech_token' | 'anonim_session_id'
+export type CookieKey = 'refrech_token' | 'anonim_session_id' | 'sessionKey'
 export type PP = { title: string, name: string, value: boolean | string | number }
 export type GG = { id: number, art: string, name: string }
 
@@ -87,9 +88,10 @@ export interface TypeMapCreate {
     'Characteristic': Prisma.CharacteristicCreateArgs,
     'ProductCard': Prisma.ProductCardCreateArgs,
     'CharacteristicItem': Prisma.CharacteristicItemCreateArgs,
-    'Anonim': Prisma.AnonimCreateArgs,
     'Basket': Prisma.BasketCreateArgs,
     'BasketItem': Prisma.BasketItemCreateArgs,
+    'Favorites': Prisma.UserFavoriteProductCreateArgs,
+    'FavoriteItem': Prisma.UserFavoriteProductItemCreateArgs,
 }
 
 export interface TypeMapCreateMany {
@@ -101,7 +103,6 @@ export interface TypeMapCreateMany {
     'Characteristic': Prisma.CharacteristicCreateManyArgs,
     'ProductCard': Prisma.ProductCardCreateManyArgs,
     'CharacteristicItem': Prisma.CharacteristicItemCreateManyArgs,
-    'Anonim': Prisma.AnonimCreateManyArgs,
     'Basket': Prisma.BasketCreateManyArgs,
     'BasketItem': Prisma.BasketItemCreateManyArgs,
 }
@@ -115,7 +116,6 @@ export interface TypeMapFindMany {
     'Characteristic': Prisma.CharacteristicFindManyArgs,
     'ProductCard': Prisma.ProductCardFindManyArgs,
     'CharacteristicItem': Prisma.CharacteristicItemFindManyArgs,
-    'Anonim': Prisma.AnonimFindManyArgs,
     'Basket': Prisma.BasketFindManyArgs,
     'BasketItem': Prisma.BasketItemFindManyArgs,
 }
@@ -129,7 +129,6 @@ export interface TypeMapFindUnique {
     'Characteristic': Prisma.CharacteristicFindUniqueArgs,
     'ProductCard': Prisma.ProductCardFindUniqueArgs,
     'CharacteristicItem': Prisma.CharacteristicItemFindUniqueArgs,
-    'Anonim': Prisma.AnonimFindUniqueArgs,
     'Basket': Prisma.BasketFindUniqueArgs,
     'BasketItem': Prisma.BasketItemFindUniqueArgs,
 }
@@ -143,7 +142,6 @@ export interface TypeMapUpdate {
     'Characteristic': Prisma.CharacteristicUpdateArgs,
     'ProductCard': Prisma.ProductCardUpdateArgs,
     'CharacteristicItem': Prisma.CharacteristicItemUpdateArgs,
-    'Anonim': Prisma.AnonimUpdateArgs,
     'Basket': Prisma.BasketUpdateArgs,
     'BasketItem': Prisma.BasketItemUpdateArgs,
 }
@@ -157,7 +155,6 @@ export interface TypeMapUpdateMany {
     'Characteristic': Prisma.CharacteristicUpdateManyArgs,
     'ProductCard': Prisma.ProductCardUpdateManyArgs,
     'CharacteristicItem': Prisma.CharacteristicItemUpdateManyArgs,
-    'Anonim': Prisma.AnonimUpdateManyArgs,
     'Basket': Prisma.BasketUpdateManyArgs,
     'BasketItem': Prisma.BasketItemUpdateManyArgs,
 }
@@ -171,7 +168,6 @@ export interface TypeMapDelete {
     'Characteristic': Prisma.CharacteristicDeleteArgs,
     'ProductCard': Prisma.ProductCardDeleteArgs,
     'CharacteristicItem': Prisma.CharacteristicItemDeleteArgs,
-    'Anonim': Prisma.AnonimDeleteArgs,
     'Basket': Prisma.BasketDeleteArgs,
     'BasketItem': Prisma.BasketItemDeleteArgs,
 }
@@ -185,7 +181,6 @@ export interface TypeMapDeleteMany {
     'Characteristic': Prisma.CharacteristicDeleteManyArgs,
     'ProductCard': Prisma.ProductCardDeleteManyArgs,
     'CharacteristicItem': Prisma.CharacteristicItemDeleteManyArgs,
-    'Anonim': Prisma.AnonimDeleteManyArgs,
     'Basket': Prisma.BasketDeleteManyArgs,
     'BasketItem': Prisma.BasketItemDeleteManyArgs,
 }
@@ -305,13 +300,8 @@ export interface Basket {
     item: Array<BasketItem>
 }
 
-export interface Anonim {
-    id: number,
-    createAt: string,
-    ip: string,
-    anonim: boolean,
-    basket: Basket
-}
+export type StoreUser = UserAnonim | UserBuyer
+// export type StoreUser<T extends Role | null> = T extends 'ANONIM' ? UserAnonim : T extends 'USER' ? UserBuyer : null
 
 export type ItemBasket = {
     id: number,
@@ -378,49 +368,7 @@ export interface UserLocationDate extends Record<UserLocationDateKey, string> { 
 export type SERVER_RESPONSE_CONTENT_KEY = keyof typeof SERVER_RESPONSE_CONTENT
 
 
-// Content key
-export interface Content {
-    AUTH_TEXT_TITLE_REGISTER: string,
-    AUTH_TEXT_BUTTOM_REGISTER: string,
-    AUTH_TEXT_SPAN_REGISTER: string,
-    AUTH_TEXT_PLACEHOLDER_USERNAME: string,
-    AUTH_TEXT_PLACEHOLDER_EMAIL: string,
-    AUTH_TEXT_PLACEHOLDER_PASSWORD: string,
-    AUTH_TEXT_PLACEHOLDER_PASSWORD_D: string,
-    AUTH_TEXT_TITLE_LOGIN: string,
-    AUTH_TEXT_BUTTOM_LOGIN: string,
-    AUTH_TEXT_SPAN_LOGIN: string,
-    AUTH_UNAUTHORIZED: string,
-    DEFAUT_USER_PHOTO_LINK: string,
-    AUTH_REGISTER_SUCH_USER_ALREADY_EXISTS: string,
-    AUTH_LOGINT_USER_IS_NOT_REGISTERED: string,
-    AUTH_LOGINT_INVALID_PASSWORD: string,
-    AUTH_ERROR: string,
-    REFRECH_TOKEN_ABSENT_IN_COOKEI: string,
-    REFRECH_TOKEN_ABSENT_IN_DB: string,
-    REFRECH_TOKEN_INVALID: string,
-    REFRECH_TOKEN_ERROR: string,
-    CHATROOM_TEXT_TIME_YESTADAY: string,
-    ALERT_BASKET_ADD_ITEM: string,
-    ALERT_BASKET_PRODUCT_IS_ALREADY_THERE: string,
-    ALERT_AUTH_LOGIN_INVALID_DATA: string,
-    ALERT_AUTH_REGISTER_SUCCESS: string,
-    ALERT_AUTH_REGISTER_PASSWORD_DONT_MATCH: string,
-    ALERT_COMMENT_CREATE_INVALID_DATA: string,
-    ALERT_COMMENT_CREATE_SUCCESS: string,
-    ALERT_PRODUCT_CREATE_INVALID_DATA: string,
-    ALERT_PRODUCT_CREATE_DOOWLOAD_PHOTO: string,
-    ALERT_PRODUCT_CREATE_SELECT_MAIN_PHOTO: string,
-    ALERT_PRODUCT_CREATE_SUCCESS: string,
-    ALERT_PRODUCT_CREATE_ERROR: string,
-    ALERT_COPE_LINK_INFO_TEXT: string,
-    TEXT_AUTH_REGISTER_PASSWORD_INFO: string,
-    TEXT_BASKET_EMPRY: string,
-    TEXT_BASKET_ADD_ITEM: string,
-    TEXT_FILTER_BUTTON_RESET: string;
 
-}
-export type CONTENT_KEY = keyof Content
 
 
 
