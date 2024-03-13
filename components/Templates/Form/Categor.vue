@@ -1,18 +1,16 @@
 <template>
-    <Group class="gap-y-3">
-        <template v-if="dataSelect">
-            <template v-for="(item,index) in dataSelect" :key="index">
-                <Group class="gap-y-2 w-full" v-if="item">
-                    <Title :tag="'h4'" class="truncate" :text="titleForSelectList[index as keyof typeof titleForSelectList]"/>
-                    <Select
-                    name="categor"
-                    :data="item"
-                    @update:model-value="(e) => addCategor(e, index)"
-                    :model-value="activeId[index] || undefined"
-                    class="w-full" />
-                </Group>
-            </template>
-          </template>
+    <Group class="gap-y-3" v-if="dataSelect">
+        <Group v-for="(item, index) in dataSelect?.filter(_ => _)" :key="getTitle(index)"
+            class="gap-y-2 w-full">
+            <Title :tag="'h4'"
+            class="truncate"
+            :text="getTitle(index)" />
+            <Select name="categor"
+            :data="item"
+            @update:model-value="(e) => addCategor(e, index)"
+            :model-value="activeId[index] || undefined"
+            class="w-full" />
+        </Group>
     </Group>
 </template>
 
@@ -35,6 +33,8 @@ const titleForSelectList = {
     1: 'Подкатегория',
     2: 'Группа'
 }
+
+const getTitle = (index:type) => titleForSelectList[index as keyof typeof titleForSelectList]
 
 
 onMounted(() => updateActiveId(props.data))
