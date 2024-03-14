@@ -31,11 +31,11 @@
                 <Flex :align="'flex-end'" :direction="'column'" class="gap-y-4">
                     <div></div>
                     <div>
-                        <Button v-if="true"
+                        <Button v-if="!anonim"
                         :appearance="'yellow'"
                         :text="commonButton.REVIEWS_ADD"
-                        @click="storeModal.changeActiveModal('add-reviews-user')"
-                        class="px-4 h-10 text-base" />
+                        @click="openModalCreateReviews"
+                        class="px-4 h-8 text-base" />
                     </div>
                 </Flex>
             </template>
@@ -44,11 +44,10 @@
 </template>
 <script setup lang="ts">
 import type { ProductCardFull } from '~~/type/intex';
-import type { AsyncDataExecuteOptions } from "nuxt/dist/app/composables/asyncData";
 import { PAGE_CATALOG_ID as common, BASE_BUTTON as commonButton } from "@/common/C";
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
-import localState from "@/utils/localState";
+import { createReviews as _createReviews } from "@/stores/createReviews";
 import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
 import Commit from '@/components/Templates/Card/Commit.vue'
 import Button from "@/components/UI/Button/Button.vue";
@@ -58,19 +57,22 @@ import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import Card from "@/components/UI/Card/Card.vue";
 
 interface Props {
-    data: ProductCardFull,
-    refresh: (opts?: AsyncDataExecuteOptions | undefined) => Promise<void>
+    data: ProductCardFull
 }
 
 const props = defineProps<Props>()
-// const { state, update } = localState()
 const storeUser = _user()
 const storeModal = _modal()
-const { data: _userData } = storeToRefs(storeUser)
+const storeCreateReviews = _createReviews()
+const { data: _userData, anonim } = storeToRefs(storeUser)
 
 const reviewsUpdate = computed(() => props.data.reviews.filter(el => el.text))
 // const reviewsRantingValue = computed(() => props.data.reviews.map(
 //     <T extends ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
 
+function openModalCreateReviews() {
+    storeCreateReviews.updateData({ id: props.data.id, name: props.data.name, art: props.data.art })
+    storeModal.changeActiveModal('add-reviews-user')
+}
 </script>
 

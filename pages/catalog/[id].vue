@@ -26,22 +26,20 @@ import Reviews from '@/components/Templates/page__product/Reviews.vue';
 import Panel from "@/components/UI/Panel/Panel.vue"
 import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
 
-
-
 const className = useCssModule()
 const route = useRoute()
 const id = route.params.id
-const { data, refresh } = useAsyncData(() => $fetch('/api/product/get', {
+const { data, refresh } = useAsyncData(GET_ASYNC_DATA_KEY('getFullInfoProduct'), () => $fetch('/api/product/get', {
     method: 'GET',
     params: { id: id, fullinfo: true, unique: true },
 }), {
+    'server': true,
+    lazy: true,
     transform: (context) => {
         if (context.data && !Array.isArray(context.data)) {
             return context.data as ProductCardFull
         } else { return null }
-    },
-    'server': true,
-    lazy: true
+    }
 })
 
 definePageMeta({
