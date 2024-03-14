@@ -2,13 +2,14 @@ import { Attribute, Prisma, Role, User } from "@prisma/client";
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
 import { KEY_ICON } from "@/content/icons/1";
 import { SERVER_RESPONSE_CONTENT } from "@/common/C";
-import { UserAnonim } from "@/server/api/auth/anonim";
-import { UserBuyer } from "server/api/auth/user.get";
+import { DefaultArgs } from "@prisma/client/runtime/library";
+// import { UserBuyer } from "server/api/auth/user.get";
 
 
 
 export type NAMEAPP = 'MARKET_5kv'
-export type CookieKey = 'refrech_token' | 'anonim_session_id' | 'sessionKey'
+export type CookieKey = 'refrech_token' | 'anonimSessionKey' | 'sessionKey'
+export type KeyAsyncData = 'getFullInfoProduct'
 export type PP = { title: string, name: string, value: boolean | string | number }
 export type GG = { id: number, art: string, name: string }
 
@@ -220,12 +221,6 @@ export interface LisLink extends MarkdownParsedContent {
     name: string,
     href: string
 }
-export interface ResponseAuthUser {
-    user?: Omit<User, 'password'>,
-    access_token?: string,
-    message?: string,
-    messageKey?: string
-}
 
 
 export type SVG_ELEMENTS = 'path' | 'line' | 'circle'
@@ -242,7 +237,6 @@ export type test = ICON_DATA<KEY_ICON>
 
 
 
-export interface CreateUser { }
 export const UserCreateSelect = {
     id: true,
     email: true,
@@ -300,7 +294,7 @@ export interface Basket {
     item: Array<BasketItem>
 }
 
-export type StoreUser = UserAnonim | UserBuyer
+export type StoreUser = Required<Prisma.UserSelect<DefaultArgs>>
 // export type StoreUser<T extends Role | null> = T extends 'ANONIM' ? UserAnonim : T extends 'USER' ? UserBuyer : null
 
 export type ItemBasket = {

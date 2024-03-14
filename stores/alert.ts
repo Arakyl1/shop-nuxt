@@ -10,7 +10,7 @@ export const alert = defineStore('alert', () => {
         if (item && item.key) {
             const createItem = {
                 state: item.state || 'info',
-                text: listKey[item.key], 
+                text: listKey[item.key] || item.key, 
                 active: true,
                 createAt: Date.now()
             }

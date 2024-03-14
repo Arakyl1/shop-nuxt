@@ -1,0 +1,43 @@
+import { H3Event } from "h3"
+import prisma from "@/server/db"
+import { generateToken, decodeToken } from "@/server/utils/jwt";
+import { Prisma, Role, User } from '@prisma/client';
+import { _createError } from "./message";
+import { CookieKey } from "@/type/intex";
+
+export async function setNewSessionKey<T extends { id: number, role: string }>(event: H3Event, user: T, key: CookieKey = 'sessionKey') {
+    const newSessionKey = generateToken({ id: user.id, role: user.role })
+    try {
+        await prisma.refrechToken.create({ data: { token: newSessionKey, userId: user.id } })
+    } catch (error) {
+        throw _createError('error white token in db')
+    }
+    _setCookie(event, key, newSessionKey)
+}
+
+export type checkValidUserRoleParams = Parameters<typeof checkValidUserRole>
+export function checkValidUserRole(data: { [k: string]: string }) {
+    return isObject(data) && ('role' in data) && Object.keys(Role).includes(data.role as string)
+}
+
+export type checkValidUserIdParams = Parameters<typeof checkValidUserId>
+export function checkValidUserId(data: { [k: string]: string }) {
+    return isObject(data) && ('id' in data) && ((isNumeric(data.id) || isNumber(data.id)))
+}
+
+export async function createAnonimUser(event) {
+    let user = await $fetch('/api/auth/create') as unknown as User
+    await setNewSessionKey(event, { id: user.id, role: user.role }, 'anonimSessionKey')
+    return user
+}
+
+export async function handleSessionKey(event, sessionKey: string) {
+    const decoded = decodeToken(sessionKey,'refrech') as string | { [k: string]: string }
+    if (decoded === null || isString(decoded)) _createError(GET_CONTENT_KEY('AUTH_UNAUTHORIZED'))
+    
+    if (!checkValidUserRole(decoded as checkValidUserRoleParams[0]) || !checkValidUserId(decoded as checkValidUserIdParams[0])) {
+        await createAnonimUser(event)
+    }
+    return { id: Number(decoded.id), role: decoded.role }
+
+}

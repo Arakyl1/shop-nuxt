@@ -4,7 +4,7 @@
             <TransitionGroup tag="ul" name="list" @click.stop="onClick" class="flex flex-column gap-y-2">
                 <template v-for="item in alertData" :key="item.createAt">
                     <Flex :tag="'li'" :justify="'end'" :data-alert-id="item.createAt">
-                        <Flex class="rounded-base py-1 px-2 gap-1"
+                        <Flex class="rounded-base py-1 px-2 gap-1 line-clamp-2"
                         :class="{
                             'text-blue-500 bg-white': item.state === 'base',
                             'bg-invalid text-white': item.state === 'error',
