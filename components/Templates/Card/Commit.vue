@@ -10,11 +10,11 @@
             :alt="data.user.username"
             :square="true"
             :rounded="'full'"
-            class="w-16"/>
+            class="w-12"/>
             <!-- <img   class="w-16 rounded-full xl:w-12 md:w-10"> -->
-            <p class="text-lg text-gray-500 grow
+            <p class="text-md text-gray-500 grow
                         xl:text-lg sm:text-base" :class="className['username']">{{ data.user.username }}</p>
-            <Rating :value="data.ranting || 0" :width="20" :readonly="true" class="gap-x-2" />
+            <Rating :value="data.ranting || 0" :width="16" :readonly="true" class="gap-x-2" />
         </Flex>
         <div>
             <p class="text-black-500 text-md sm:text-base">{{ data.text }}</p>
