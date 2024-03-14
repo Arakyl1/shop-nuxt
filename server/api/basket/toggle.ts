@@ -43,7 +43,6 @@ export default defineEventHandler(async (event: H3Event) => {
                         where: { id: Number(query.item_id) },
                     })
                     message = { key: GET_SERVER_RESPONSE_KEY('BASKET_REMOVE_SUCCESSFULLY'), state: 'info' }
-                    console.log(message,'server')
                 }
                 break;
             }

@@ -12,14 +12,13 @@
 
         <Input
         class="w-full h-12"
-        type="email"
+        type="text"
         :span="'Username'"
         required
         aria-required="true"
         autocomplete="username"
         aria-autocomplete="list"
-        :name="modelProp('User', 'username')"
-        @invalid.capture="() => { console.log('invliad') }" />
+        :name="modelProp('User', 'username')" />
 
         <Input
         class="w-full h-12"
@@ -43,7 +42,7 @@
         autocomplete="new-password"
         class="text-lg w-full h-12" 
         aria-required="true"
-        :name="modelProp('User', 'password')" />
+        name="repeatPassword" />
 
         <Button
         :appearance="'blue'"
@@ -65,51 +64,49 @@ import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import { searchInvalidElem } from '@/utils/formHelpers'
-
-
-import { UserRegisterData } from "@/type/intex";
 import { alert as _alert } from "@/stores/alert";
 
-// const emit = defineEmits<{
-//   (e: 'response', value: ResponseAuthUser): void
-// }>()
-
-type ParticalMY<T> = { [P in keyof T]: T[P] | null; }
 
 // const data = ref<ParticalMY<UserRegisterData>>(createObject())
-const { register: _register } = useAuth()
+const { register: userRegister} = useAuth()
 const form = ref<HTMLFormElement | null>(null)
-// const storeAlert = _alert()
+const storeAlert = _alert()
+
+
+onMounted(() => [
+    window.addEventListener('restore', onRestore, { passive: true })
+])
+
+function onRestore() {
+    resetForm(form)
+}
 
 async function onClick() {
   if (form.value instanceof HTMLFormElement) {
-    searchInvalidElem(form.value)
-  }
-  // const resValidData = checkValidData(unref(data.value), form.value ? form.value : null)
 
-  // if (resValidData) {
-  //   const res = await _register(data.value as UserRegisterData) || false
-  //   if (res) {
-  //     emit('response', res)
-  //     if (_content.value) {
-  //       storeAlert.create({ text: _content.value.ALERT_AUTH_REGISTER_SUCCESS || null, state: 'success' })
-  //     }
-  //     data.value = createObject()
-  //   }
-  // }
+    const formData = new FormData(form.value)
+    const registerData: { [key:string]: any }  = {}
+    
+    for (const [key, value] of formData) {
+        if (['username','password','email','repeatPassword'].includes(key)) {
+          registerData[key] = value
+        }
+    }
+    if (!checkValidData(registerData)) return false
+    
+    await userRegister(registerData)
+  }
 }
 
 
-// function checkValidData<
-//   T extends HTMLFormElement | null,
-//   U extends typeof data.value>(data: U, form: T): true | void {
-//   if (!form || !form.reportValidity()) return
-//   if (data.password !== data.repeartPassword && _content.value) {
-//     storeAlert.create({ text: _content.value.ALERT_AUTH_REGISTER_PASSWORD_DONT_MATCH || null, state: 'error' })
-//     return
-//   }
-//   return true
-// }
+function checkValidData(data: { [key:string]: any }): boolean{
+  if (!searchInvalidElem(form)) return false
+  if (data.password !== data.repeatPassword) {
+    storeAlert.create({ key: 'AUTH_REGISTER_PASSWORD_DONT_MATCH', state: 'error' })
+    return false
+  }
+  return true
+}
 
 // watch(() => props.active, () => {
 //   form.value?.reset()

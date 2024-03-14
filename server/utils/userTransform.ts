@@ -9,6 +9,7 @@ export const userPersonalData = Prisma.validator<Prisma.UserArgs>()({
         email: true,
         profileImage: true,
         createAt: true,
+        role: true
     },
 })
 

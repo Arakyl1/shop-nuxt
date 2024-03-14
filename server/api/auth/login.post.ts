@@ -1,44 +1,42 @@
 import { H3Event } from "h3"
 import bcrypt from 'bcryptjs';
 import prisma from "../../db";
-import { Prisma } from "@prisma/client";
-import { CookieKey } from "~/type/intex";
-import { userPersonalData, userTransform } from "~/server/utils/userTransform";
-import { generateTokens } from "~~/server/utils/jwt";
+import { Prisma, User } from "@prisma/client";
 import { GET_CONTENT_KEY } from "../../utils/other";
+import { setNewSessionKey } from "@/server/utils/auth";
 
 export default defineEventHandler(async (event: H3Event) => {
-    const body = await readBody(event)
-    const keyCookie: CookieKey = 'refrech_token'
-    const cookieRefrechToken = getCookie(event, keyCookie)
 
-    const { username, password } = body
-    const _userPersonalData: Prisma.UserSelect = { ...userPersonalData.select, password: true } 
-    const searchParams: Prisma.UserFindUniqueArgs = { where: { username: username }, select: _userPersonalData }
-    
-    const user = await prisma.user.findUnique(searchParams)
-    if (!user) return ({ messageKey: GET_CONTENT_KEY('AUTH_LOGINT_USER_IS_NOT_REGISTERED') })
-
-    const doesThePaswordMatch = await bcrypt.compare(password, user.password)
-    if (!doesThePaswordMatch) return ({ messageKey: GET_CONTENT_KEY('AUTH_LOGINT_INVALID_PASSWORD') })
-
-    // Find and delete old Refrech Token in DB
-    if (cookieRefrechToken) {
-        const resFindToken = await prisma.refrechToken.findUnique({ where: { token: cookieRefrechToken }, select: { id: true } })
-        if (resFindToken) {
-            await prisma.refrechToken.delete({ where: { id: resFindToken.id } })
+    try {
+        const body = await readBody(event)
+        const { username, password } = body
+        
+        const searchParams: Prisma.UserFindUniqueArgs = {
+            where: { username: username },
+            select: {
+                id: true,
+                role: true,
+                password: true,
+            }
         }
-    }
 
-   
-    // Generate new access and refrech token
-    const { accessToken, refrechToken } = await generateTokens(user)
-    await prisma.refrechToken.create({ data: { 'token': refrechToken, 'userId': user.id } })
-    // Set refrech token in cookie
-    _setCookie(event,'refrech_token', refrechToken)
+        let user: User | undefined
+        try {
+            user = await prisma.user.findUnique(searchParams)
+            if (!user) throw _createError(GET_CONTENT_KEY('AUTH_LOGINT_USER_IS_NOT_REGISTERED'))
+            
+        } catch (error) {
+            throw _createError('error login data')
+        }
 
-    return {
-        access_token: accessToken,
-        user: userTransform(user)
-    }
+        const doesThePasswordMatch = await bcrypt.compare(password, user.password!)
+        if (!doesThePasswordMatch) throw _createError(GET_CONTENT_KEY('AUTH_LOGINT_INVALID_PASSWORD'))
+
+        // Generate new sessionKey
+        await setNewSessionKey(event,user)
+        return await $fetch('/api/auth/user',{ params: { ...user } })
+        
+    } catch (error) {
+        return error
+    }   
 })

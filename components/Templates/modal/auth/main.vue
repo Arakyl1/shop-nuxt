@@ -1,54 +1,81 @@
 <template>
-    <div class="sm:-mx-2">
-        <template v-if="_userData">
-            <div class="flex items-center mb-6 sm:mb-4">
-                <img class="w-12 aspect-square rounded-full mr-6" :src="_userData.profileImage" alt="user_photo">
-                <h3 class="text-2xl">{{ _userData.username }}</h3>
-            </div>
-        </template>
-        <div class="decor-line"></div>
-        <div>
-            <div class="mb-4">
+    <Card :container="'xl'" v-if="_userData"
+    :class="className['body']"
+    class="scrollbar-v1">
+        <Group class="gap-y-6 w-full">
+            <Flex class="gap-x-8">
+                <Image :square="true"
+                :src="_userData.profileImage"
+                :alt="`Photo users ${_userData.username}`"
+                :class="className['image']"
+                :rounded="'xl'"
+                class="w-12 border"/>
+                <p class="text-md">{{ _userData.username }}</p>
+            </Flex>
+
+            <div class="decor-line"></div>
+
+            <Group  class="gap-3 w-full">
                 <template v-for="(elem, index) in list" :key="index">
-                    <ul v-if="Array.isArray(elem.data)" class="pt-3 pb-1 pl-2 sm:pt-2 sm:pb-0">
-                        <li v-for="item in elem.data" :key="item" class="mb-2 text-lg hover:text-yellow-500 transition">
-                            {{ item }}
+                    <Group :tag="'ul'" class="gap-y-2">
+                        <li v-for="item in elem.data" :key="item">
+                            <Button :mode="'link'" :text="item" :size="'sm'"/>
                         </li>
-                    </ul>
-                    <div v-else-if="elem.decorLine" class="decor-line"></div>
+                    </Group>
+                  
                 </template>
-            </div>
-            <!-- <AtomButtonStandart @click.stop="logoutUser"
-            class="bg-red-500 text-white"
-            >Выйти</AtomButtonStandart> -->
-        </div>
-    </div>
+            </Group>
+
+            <div class="decor-line"></div>
+    
+            <Button
+                :mode="'link'"
+                :size="'xl'"
+                :text="'Выйти'"
+                :class="className['bt-logout']"
+                @click="onClick"/>
+        </Group>
+    </Card>
 </template>
-nmo
+
 <script setup lang="ts">
-import { user as _user } from "@/stores/user";
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Group from "@/components/UI/Group/Group.vue";
-import Input from "@/components/UI/Input/Input.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Image from "@/components/UI/Image/Image.vue";
 import { user as _user } from "@/stores/user";
+import { modal as _modal } from "@/stores/modal";
 
 const storeUser = _user()
-const { data: _userData } = storeToRefs(storeUser)
+const storeModal = _modal()
+const { data: _userData, anonim } = storeToRefs(storeUser)
 const { logout: _logout } = useAuth()
+const className = useCssModule()
 
 const list = [
     { data: ['Корзина'] },
-    { decorLine: true },
     { data: ['Избранные товары', 'Просмотренные', 'Списки сравнения', 'Лист ожилания'] },
-    { decorLine: true },
     { data: ['Бонусный счет', 'Личные данные', 'История покупок', 'Отзывы и вопросы'] }
 ]
 
-function logoutUser() {
-    storeUser.update(null) 
-    _logout()
+async function onClick() {
+   await _logout()
+    storeModal.changeActiveModal(null)
 }
+
 </script>
+
+<style lang="css" module>
+.body {
+    width: 400px;
+}
+.image {
+    border: 1px solid var(--gray-500);
+}
+
+.bt-logout {
+    --color: var(--red-500);
+    --color--hover: var(--red-300);
+}
+</style>

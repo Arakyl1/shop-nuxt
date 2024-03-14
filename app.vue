@@ -30,7 +30,8 @@ const route = useRoute()
 const storeUser = _user()
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
 const { data } = storeToRefs(storeUser)
-
+const event = useRequestEvent()
+const { initAuth } = useAuth()
 
 
 await useFetch('/api/attridute/get', {
@@ -46,11 +47,11 @@ await useFetch('/api/attridute/get', {
   }
 })
 
-isAuth()
+initAuth(event)
 
 onServerPrefetch(async () => {
   if (!data.value) {
-    isAuth()
+    initAuth(event)
   }
   // if (Object.prototype.hasOwnProperty.call(headers, 'accept-language')) {
   //   const userLocalLanguage = getLanguageUser(headers['accept-language']!)
@@ -80,17 +81,7 @@ useSeoMeta({
 })
 onMounted(() => console.log('App mounted'))
 
-async function isAuth() {
-  const event = useRequestEvent()
-  await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
-    retry: 3,
-    onResponse({ response }) {
-      if (response._data) {
-        storeUser.update(response._data)
-      }
-    },
-  }))
-}
+
 
 // user data
 // name PPPPPPPP

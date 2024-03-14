@@ -29,7 +29,7 @@ interface Props {
     maxValue?: number,
     minValue?: number,
     mode?: 'primary',
-    readonly: boolean
+    readonly?: boolean
 }
 const props = withDefaults(defineProps<Props>(),{
     minValue: 1,

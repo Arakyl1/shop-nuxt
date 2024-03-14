@@ -1,23 +1,23 @@
 <template>
     <Transition name="auth" :duration="300" mode="out-in">
-        <template v-if="false"><p>dsdgsdg</p></template>
-        <Login v-else-if="modalLogin">
+        <Main v-if="!_userAnonim"/>
+        <Login v-else-if="state">
             <div :class="className['footer-button']">
                 <div class="decor-line"></div>
                 <Button
                 :mode="'link'"
                 :text="'Создать аккаунт'"
-                @click="onClick"
+                @click="update(!state)"
                 class="text-sm"/>
             </div>
         </Login>
-        <Register v-else-if="!modalLogin">
+        <Register v-else-if="!state">
             <div :class="className['footer-button']">
                 <div class="decor-line"></div>
                 <Button
                 :mode="'link'"
                 :text="'Войти в аккаунт'"
-                @click="onClick"
+                @click="update(!state)"
                 class="text-sm"/>
             </div>
         </Register>
@@ -27,29 +27,30 @@
 
 <script setup lang="ts">
 import { user as _user } from "@/stores/user";
-// import Flex from "@/components/UI/Flex/Flex.vue";
-// import Group from "@/components/UI/Group/Group.vue";
-// import Input from "@/components/UI/Input/Input.vue";
-import Button from "@/components/UI/Button/Button.vue";
-// import Card from "@/components/UI/Card/Card.vue";
-// import Image from "@/components/UI/Image/Image.vue";
 import Login from "@/components/Templates/modal/auth/login.vue";
 import Register from "@/components/Templates/modal/auth/register.vue";
-// import localState from "@/utils/localState";
-import { alert as _alert } from "@/stores/alert";
+import Main from "@/components/Templates/modal/auth/main.vue";
+import Button from "@/components/UI/Button/Button.vue";
+import localState from "@/utils/localState";
 
-// const { state, update } = localState()
-const modalLogin = ref<boolean>(true)
+
 const storeUser = _user()
-const { data: _userData, anonim: _userAnonim } = storeToRefs(storeUser)
-// const reset = ref<boolean>(false)
-const storeAlert = _alert()
+const { data: _userData, anonim: _userAnonim } = storeToRefs(storeUser);
 const  className = useCssModule()
+const { state, update } = localState()
 
 
-function onClick() {
-    modalLogin.value = !modalLogin.value
+function resetData() {
+    nextTick(() => {
+        const event = new CustomEvent('restore')
+        window.dispatchEvent(event)
+    })
 }
+
+watch(() => _userAnonim.value, () => {
+    resetData()
+})
+
 </script>
 
 <style lang="css" module>
