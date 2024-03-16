@@ -1,10 +1,9 @@
 <template>
     <Panel :mode="'primary'">
-        <Title :tag="'h2'" :text="'Контакты'" />
+        <Title :tag="'h2'" :text="META.CONTACT.TITLE" />
         <div>
-            <p class="text-lg py-4 lg:text-base sm:text-sm">Часы работы и приёма звонков: Понедельник- суббота с 9:00 до 20:00
-                ,воскресенье-выходной</p>
-                <Map />
+            <p class="text-lg py-4">{{ PAGE_CONTACT.HOUR_WORK }}</p>
+            <Map />
         </div>
         <Market/>
        <ClientOnly>  
@@ -19,11 +18,10 @@ import Title from "@/components/UI/Title/Title.vue";
 import Map from "@/components/Templates/page__contact/map.vue";
 import Market from "@/components/Templates/page__contact/Market.vue";
 import Requisites from "@/components/Templates/page__contact/Requisites.vue";
-import { PAGE_META as META } from "@/common/C";
+import { PAGE_META as META, PAGE_CONTACT } from "@/common/C";
 
 definePageMeta({
     title: META.CONTACT.TITLE
 })
-
 
 </script>

@@ -16,7 +16,7 @@
                 :mode="'outline'"
                 :rounded="'lg'"
                 :icon-transition="'select-icon'"
-                :icon-right="{ key: isActive ? 'arrow' : 'arrow', size: '25_25' }"
+                :icon-right="{ icon: isActive ? 'arrow' : 'arrow', size: '25_25' }"
                 class="text-base w-full h-10 truncate"
                 :class="[ activeOption?.value ? 'justify-between' : 'justify-end']"
                 :style="{ padding: '0rem 0.25rem 0 0.75rem' }"
@@ -237,7 +237,7 @@ function onEvent() {
 }
 
 function sendEvent() {
-    if (select.value instanceof HTMLElement && checkThisComponent(body.value, instanse)) {
+    if (select.value instanceof HTMLElement && checkThisComponent(body.value, unref(instanse))) {
         const event = new Event('change', { bubbles: true })
         select.value.dispatchEvent(event)
     }

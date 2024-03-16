@@ -13,7 +13,7 @@
         <Input
         class="w-full h-12"
         type="text"
-        :span="'Username'"
+        :span="common.USER_USERNAME.PLACEHOLDER"
         required
         aria-required="true"
         autocomplete="username"
@@ -23,7 +23,7 @@
         <Input
         class="w-full h-12"
         :type="'email'"
-        :span="'Email'"
+        :span="common.USER_EMAIL.PLACEHOLDER"
         required
         aria-required="true"
         autocomplete="email"
@@ -31,14 +31,14 @@
         :name="modelProp('User', 'email')" />
 
         <Password
-        :span="'Password'"
+        :span="common.USER_PASSWORD.PLACEHOLDER"
         autocomplete="new-password"
         class="text-lg w-full h-12"
         aria-required="true"
         :name="modelProp('User', 'password')" />
 
         <Password
-        :span="'Repeat password'"
+        :span="common.USER_CURRENT_PASSWORD.PLACEHOLDER"
         autocomplete="new-password"
         class="text-lg w-full h-12" 
         aria-required="true"
@@ -47,7 +47,7 @@
         <Button
         :appearance="'blue'"
         class="text-md w-full justify-center h-12"
-        :text="'Register'"
+        :text="BASE_BUTTON.USER_REGISTER"
         @click="onClick"/>
       </Group>
 
@@ -65,9 +65,9 @@ import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import { searchInvalidElem } from '@/utils/formHelpers'
 import { alert as _alert } from "@/stores/alert";
+import { INPUT_CONTENT as common, BASE_BUTTON } from '@/common/C'
 
 
-// const data = ref<ParticalMY<UserRegisterData>>(createObject())
 const { register: userRegister} = useAuth()
 const form = ref<HTMLFormElement | null>(null)
 const storeAlert = _alert()
@@ -107,17 +107,4 @@ function checkValidData(data: { [key:string]: any }): boolean{
   }
   return true
 }
-
-// watch(() => props.active, () => {
-//   form.value?.reset()
-// })
-
-// function createObject() {
-//   return {
-//     username: null,
-//     email: null,
-//     password: null,
-//     repeartPassword: null
-//   }
-// }
 </script>

@@ -2,7 +2,7 @@
     <Group class="gap-y-6" :class="className['body']">
         <Title :tag="'h3'" :text="common.TITLE"/>
         <div class="decor-line"></div>
-        <Group v-if="favoriteLength">
+        <Group v-if="favoriteLength" class="w-full">
             <Grid :container="'md'" class="gap-8">
                 <ProductCard v-for="item in favorites?.item" :key="item.cardId" :data="item.card"/>
             </Grid>
@@ -33,5 +33,13 @@ const className = useCssModule()
     width: 940px;
     aspect-ratio: 5/3;
     /* min-width: 100%; */
+}
+
+@media (max-width: 768px) {
+    .body {
+        width: 100%;
+        aspect-ratio: auto;
+        height: 100%;
+    }
 }
 </style>

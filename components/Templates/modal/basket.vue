@@ -2,7 +2,7 @@
     <Group class="gap-y-6" :class="className['body']">
         <Title :tag="'h3'" :text="common.TITLE"/>
         <div class="decor-line"></div>
-        <Group v-if="basketLength" class="gap-y-3 grow w-full">
+        <Group v-if="basketLength" class="gap-y-3 grow h-full w-full">
             <Group class="grow w-full">
                 <article class="py-4 w-full" v-for="item in basket!.item" :key="item.cardId">
                     <Flex class="gap-6">
@@ -10,25 +10,26 @@
                         :src="changeValueImageSize(item.card.image[0].link,
                             { 'heigth': 'h_56', 'bgrem': 'co_white,e_make_transparent:1' })"/>
                     
-                        <div class="grow">
+                        <div class="grow" :class="className['product-name']">
                             <Button :to="`/catalog/${item.cardId}`"
                             :text="item.card.name"
                             :mode="'link'"
                             class="text-md"/>
                             <p class="text-gray-500 text-md ">{{ item.card.art }}</p>
                         </div>
-                        <div class="">
+
+                        <div class="none --md:block">
                             <ProductPrice
                             class="text-base"
                             :price="item.card.price"
                             :discount="item.card.discount > 0" />
                         </div>
-                        <div class="">
-                            <Counter :value="item.count" :max-value="item.card.quantity"/>
+                        <div class="none --md:block">
+                            <Counter :value="item.count" :max-value="item.card.quantity" :class="className['counter']"/>
                         </div>
                         <Button
                         :appearance="'gray-icon'"
-                        :icon-left="{ key: 'close', 'size': '16_16' }"
+                        :icon-left="{ icon: 'close', 'size': '16_16' }"
                         @click.stop="remove({ 'item_id': item.id })"/>
                     </Flex>
                 </article>
@@ -75,5 +76,22 @@ function transformPrice(reg:string, option: object, price:number):string {
     width: 940px;
     aspect-ratio: 5/3;
     /* min-width: 100%; */
+}
+
+
+@media (max-width: 768px) {
+    .body {
+        width: 100%;
+        aspect-ratio: auto;
+        height: 100%;
+    }
+
+    .product-name > * {
+        text-align: start;
+        font-size: var(--text-sm) !important;
+    }
+    .product-name > button> p {
+        white-space: wrap;
+    }
 }
 </style>

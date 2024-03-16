@@ -52,7 +52,7 @@
             <Button tabindex="-1"
             @click="removeItem(index)"
             :appearance="'gray-icon'"
-            :icon-left="{ 'key': 'close', size: '20_20' }"/>
+            :icon-left="{ 'icon': 'close', size: '20_20' }"/>
           </Flex>
           
           <Flex class="gap-4 w-full flex-wrap" :class="className['bt-control']">
@@ -79,11 +79,11 @@
               <Title :tag="'h3'" :text="item.title" class="grow truncate"/>
               <Button
               :appearance="'gray-icon'"
-              :icon-left="{ key: 'edit', size: '24_24' }"
+              :icon-left="{ icon: 'edit', size: '24_24' }"
               @click="makeEditingActive(index)"/>
               <Button
               :appearance="'gray-icon'"
-              :icon-left="{ key: 'delete', size: '24_24' }"
+              :icon-left="{ icon: 'delete', size: '24_24' }"
               @click="initDeleteGroup(index)"/>
             </Flex>
             <div class="decor-line"></div>

@@ -7,9 +7,10 @@
                 <div v-for="item in data" class="w-full">
                     <Title :tag="'h4'" :text="item.title" class="text-black-100" :class="className['title']" />
                     <Flex :tag="'ul'" :direction="'column'" class="gap-y-3 w-full">
-                        <Flex v-for="elem in item.content" :tag="'li'" :justify="'between'" class="w-full">
-                            <p class="text-gray-500 sm:text-sm">{{ elem.name }}</p>
-                            <p class="text-black-100 sm:text-sm">{{ elem.value }}</p>
+                        <Flex v-for="elem in item.content" :tag="'li'" :justify="'between'" :align="'flex-start'" class="w-full">
+                            <p class="text-gray-500 w-1/2">{{ elem.name }}</p>
+                            <div class="grow"></div>
+                            <p class="text-black-100">{{ elem.value.replace(/\//g,', ') }}</p>
                         </Flex>
                     </Flex>
                 </div>

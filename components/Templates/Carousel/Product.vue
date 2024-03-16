@@ -10,7 +10,7 @@
                             <ButtonArrow class="h-11 -scale-100"
                             :disabled="listValueScroll ? listValueScroll.current === 0 : false"
                             @click="prev"/>
-                            <ButtonArrow class="h-11"
+                            <ButtonArrow class="h-11 "
                             :disabled="listValueScroll ? listValueScroll.max <= listValueScroll.current : false"
                             @click="next"/>
                         </Flex>

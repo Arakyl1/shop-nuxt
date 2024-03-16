@@ -7,10 +7,19 @@ export const ROOTER = {
     6: { title: 'Акции', href: '/catalog' },
     7: { title: 'Все товары', href: '/catalog' },
     8: { title: 'Возврат товара', href: '/delivery' },
-    9: { title: 'Личный кабинет', href: '/' },
-    10: { title: 'История заказов', href: '/' },
-    11: { title: 'Избранное', href: '/' },
+    9: { title: 'Личный кабинет', href: '/user/main' },
+    10: { title: 'История заказов', href: '/user' },
+    11: { title: 'Избранное', href: '/user/favorites' },
     12: { title: 'Рассылка', href: '/' },
+    13: { title: 'Корзина', href: '/' },
+    14: { title: 'Избранные товары', href: '/user' },
+    15: { title: 'Просмотренные', href: '/user' },
+    16: { title: 'Списки сравнения', href: '/user' },
+    17: { title: 'Лист ожилания', href: '/user' },
+    18: { title: 'Бонусный счет', href: '/user' },
+    19: { title: 'Личные данные', href: '/user/main' },
+    20: { title: 'История покупок', href: '/user' },
+    21: { title: 'Отзывы и вопросы', href: '/user' },
 }
 
 export const FOOTER_ROUTER = [
@@ -43,7 +52,19 @@ export const FOOTER_ROUTER = [
     },
 ]
 
-export const HEADER_ROUTER = {
-    1: ROOTER[1],
-    2: ROOTER[2],
-}
+export const HEADER_ROUTER = [
+    ROOTER[1],
+    ROOTER[2],
+]
+
+export const MODAL_MENU_USER = [
+    [ROOTER[13]],
+    [ROOTER[14],ROOTER[15],ROOTER[16], ROOTER[17]],
+    [ROOTER[18],ROOTER[19],ROOTER[20], ROOTER[21]],
+]
+
+
+export const PAGE_USER = [
+    ROOTER[19],ROOTER[17],ROOTER[20],ROOTER[14],
+    ROOTER[21],ROOTER[18],ROOTER[15],ROOTER[16],
+]

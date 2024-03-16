@@ -6,7 +6,7 @@
                     <template v-if="text">{{ text }}</template>
                     <slot name="button" v-else v-bind="{ onClick }"></slot>
                     <Button
-                    :icon-left="icon ? icon : { key: 'arrow', size: '24_24' }"
+                    :icon-left="icon ? icon : { icon: 'arrow', size: '24_24' }"
                     @click="() => isActive ? close() : onClick()"
                     :class="iconClass"
                     :size="'none'"
@@ -29,7 +29,7 @@
                     <template v-if="text">{{ text }}</template>
                     <slot name="button" v-else v-bind="{ onClick }"></slot>
                     <Button
-                    :icon-left="icon ? icon : { key: 'arrow', size: '24_24' }"
+                    :icon-left="icon ? icon : { icon: 'arrow', size: '24_24' }"
                     @click="onClick"
                     :class="iconClass"
                     :mode="'none'" />
@@ -82,7 +82,7 @@ const emit = defineEmits(['message'])
 const className = useCssModule()
 const accordion = ref<HTMLElement | null>(null)
 const instanse = ref()
-const watchElement = watchEvent('data-accordion', instanse.value, () => { isActive.value = false })
+const watchElement = watchEvent('data-accordion', instanse, () => close())
 const { isActive, close, onClick, open, onFocus, onHover, onContextMenu } = useShow(props, watchElement)
 let size: ReturnType<typeof useHeight> | undefined
 if (props.animated !== 'none') {

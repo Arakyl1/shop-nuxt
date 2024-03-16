@@ -46,8 +46,10 @@ watch(() => props.active, (newV) => {
    
     if (newV) {
         document.body.style.overflow = 'hidden'
+        console.log(isDesktop, isFirefox)
         if (isDesktop && !isFirefox) {
             document.body.style.paddingRight = '16px'
+            
         }
     } else {
         setTimeout(() => {

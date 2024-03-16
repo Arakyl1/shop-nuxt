@@ -52,7 +52,7 @@
                         class="gap-x-8"/>
                         <p class="grow text-gray-500">{{ `${common.TEXT_REVIEWS} (${data.reviews.length})` }}</p>
                         <Button
-                        :icon-left="{ key: 'share', size: '25_25' }"
+                        :icon-left="{ icon: 'share', size: '25_25' }"
                         :appearance="'blue-icon'"
                         @click="onClick"/>
                         
@@ -79,7 +79,7 @@
                         class="text-base px-16 h-12 lg:px-10"
                         :text="common.BUTTON_BASKET_ADD"
                         :appearance="'blue'"
-                        :icon-left="{ key: 'basket', size: '25_25' }"
+                        :icon-left="{ icon: 'basket', size: '25_25' }"
                         :disabled="data.quantity === 0"
                         @click="add({ card_id: data.id, count: numberOfProduct })"/>
 
@@ -94,7 +94,6 @@
 <script setup lang="ts">
 import type { ProductCardFull } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
-import { getStatus } from '#imports';
 import { PAGE_CATALOG_ID as common } from "@/common/C";
 import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
 import ControlItem from "@/components/Templates/ControlElements/Item.vue";
@@ -106,6 +105,7 @@ import Card from "@/components/UI/Card/Card.vue";
 import Counter from "@/components/UI/Counter/Counter.vue";
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import ProductPrice from "@/components/Templates/Product/Price.vue";
+import { getStatus } from '@/utils/other';
 import { default as Status, type Props as StatusProps } from "@/components/UI/Status/Status.vue";
 
 

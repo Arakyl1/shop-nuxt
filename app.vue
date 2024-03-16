@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div>
-      <Alert />
+    <Alert />
+    <header>
       <Header class="none --md:block" />
       <HeaderMobile class="--md:hidden" />
-    </div>
+    </header>
     <div class="container">
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
@@ -12,7 +12,8 @@
       <NuxtPage></NuxtPage>
     </div>
     <Footer />
-    <ModalRoot />
+    <ModalRoot/>
+    <ContentIcon/>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import Header from "@/components/Templates/Header/Header.vue";
 import HeaderMobile from "@/components/Templates/Header/mobile.vue";
 import ModalRoot from '@/components/Templates/modal/ModalRoot.vue'
 import Alert from '@/components/Templates/Alert/Alert.vue'
+import ContentIcon from '@/components/content/Icon.vue'
 
 const config = useRuntimeConfig()
 const route = useRoute()

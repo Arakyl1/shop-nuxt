@@ -60,7 +60,6 @@ import localState from "@/utils/localState";
 import Title from "@/components/UI/Title/Title.vue";
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Button from "@/components/UI/Button/Button.vue";
-import Card from "@/components/UI/Card/Card.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import Modal from "@/components/UI/Modal/ModalCard.vue";
 import { PAGE_CONTACT as common } from "@/common/C";

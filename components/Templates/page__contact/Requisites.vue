@@ -2,7 +2,7 @@
     <Flex :tag="'section'" class="text-gray-500 flex-wrap" :class="className['body']">
         <div class="">
             <Group class="gap-y-8">
-                <Title :tag="'h3'" class="text-gray-500" :text="'Для связи'"/>
+                <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_COMMUNICATIONS"/>
                 <Flex class="gap-8" :class="className['']">
                     <Flex class="gap-4">
                         <div :class="className['circle']" class="shadow-md">
@@ -26,14 +26,14 @@
                         class="text-md"/>
                     </Flex>
                 </Flex>
-                <Title :tag="'h3'" class="text-gray-500" :text="'Социальные сети'"/>
+                <Title :tag="'h3'" class="text-gray-500" :text="common.TILE_SOCIAL"/>
                 <SocialIcon />
             </Group>
         </div>
         <div class="grow">
             <Card :appearance="'gray'" :container="'xl'">
                 <Group class="gap-y-2">
-                    <Title :tag="'h3'" class="text-gray-500" :text="'Реквизиты'"/>
+                    <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_REQUISITES"/>
                     <ContentDoc path="/contact/requisites" v-slot="{ doc }">
                         <ul class="text-black-300">
                             <Flex v-for="item in doc.body"

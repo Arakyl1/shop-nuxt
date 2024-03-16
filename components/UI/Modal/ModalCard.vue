@@ -18,7 +18,7 @@
                     :class="[className['body']]"
                     class="scrollbar-v1">
                         <Button v-if="btClose"
-                        :icon-left="{ key: 'close', size: '20_20' }"
+                        :icon-left="{ icon: 'close', size: '20_20' }"
                         @click="onClick"
                         :appearance="'gray-icon'"
                         :class="className['bt-close']"
@@ -147,6 +147,12 @@ function onClick() {
 }
 
 @media (max-width: 768px) {
+    .modal {
+        height: 85svh;
+    }
+    .body {
+        height: 100%;
+    }
     .anim-modal {
         transform: translateY(0);
         opacity: 1;

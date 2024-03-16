@@ -18,7 +18,7 @@
                                 <template #trigger="{ isActive, close, onClick }">
                                     <Flex :justify="'between'" class=" py-4">
                                         <Paragraph :text="section.title" class="text-white" />
-                                        <Button :icon-left="{ key: 'add-plus', 'size': '16_16' }" :size="'none'" @click="() => isActive ? close() : onClick()" />
+                                        <Button :icon-left="{ icon: 'add-plus', 'size': '16_16' }" :size="'none'" @click="() => isActive ? close() : onClick()" />
                                         </Flex>
                                     </template>
                                     <template #default>
@@ -43,7 +43,7 @@
                             <Paragraph :text="common.SOCIAL_NETWORK" class="text-gray-300 px-1"/>
                         </Flex>
                         
-                        <Button :icon-left="{ key: 'user-outline', size: '13_18' }"
+                        <Button :icon-left="{ icon: 'user-outline', size: '13_18' }"
                         :appearance="'blue'"
                         :text="common.BUTTON_TEXT"
                         class="w-full h-12 text-bold justify-center"/>
@@ -105,7 +105,7 @@
                                 <Paragraph :text="common.SOCIAL_NETWORK" class="text-gray-300 px-1"/>
                             </Flex>
 
-                            <Button :icon-left="{ key: 'user-outline', size: '13_18' }"
+                            <Button :icon-left="{ icon: 'user-outline', size: '13_18' }"
                             :size="'base'"
                             :appearance="'blue'"
                             :text="common.BUTTON_TEXT"
@@ -134,7 +134,7 @@ import Title from "@/components/UI/Title/Title.vue";
 import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Accordion from "@/components/UI/Accordion/Accordion.vue";
-import { FOOTER_ROUTER } from "#imports";
+import { FOOTER_ROUTER } from "@/utils/router";
 import { FOOTER as common } from "@/common/C";
 
 

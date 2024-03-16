@@ -1,14 +1,14 @@
 <template>
     <Panel :mode="'primary'">
         <Flex :justify="'between'" >
-            <Title :tag="'h2'" :text="'Каталог товаров'" class="grow"/>
+            <Title :tag="'h2'" :text="META.CATALOG.TITLE" class="grow"/>
             <div class="none --md:block">
                 <SelectSize />
             </div>
             <Button
             :appearance="'blue'"
             :square="true"
-            :icon-left="{ key: 'filter', size: '24_24' }"
+            :icon-left="{ icon: 'filter', size: '24_24' }"
             class="h-10 --md:hidden justify-center"
             @click="() => update(true)"/>
         </Flex>

@@ -363,6 +363,10 @@ export type SERVER_RESPONSE_CONTENT_KEY = keyof typeof SERVER_RESPONSE_CONTENT
 
 
 
+export type ICON_ID_NAME = 'add-list' |'add-plus'|'arrow-right'|'icon-plus'|'arrow-bold'|'basket'|'checkbox-1'|'close'|'delete'|'dot-flashing'|'edit'|'filter'|'like'|'menu'|'other'|'reload'|'share'|'star'|'static'|'user'|'user-outline'|'arrow'|'hide'|'loader'|'loader-circles'|'magnifier'|'magnifier-minus'|'view'
+
+
+
 
 
 

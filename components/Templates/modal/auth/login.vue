@@ -9,7 +9,7 @@
             <Group class="gap-y-6" :align="'center'">
                 <Title :tag="'h3'" :text="'Login'"/>
                 <Input class="w-full h-12"
-                :span="'username'"
+                :span="common.USER_USERNAME.PLACEHOLDER"
                 required
                 aria-required="true"
                 autocomplete="username"
@@ -17,7 +17,7 @@
                 :name="modelProp('User', 'username')" />
 
                 <Password
-                :span="'password'"
+                :span="common.USER_CURRENT_PASSWORD.PLACEHOLDER"
                 autocomplete="current-password"
                 class="text-lg w-full h-12"
                 aria-required="true"
@@ -26,7 +26,7 @@
                 <Button
                 :appearance="'blue'"
                 class="text-md w-full justify-center h-12"
-                :text="'Login'"
+                :text="BASE_BUTTON.USER_LOGIN"
                 @click="onClick"/>
             </Group>
         </form>
@@ -41,7 +41,8 @@ import Input from "@/components/UI/Input/Input.vue";
 import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import { resetForm, searchInvalidElem } from "#imports";
+import { resetForm, searchInvalidElem } from "@/utils/formHelpers";
+import { INPUT_CONTENT as common, BASE_BUTTON } from '@/common/C'
 
 
 const { login: userLogin } = useAuth()

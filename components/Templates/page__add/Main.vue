@@ -13,7 +13,7 @@
               <div :class="className['bt-remove']">
                 <Button
                 :appearance="'gray-icon'"
-                :iconLeft="{ 'key': 'close', 'size': '20_20' }"
+                :iconLeft="{ 'icon': 'close', 'size': '20_20' }"
                 @click.stop="removeItem(index)"/>
               </div>
               <div :class="className['info-img']">
@@ -114,7 +114,7 @@ import Select from "@/components/UI/Select/SelectRelative.vue";
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import FileImage from "@/components/UI/File/Image.vue";
 import ControlElements from "@/components/Templates/ControlElements/Item.vue";
-import { Attribute, Prisma , Image as PrismaImage } from "@prisma/client";
+import { Attribute, Image as PrismaImage } from "@prisma/client";
 import { INPUT_CONTENT as commonInput, PAGE_ADD as common } from "@/common/C";
 import { CategorDataItem, LoginJSONData, _HTMLInputElement } from "@/type/intex";
 import { alert as _alert } from "@/stores/alert";

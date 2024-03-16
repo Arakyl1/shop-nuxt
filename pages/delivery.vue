@@ -1,17 +1,10 @@
 <template>
     <Panel :mode="'primary'" class="mb-12">
         <Grid :container="'xs'" class="gap-8 md:gap-4 lg:gap-6 sm:gap-4" :class="className['body']">
-            <Group class="gap-8">
+            <Group class="gap-8" v-for="section,index in data"
+            :key="index">
                 <Card :appearance="'gray'"
-                v-for="item in data?.slice(0, Math.ceil(data.length / 2))"
-                :key="item.title"
-                :container="'xl'" >
-                    <ContentRenderer :value="item" :class="className['delivery']" />
-                </Card>
-            </Group>
-            <Group class="gap-8">
-                <Card :appearance="'gray'"
-                v-for="item in data?.slice(Math.ceil(data.length / 2), data.length)"
+                v-for="item in section"
                 :key="item.title"
                 :container="'xl'" >
                     <ContentRenderer :value="item" :class="className['delivery']" />
@@ -34,7 +27,12 @@ definePageMeta({
 
 const className = useCssModule()
 
-const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find())
+const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find(), {
+    transform (res) {
+        const midI = Math.ceil(res.length / 2)
+        return [res.slice(0, midI), res.slice(midI)]
+    } 
+})
 </script>
 
 <style lang="scss" module>

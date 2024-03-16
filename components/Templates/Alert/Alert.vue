@@ -14,7 +14,7 @@
                         :style="{ '--tw-bg-opacity':
                             ['base', 'error', 'loader'].includes(item.state) ? 0.55 : item.state === 'info' ? 0.85 : 0.75
                         }">
-                            <CreateIcon v-if="item.state === 'loader'" :name="'loader_24_24'" />
+                            <CreateIcon v-if="item.state === 'loader'" :icon="'loader'" :type="'none'"/>
                             <p class="color-inherit text-sm">{{ item.text }}</p>
                         </Flex>
                     </Flex>
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { alert as _alert } from "@/stores/alert";
 import Flex from "@/components/UI/Flex/Flex.vue";
-import { default as CreateIcon } from "@/utils/icon/create";
+import { default as CreateIcon } from "@/utils/icon/index.vue";
 
 const storeAlert = _alert()
 const { data: alertData } = storeToRefs(storeAlert)

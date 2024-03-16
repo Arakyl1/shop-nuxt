@@ -44,7 +44,9 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { ssr: true },
     '/add': { ssr: false },
-    '/delivery': { swr: true }
+    '/delivery': { swr: true },
+    '/user': { ssr: false, redirect: { to: '/user/main' } },
+    '/user/**': { ssr: false }
   },
   vite: {
     resolve: {

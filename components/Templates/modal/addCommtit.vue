@@ -25,7 +25,7 @@
         <Flex :justify="'end'" class="w-full">
             <Button
             :appearance="'yellow'"
-            :text="'Опубликовать'"
+            :text="common.REVIEWS_CREATE"
             :size="'lg'"
             class="h-10 text-base"
             @click="onClick"/>
@@ -43,15 +43,19 @@ import { user as _user } from "@/stores/user";
 import { alert as _alert } from "@/stores/alert";
 import { createReviews as _createReviews } from "@/stores/createReviews";
 import { Prisma } from "@prisma/client";
+import { modal as _modal } from '@/stores/modal.js'
+import { BASE_BUTTON as common } from '@/common/C'
 
 
 const storeUser = _user()
+const storeAlert = _alert()
+const storeModal = _modal()
 const storeCreateReviews = _createReviews()
 const { data: _userData } = storeToRefs(storeUser)
 const { data: activeProduct } = storeToRefs(storeCreateReviews)
 const form = ref<HTMLFormElement | null>(null)
 const className = useCssModule()
-const storeAlert = _alert()
+
 
 async function onClick() {
     if (!form.value || !_userData.value || !activeProduct.value) return
@@ -77,17 +81,20 @@ async function onClick() {
         body: body,
         onResponse({ response }) {
             if (response.status < 400) {
-                handleResponse()
+                handleResponse(response._data)
             }
         }
     })
     
 }
 
-function handleResponse() {
-    resetForm(form)
-    storeAlert.create({ key: 'COMMENT_CREATE_SUCCESS', state: 'success' })
-    refreshNuxtData(GET_ASYNC_DATA_KEY('getFullInfoProduct'))
+function handleResponse(res: any) {
+    if (res) {
+        resetForm(form)
+        storeModal.changeActiveModal(null)
+        storeAlert.create({ key: 'COMMENT_CREATE_SUCCESS', state: 'success' })
+        refreshNuxtData(GET_ASYNC_DATA_KEY('getFullInfoProduct'))
+    }
 }
 
 // async function onClick() {

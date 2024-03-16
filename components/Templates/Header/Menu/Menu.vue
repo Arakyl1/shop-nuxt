@@ -3,11 +3,11 @@
         <Flex>
             <Group :class="className['list']" >
                 <Button
-                text="Каталог"
+                :text="BASE_BUTTON.CATALOG"
                 :tag="'nuxt-link'"
                 to="/catalog?categor=1"
                 class="px-5 h-14 grow"
-                :iconLeft="{ key: 'menu', size: '20_20' }"
+                :iconLeft="{ icon: 'menu', size: '20_20' }"
                 appearance="blue"
                 :class="className['button-menu']"/>
                
@@ -21,10 +21,10 @@
                         :text="item.value"
                         :tag="'nuxt-link'"
                         :rounded="'none'"
-                        :to="{ path: '/catalog', query: { ...route.query, categor: item.id, page: 1 } }"
+                        :to="getBaseCategorRoute(item.id, $route)"
                         class="w-full h-12 justify-between text-base"
                         :class="className['button-categor']"
-                        :iconRight="{ key: 'arrow-bold', size: '16_12' }"/>
+                        :iconRight="{ icon: 'arrow-bold', size: '16_12' }"/>
                     </li>
                 </Group>
             </Group>
@@ -40,13 +40,13 @@
                                         <Flex class="gap-2" >
                                             <Button
                                             :appearance="'white-icon'"
-                                            :icon-left="{ key: 'add-plus', size: '16_16' }"
+                                            :icon-left="{ 'icon': 'add-plus', size: '16_16' }"
                                             @click.stop="() => isActive ? close() : onClick()"/>
                                             <Button
                                             :text="item.value"
                                             :tag="'nuxt-link'"
                                             :rounded="'none'"
-                                            :to="{ path: '/catalog', query: { categor: item.id, limit: $route.query.limit || 12, page: 1 } }"
+                                            :to="getBaseCategorRoute(item.id, $route)"
                                             class="text-base"
                                             :class="className['link']"/>
                                         </Flex>
@@ -60,7 +60,7 @@
                                                     :text="elem.value"
                                                     :tag="'nuxt-link'"
                                                     :rounded="'none'"
-                                                    :to="{ path: '/catalog', query: { categor: elem.id, limit: $route.query.limit || 12, page: 1,  } }"
+                                                    :to="getBaseCategorRoute(elem.id, $route)"
                                                     class="pre-wrap"
                                                     :class="className['link']"/>
                                                 </li>
@@ -83,6 +83,9 @@ import Group from "@/components/UI/Group/Group.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Accordion from "@/components/UI/Accordion/Accordion.vue";
 import { CategorDataItem } from '@/type/intex';
+import { BASE_BUTTON } from '@/common/C'
+import { getBaseCategorRoute } from '@/utils/headerHelper'
+
 
 const props = defineProps<{ activeMenu: boolean }>()
 
@@ -122,6 +125,8 @@ function onMouseout({ target, type }: MouseEvent) {
 function resetData() {
     activeCategor.value = null
 }
+
+
 </script>
 
 <style lang="css" module>
@@ -162,13 +167,13 @@ function resetData() {
 
 <style lang="css">
 
-.menu-modaile-enter-active,
-.menu-modaile-leave-active {
+.menu-mobile-enter-active,
+.menu-mobile-leave-active {
     transition: opacity 1s ease;
 }
 
-.menu-modaile-enter-from,
-.menu-modaile-leave-to {
+.menu-mobile-enter-from,
+.menu-mobile-leave-to {
     transform-origin: left;
     transform: scaleX(0);
 }

@@ -6,12 +6,12 @@
                 @image-data="(e) => imageData = e"
                 :download-json-data="downloadJSONData">
                     <Flex :justify="'end'" class="gap-x-3 w-full">
-                        <p class="text-gray-500 text-center ">Загрузить JSON обьект</p>
+                        <p class="text-gray-500 text-center ">{{ common.DOWNLOAD_JSON }}</p>
                         <Button
                         :appearance="'green'"
                         :size="'base'"
                         :rounded="'xl'"
-                        :text="'Загрузить файл данных'"
+                        :text="BASE_BUTTON.DOWNLOAD_JSON"
                         class="h-10 text-base"
                         @click="onClick"/>
                         <input type="file" name="" id="" accept=".json" hidden ref="inputfile" @change="onChange">
@@ -33,15 +33,15 @@
                 <Button
                 :appearance="'red'"
                 :size="'sm'"
-                :text="'Сбросить форму'"
+                :text="BASE_BUTTON.RESET_FORM"
                 class="h-12 text-md grow"
                 @click="setStatus('cancel-create')"/>
                 
                 <Button
                 :appearance="'green'"
                 :size="'sm'"
-                :icon-left="pending ? { key: 'loader-circles', size: '24_24' } : undefined"
-                :text="'Добавить товар'"
+                :icon-left="pending ? { icon: 'loader-circles', size: '24_24' } : undefined"
+                :text="BASE_BUTTON.ADD_PRODUCT"
                 class="h-12 text-md grow"
                 @click="createProduct"/>
             </Flex> 
@@ -70,7 +70,7 @@ import Confirm from "@/components/Templates/modal/Confirm.vue";
 import Alert from "@/components/Templates/modal/Alert.vue";
 import Characteristic from '@/components/Templates/page__add/Characteristic.vue';
 import Parameters from '@/components/Templates/page__add/Parameters.vue';
-import { PAGE_META as META, CONFIRM_TITLE as commonConfirm, BASE_BUTTON as commonButton } from "@/common/C";
+import { PAGE_META as META, CONFIRM_TITLE as commonConfirm, PAGE_ADD as common, BASE_BUTTON } from "@/common/C";
 import { resetForm, setValueInput, searchInvalidElem } from '@/utils/formHelpers';
 import { listWordsCharacteristic, listSectionsToSkip } from '@/utils/checkListWords'
 import { ProductCard } from '@prisma/client';

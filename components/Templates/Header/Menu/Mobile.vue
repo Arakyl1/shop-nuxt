@@ -13,6 +13,7 @@
                         <Group tag="ul" class="w-full gap-y-4" v-if="subcategoryData">
                             <li v-for="item in subcategoryData"
                                 :key="item.id" class="w-full">
+
                                 <Accordion :animated="'none'" class="w-full">
                                     <template #trigger="{ isActive, close, onClick }">
                                         <Flex class="gap-2" >
@@ -20,13 +21,13 @@
                                             class="p-1"
                                             :square="true"
                                             :appearance="'black'"
-                                            :icon-left="{ key: 'add-plus', size: '16_16' }"
+                                            :icon-left="{ icon: 'add-plus', size: '16_16' }"
                                             @click.stop="() => isActive ? close() : onClick()"/>
                                             <Button
                                             :text="item.value"
                                             :tag="'nuxt-link'"
                                             :rounded="'none'"
-                                            :to="{ path: '/catalog', query: { categor: item.id, limit: $route.query.limit || 12, page: 1 } }"
+                                            :to="getBaseCategorRoute(item.id, $route)"
                                             class="text-base"
                                             :class="className['link']"/>
                                         </Flex>
@@ -41,7 +42,7 @@
                                                     :text="elem.value"
                                                     :tag="'nuxt-link'"
                                                     :rounded="'none'"
-                                                    :to="{ path: '/catalog', query: { categor: elem.id, limit: $route.query.limit || 12, page: 1,  } }"
+                                                    :to="getBaseCategorRoute(item.id, $route)"
                                                     class="pre-wrap"
                                                     :class="className['link']"/>
                                                 </li>
@@ -61,11 +62,10 @@
                                 :text="item.value"
                                 :tag="checkAvailabilityChildren(item) ? 'button' : 'nuxt-link'"
                                 :rounded="'none'"
-                                v-bind="checkAvailabilityChildren(item) ? {} :
-                                    { to: { path: '/catalog', query: { ...route.query, categor: item.id, page: 1 } } }"
+                                v-bind="checkAvailabilityChildren(item) ? {} : getBaseCategorRoute(item.id, $route)"
                                 class="w-full h-12 justify-between text-base"
                                 :class="className['button-categor']"
-                                :iconRight="{ key: 'arrow-bold', size: '16_12' }"
+                                :iconRight="{ 'icon': 'arrow-bold', size: '16_12' }"
                                 @click="() => setActiveCategor(item.id)"/>
                                 <div class="decor-line"></div>
                             </li>
@@ -82,6 +82,7 @@ import Group from "@/components/UI/Group/Group.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Accordion from "@/components/UI/Accordion/Accordion.vue";
 import { CategorDataItem } from '~~/type/intex';
+import { getBaseCategorRoute } from '@/utils/headerHelper'
 
 interface ToucheData {
     x: number | null,

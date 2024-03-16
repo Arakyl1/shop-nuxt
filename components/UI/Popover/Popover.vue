@@ -102,7 +102,7 @@ const emit = defineEmits(['open', 'close'])
 const popover = ref(null)
 const className = useCssModule()
 const instanse = ref()
-const watchElement = watchEvent('data-popover', instanse, () => { isActive.value = false })
+const watchElement = watchEvent('data-popover', instanse, () => close())
 const { isActive, close, onClick } = useShow(props, watchElement)
 
 

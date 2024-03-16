@@ -65,7 +65,7 @@
                         :appearance="'blue'"
                         :size="'base'"
                         :text="commonButton.FILTER_RESET"
-                        :icon-left="{ key: 'reload', size: '20_20' }"
+                        :icon-left="{ icon: 'reload', size: '20_20' }"
                         @click.prevent="resetData" class="text-md h-10"/>
                     </Flex>
                 </template>
@@ -89,7 +89,7 @@ import FilterSkeleton from '@/components/Templates/page__catalog/filterSkeleton.
 import { FilterData } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
 import { BASE_BUTTON as commonButton } from "@/common/C";
-import { resetForm, setValueInput } from "#imports";
+import { resetForm, setValueInput } from "@/utils/formHelpers";
 
 
 const route = useRoute()

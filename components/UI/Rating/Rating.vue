@@ -101,6 +101,8 @@ watch(() => oldValue.value, (newV) => {
     }
 })
 
+watchEffect(() => oldValue.value = props.value)
+
 function toFixed(num: number) {
     return Number(num.toFixed(2))
 }

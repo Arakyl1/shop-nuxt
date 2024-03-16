@@ -9,10 +9,10 @@
 
         <template v-if="iconLeft">
             <Transition v-if="iconTransition" :name="iconTransition" mode="out-in">
-                <CreateIcon :name="`${iconLeft.key}_${iconLeft.size}`" aria-hidden="true"/>
+                <CreateIcon v-bind="{ ...iconLeft }" aria-hidden="true"/>
                 <!-- <component :is="iconLeft"  /> -->
             </Transition>
-            <CreateIcon v-else :name="`${iconLeft.key}_${iconLeft.size}`" aria-hidden="true" />
+            <CreateIcon v-else v-bind="{ ...iconLeft }" aria-hidden="true" />
             
         </template>
 
@@ -23,10 +23,10 @@
         </p>
         <template v-if="iconRight">
             <Transition v-if="iconTransition" :name="iconTransition" mode="out-in">
-                <CreateIcon :name="`${iconRight.key}_${iconRight.size}`" aria-hidden="true"/>
+                <CreateIcon v-bind="{ ...iconRight }" aria-hidden="true"/>
                 <!-- <component :is="iconLeft"  /> -->
             </Transition>
-            <CreateIcon v-else :name="`${iconRight.key}_${iconRight.size}`" aria-hidden="true" />
+            <CreateIcon v-else v-bind="{ ...iconRight }" aria-hidden="true" />
             
         </template>
 
@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { NuxtLink } from '#components';
-import { default as CreateIcon, type Props as CreateIconProps, type NameIcon } from "@/utils/icon/create";
+import { default as CreateIcon, Props as IconProps } from "@/utils/icon/index.vue";
 
 // элемент кнопка, через пропс можно передать текс, установить иконки справа или слева от текста
 // задать различный стили кнопки, если будет недостаточно просов для текста
@@ -48,8 +48,8 @@ export interface Props {
     // менять значения можно, только где указано "0", так же этот размер не должен быть разовым
     size?: '2xs'|'xs'|'sm'|'base'|'lg'|'xl'|'2xl'|'3xl'|'4xl'|'none',
     text?: string | number, // текс кнопки
-    iconLeft?: { key: NameIcon, size: `${number}_${number}` },
-    iconRight?: { key: NameIcon, size: `${number}_${number}` },
+    iconLeft?: IconProps,
+    iconRight?: IconProps,
     iconTransition?: string,
     square?: boolean,
     rounded?: 'none'|'xs'|'sm'|'base'|'lg'|'xl'|'full',
@@ -251,12 +251,12 @@ defineExpose({ button })
 .button p {
     color: inherit;
 }
-.button:not(.icon-none) g[data-type-icon=monocolor] {
+.button:not(.icon-none) use[type-icon=monocolor] {
     fill: var(--fill-color, var(--white));
     transition: var(--transition, var(--bt-transition--sm));
 }
 
-.button:not(.icon-none) g[data-type-icon=outline] {
+.button:not(.icon-none) use[type-icon=outline] {
     stroke: var(--fill-color, var(--white));
     transition: var(--transition, var(--bt-transition--sm));
 }
@@ -265,10 +265,10 @@ defineExpose({ button })
     background-color: var(--bg-color--hover);
     color: var(--color--hover, var(--color, var(--white)));
 }
-.button:hover:not(.disabled):not(.active):not(.icon-none) g[data-type-icon=monocolor] {
+.button:hover:not(.disabled):not(.active):not(.icon-none) use[type-icon=monocolor] {
     fill: var(--fill-hover, var(--fill-color, var(--white)));
 }
-.button:hover:not(.disabled):not(.active):not(.icon-none) g[data-type-icon=outline] {
+.button:hover:not(.disabled):not(.active):not(.icon-none) use[type-icon=outline] {
     stroke: var(--fill-hover, var(--fill-color, var(--white)));
 }
 
@@ -276,10 +276,10 @@ defineExpose({ button })
     background-color: var(--bg-color--hover);
     color: var(--color--hover, var(--color, var(--white)));
 }
-*:hover > .button.hover:not(.disabled):not(.active):not(.icon-none) g[data-type-icon=monocolor] {
+*:hover > .button.hover:not(.disabled):not(.active):not(.icon-none) use[type-icon=monocolor] {
     fill: var(--fill-hover, var(--fill-color, var(--white)));
 }
-*:hover > .button.hover:not(.disabled):not(.active):not(.icon-none) g[data-type-icon=outline] {
+*:hover > .button.hover:not(.disabled):not(.active):not(.icon-none) use[type-icon=outline] {
     stroke: var(--fill-hover, var(--fill-color, var(--white)));
 }
 
@@ -289,10 +289,10 @@ defineExpose({ button })
     color: var(--color-active, var(--color--hover, var(--color, var(--black-700))));
     --fill-active-base: var(--fill-active, var(--fill-hover, var(--fill-color, var(--white))));
 }
-.button.active g[data-type-icon=monocolor]{
+.button.active use[type-icon=monocolor]{
     fill: var(--fill-active-base);
 }
-.button.active g[data-type-icon=outline]{
+.button.active use[type-icon=outline]{
     stroke: var(--fill-active-base);
 }
 
@@ -302,10 +302,10 @@ defineExpose({ button })
     color: var(--color-disabled, var(--white)) !important;
 }
 
-.button.disabled:not(.icon-none) g[data-type-icon=monocolor] {
+.button.disabled:not(.icon-none) use[type-icon=monocolor] {
     fill: var(--fill-disabled, var(--white)) !important;
 }
-.button.disabled:not(.icon-none) g[data-type-icon=outline] {
+.button.disabled:not(.icon-none) use[type-icon=outline] {
     stroke: var(--fill-disabled, var(--white)) !important;
 }
 
@@ -313,10 +313,10 @@ defineExpose({ button })
     background-color: var(--icon-bg-color-disabled, var(--white)) !important;
 }
 
-.button.icon--disabled:not(.icon-none) g[data-type-icon=monocolor] {
+.button.icon--disabled:not(.icon-none) use[type-icon=monocolor] {
     fill: var(--icon-fill-disabled, var(--gray-300)) !important;
 }
-.button.icon--disabled:not(.icon-none) g[data-type-icon=outline] {
+.button.icon--disabled:not(.icon-none) use[type-icon=outline] {
     stroke: var(--icon-fill-disabled, var(--gray-300)) !important;
 }
   

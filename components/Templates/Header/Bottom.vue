@@ -13,11 +13,11 @@
             <Flex class="h-14 w-full bg-gray-100 relative ">
             <div class="h-full flex" ref="menubutton">
                 <Button
-                text="Каталог"
+                :text="BASE_BUTTON.CATALOG"
                 :tag="'nuxt-link'"
                 to="/catalog"
                 class="px-5"
-                :iconLeft="{ key: 'menu', size: '20_20' }"
+                :iconLeft="{ icon: 'menu', size: '20_20' }"
                 appearance="blue"
                 @mouseenter.stop="onMouseenter"/>
             </div>
@@ -28,12 +28,12 @@
                         class="whitespace-nowrap"
                         :text="item.value"
                         :mode="'none'"
-                        :to="{ path: '/catalog', query: { categor: item.id, limit: $route.query.limit || 12, page: 1 } }"/>
+                        :to="getBaseCategorRoute(item.id, $route)"/>
                     </li>
                 </Flex>
                 <Flex :justify="'center'" :class="className['button-more']">
                     <Button
-                    :iconLeft="{ key: 'arrow-bold', size: '6_11' }"
+                    :iconLeft="{ 'icon': 'arrow-bold', size: '6_11' }"
                     :appearance="'gray-icon'"
                     :class="{ [className['active']]: !active }"
                     @click="listOffset"/>
@@ -50,6 +50,8 @@ import localState from "@/utils/localState";
 import Mask from "@/components/UI/Mask/Mask.vue";
 import Menu from './Menu/Menu.vue'
 import { CategorDataItem } from "@/type/intex";
+import { BASE_BUTTON } from '@/common/C'
+import { getBaseCategorRoute } from '@/utils/headerHelper'
 
 const { state, update } = localState()
 // ссылать через свойства el
@@ -77,11 +79,6 @@ function onMouseleave(): void {
     }
 }
 
-// watch(() => state.value, (newV) => {
-//     if (!newV) {
-//         onMouseleave()
-//     }
-// })
 
 function listOffset(): void {
     if (list.value && list.value.flex) {

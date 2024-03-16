@@ -26,7 +26,7 @@
             </template>
             <template #footer>
                 <p v-if="!reviewsUpdate.length"
-                class="text-lg text-gray-500 py-4"
+                class="text-md text-gray-500 py-4"
                 >{{ common.TEXT_NOT_REVIEWS }}</p>
                 <Flex :align="'flex-end'" :direction="'column'" class="gap-y-4">
                     <div></div>

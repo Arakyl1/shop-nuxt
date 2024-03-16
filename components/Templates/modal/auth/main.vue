@@ -16,24 +16,28 @@
             <div class="decor-line"></div>
 
             <Group  class="gap-3 w-full">
-                <template v-for="(elem, index) in list" :key="index">
+                <template v-for="(elem, index) in MODAL_MENU_USER" :key="index">
                     <Group :tag="'ul'" class="gap-y-2">
-                        <li v-for="item in elem.data" :key="item">
-                            <Button :mode="'link'" :text="item" :size="'sm'"/>
+                        <li v-for="item in elem" :key="item.title">
+                            <Button
+                            :tag="'nuxt-link'"
+                            :to="item.href"
+                            :mode="'link'"
+                            :text="item.title"
+                            :size="'sm'"/>
                         </li>
                     </Group>
-                  
                 </template>
             </Group>
 
             <div class="decor-line"></div>
     
             <Button
-                :mode="'link'"
-                :size="'xl'"
-                :text="'Выйти'"
-                :class="className['bt-logout']"
-                @click="onClick"/>
+            :mode="'link'"
+            :size="'xl'"
+            :text="common.USER_LOGOUT"
+            :class="className['bt-logout']"
+            @click="onClick"/>
         </Group>
     </Card>
 </template>
@@ -46,6 +50,8 @@ import Card from "@/components/UI/Card/Card.vue";
 import Image from "@/components/UI/Image/Image.vue";
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
+import { MODAL_MENU_USER } from '@/utils/router'
+import { BASE_BUTTON as common } from '@/common/C'
 
 const storeUser = _user()
 const storeModal = _modal()
@@ -53,11 +59,6 @@ const { data: _userData, anonim } = storeToRefs(storeUser)
 const { logout: _logout } = useAuth()
 const className = useCssModule()
 
-const list = [
-    { data: ['Корзина'] },
-    { data: ['Избранные товары', 'Просмотренные', 'Списки сравнения', 'Лист ожилания'] },
-    { data: ['Бонусный счет', 'Личные данные', 'История покупок', 'Отзывы и вопросы'] }
-]
 
 async function onClick() {
    await _logout()

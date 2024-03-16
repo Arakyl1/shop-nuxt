@@ -1,29 +1,29 @@
 <template>
-    <header>
+    <div>
         <div class="bg-gray-100 w-full">
             <div class="container">
                 <Flex :justify="'between'" class="w-full py-2">
                     <Flex class="gap-x-4">
-                        <template v-for="button,key in [HEADER_ROUTER[1], HEADER_ROUTER[2]]" :key="key">
+                        <template v-for="button in [HEADER_ROUTER[0], HEADER_ROUTER[1]]" :key="button?.title">
                             <Button 
                             tag="nuxt-link"
                             :mode="'link'"
-                            :text="button.title"
-                            :to="button.href"
+                            :text="button?.title"
+                            :to="button?.href"
                             class="text-black-300"/>
                         </template>
                     </Flex>
 
                     <div class="none --lg:block">
                         <Flex :justify="'center'" class="grow gap-x-8">
-                            <p class="text-gray-300">Построй и обустрой</p>
+                            <p class="text-gray-300">{{ common.TOP_SLOGAN }}</p>
                                 <Flex class="gap-x-2" >
                                     <svg v-for="item in 3" :key="item"
                                     height="12" width="12px" xmlns="http://www.w3.org/2000/svg">
                                     <circle r="5" cx="6" cy="6" class="fill-blue-500"></circle>
                                 </svg>
                             </Flex>
-                            <p>Всё для дома, дачи и стройки!</p>
+                            <p>{{ common.TOP_CAPTION }}</p>
                         </Flex>
                     </div>
                     
@@ -31,7 +31,7 @@
                         <Button 
                         tag="nuxt-link"
                         :mode="'link'"
-                        :icon-left="{ key: 'add-list', size: '30_30' }"
+                        :icon-left="{ 'icon': 'add-list', size: '30_30' }"
                         :appearance="'yellow-icon'"
                         to="/add"/>
                     <ClientOnly>
@@ -45,7 +45,7 @@
                         <Indicator :text="basketLength" :active="!!basketLength">
                             <Button
                             :appearance="'gray-icon'"
-                            :icon-left="{ key: 'basket', size: '30_30' }"
+                            :icon-left="{ icon: 'basket', size: '30_30' }"
                             :check-hover-parent="true"
                             :active="!!basketLength"
                             @click="storeModal.changeActiveModal('basket-user')"/>
@@ -85,12 +85,12 @@
                 :size="'xs'"
                 class="h-10"
                 :active="isBoolean(anonim) && !anonim"
-                :icon-left="{ key: 'user', size: '24_24' }"
+                :icon-left="{ icon: 'user', size: '24_24' }"
                 @click="storeModal.changeActiveModal('auth-user')"/>
             </Flex>
         </div>
         <Bottom/>
-    </header>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -103,12 +103,11 @@ import Search from "@/components/Templates/Search/Search.vue";
 import Bottom from "./Bottom.vue";
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
-import { HEADER_ROUTER } from "#imports";
+import { HEADER_ROUTER } from "@/utils/router";
 import { HEADER as common } from "@/common/C";
 
 const storeUser = _user()
 const storeModal = _modal()
 const { basketLength, anonim, favoriteLength } = storeToRefs(storeUser)
 const config = useRuntimeConfig()
-
 </script>

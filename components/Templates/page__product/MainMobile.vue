@@ -68,7 +68,7 @@
                 class="text-base grow h-12 justify-center"
                 :text="common.BUTTON_BASKET_ADD"
                 :appearance="'blue'"
-                :icon-left="{ key: 'basket', size: '25_25' }"
+                :icon-left="{ icon: 'basket', size: '25_25' }"
                 :disabled="data.quantity === 0"
                 @click="add({ card_id: data.id, count: numberOfProduct })"/>
                 <ClientOnly>
@@ -76,7 +76,7 @@
                     class="h-12 justify-center"
                     :appearance="'blue'"
                     :square="true"
-                    :icon-left="{ key: 'like', size: '25_25' }"
+                    :icon-left="{ icon: 'like', size: '25_25' }"
                     :style="{ '--bg-color-active': 'var(--blue-500)', '--fill-active': 'var(--red-500)'}"
                     :active="checkAvailabilityItemInFavorites(data.id)"
                     @click="toggle({ card_id: data.id })"/>
@@ -85,7 +85,7 @@
                 class="h-12 justify-center"
                 :appearance="'blue'"
                 :square="true"
-                :icon-left="{ key: 'share', size: '25_25' }"
+                :icon-left="{ icon: 'share', size: '25_25' }"
                 @click="onClick"/>
             </Flex>
         </Group>
@@ -94,7 +94,6 @@
 <script setup lang="ts">
 import type { ProductCardFull } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
-import { getStatus } from '#imports';
 import { PAGE_CATALOG_ID as common } from "@/common/C";
 import ControlItem from "@/components/Templates/ControlElements/Item.vue";
 import Button from "@/components/UI/Button/Button.vue";
@@ -106,7 +105,7 @@ import Counter from "@/components/UI/Counter/Counter.vue";
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import ProductPrice from "@/components/Templates/Product/Price.vue";
 import { default as Status } from "@/components/UI/Status/Status.vue";
-
+import { getStatus } from '@/utils/other';
 
 const props = defineProps<{ data: ProductCardFull }>()
 const { add } = useBasket()

@@ -1,5 +1,5 @@
 <template>
-    <Button v-bind="{ ...props }" :appearance="'red-icon'" :icon-left="{ key: 'like', size: '28_28' }" :class="rootClass" />
+    <Button v-bind="{ ...props }" :appearance="'red-icon'" :icon-left="{ icon: 'like', size: '28_28' }" :class="rootClass" />
 </template>
 <script setup lang="ts">
 import { default as Button, type Props as ButtonProps } from "@/components/UI/Button/Button.vue";
@@ -22,16 +22,16 @@ const rootClass = computed(() => {
     --fill-color: var(--transparent);
 }
 
-.button g {
+.button use {
     stroke: var(--gray-300);
     stroke-width: 1.5px;
 }
 
-*:hover>.button g,
-.button:hover g {
+*:hover>.button use,
+.button:hover use {
     stroke: var(--red-300);
 }
 
-.button.active g {
+.button.active use {
     stroke: var(--red-500);
 }</style>

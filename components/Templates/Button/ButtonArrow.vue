@@ -1,5 +1,5 @@
 <template>
-    <Button v-bind="{ ...props }" :appearance="'blue'" :square="true" :icon-left="{ key: 'arrow-bold', size: '8_15' }"
+    <Button v-bind="{ ...props }" :appearance="'blue'" :square="true" :icon-left="{ icon: 'arrow-bold', size: '18_18' }"
         class="justify-center" />
 </template>
 <script setup lang="ts">

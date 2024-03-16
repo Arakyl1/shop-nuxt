@@ -31,7 +31,7 @@ export function generateKey(data:object): string {
 
 // week = 604800000
 // mouth = 2678400000
-export function checkDate(date:string, pastDate: number =  3678400000): boolean {
+export function checkDate(date:string, pastDate: number =  60480000000): boolean {
    return new Date(date).getTime() > (Date.now() - pastDate)
 }
 
@@ -108,6 +108,7 @@ export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.
 export function getStatus(data:ProductCardBase | null) {
     if (!data) return null
     let status: StatusProps['status'] | undefined
+
 
     switch (true) {
         case data.discount > 0: {

@@ -67,7 +67,7 @@ const emit = defineEmits(['open', 'close'])
 const tooltip = ref(null)
 const className = useCssModule()
 const instanse = ref()
-const _watchEvent = watchEvent('data-tooltip', instanse, () => { isActive.value = false })
+const _watchEvent = watchEvent('data-tooltip', instanse, () => close())
 const { isActive, close, onClick, onHover, onFocus } = useShow(props, _watchEvent)
 
 

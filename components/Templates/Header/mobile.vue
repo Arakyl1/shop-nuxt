@@ -1,7 +1,6 @@
 <template>
-    <header>
-        <div class="container">
-            <div class="h-14"></div>
+    <div>
+        <div class="container py-4">
             <Group class="gap-4">
                 <Flex class="w-full gap-7">
                     <Button
@@ -13,20 +12,20 @@
                     <Flex class="grow" :justify="'between'" :class="className['top']">
                         <Button
                         :appearance="'gray-icon'"
-                        :icon-left="{ key: 'static', size: '24_24' }"/>
+                        :icon-left="{ icon: 'static', size: '24_24' }"/>
                         <ClientOnly>
-                            <Indicator :text="4" :active="Boolean(4)">
+                            <Indicator :text="favoriteLength" :active="!!favoriteLength">
                                 <ButtonLike
                                 :check-hover-parent="true"
-                                :active="Boolean(44)"
+                                :active="!!favoriteLength"
                                 @click="storeModal.changeActiveModal('favorite-user')"/>
                             </Indicator>
-                            <Indicator :text="basketLength" :active="Boolean(basketLength)">
+                            <Indicator :text="basketLength" :active="!!basketLength">
                                 <Button
                                 :appearance="'gray-icon'"
-                                :icon-left="{ key: 'basket', size: '30_30' }"
+                                :icon-left="{ icon: 'basket', size: '30_30' }"
                                 :check-hover-parent="true"
-                                :active="Boolean(basketLength)"
+                                :active="!!basketLength"
                                 @click="storeModal.changeActiveModal('basket-user')"/>
                             </Indicator>
                         </ClientOnly>
@@ -34,14 +33,13 @@
                         <Button
                         :appearance="'gray-icon'"
                         :active="isBoolean(anonim) && !anonim"
-                        :icon-left="{ key: 'user', size: '24_24' }"
+                        :icon-left="{ icon: 'user' }"
                         @click="storeModal.changeActiveModal('auth-user')"/>
                         <Button
                         :appearance="'blue'"
                         :size="'xs'"
                         class="h-10"
-                        :active="isBoolean(anonim) && !anonim"
-                        :icon-left="{ key: 'menu', size: '24_24' }"
+                        :icon-left="{ icon: 'menu' }"
                         @click="() => update(true)"/>
                     </Flex>
                 </Flex>
@@ -70,7 +68,7 @@
                 <Search class="w-full">
                     <template #form="{ refresh, onFocus }">
                         <Input :mode="'secondary'"
-                        :icon="{ 'key': 'magnifier', size: '24_24' }"
+                        :icon="{ 'icon': 'magnifier' }"
                         :style="{ '--border': 'none' }"
                         :icon-clickable="true"
                         :on-icon-click="refresh"
@@ -82,7 +80,7 @@
         </div>
       
         <MenuMobile :class="className['menu']" :data-show-menu="state" :close-fun="update"/>
-        </header>
+    </div>
 </template>
 <script setup lang="ts">
 import Flex from "@/components/UI/Flex/Flex.vue";
@@ -102,7 +100,7 @@ import { HEADER as common } from "@/common/C";
 const { state, update } = localState()
 const storeUser = _user()
 const storeModal = _modal()
-const { data, basketLength, anonim } = storeToRefs(storeUser)
+const { basketLength, anonim, favoriteLength } = storeToRefs(storeUser)
 const config = useRuntimeConfig()
 const className = useCssModule()
 

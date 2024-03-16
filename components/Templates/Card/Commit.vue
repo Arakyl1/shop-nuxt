@@ -11,7 +11,6 @@
             :square="true"
             :rounded="'full'"
             class="w-12"/>
-            <!-- <img   class="w-16 rounded-full xl:w-12 md:w-10"> -->
             <p class="text-md text-gray-500 grow
                         xl:text-lg sm:text-base" :class="className['username']">{{ data.user.username }}</p>
             <Rating :value="data.ranting || 0" :width="16" :readonly="true" class="gap-x-2" />

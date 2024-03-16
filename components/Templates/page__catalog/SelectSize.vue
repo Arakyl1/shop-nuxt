@@ -1,7 +1,7 @@
 <template>    
     <Flex>
-        <p class="text-gray-300">Показывать:
-            <span class="text-blue-500 px-1">по</span>
+        <p class="text-gray-300">{{ SELECT_LIMIT_PAGE.NAME }}
+            <span class="text-blue-500 px-1">{{ SELECT_LIMIT_PAGE.BY }}</span>
         </p>
         <ClientOnly>
             <Select :data="data" class="w-16" @change="onChange" :model-value="(sizeValue as number)">
@@ -10,7 +10,7 @@
                     :appearance="'blue-icon'"
                     :rounded="'lg'"
                     :icon-transition="'select-icon'"
-                    :icon-right="{ key: isActive ? 'arrow' : 'arrow', size: '25_25' }"
+                    :icon-right="{ icon: isActive ? 'arrow' : 'arrow', size: '25_25' }"
                     class="text-base w-full h-6 py-0.5 px-1"
                     :class="[ activeOption?.value ? 'justify-between' : 'justify-end']"
                     @click="onClick"/>
@@ -24,6 +24,7 @@
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Select from "@/components/UI/Select/SelectRelative.vue";
 import Button from "@/components/UI/Button/Button.vue";
+import { SELECT_LIMIT_PAGE } from '@/common/C'
 
 const route = useRoute()
 const sizeValue = ref('limit' in route.query ? route.query.limit : 12)

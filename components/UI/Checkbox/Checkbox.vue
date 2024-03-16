@@ -9,7 +9,7 @@
         <div :class="rootClass" @click.stop="onClick"
         :tabindex="attr?.disabled ? -1 : 1"
         @keyup.stop.enter="checkbox?.click()">
-                <CreateIcon :name="icon" :class="className['svg']" />
+                <CreateIcon v-bind="{ ...icon }" :class="className['svg']" />
         </div>
         <Paragraph v-if="text"
             :for="attr?.attr?.id"
@@ -24,17 +24,17 @@
 
 
 <script setup lang="ts">
-import { default as CreateIcon, NameIcon } from "@/utils/icon/create";
+import { default as CreateIcon, Props as IconProps } from "@/utils/icon/index.vue";
 import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
 
 export interface Props {
     mode?: 'primary' | 'secondary' | 'outline',
-    icon?: `${NameIcon}_${number}_${number}`,
+    icon?: IconProps,
     text?: string | number,
     checked?: boolean,
 }
 
-const props = withDefaults(defineProps<Props>(),{ icon: 'checkbox-1_15_15', checked: false })
+const props = withDefaults(defineProps<Props>(),{ 'icon': () => ({ 'icon': 'checkbox-1', size: '18_18' }), checked: false })
 const checkbox = ref<HTMLInputElement | null>(null)
 const className = useCssModule()
 const attr = useAttrs()
@@ -93,20 +93,20 @@ function onClick() {
     height: 100%;
     width: 100%;
 }
-.svg > g{
+.svg > use{
     stroke-width: 2px;
 }
 .checkbox:hover {
     border-color: var(--checkbox-border-color--hover);
 }
-.checkbox:hover .svg > g {
+.checkbox:hover .svg > use {
     stroke: var(--checkbox-border-color--hover);
 }
 .input:checked ~ .checkbox {
     border-color: var(--checkbox-border-color--active);
     background-color: var(--checkbox-background-color--active);
 }
-.input:checked ~ .checkbox .svg > g {
+.input:checked ~ .checkbox .svg > use {
     stroke: var(--checkbox-stroke-color--active);
 }
 </style>

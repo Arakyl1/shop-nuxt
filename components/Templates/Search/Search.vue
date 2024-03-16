@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { ProductCardBase, useShowProps } from '~~/type/intex'
+import { useShowProps } from '~~/type/intex'
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import Input from "@/components/UI/Input/Input.vue";
@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const className = useCssModule()
 const instanse = ref()
-const _watchEvent = watchEvent('data-search', instanse.value, () => { isActive.value = false })
+const _watchEvent = watchEvent('data-search', instanse, () => close())
 const { isActive, close, onFocus } = useShow(props, _watchEvent)
 
 const inputText = ref<string>('')
@@ -95,12 +95,10 @@ const inputText = ref<string>('')
 
 
 
-const { error, data, pending, refresh } = useAsyncData('/api/product/get?search', () => $fetch('/api/product/get', {
+const { error, data, pending, refresh } = await useAsyncData(() => $fetch('/api/product/get', {
     method: 'GET',
-    server: true,
     params: { search: inputText.value, limit: 15  },
 }), {
-    'lazy': true,
     watch: [inputText],
 })
 

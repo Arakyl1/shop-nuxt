@@ -18,7 +18,7 @@
 
         <i :class="[ className['icon']]">
             <CreateIcon v-if="icon"
-            :name="`${icon.key}_${icon.size}`"
+            v-bind="{ ...icon }"
             aria-hidden="true"
             @click="(e) => iconClickable ? onIconClick(e) : null"/>
         </i>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { default as CreateIcon, NameIcon } from "@/utils/icon/create";
+import { default as CreateIcon, Props as IconProps } from "@/utils/icon/index.vue";
 
 // родитель может отлавливать событие клика по иконке через @icon-click=""
 // при условие что установлена иконка и включена функция клика по иконке
@@ -57,7 +57,7 @@ export interface Props {
     readonly?: boolean,
     // сделать неактивным
     disabled?: boolean,
-    icon?: { key: NameIcon, size: `${number}_${number}` },
+    icon?: IconProps,
     iconClickable?: boolean
 
 }
@@ -237,11 +237,11 @@ function onIconClick(event) {
     color: var(--gray-300);
     transition: var(--input-transitions-span--xs);
 }
-.input:not(.readonly) g[data-type-icon=monocolor] {
+.input:not(.readonly) use[type-icon=monocolor] {
     fill: var(--fill-color, var(--gray-700));
     transition: var(--transition, var(--input-transitions--sm));
 }
-.input:not(.readonly) g[data-type-icon=outline] {
+.input:not(.readonly) use[type-icon=outline] {
     stroke: var(--fill-color, var(--gray-700));
     transition: var(--transition, var(--input-transitions--sm));
 }
@@ -277,10 +277,10 @@ function onIconClick(event) {
     color: var(--color-readonly, var(--gray-300));
 }
 
-.input.readonly g[data-type-icon=monocolor] {
+.input.readonly use[type-icon=monocolor] {
     fill: var(--fill-readonly , var(--gray-300));
 }
-.input.readonly g[data-type-icon=outline] {
+.input.readonly use[type-icon=outline] {
     stroke: var(--fill-readonly , var(--gray-300));
 }
 

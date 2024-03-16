@@ -1,6 +1,9 @@
 <template>
     <div>
-        <Pagination
+        <Button :appearance="'blue-icon'">
+            <CreateIcon :icon="'basket'" :active="true"/>
+        </Button>
+        <!-- <Pagination
             :total="120"
             :range-before="1"
             :range-after="2"
@@ -24,7 +27,7 @@
         <RangeNumber :section="data"/>
         <Password :mode="'secondary'" :span="'Password'"/>
         
-        <!-- <div class="w-40">
+        <div class="w-40">
             <Rating :readonly="false" />
             <Switch />
             <CheckBox :disabled="true"/>
@@ -52,31 +55,31 @@
                     <Button :icon-left="{ key: key, size: '24_24' }"  :size="'xs'" :appearance="'blue'" />
                 </template>
             </div>
-        </div> -->
+        </div>
         <div class="flex gap-2" :style="{ 'flex-wrap': 'wrap' }">
                 
                 <Button :icon-left="{ key: 'loader', size: '36_36' }" class="h-12"  :size="'xs'" :appearance="'blue'" />
                 <Button :icon-left="{ key: 'loader-circles', size: '36_36' }" class="h-12"  :size="'xs'" :appearance="'blue'" />
             </div>
-    </div>
+    </div> -->
 </div>
 </template>
 
 
 <script setup lang="ts">
-import Input from "@/components/UI/Input/Input.vue";
-import RangeNumber from "@/components/UI/Range/Number.vue";
-import Password from "@/components/UI/Input/Password.vue";
-import Pagination from "@/components/UI/Pagination/Pagination.vue";
+import CreateIcon from "@/utils/icon/index.vue";
+// import Input from "@/components/UI/Input/Input.vue";
+// import RangeNumber from "@/components/UI/Range/Number.vue";
+// import Password from "@/components/UI/Input/Password.vue";
+// import Pagination from "@/components/UI/Pagination/Pagination.vue";
 import Button from "@/components/UI/Button/Button.vue";
-import { paggination } from '#imports'
 
-const { activePage, updatePage, getInfoPagination } = paggination()
-const data ={
-        title: "NUMBER",
-        from: { name: 'from', min: 0, max: 45, placeholder: 'from', step: 1 },
-        to: { name: 'to', min: 0, max: 45, placeholder: 'to', step: 1 }
-    }
+// const { activePage, updatePage, getInfoPagination } = paggination()
+// const data ={
+//         title: "NUMBER",
+//         from: { name: 'from', min: 0, max: 45, placeholder: 'from', step: 1 },
+//         to: { name: 'to', min: 0, max: 45, placeholder: 'to', step: 1 }
+//     }
 </script>
 
 <!-- <script setup lang="ts">

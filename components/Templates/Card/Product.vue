@@ -54,13 +54,13 @@
                         :discount="content.discount > 0" />
                     <Button
                     :appearance="'gray-icon'"
-                    :icon-left="{ key: 'static', size: '24_24' }"/>
+                    :icon-left="{ icon: 'static', size: '24_24' }"/>
                 </Flex>
             </Flex>
             <slot name="bt-basket" v-bind="{ content, add }">
                 <Button v-if="content && !isNumber(content)"
-                :icon-left="{ key: 'basket', size: viewport.isGreaterOrEquals('lg') ? '25_25' : '20_20' }"
-                :text="common.BASKET_ADD|| 'add basket'"
+                :icon-left="{ icon: 'basket', size: viewport.isGreaterOrEquals('lg') ? '25_25' : '20_20' }"
+                :text="common.BASKET_ADD"
                 :appearance="'blue'"
                 :disabled="content.quantity === 0"
                 @click.stop="add({ 'card_id': content.id, count: 1 })"
@@ -78,7 +78,7 @@ import ProductPrice from "@/components/Templates/Product/Price.vue";
 import Skeleton from "@/components/UI/Skeleton/Skeleton.vue";
 import { default as Status } from "@/components/UI/Status/Status.vue";
 import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
-import { getStatus } from '#imports';
+import { getStatus } from '@/utils/other';
 import { BASE_BUTTON as common } from "@/common/C";
 
 

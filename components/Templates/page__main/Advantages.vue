@@ -48,7 +48,6 @@ import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
 import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Title from "@/components/UI/Title/Title.vue";
-import ControlItem from "@/components/Templates/ControlElements/Item.vue";
 import { PAGE_MAIN as common } from "@/common/C";
 
 const { data } = await useAsyncData('advantages', () => queryContent('/main/advantages').findOne())

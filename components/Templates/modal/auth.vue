@@ -1,22 +1,22 @@
 <template>
     <Transition name="auth" :duration="300" mode="out-in">
         <Main v-if="!_userAnonim"/>
-        <Login v-else-if="state">
+        <Login v-else-if="!state">
             <div :class="className['footer-button']">
                 <div class="decor-line"></div>
                 <Button
                 :mode="'link'"
-                :text="'Создать аккаунт'"
+                :text="common.USER_REGISTER"
                 @click="update(!state)"
                 class="text-sm"/>
             </div>
         </Login>
-        <Register v-else-if="!state">
+        <Register v-else-if="state">
             <div :class="className['footer-button']">
                 <div class="decor-line"></div>
                 <Button
                 :mode="'link'"
-                :text="'Войти в аккаунт'"
+                :text="common.USER_LOGIN"
                 @click="update(!state)"
                 class="text-sm"/>
             </div>
@@ -32,6 +32,7 @@ import Register from "@/components/Templates/modal/auth/register.vue";
 import Main from "@/components/Templates/modal/auth/main.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import localState from "@/utils/localState";
+import { BASE_BUTTON as common } from '@/common/C'
 
 
 const storeUser = _user()
