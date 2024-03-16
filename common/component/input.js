@@ -1,0 +1,87 @@
+import { INPUT_VALIDITY_BASE } from '../C.js'
+
+export const INPUT_CONTENT = {
+    USER_NAME: {
+        PLACEHOLDER: 'Имя',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    USER_USERNAME: {
+        PLACEHOLDER: 'Username',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    USER_PASSWORD: {
+        PLACEHOLDER: 'Пароль',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    USER_CURRENT_PASSWORD: {
+        PLACEHOLDER: 'Повторите пароль',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    USER_DATE: {
+        PLACEHOLDER: 'Дата рождения',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    USER_EMAIL: {
+        PLACEHOLDER: 'E-mail',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+        PATTERN_MISMATCH: "Неверный формат почты"
+    },
+    USER_TELEPHONE: {
+        PLACEHOLDER: 'Номер телефона',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    USER_TELEGRAM: {
+        PLACEHOLDER: 'Имя пользователя в Telegram',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING,
+    },
+    SEARCH: {
+        PLACEHOLDER: 'Что ищем?.',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    ADD_SECTION: {
+        PLACEHOLDER: 'Название раздела',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    ADD_NAME: {
+        PLACEHOLDER: 'Характеристика',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    ADD_VALUE: {
+        PLACEHOLDER: 'Значение',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_NAME: {
+        PLACEHOLDER: 'Название товара',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_CODE: {
+        PLACEHOLDER: 'Код продукта',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_MAKER: {
+        PLACEHOLDER: 'Производитель',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_ARTICLE: {
+        PLACEHOLDER: 'Артикул',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_MODEL: {
+        PLACEHOLDER: 'Код модели',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_PRICE: {
+        PLACEHOLDER: 'Цена',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    PRODUCT_CREATE_QUANTITY: {
+        PLACEHOLDER: 'Количество товара на складе',
+        VALUE_MISSING: INPUT_VALIDITY_BASE.VALUE_MISSING
+    },
+    FILE_ADD_IMAGE: {
+        PLACEHOLDER: 'Кликните, чтобы добавить фото'
+    },
+    PRODUCT_CREATE_DESCRIPTION_TEXTAREA: {
+        PLACEHOLDER: 'Описание товара'
+    }
+}
