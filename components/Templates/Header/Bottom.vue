@@ -33,7 +33,7 @@
                 </Flex>
                 <Flex :justify="'center'" :class="className['button-more']">
                     <Button
-                    :iconLeft="{ 'icon': 'arrow-bold', size: '6_11' }"
+                    :iconLeft="{ 'icon': 'arrow-bold', size: '12_18' }"
                     :appearance="'gray-icon'"
                     :class="{ [className['active']]: !active }"
                     @click="listOffset"/>

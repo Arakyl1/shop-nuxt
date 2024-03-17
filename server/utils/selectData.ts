@@ -25,6 +25,14 @@ export const selectProductCard= (obj?:Prisma.ProductCardSelect) => ({
     image: { select: { ...selectImage() } }
 })
 
+export const selectProductCardMin = (obj?:Prisma.ProductCardSelect) => ({
+    ...obj,
+    id: true,
+    name: true,
+    art: true,
+    image: { select: { ...selectImage() } }
+}) 
+
 export const selectCharacteristic = (obj?:Prisma.CharacteristicSelect) => ({
     ...obj,
     id: true,
@@ -44,6 +52,7 @@ export const selectComment = (obj?:Prisma.CommentSelect) => ({
     id: true,
     ranting: true,
     text: true,
+    createAt: true,
 })
 
 export const selectImage = (obj?:Prisma.ImageSelect) => ({

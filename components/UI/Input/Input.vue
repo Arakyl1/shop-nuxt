@@ -16,8 +16,8 @@
             <span v-if="required" :class="[ className['required']]">&#10035;</span>
         </span>
 
-        <i :class="[ className['icon']]">
-            <CreateIcon v-if="icon"
+        <i :class="[ className['icon']]" v-if="icon">
+            <CreateIcon 
             v-bind="{ ...icon }"
             aria-hidden="true"
             @click="(e) => iconClickable ? onIconClick(e) : null"/>
@@ -196,9 +196,7 @@ function onIconClick(event) {
     display: flex;
     align-items: center;
 }
-.input:hover:not(.readonly) {
-    border-color: var(--border-hover);
-}
+
 .input input {
     border: none;
     width: 100%;
@@ -245,19 +243,7 @@ function onIconClick(event) {
     stroke: var(--fill-color, var(--gray-700));
     transition: var(--transition, var(--input-transitions--sm));
 }
-.input.focus > span, .input > span.active {
-    font-size: 10px;
-    top: 0.75rem;
-}
-.required {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(125%, -50%);
-    font-size: 0.5rem;
-    color: var(--red-500);
-    font-weight: 500;
-}
+
 .input.icon {
     padding-right: var(--padding-with-icon, 3.5rem) !important;
 }
@@ -268,7 +254,31 @@ function onIconClick(event) {
    transform: translateY(-50%);
 }
 
-/* Readonly status */
+/* HOVER STATE */
+.input:hover:not(.readonly) {
+    border-color: var(--border-hover);
+}
+
+.input:hover:not(.readonly) use[type-icon=monocolor] {
+    fill: var(--border-hover, var(--blue-500));
+}
+.input:hover:not(.readonly) use[type-icon=outline] {
+    stroke: var(--border-hover, var(--blue-500));
+}
+
+/* REQUIRED STATE */
+.required {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(125%, -50%);
+    font-size: 0.5rem;
+    color: var(--red-500);
+    font-weight: 500;
+}
+
+
+/* READONLY STATE */
 .input.readonly {
     border-color: var(--color-readonly, var(--gray-300));
     background-color: var(--bg-color-readonly, var(--gray-100));
@@ -284,14 +294,20 @@ function onIconClick(event) {
     stroke: var(--fill-readonly , var(--gray-300));
 }
 
-/* Valid style */
+/* VALID STATE */
 .input[data-elem-status='invalid']:not(.readonly) {
     border-color: var(--invalid);
 }
 .input[data-elem-status='valid']:not(.readonly) {
     border-color: var(--valid);
 }
-/* Focus style */
+
+/* FOCUS STATE */
+.input.focus > span, .input > span.active {
+    font-size: 10px;
+    top: 0.75rem;
+}
+
 .input.focus:not(.input.readonly) {
     border-color: var(--focus-border, var(--blue-500));
     box-shadow: var(--focus-shadow, 0 0 0 2px #e7f3ff);
@@ -315,13 +331,21 @@ function onIconClick(event) {
     --border-hover: var(--blue-500);
 }
 
+.primary {
+    --bg-color: var(--gray-100);
+    --padding: 0.75rem 1rem 0.75rem 0.75rem;
+    --border: 1px solid #e6e6e6;
+    --padding-span-active: 1.25rem 1rem 0.75rem 0.75rem;
+    --color: var(--black-500);
+    --border-hover: var(--blue-500);
+}
+
 .outline {
     --bg-color: var(--transparent);
     --padding: 0.625rem 1rem;
     --border: 1px solid var(--gray-500);
     --padding-span-active: 1rem 1rem 0.25rem 1rem;
     --color: var(--black-500);
-    --fill-color: var(--blue-500);
     --border-hover: var(--blue-500);
 }
 </style>

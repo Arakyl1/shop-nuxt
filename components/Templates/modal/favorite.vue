@@ -39,7 +39,6 @@ const className = useCssModule()
     .body {
         width: 100%;
         aspect-ratio: auto;
-        height: 100%;
     }
 }
 </style>

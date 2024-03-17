@@ -1,131 +1,109 @@
 <template>
     <div class="w-full">
-        <Header :title="PAGE_META.USER_MAIN.TITLE"/>
-        <Group :class="className['body']">
+        <!-- <Header :title="PAGE_META.USER_MAIN.TITLE"/> -->
+        <Group :class="className['body']" class="gap-10">
             <!-- <Tag
             :type="'dark'"
             :padding-size="'lg'"
             :text="common.HEADER_SPAN"
             class="text-sm--imp justify-center w-full"/> -->
+            <form ref="form" class="w-full">
+                <Group class="w-full gap-12">
+                    <Group class="w-full gap-7">
+                        <Title :text="common.SECTION_1_TITLE" :tag="'h3'" class="text-bold"/>
+                        <Group class="gap-5 w-full">
 
-            <!-- <form class="" ref="form" @input.stop="checkValidForm" @change.stop="checkValidForm">
-                <Group gap="3.75rem" :gap768="'1.875rem'">
-                    <Group :gap="'1.875rem'" :gap768="'1.25rem'">
-                        <Title :text="common.SECTION_1_TITLE"
-                        :mode="'primary'"
-                        :size="'xl'"
-                        v-if="screen.breakpoints.desktop" />
-                        <FileImage :name="'photo'" :class="className['image']"/>
-                        <Group :gap="'1.25rem'">
-                            <CardGrid :size="'xs'" :gap="'1.25rem'">
-                                <FormField :value-missing="common.INPUT_VALUE_MISSING">
+                            <Grid :container="'xs'" class="w-full gap-5">
+                                 <FormField >
                                     <Input
-                                    :type="'text'"
-                                    :name="'name'"
-                                    :mode="'secondary'"
-                                    :span="common.INPUT_PLACEHOLDER_NAME"
-                                    :required="true" />
+                                    :name="modelProp('User','name')"
+                                    :mode="'primary'"
+                                    :span="INPUT_CONTENT.USER_NAME.PLACEHOLDER"
+                                    :required="true"
+                                    autocomplete="name"/>
                                 </FormField>
-                                <FormField :value-missing="common.INPUT_VALUE_MISSING">
+                                <FormField>
                                     <Date
                                     :name="'date_born'"
-                                    :mode="'secondary'"
-                                    :span="common.INPUT_PLACEHOLDER_DATE"
-                                    :required="true" />
+                                    :mode="'primary'"
+                                    autocapitalize="bday"
+                                    :span="INPUT_CONTENT.USER_DATE.PLACEHOLDER"/>
                                 </FormField>
-                            </CardGrid>
-                            <FormField>
-                                <FlexCard :gap="'1rem'">
-                                    <Radio
-                                    :mode="'primary'"
-                                    :name="'gender'"
-                                    :value="'men'"
-                                    :text="common.LIST_RADIO_GENDER_MAN"
-                                    checked />
-                                    <Radio
-                                    :mode="'primary'"
-                                    :name="'gender'"
-                                    :value="'wonem'"
-                                    :text="common.LIST_RADIO_GENDER_WOMAN" />
-                                </FlexCard>
-                            </FormField>
+                            </Grid>
+                            <Flex class="gap-4">
+                                <Radio v-for="item in radioList"
+                                :key="item.key"
+                                :mode="'primary'"
+                                :name="'gender'"
+                                :value="item.key"
+                                :style="{ 'fontSize': '1.25rem' }"
+                                :text="item.label"
+                                checked/>
+                            </Flex>
                         </Group>
                     </Group>
-                    <Group :gap="'1.875rem'" :gap768="'1.25rem'">
-                        <Title
-                        :text="common.SECTION_2_TITLE"
-                        :mode="'primary'"
-                        :size="'xl'"
-                        v-if="screen.breakpoints.desktop" />
-
-                        <Group :gap="'1.25rem'" :gap768="'1rem'">
-                            <CardGrid :size="'xs'" :gap="'1.25rem'" :class="className['info']">
-                                <FormField
-                                :value-missing="common.INPUT_VALUE_MISSING"
-                                :pattern-mismatch="common.INPUT_EMAIL_PATTERN_MISMATH">
+                    
+                    <Group class="w-full gap-7">
+                        <Title :text="common.SECTION_2_TITLE" :tag="'h3'" class="text-bold"/>
+                        <Group class="gap-5 w-full">
+                            <Grid :container="'xs'" class="w-full gap-5">
+                                <FormField :pattern-mismatch="INPUT_CONTENT.USER_EMAIL.PATTERN_MISMATCH">
                                     <Input
                                     :type="'email'"
-                                    :name="'email'"
-                                    :mode="'secondary'"
-                                    :span="common.INPUT_PLACEHOLDER_EMAIL"
+                                    :name="modelProp('User','email')"
+                                    :mode="'primary'"
+                                    autocomplete="email"
+                                    :span="INPUT_CONTENT.USER_EMAIL.PLACEHOLDER"
                                     :required="true" />
                                 </FormField>
-                                <div>
-                                    <Paragraph
-                                    :text="common.INPUT_LABEL_TEL"
-                                    :size="'sm'"
-                                    class="text-stone-300"
-                                    :line="1"
-                                    :class="className['span']"/>
-                                    <Paragraph :text="data.phone" :size="'sm'" class="text-medium" :line="1" />
-                                </div>
-                            </CardGrid>
+                                <FormField >
+                                    <Input
+                                    :name="'tel'"
+                                    :mode="'primary'"
+                                    autocomplete="tel"
+                                    :span="INPUT_CONTENT.USER_TELEPHONE.PLACEHOLDER"
+                                    :required="true" />
+                                </FormField>
+                            </Grid>
                             <Checkbox
                             name="subscribe"
                             :mode="'primary'"
-                            :text="common.CHECKBOX_DECRIPTION" />
-                        </Group>
-
-                        <Grid :size="'xs'" :gap="'1.25rem'">
-                            <FormField>
+                            :text="common.CHECKBOX_DECRYPTION"/>
+                            <Grid :container="'xs'" class="w-full gap-5">
                                 <Input
-                                :type="'text'"
                                 :name="'telegram_username'"
-                                :mode="'secondary'"
-                                :span="common.INPUT_PLACEHOLDER_TELEGRAM"
-                                :icon=""
-                                :icon-size="24"
-                                :icon-clickable="true" />
-                            </FormField>
-                        </Grid>
-                    
+                                :mode="'primary'"
+                                :span="INPUT_CONTENT.USER_TELEGRAM.PLACEHOLDER"/>
+                            </Grid>
+                        </Group>
                     </Group>
                 </Group>
-            </form> -->
-            
-            <Transition v-show="formValid" name="fade-primary" :duration="250">
-                <Grid :size="'xs'" v-if="formValid">
-                    <Button
-                    :text="common.BUTTON_SAVE"
-                    :appearance="'green'"
-                    :rounded="'base'"
-                    :size="'lg'"
-                    class="w-full"  />
-                </Grid>
-            </Transition>
+                
+                
+            </form>
 
-            <div class="decor-line" ></div>
+            <Grid :size="'xs'">
+                <Button
+                :text="BASE_BUTTON.USER_SAVE"
+                :appearance="'green'"
+                :size="'lg'"
+                class="w-full  h-10"
+                @click="onClick"/>
+            </Grid>
+
+            <Group class="gap-5 w-full">
+                <div class="decor-line"></div>
+                <Button
+                :text="BASE_BUTTON.USER_LOGOUT"
+                :mode="'link'"
+                class="text-base text-red-500"
+                @click="async() => await _logout()"/>
+            </Group>          
         </Group>
-        
-        <Button
-        :text="common.BUTTON_LOGOUT"
-        :style="'link'"
-        class="text-sm text-stone-300 text-medium"  />
     </div>
 </template>
 
 <script setup lang="ts">
-import Panel from "@/components/UI/Panel/Panel.vue";
 import Title from "@/components/UI/Title/Title.vue";
 // import FileImage from "@/components/UI/File/Image.vue";
 import Input from "@/components/UI/Input/Input.vue";
@@ -139,19 +117,22 @@ import Group from "@/components/UI/Group/Group.vue";
 // import Tag from "@/components/UI/Tag/Tag.vue";
 import FormField from "@/components/UI/FormField/FormField.vue";
 import Grid from "@/components/UI/Grid/Grid.vue";
-import Header from "@/components/Templates/Header/mobileButtonReturn.vue";
 import { user as _user } from '@/stores/user';
-import { PAGE_USER_MAIN as common, PAGE_META } from "@/common/C";
+import Confirm from "@/components/Templates/modal/Confirm.vue";
+import { PAGE_USER_MAIN as common, PAGE_META, BASE_BUTTON, INPUT_CONTENT } from "@/common/C";
 import { setValueInput, searchInvalidElem } from '@/utils/formHelpers'
 
 
-// const _SLUG = useState<string>("SLUG")
-// const { getData } = useUsers(unref(_SLUG))
+const { logout: _logout } = useAuth()
 const form = ref<HTMLFormElement | null>(null)
 const formValid = ref(false)
 const storeUser = _user()
 const { data } = storeToRefs(storeUser)
 const className = useCssModule()
+const radioList = [
+    { key: 'man', label: common.LIST_RADIO_GENDER_MAN },
+    { key: 'woman', label: common.LIST_RADIO_GENDER_WOMAN },
+]
 // const screen = useState<AppScreen>('APP_SCREEN')
 // когда будет нормальный стор для юзера тогда, данные его можно будет достать из стора и не отправлять запрос
 // const { data: userData } = await getData({ 'tab': 'user' }, {
@@ -161,6 +142,23 @@ const className = useCssModule()
 onMounted(() => {
     // setValueInput(form)
 })
+
+
+async function onClick() {
+    if(form.value instanceof HTMLFormElement) {
+        const formData = new FormData(form.value)
+        const urlEncoded = new URLSearchParams(formData).toString();
+        await useFetch('/api/user/update', {
+            method: 'POST',
+            body: urlEncoded,
+            
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        
+    }
+}
 
 
 // async function onClick({ target }: MouseEvent) {
@@ -224,7 +222,6 @@ onMounted(() => {
 <style lang="css" module>
 .body {
     width: 75%;
-    margin-bottom: 1.5rem;
 }
 .span{
     margin-bottom: 0.5rem;

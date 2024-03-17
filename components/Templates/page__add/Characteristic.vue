@@ -21,8 +21,7 @@
       
       <form ref="form" class="w-full" v-if="characteristicSection">
         <Group class="gap-4 w-full">
-          <FormField class="w-full"
-          :value-missing="commonInput.ADD_SECTION.VALUE_MISSING">
+          <FormField class="w-full">
             <Input
             :placeholder="commonInput.ADD_SECTION.PLACEHOLDER"
             v-model.trim="characteristicSection.title"
@@ -32,8 +31,7 @@
           <Flex v-for="(item, index) in characteristicSection.children"
           :key="index"
           class="gap-x-3 w-full">
-            <FormField class="w-full"
-            :value-missing="commonInput.ADD_NAME.VALUE_MISSING">
+            <FormField class="w-full">
               <Input
               :placeholder="commonInput.ADD_NAME.PLACEHOLDER"
               autocapitalize="words"
@@ -41,8 +39,7 @@
               required class="grow"/>
             </FormField>
 
-            <FormField class="w-full"
-            :value-missing="commonInput.ADD_VALUE.VALUE_MISSING">
+            <FormField class="w-full">
               <Input 
               :placeholder="commonInput.ADD_VALUE.PLACEHOLDER"
               v-model="characteristicSection.children[index].value"

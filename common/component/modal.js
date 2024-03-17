@@ -10,3 +10,8 @@ export const MODAL_BASKET = {
     TOTAL_SUM: 'Общая сумма заказа: ',
     EMPTY_CONTENT: EMPTY_CONTENT.MODAL_EMPTY_BASKET
 }
+
+export const MODAl_AUTH = {
+    TITLE_LOGIN: 'Вход',
+    TITLE_REGISTER: 'Регистрация',
+}

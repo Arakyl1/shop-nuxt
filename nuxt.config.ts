@@ -55,6 +55,7 @@ export default defineNuxtConfig({
       }
     }
   },
+  css: ['v-calendar/style.css'],
   app: {
     pageTransition: { name: 'blur', mode: 'out-in' }
   },
@@ -76,11 +77,11 @@ export default defineNuxtConfig({
 
     fallbackBreakpoint: 'lg'
   },
-  webVitals: {
-    provider: 'log',
-    debug: true, // debug enable metrics reporting on dev environments
-    disabled: false
-  }
+  // webVitals: {
+  //   provider: 'log',
+  //   debug: true, // debug enable metrics reporting on dev environments
+  //   disabled: false
+  // }
 });
 
 // const viewport = useViewport() v-if="viewport.isGreaterOrEquals('sm')"

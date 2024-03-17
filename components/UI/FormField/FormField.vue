@@ -9,6 +9,8 @@
 </template>
 
 <script setup>
+import { INPUT_VALIDITY_BASE } from '@/common/C'
+
 const props = defineProps({
     label: {
         type: String,
@@ -22,46 +24,54 @@ const props = defineProps({
     // текст сообщения если пользователь ввел значение
     // которое браузер не может преобразовать
     badInput: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.BAD_INPUT
     },
     // текст сообщения если значение не соответствует шаблону,
     // указанному в атрибуте pattern
     patternMismatch: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.PATTERN_MISMATCH
     },
     // текст сообщения если значение больше максимума, 
     // заданного в атрибуте max
     rangeOverflow: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.RANGE_OVERFLOW
     },
     // текст сообщения если значение меньше минимума, 
     // заданного в атрибуте min
     rangeUnderflow: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.RANGE_UNDERFLOW
     },
     // текст сообщения если значение не соответствует правилам, 
     // заданным в атрибуте step
     stepMismatch: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.STEP_MISMATCH
     },
     // текст сообщения если значение превышает лимит, 
     // указанный в атрибуте maxlength
     tooLong: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.TOO_LONG
     },
     // текст сообщения если длина значения не достигает минимума,
     // указанного в атрибуте minlength
     tooShort: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.TOO_SHORT
     },
     // текст сообщения если элемент соответствует всем ограничениям валидации и,
     //следовательно, считается валидным
     valid: {
-        type: String
+        type: String,
     },
     // текст сообщения если у элемента есть атрибут required, но сам элемент заполнен не был
     valueMissing: {
-        type: String
+        type: String,
+        default: INPUT_VALIDITY_BASE.VALUE_MISSING
     },
     spanShow: {
         type: Boolean,
@@ -89,7 +99,7 @@ function onCheckValid(e) {
                     messadge.value = props[key]
                     typeValid.value = key
                     
-                   key !== 'valid' ? _target.setCustomValidity(props[key]) : ''
+                //    key !== 'valid' ? _target.setCustomValidity(props[key]) : ''
                     return
                 }
 

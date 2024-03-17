@@ -8,7 +8,7 @@
     <form ref="form">
       <Group class="gap-y-6" :align="'center'">
         <Title :tag="'h3'"
-        :text="'Register'" />
+        :text="MODAl_AUTH.TITLE_REGISTER" />
 
         <Input
         class="w-full h-12"
@@ -65,7 +65,7 @@ import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import { searchInvalidElem } from '@/utils/formHelpers'
 import { alert as _alert } from "@/stores/alert";
-import { INPUT_CONTENT as common, BASE_BUTTON } from '@/common/C'
+import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 
 
 const { register: userRegister} = useAuth()

@@ -7,7 +7,7 @@
     class="scrollbar-v1">
         <form ref="form">
             <Group class="gap-y-6" :align="'center'">
-                <Title :tag="'h3'" :text="'Login'"/>
+                <Title :tag="'h3'" :text="MODAl_AUTH.TITLE_LOGIN"/>
                 <Input class="w-full h-12"
                 :span="common.USER_USERNAME.PLACEHOLDER"
                 required
@@ -42,7 +42,8 @@ import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import { resetForm, searchInvalidElem } from "@/utils/formHelpers";
-import { INPUT_CONTENT as common, BASE_BUTTON } from '@/common/C'
+import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
+import { default as useAuth } from '@/composables/useAuth'
 
 
 const { login: userLogin } = useAuth()

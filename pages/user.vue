@@ -1,7 +1,7 @@
 <template>
     <Panel :mode="'primary'">
         <Flex class="gap-8" :align="'flex-start'">
-            <div class="none --md:block">
+            <div class="none --md:block w-1/4">
                 <Group :tag="'ul'" class="gap-3" :class="className['menu']">
                     <li v-for="item in PAGE_USER" :key="item.title">
                         <Button
@@ -9,8 +9,9 @@
                         :to="item.href"
                         :mode="'link'"
                         :text="item.title"
-                        :size="'2xl'"
-                        class="text-md"/>
+                        class="text-md"
+                        :active="route.path === item.href"
+                        :style="{ '--color': 'var(--gray-500)', '--color-active': 'var(--black-500)'}"/>
                     </li>
                 </Group>
             </div>
@@ -29,9 +30,10 @@ import { PAGE_USER } from '@/utils/router'
 import { PAGE_META } from '@/common/C'
 
 definePageMeta({
-    middleware: ['user']
+    middleware: ['1-auth','2-page-user-route']
 })
 
+const route = useRoute()
 const className = useCssModule()
 </script>
 

@@ -31,13 +31,29 @@ export async function createAnonimUser(event) {
     return user
 }
 
-export async function handleSessionKey(event, sessionKey: string) {
+export function handleSessionKey(sessionKey: string) {
     const decoded = decodeToken(sessionKey,'refrech') as string | { [k: string]: string }
-    if (decoded === null || isString(decoded)) _createError(GET_CONTENT_KEY('AUTH_UNAUTHORIZED'))
+    if (decoded === null || isString(decoded)) throw _createError(GET_CONTENT_KEY('AUTH_UNAUTHORIZED'))
     
     if (!checkValidUserRole(decoded as checkValidUserRoleParams[0]) || !checkValidUserId(decoded as checkValidUserIdParams[0])) {
-        await createAnonimUser(event)
+       return null
     }
     return { id: Number(decoded.id), role: decoded.role }
 
+}
+
+
+export function defineAuthenticatedEventHandler<T, K extends { [k:string]: any }>(
+    handler: (event: H3Event, authUser: K) => T | Promise<T>
+) {
+    return defineEventHandler(async(event) => {
+        const sessionKey = getCookie(event, 'sessionKey') || ''
+        try {
+            const user = handleSessionKey(sessionKey)
+            return handler(event, user)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    })
 }

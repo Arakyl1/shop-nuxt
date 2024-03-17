@@ -2,7 +2,7 @@
     <Group class="gap-y-6" :class="className['body']">
         <Title :tag="'h3'" :text="common.TITLE"/>
         <div class="decor-line"></div>
-        <Group v-if="basketLength" class="gap-y-3 grow h-full w-full">
+        <Group v-if="basketLength" class="gap-y-3 grow  w-full">
             <Group class="grow w-full">
                 <article class="py-4 w-full" v-for="item in basket!.item" :key="item.cardId">
                     <Flex class="gap-6">

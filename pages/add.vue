@@ -34,7 +34,7 @@
                 :appearance="'red'"
                 :size="'sm'"
                 :text="BASE_BUTTON.RESET_FORM"
-                class="h-12 text-md grow"
+                class="h-12 text-md grow justify-center"
                 @click="setStatus('cancel-create')"/>
                 
                 <Button
@@ -42,7 +42,7 @@
                 :size="'sm'"
                 :icon-left="pending ? { icon: 'loader-circles', size: '24_24' } : undefined"
                 :text="BASE_BUTTON.ADD_PRODUCT"
-                class="h-12 text-md grow"
+                class="h-12 text-md grow justify-center"
                 @click="createProduct"/>
             </Flex> 
         </Flex>
@@ -80,7 +80,7 @@ const numberProperty = ['price', 'quantity']
 
 definePageMeta({
     title: META.ADD.TITLE,
-    // middleware: ['add']
+    middleware: ['1-auth']
 })
 
 const className = useCssModule()

@@ -4,7 +4,7 @@
             <Card :container="'xl'" :class="className['modal']" data-confirm>
                 <Group class="gap-y-6">
                     <Title :tag="'h3'" :text="title" />
-                    <Flex class="gap-4 w-full">
+                    <Flex class="gap-4 w-full grow">
                         <Button :appearance="'red'" :text="common.REJECTION" class="grow h-10 justify-center"
                         data-promise-status="rejection" />
                         <Button :appearance="'green'" :text="common.ACCEPT" class="grow h-10 justify-center"

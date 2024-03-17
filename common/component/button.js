@@ -14,6 +14,7 @@ export const BASE_BUTTON = {
     USER_LOGIN: 'Войти в аккаунт',
     USER_REGISTER: 'Создать аккаунт',
     USER_LOGOUT: 'Выйти',
+    USER_SAVE: "Сохранить",
     REVIEWS_CREATE: 'Опубликовать',
     CATALOG: "Каталог",
     DOWNLOAD_JSON: 'Загрузить файл данных',

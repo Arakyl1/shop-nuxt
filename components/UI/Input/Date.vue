@@ -2,52 +2,25 @@
     <DatePicker :popover="{ showDelay: 0, hideDelay: 50, placement: 'bottom-end' }">
         <template #default="{ togglePopover, inputValue }">
             <Input
-                :type="'text'"
-                :name="name"
-                :mode="mode"
-                :span="span"
-                :required="true"
-                :icon-clickable="true"
-                :pattern="'\\d{4}-\\d{2}-\\d{2}|\\d{2}-\\d{2}-\\d{4}|\\d{2}\.\\d{2}\.\\d{4}'"
-                :placeholder="placeholder"
-                :model-value="inputValue"
-                @icon-click="togglePopover"/>
+            :type="'text'"
+            v-bind="{ ...props }"
+            :icon-clickable="true"
+            :icon="{ 'icon': 'calendar' }"
+            :pattern="'\\d{4}-\\d{2}-\\d{2}|\\d{2}-\\d{2}-\\d{4}|\\d{2}\.\\d{2}\.\\d{4}'"
+            autocomplete="bday"
+            :model-value="inputValue"
+            @icon-click="togglePopover"/>
         </template>
     </DatePicker>
 </template>
 
-<script setup>
-import Input from "@/components/UI/Input/Input.vue";
-// import { Calendar as IconCalendar } from "@element-plus/icons-vue";
+<script setup lang="ts">
+import { default  as Input, Props as InputProps } from "@/components/UI/Input/Input.vue";
 import { DatePicker } from 'v-calendar';
 
-const props = defineProps({
-    // стиль оформления input
-    mode: {
-        type: String,
-        validator(value) {
-            return ['primary', 'secondary', 'outline'].includes(value)
-        }
-    },
-    // имя input, 
-    name: {
-        type: String
-    },
-    // анимерованный placeholder вместо базового
-    // если была передано значание для базовго placeholder (эт пропс placeholder)
-    // то приоритет отдается базовому 
-    span: {
-        type: String
-    },
-    // базовый placeholder
-    placeholder: {
-        type: String
-    },
-    // сделать поле обязательный
-    required: {
-        type: Boolean
-    }
-})
+interface Props extends Pick<InputProps, 'mode'|'name'|'span'|'placeholder'|'required'> {}
+
+const props = defineProps<Props>()
 
 </script>
 

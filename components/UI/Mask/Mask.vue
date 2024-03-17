@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
     fun: () => false
 })
 const className = useCssModule()
-const { isDesktop, isFirefox } = useDevice();
+const { isDesktop, isFirefox, isAndroid, isIos } = useDevice();
 
 
 const rootClass = computed(() => {
@@ -41,20 +41,28 @@ const rootClass = computed(() => {
     }
 })
 
+function checkScreenSizeMoreScrollSize() {
+    if (!document && window) return false
+    return document.body.clientHeight > window.innerHeight
+}
+
+function checkDevice() {
+    return isDesktop && !isFirefox && !isAndroid && !isIos && checkScreenSizeMoreScrollSize()
+}
+
 watch(() => props.active, (newV) => {
     if (!props.hideScroll) return
    
     if (newV) {
         document.body.style.overflow = 'hidden'
-        console.log(isDesktop, isFirefox)
-        if (isDesktop && !isFirefox) {
+        if (checkDevice()) {
             document.body.style.paddingRight = '16px'
             
         }
     } else {
         setTimeout(() => {
             document.body.style.overflow = 'auto'
-            if (isDesktop && !isFirefox) {
+            if (checkDevice()) {
                 document.body.style.paddingRight = '0'
             }
         }, 300)

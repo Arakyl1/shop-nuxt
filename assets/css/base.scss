@@ -286,3 +286,9 @@ h4 {
     box-shadow: var(--#{$name});
   }
 }
+
+// object 
+
+.object-cover {
+  object-fit: cover;
+}

@@ -75,7 +75,6 @@
             <Grid v-if="Array.isArray(item)" :container="'xs'" class="gap-5 w-full">
               <FormField v-for="elem in item"
               :key="elem.placeholder"
-              :valueMissing="elem.valueMissing"
               class="grow">
                 <Input 
                 :type="elem.type"
@@ -87,7 +86,6 @@
             </Grid>
             <div v-else-if="'decorLine' in item" class="decor-line"></div>
             <FormField v-else-if="'type' in item"
-            :valueMissing="item.valueMissing"
             class="w-full">
               <Input
               :type="(item.type as 'text')"
@@ -223,7 +221,7 @@ interface Model {
   type: string,
   placeholder: string,
   name: string,
-  valueMissing: string,
+  valueMissing?: string,
   arrt?: {
     min?: number,
     max?: number,
@@ -237,21 +235,18 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
   {
     type: 'text',
     placeholder: commonInput.PRODUCT_CREATE_NAME.PLACEHOLDER,
-    valueMissing: commonInput.PRODUCT_CREATE_NAME.VALUE_MISSING,
     name: modelProp('ProductCard', 'name'),
     arrt: { 'minlength': 6 }
   },
   {
     type: 'text',
     placeholder: commonInput.PRODUCT_CREATE_CODE.PLACEHOLDER,
-    valueMissing: commonInput.PRODUCT_CREATE_CODE.VALUE_MISSING,
     name: modelProp('ProductCard', 'art'),
     arrt: { 'minlength': 6 }
   },
   {
     type: 'text',
     placeholder: commonInput.PRODUCT_CREATE_MAKER.PLACEHOLDER,
-    valueMissing: commonInput.PRODUCT_CREATE_MAKER.VALUE_MISSING,
     name: "maker"
   },
   {
@@ -261,14 +256,12 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
     {
       type: 'text',
       placeholder: commonInput.PRODUCT_CREATE_ARTICLE.PLACEHOLDER,
-      valueMissing: commonInput.PRODUCT_CREATE_ARTICLE.VALUE_MISSING,
       name: modelProp('ProductCard', 'itemArt'),
       arrt: { 'minlength': 6 }
     },
     {
       type: 'text',
       placeholder: commonInput.PRODUCT_CREATE_MODEL.PLACEHOLDER,
-      valueMissing: commonInput.PRODUCT_CREATE_MODEL.VALUE_MISSING,
       name: modelProp('ProductCard', 'itemMod'),
       arrt: { 'minlength': 6 }
     }
@@ -280,14 +273,12 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
     {
       type: 'number',
       placeholder: commonInput.PRODUCT_CREATE_PRICE.PLACEHOLDER,
-      valueMissing: commonInput.PRODUCT_CREATE_PRICE.VALUE_MISSING,
       name: modelProp('ProductCard', 'price'),
       arrt: { min: 0, step: 0.01 }
     },
     {
       type: 'number',
       placeholder: commonInput.PRODUCT_CREATE_QUANTITY.PLACEHOLDER,
-      valueMissing: commonInput.PRODUCT_CREATE_QUANTITY.VALUE_MISSING,
       name: modelProp('ProductCard', 'quantity'),
       arrt: { min: 0 }
     }

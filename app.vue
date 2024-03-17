@@ -49,11 +49,11 @@ await useFetch('/api/attridute/get', {
   }
 })
 
-initAuth(event)
+await initAuth(event)
 
 onServerPrefetch(async () => {
   if (!data.value) {
-    initAuth(event)
+    await initAuth(event)
   }
   // if (Object.prototype.hasOwnProperty.call(headers, 'accept-language')) {
   //   const userLocalLanguage = getLanguageUser(headers['accept-language']!)

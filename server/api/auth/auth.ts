@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     let user: Pick<User, 'id'| 'role'> | undefined
     
     try {
-        user = sessionKey ? await handleSessionKey(event, sessionKey) : await createAnonimUser(event)
+        user = sessionKey ? handleSessionKey(sessionKey) || await createAnonimUser(event) : await createAnonimUser(event)
     
         try {
             const res =  await $fetch('/api/auth/user',{ params: { ...user } })

@@ -70,15 +70,13 @@ export default () => {
                 handleResponse(response)
             }
         })
-
-        //    _setCookie(event,'refrech_token', '')
         } catch (error) {
             console.log(error);   
         }
     }
 
     const initAuth = async(event: H3Event<EventHandlerRequest>) => {
-        await useAsyncData(() => fetchWithCookie(event, '/api/auth/auth', {
+        await useAsyncData(async() => await fetchWithCookie(event, '/api/auth/auth', {
             retry: 3,
             onResponse({ response }) {
                 handleResponse(response)
