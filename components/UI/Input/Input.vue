@@ -158,7 +158,8 @@ function onIconClick(event) {
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
+/* purgecss start ignore */
+
 /* Список всех доступных переменых для цветовой настройки input 
 --bg-color - задний фон в обычном состояние
 --padding - величина полей
@@ -349,6 +350,7 @@ function onIconClick(event) {
     --color: var(--black-500);
     --border-hover: var(--blue-500);
 }
+/* purgecss end ignore */
 </style>
 
 
