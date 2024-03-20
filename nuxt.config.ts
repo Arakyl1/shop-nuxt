@@ -58,7 +58,7 @@ export default defineNuxtConfig({
   },
   css: ['v-calendar/style.css'],
   app: {
-    pageTransition: { name: 'blur', mode: 'out-in' }
+    pageTransition: { name: 'blur', mode: 'out-in' },
   },
   viewport: {
     breakpoints: {
@@ -78,6 +78,10 @@ export default defineNuxtConfig({
 
     fallbackBreakpoint: 'lg'
   },
+ 'purgecss': {
+    whitelistPatterns: [/^module__/], // Пропустить все CSS модули
+    whitelistPatternsChildren: [/^module__/],
+ }
   // webVitals: {
   //   provider: 'log',
   //   debug: true, // debug enable metrics reporting on dev environments
