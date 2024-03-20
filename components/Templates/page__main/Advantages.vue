@@ -17,18 +17,7 @@
             </template>
             <template v-if="viewport.isGreaterOrEquals('sm')"
             #center="{ prev, next, listValueScroll }" >
-                <template v-if="listValueScroll.max > 0">
-                    <ButtonArrow
-                    :class="className['control-button--left']"
-                    :disabled="listValueScroll.current === 0"
-                    @click="prev"
-                    class="h-11"/>
-                    <ButtonArrow
-                    :class="className['control-button--right']"
-                    :disabled="listValueScroll.current >= listValueScroll.max"
-                    @click="next"
-                    class="h-11"/>
-                </template>
+                <ControlButtonCenterAbsolute v-bind="{ listValueScroll, next, prev }"/>
             </template>
             <template v-else #footer="{ prev, next, indexActiveButton, updateScrolLeft, listValueScroll }">
                 <div :class="className['control-button--mobile']">
@@ -45,9 +34,10 @@
 
 <script setup lang="ts">
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
-import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Title from "@/components/UI/Title/Title.vue";
+import ControlItem from "@/components/Templates/ControlElements/Item.vue";
+import ControlButtonCenterAbsolute from "@/components/Templates/Carousel/ControlButtonCenterAbsolute.vue";
 import { PAGE_MAIN as common } from "@/common/C";
 
 const { data } = await useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
@@ -62,18 +52,7 @@ const viewport = useViewport()
     margin-bottom: 4rem;
 }
 
-.control-button--left {
-    position: absolute;
-    transform: translate(-50%, -50%) scale(-1);
-    top: 50%;
-    left: 0rem;
-}
-.control-button--right {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 100%;
-}
+
 .control-button--mobile {
     margin-top: 1rem;
 }

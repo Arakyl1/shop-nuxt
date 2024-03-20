@@ -16,10 +16,10 @@
 // MEDIA STYLE FOR HIDDEN
 @each $name, $value in $containerSize {
   @media (min-width: $value) {
-    .--#{$name}\:hidden {
+    .\/#{$name}\:hidden {
       display: none !important;
     }
-    .--#{$name}\:block {
+    .\/#{$name}\:block {
       display: block !important;
     }
   }
@@ -154,6 +154,10 @@
 
 .none {
   display: none;
+}
+
+.block {
+  display: block;
 }
 
 // cursor

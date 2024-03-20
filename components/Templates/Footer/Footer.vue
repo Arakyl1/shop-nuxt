@@ -2,7 +2,7 @@
     <footer class="bg-black-300" :class="className['body']">
         <div class="container" v-if="common">
             <!-- Mobile Footer start -->
-            <div class="--md:hidden">
+            <div class="/md:hidden">
                 <Group class="gap-y-8 w-full ">
                     <Flex :justify="'end'" class="w-full">
                         <Button tag="a" :href="`tel:${common.TELEPHONE}`" :text="common.TELEPHONE" :size="'none'" class="text-white"/>
@@ -60,7 +60,7 @@
                 </div>
 
             <!-- Desktop Footer start -->
-            <div class="none --md:block">
+            <div class="none /md:block">
                 <Group class="gap-y-12">
                     <Grid class="gap-10" :container="'sm'">
                         <Group class="gap-y-5">

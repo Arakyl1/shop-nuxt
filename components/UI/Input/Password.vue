@@ -2,7 +2,7 @@
 <Input
     :type="showPassword ? 'text' : 'password'"
     :name="'password'"
-    :icon="{ 'key': showPassword ? 'hide' : 'view', size: '22_22' }"
+    :icon="{ 'icon': showPassword ? 'hide' : 'view', size: '22_22' }"
     :icon-clickable="true"
     :required="true"
     

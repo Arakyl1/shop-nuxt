@@ -1,7 +1,7 @@
 <template>
     <Panel :mode="'primary'">
         <Flex class="gap-8" :align="'flex-start'">
-            <div class="none --md:block w-1/4">
+            <div class="none /md:block w-1/4">
                 <Group :tag="'ul'" class="gap-3" :class="className['menu']">
                     <li v-for="item in PAGE_USER" :key="item.title">
                         <Button

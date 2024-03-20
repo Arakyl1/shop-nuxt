@@ -8,7 +8,7 @@
     :text="page.number"
     :square="true"
     :active="page.isCurrent"
-    class="h-12 justify-center text-base"
+    class="h-12 justify-center text-base button-control-basic"
     />
 </template>
 
@@ -42,17 +42,5 @@ const props = defineProps({
     },
 })
 
-</script>
 
-<!-- <style lang="css">
-.padination-butoon {
-    width: 2.75rem;
-    font-size: var(--text-base);
-}
-@media (max-width: 620px) {
-    .padination-butoon {
-        width: 2.25rem;
-        font-size: var(--text-sm);
-    } 
-}
-</style> -->
+</script>

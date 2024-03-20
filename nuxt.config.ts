@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/device',
+    'nuxt-purgecss',
     // "nuxt-vercel-analytics",
     // '@nuxtjs/web-vitals',
     'nuxt-viewport',

@@ -179,6 +179,7 @@ const content = computed<ProductCardBase | null>(() => props.data)
     }
     .button-basket {
         font-size: var(--text-sm);
+        height: 2.5rem !important;
     }
 }
 </style>

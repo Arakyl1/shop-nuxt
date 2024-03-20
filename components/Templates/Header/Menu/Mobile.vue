@@ -42,7 +42,7 @@
                                                     :text="elem.value"
                                                     :tag="'nuxt-link'"
                                                     :rounded="'none'"
-                                                    :to="getBaseCategorRoute(item.id, $route)"
+                                                    :to="getBaseCategorRoute(elem.id, $route)"
                                                     class="pre-wrap"
                                                     :class="className['link']"/>
                                                 </li>

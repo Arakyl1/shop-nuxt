@@ -72,3 +72,8 @@ q:before, q:after {
   font: inherit;
   -webkit-appearance: button;
 }
+
+img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}

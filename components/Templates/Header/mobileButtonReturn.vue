@@ -2,7 +2,7 @@
     <Flex
     :class="className['header']"
     :justify="'between'"
-    class="gap-10 --md:hidden w-full">
+    class="gap-10 /md:hidden w-full">
         <Button
         :appearance="'black-icon'"
         :icon-left="{ icon: 'arrow-right' }" />

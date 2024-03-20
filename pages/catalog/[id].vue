@@ -1,8 +1,8 @@
 <template>
     <Panel :mode="'primary'">
         <template v-if="data">
-            <Main :data="data" class="none --md:block" />
-            <MainMobile :data="data" class="--md:hidden" />
+            <Main :data="data" class="none /md:block" />
+            <MainMobile :data="data" class="/md:hidden" />
             <section class="gap-8" :class="className['content']">
                 <Characteristic :data="data.characteristic" />
                 <Description :data="data"/>

@@ -250,7 +250,12 @@ function getAriaPageLabel(pageNumber, isCurrent) {
 }
 
 
-
+@media (max-width: 620px) {
+    .pagination,
+    .pagination__list {
+        gap: 0.25rem !important;
+    }
+}
 
 
 // @media (max-width: 1024px) {

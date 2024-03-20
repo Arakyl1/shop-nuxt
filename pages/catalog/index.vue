@@ -2,14 +2,14 @@
     <Panel :mode="'primary'">
         <Flex :justify="'between'" >
             <Title :tag="'h2'" :text="META.CATALOG.TITLE" class="grow"/>
-            <div class="none --md:block">
+            <div class="none /md:block">
                 <SelectSize />
             </div>
             <Button
             :appearance="'blue'"
             :square="true"
             :icon-left="{ icon: 'filter', size: '24_24' }"
-            class="h-10 --md:hidden justify-center"
+            class="h-10 /md:hidden justify-center"
             @click="() => update(true)"/>
         </Flex>
         <Flex :align="'flex-start'" class="gap-8">
@@ -34,7 +34,7 @@
 
         </Flex>
         <Flex :justify="'center'">
-            <Card class="visible px-8 none --md:block"><div :style="{ width: '250px' }"></div></Card>
+            <Card class="visible px-8 none /md:block"><div :style="{ width: '250px' }"></div></Card>
             <Pagination v-if="countItem"
             :total="countItem"
             :range-before="1"

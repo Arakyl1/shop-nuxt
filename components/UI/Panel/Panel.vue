@@ -36,6 +36,7 @@ const className = useCssModule()
     display: flex;
     flex-direction: column;
     gap: 6.25rem;
+    padding-top: 3.125rem;
 }
 .primary {
     display: flex;

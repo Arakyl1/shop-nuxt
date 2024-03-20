@@ -11,20 +11,22 @@
                             { 'heigth': 'h_56', 'bgrem': 'co_white,e_make_transparent:1' })"/>
                     
                         <div class="grow" :class="className['product-name']">
-                            <Button :to="`/catalog/${item.cardId}`"
+                            <Button
+                            :tag="'nuxt-link'"
+                            :to="`/catalog/${item.cardId}`"
                             :text="item.card.name"
                             :mode="'link'"
                             class="text-md"/>
                             <p class="text-gray-500 text-md ">{{ item.card.art }}</p>
                         </div>
 
-                        <div class="none --md:block">
+                        <div class="none /md:block">
                             <ProductPrice
                             class="text-base"
                             :price="item.card.price"
                             :discount="item.card.discount > 0" />
                         </div>
-                        <div class="none --md:block">
+                        <div class="none /md:block">
                             <Counter :value="item.count" :max-value="item.card.quantity" :class="className['counter']"/>
                         </div>
                         <Button

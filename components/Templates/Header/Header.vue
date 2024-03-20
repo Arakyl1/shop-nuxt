@@ -14,7 +14,7 @@
                         </template>
                     </Flex>
 
-                    <div class="none --lg:block">
+                    <div class="none /lg:block">
                         <Flex :justify="'center'" class="grow gap-x-8">
                             <p class="text-gray-300">{{ common.TOP_SLOGAN }}</p>
                                 <Flex class="gap-x-2" >
@@ -69,7 +69,7 @@
                 :mode="'none'"
                 :text="common.TELEPHONE" class="text-lg text-bold"/>
 
-                <Search class="none --lg:block" />
+                <Search class="none /lg:block" />
                 
                 <SocialIcon/>
 
@@ -77,7 +77,7 @@
                 :tag="'nuxt-link'"
                 :appearance="'yellow'"
                 :size="'lg'"
-                class="h-10 text-bold --md:hidden"
+                class="h-10 text-bold /md:hidden"
                 :text="common.BUTTON_ADDRESS_MARKER"/>
                 
                 <Button

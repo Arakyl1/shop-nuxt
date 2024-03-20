@@ -22,7 +22,7 @@
                         @click="onClick"
                         :appearance="'gray-icon'"
                         :class="className['bt-close']"
-                        class="none --md:block"
+                        class="none /md:block"
                         data-modal-bt-close="true"/>
                         <slot></slot>
                     </Card>
