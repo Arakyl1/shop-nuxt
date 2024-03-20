@@ -68,6 +68,7 @@ function onClick() {
 
 
 <style lang="css" module>
+/* purgecss ignore */
 .container {
     display: inline-block;
     height: 1.25rem;

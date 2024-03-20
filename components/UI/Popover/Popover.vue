@@ -126,6 +126,7 @@ watch(() => isActive.value, (newV) => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .popover {
     display: inline-flex;
     position: relative;

@@ -27,6 +27,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .status {
     color: var(--white);
     text-transform: uppercase;

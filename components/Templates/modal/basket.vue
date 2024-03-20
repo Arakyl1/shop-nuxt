@@ -73,6 +73,7 @@ function transformPrice(reg:string, option: object, price:number):string {
 
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     /* max-width: 900px; */
     width: 940px;

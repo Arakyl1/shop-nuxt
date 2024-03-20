@@ -245,6 +245,7 @@ function sendEvent() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     overflow: hidden;
     position: absolute;

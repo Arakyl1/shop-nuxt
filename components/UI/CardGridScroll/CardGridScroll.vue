@@ -215,6 +215,7 @@ function getValueScroll() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .container {
     width: 100%;
 }

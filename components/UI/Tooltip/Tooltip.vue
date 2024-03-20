@@ -93,6 +93,7 @@ onMounted(() => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .tooltip {
     display: inline-flex;
     position: relative;

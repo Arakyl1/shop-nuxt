@@ -210,6 +210,7 @@ defineExpose({ button })
 </script>
 
 <style lang="scss" module>
+/* purgecss ignore */
 // Список всех доступных переменых для цветовой настройки кнопки
 // --bg-color - задний фон в обычном состояние
 // --color - цвет текста в обычном состояние

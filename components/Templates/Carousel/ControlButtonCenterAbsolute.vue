@@ -29,6 +29,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .control-button--left {
     position: absolute;
     transform: translate(-50%, -50%) scale(-1);

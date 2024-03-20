@@ -92,6 +92,7 @@ function listOffset(): void {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .list-link {
     height: 100%;
     overflow-x: scroll;

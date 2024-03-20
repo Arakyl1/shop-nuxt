@@ -72,6 +72,7 @@ function onClick() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .root{
     display: flex;
     align-items: center;

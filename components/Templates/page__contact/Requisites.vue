@@ -65,6 +65,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body > *:nth-child(1) {
     width: calc((100% /12) *5);
 }

@@ -33,6 +33,7 @@ onMounted(() => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
     .xs {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }

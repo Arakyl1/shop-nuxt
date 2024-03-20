@@ -48,6 +48,7 @@ const rootClass = computed(() => {
 </script>
 
 <style lang="scss" module>
+/* purgecss ignore */
 .title {
     position: relative;
 }

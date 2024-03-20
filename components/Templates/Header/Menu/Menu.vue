@@ -130,6 +130,7 @@ function resetData() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     position: fixed;
     background-color: var(--blue-500);

@@ -59,6 +59,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" module>
+/* purgecss ignore */
 .card {
     background-color: var(--white);
 }

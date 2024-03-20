@@ -32,6 +32,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     padding-top: 1.5rem;
 }

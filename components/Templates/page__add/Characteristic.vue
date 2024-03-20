@@ -271,6 +271,7 @@ function removeItem(elemIndex: number) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 
 .body {
   max-width: 100%;

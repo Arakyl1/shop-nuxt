@@ -135,7 +135,7 @@ function copyArticle(key: string) {
 </script>
 
 <style lang="css" module>
-
+/* purgecss ignore */
 .photo [ data-card-grid-scroll] > ul {
     aspect-ratio: 9/8;
 }

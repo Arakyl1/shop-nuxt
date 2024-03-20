@@ -93,6 +93,7 @@ function onClick() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 /* .wrapper {
     position: relative;
 } */

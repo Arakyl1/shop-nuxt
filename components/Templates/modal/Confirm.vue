@@ -64,6 +64,7 @@ function onOpen() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .modal {
   min-width: 320px;
   max-width: 450px;

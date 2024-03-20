@@ -134,6 +134,7 @@ onMounted(() => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     position: absolute;
     top: calc(100% + 1rem);

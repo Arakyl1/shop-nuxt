@@ -23,6 +23,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     color: var(--transparent);
     border-radius: var(--rounded-base);

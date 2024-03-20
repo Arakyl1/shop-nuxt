@@ -17,7 +17,7 @@
                 </Flex>
                 <Rating :readonly="false" :step="1" :name="modelProp('Comment', 'ranting')"/>
                 <textarea rows="10"
-                class="rounded-xl "
+                class="rounded-xl w-full p-4"
                 :name="modelProp('Comment', 'text')"
                 :class="[className['textarea'], className['border']]"></textarea>
             </Group>
@@ -136,14 +136,11 @@ function handleResponse(res: any) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     /* max-width: 900px; */
     height: min-content;
     /* min-width: 100%; */
-}
-.textarea {
-    width: 100%;
-    padding: 1rem;
 }
 
 .border {

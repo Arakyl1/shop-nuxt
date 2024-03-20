@@ -158,6 +158,7 @@ function onIconClick(event) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 /* Список всех доступных переменых для цветовой настройки input 
 --bg-color - задний фон в обычном состояние
 --padding - величина полей

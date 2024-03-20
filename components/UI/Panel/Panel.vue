@@ -19,6 +19,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 /* .panel > [data-pagination] {
     margin-top: 2rem;
 }

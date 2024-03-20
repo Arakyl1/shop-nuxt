@@ -95,6 +95,7 @@ const content = computed<ProductCardBase | null>(() => props.data)
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .status {
     top: 1rem;
 }

@@ -48,10 +48,10 @@ const viewport = useViewport()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .head {
     margin-bottom: 4rem;
 }
-
 
 .control-button--mobile {
     margin-top: 1rem;

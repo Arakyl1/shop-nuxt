@@ -41,7 +41,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
-
+/* purgecss ignore */
 .control-button--mobile {
     margin-top: 1rem;
 }

@@ -52,6 +52,7 @@ function onClick({ target }: MouseEvent) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     display: grid;
     grid-auto-flow: column;

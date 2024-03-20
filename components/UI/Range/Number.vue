@@ -45,6 +45,7 @@ const attr = computed(() => Object.fromEntries(Object.entries(props).filter((_) 
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .item {
     max-width: 47%;
     width: 100%;

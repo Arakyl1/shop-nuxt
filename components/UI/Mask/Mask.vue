@@ -71,7 +71,7 @@ watch(() => props.active, (newV) => {
 </script>
 
 <style lang="css" module>
-
+/* purgecss ignore */
 .mask::after {
     content: '';
     position: absolute;

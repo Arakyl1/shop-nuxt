@@ -287,6 +287,7 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .file {
  display: flex;
  justify-content: center;

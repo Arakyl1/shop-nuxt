@@ -128,6 +128,7 @@ function setActiveCategor(id: typeof categorId.value) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     position: fixed;
     top: 0;

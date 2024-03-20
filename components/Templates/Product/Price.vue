@@ -30,6 +30,7 @@ function transformPrice(reg:string, option: object, price:number):string {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     display: flex;
     align-items: flex-end;

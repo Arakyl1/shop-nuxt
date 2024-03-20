@@ -55,6 +55,7 @@ watch(() => _userAnonim.value, () => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .footer-button {
     display: flex;
     flex-direction: column;

@@ -143,6 +143,7 @@ const className = useCssModule()
 const card: readonly string[] = ['maestro', 'master', 'mir', 'visa']
 </script>
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     padding: 2rem 0;
 }

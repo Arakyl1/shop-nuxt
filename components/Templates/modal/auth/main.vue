@@ -68,6 +68,7 @@ async function onClick() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     width: 400px;
 }

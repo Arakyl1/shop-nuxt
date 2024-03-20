@@ -37,6 +37,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .header {
     height: 3.625rem;
     padding: 0 1.25rem;

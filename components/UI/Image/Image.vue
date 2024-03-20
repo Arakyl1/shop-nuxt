@@ -78,6 +78,7 @@ function onError() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     display: flex;
     overflow: hidden !important;

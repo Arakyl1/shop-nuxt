@@ -22,6 +22,7 @@ const item = ref<HTMLElement | null>(null)
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .separator {
   width: 100%;
   height: 1px;

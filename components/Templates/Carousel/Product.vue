@@ -51,6 +51,7 @@ const { data } = await useFetch('/api/product/get', {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .header {
     gap: 1.5rem;
     margin-bottom: 2rem;

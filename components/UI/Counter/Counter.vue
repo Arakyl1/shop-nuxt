@@ -113,6 +113,7 @@ function onPointerUp({ target }: PointerEvent) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     display: flex;
     align-items: center;

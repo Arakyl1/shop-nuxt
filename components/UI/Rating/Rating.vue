@@ -180,6 +180,7 @@ function onReset() {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .input {
     visibility: hidden;
     position: absolute;

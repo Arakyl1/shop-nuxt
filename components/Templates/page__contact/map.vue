@@ -73,6 +73,7 @@ const WEEKENDS_DAY = common.WEEKENDS_DAY.split('GAP')
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .item {
     padding: 0.75rem 1.25rem;
     width: 100%;

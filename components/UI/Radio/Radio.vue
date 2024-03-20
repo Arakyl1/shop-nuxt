@@ -62,6 +62,7 @@ function onClick({ target }: MouseEvent) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .radio {
     display: flex;
     gap: 0 0.25rem;

@@ -28,6 +28,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     /* max-width: 900px; */
     width: 940px;

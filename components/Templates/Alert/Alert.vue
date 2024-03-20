@@ -46,6 +46,7 @@ function onClick({ target }: MouseEvent) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .body {
     position: fixed;
     z-index: 1000;

@@ -17,6 +17,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .line {
     overflow: hidden;
     display: -webkit-box;

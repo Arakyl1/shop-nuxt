@@ -58,6 +58,7 @@ function transformData(item: NonNullable<typeof data.value>['item'][0]) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .picture {
     object-fit: cover;
     min-width: 100%;

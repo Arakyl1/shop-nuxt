@@ -75,6 +75,7 @@ function checkRandomNum() {
 
 
 <style lang="css" module>
+/* purgecss ignore */
 .textarea {
   height: 20rem;
   border: 1px solid var(--gray-300);

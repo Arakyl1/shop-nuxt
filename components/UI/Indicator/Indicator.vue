@@ -41,6 +41,7 @@ onMounted(() => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .indicator {
     position: absolute;
 }

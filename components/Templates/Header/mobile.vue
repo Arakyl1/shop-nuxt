@@ -107,6 +107,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 @media (min-width: 640px) {
     .top {
         gap: 1.5rem;

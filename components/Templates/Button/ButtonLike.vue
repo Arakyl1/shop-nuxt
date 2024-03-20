@@ -18,6 +18,7 @@ const rootClass = computed(() => {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .button {
     --fill-color: var(--transparent);
 }

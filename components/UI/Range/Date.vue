@@ -47,6 +47,7 @@ function changeDate(date) {
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .bt {
     padding: 0.75rem 0.5rem;
 }

@@ -31,7 +31,7 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
-
+/* purgecss ignore */
 @media screen and  (min-width: 768px) {
     .body {
         width: 75%;

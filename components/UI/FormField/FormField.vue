@@ -123,6 +123,7 @@ onMounted(() => checkMessage() && elem.value ? elem.value.removeEventListener('i
 </script>
 
 <style lang="css" module>
+/* purgecss ignore */
 .field {
     position: relative;
 }
