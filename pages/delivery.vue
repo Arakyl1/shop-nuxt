@@ -1,6 +1,6 @@
 <template>
     <Panel :mode="'primary'" class="mb-12">
-        <Grid :container="'xs'" class="gap-8 md:gap-4 lg:gap-6 sm:gap-4" :class="className['body']">
+        <Grid :container="'xs'" class="gap-8 /md:gap-4 lg:gap-6 sm:gap-4" :class="className['body']">
             <Group class="gap-8" v-for="section,index in data"
             :key="index">
                 <Card :appearance="'gray'"

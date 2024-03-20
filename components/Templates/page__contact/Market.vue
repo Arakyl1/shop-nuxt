@@ -7,7 +7,7 @@
                         <ClientOnly>
                             <img :src="elem.img" alt="Market photo" class="object-cover w-full">
                         </ClientOnly>
-                        <p class="py-2 lg:text-sm md:text-base">{{ elem.adress }}</p>
+                        <p class="py-2 lg:text-sm /md:text-base">{{ elem.adress }}</p>
                     </div>
                 </template>
                 <template v-if="viewport.isGreaterOrEquals('sm')"

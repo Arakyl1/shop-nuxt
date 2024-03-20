@@ -2,8 +2,8 @@
   <div>
     <Alert />
     <header>
-      <Header class="none md:block" />
-      <HeaderMobile class="md:hidden" />
+      <Header class="none /md:block" />
+      <HeaderMobile class="/md:hidden" />
     </header>
     <div class="container">
       <!-- <Transition name="path" mode="out-in">
