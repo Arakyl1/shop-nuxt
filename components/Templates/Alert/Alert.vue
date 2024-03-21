@@ -1,7 +1,7 @@
 <template>
     <div :class="className['body']">
         <ClientOnly>
-            <TransitionGroup tag="ul" name="list" @click.stop="onClick" class="flex flex-column gap-y-2">
+            <TransitionGroup tag="ul" name="list" @click.stop="onClick" class="flex flex-column gap-2">
                 <template v-for="item in alertData" :key="item.createAt">
                     <Flex :tag="'li'" :justify="'end'" :data-alert-id="item.createAt">
                         <Flex class="rounded-base py-1 px-2 gap-1 line-clamp-2"

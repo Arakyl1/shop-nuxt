@@ -3,13 +3,13 @@
         <div class="container" v-if="common">
             <!-- Mobile Footer start -->
             <div class="/md:hidden">
-                <Group class="gap-y-8 w-full ">
+                <Group class="gap-8 w-full ">
                     <Flex :justify="'end'" class="w-full">
-                        <Button tag="a" :href="`tel:${common.TELEPHONE}`" :text="common.TELEPHONE" :size="'none'" class="text-white"/>
+                        <Button tag="a" :href="`tel:${common.TELEPHONE}`" :text="common.TELEPHONE" class="text-white"/>
                     </Flex>
                     <Flex :justify="'between'" class="w-full">
                         <Paragraph :text="common.WORKING_HOURS" class="text-white" />
-                        <Button tag="a" :href="`mailto:${common.MAIL}`" :text="common.MAIL" :size="'none'"/>
+                        <Button tag="a" :href="`mailto:${common.MAIL}`" :text="common.MAIL" />
                     </Flex>
                     <Group class="w-full">
                         <template v-for="section in FOOTER_ROUTER">
@@ -18,15 +18,16 @@
                                 <template #trigger="{ isActive, close, onClick }">
                                     <Flex :justify="'between'" class=" py-4">
                                         <Paragraph :text="section.title" class="text-white" />
-                                        <Button :icon-left="{ icon: 'add-plus', 'size': '16_16' }" :size="'none'" @click="() => isActive ? close() : onClick()" />
+                                        <Button
+                                        :icon-left="{ icon: 'add-plus', 'size': '16_16' }"
+                                        @click="() => isActive ? close() : onClick()" />
                                         </Flex>
                                     </template>
                                     <template #default>
-                                        <Group class="gap-y-3" :class="className['accordion-body']">
+                                        <Group class="gap-3" :class="className['accordion-body']">
                                             <Button v-for="item in section.links"
                                             :key="item.href"
                                             tag="nuxt-link"
-                                            :size="'none'"
                                             :mode="'link'"
                                             :text="item.title"
                                             :to="item.href"
@@ -43,14 +44,14 @@
                             <Paragraph :text="common.SOCIAL_NETWORK" class="text-gray-300 px-1"/>
                         </Flex>
                         
-                        <Button :icon-left="{ icon: 'user-outline', size: '13_18' }"
+                        <Button :icon-left="{ icon: 'user-outline', size: '18_18' }"
                         :appearance="'blue'"
                         :text="common.BUTTON_TEXT"
-                        class="w-full h-12 text-bold justify-center"/>
+                        class="w-full text-bold justify-center"/>
                         
                         <Paragraph :text="common.PAYMENT_METHODS" class="text-md text-white w-full"/>
                         
-                        <Flex class="gap-x-2.5 w-full">
+                        <Flex class="gap-2.5 w-full">
                             <img v-for="item in card" :key="item" :src="`/img/card/${item}.png`" :alt="item" class="" >
                         </Flex>
                         
@@ -61,9 +62,9 @@
 
             <!-- Desktop Footer start -->
             <div class="none /md:block">
-                <Group class="gap-y-12">
+                <Group class="gap-12">
                     <Grid class="gap-10" :container="'sm'">
-                        <Group class="gap-y-5">
+                        <Group class="gap-5">
                             <div>
                                 <img src="@/assets/img/logo.png" :alt="`Logo market place ${config.public.NAME_APP}`" class="h-9">
                             </div>
@@ -72,9 +73,9 @@
                             <Paragraph :text="common.WORKING_HOURS" class="text-white"/>
                             <Paragraph :text="common.ADDRESS" class="text-gray-300"/>
                         </Group>
-                        <Group class="gap-y-5">
+                        <Group class="gap-5">
                             <Title :text="FOOTER_ROUTER[0].title" :tag="'h4'" class="text-white"/>
-                            <Group class="gap-y-2.5">
+                            <Group class="gap-2.5">
                                 <Button v-for="item in FOOTER_ROUTER[0].links"
                                 :key="item.title"
                                 tag="nuxt-link"
@@ -84,10 +85,10 @@
                                 :style="{ '--color': 'var(--gray-300)' }" />
                             </Group>
                         </Group>
-                        <Group class="gap-y-6.5">
-                            <Group class="gap-y-5" v-for="section in FOOTER_ROUTER.slice(1,3)">
+                        <Group class="gap-6.5">
+                            <Group class="gap-5" v-for="section in FOOTER_ROUTER.slice(1,3)">
                                 <Title :text="section.title" :tag="'h4'" class="text-white"/>
-                                <Group class="gap-y-2.5">
+                                <Group class="gap-2.5">
                                     <Button v-for="item in section.links"
                                     :key="item.href"
                                     :mode="'link'"
@@ -98,18 +99,17 @@
                                 </Group>
                             </Group>
                         </Group>
-                        <Group class="gap-y-7.5">
+                        <Group class="gap-7.5">
                             <Flex class="gap-2.5 w-full">
                                 <img src="@/assets/img/iconSocials/whatsApp.png" alt="whatsApp" class="h-6 w-6 pointer">
                                 <img src="@/assets/img/iconSocials/vider.png" alt="viber" class="h-6 w-6 pointer">
                                 <Paragraph :text="common.SOCIAL_NETWORK" class="text-gray-300 px-1"/>
                             </Flex>
 
-                            <Button :icon-left="{ icon: 'user-outline', size: '13_18' }"
-                            :size="'base'"
+                            <Button :icon-left="{ icon: 'user-outline', size: '18_18' }"
                             :appearance="'blue'"
                             :text="common.BUTTON_TEXT"
-                            class="w-full h-12 text-bold justify-center"/>
+                            class="w-full px-4 text-bold justify-center"/>
 
                             <Paragraph :text="common.PAYMENT_METHODS" class="text-md text-white w-full"/>
 

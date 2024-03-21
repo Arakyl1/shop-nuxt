@@ -1,6 +1,6 @@
 <template>
-    <Group class="gap-y-4" :class="className['body']" v-if="_userData && activeProduct">
-        <Flex class="gap-x-4">
+    <Group class="gap-4" :class="className['body']" v-if="_userData && activeProduct">
+        <Flex class="gap-4">
             <Image :src="_userData.profileImage" :square="true"
             alt="user-image"
             :rounded="'xl'"
@@ -10,8 +10,8 @@
         </Flex>
         <div class="decor-line"></div>
         <form class="w-full" ref="form">
-            <Group class="gap-y-3">
-                <Flex class="gap-x-3">
+            <Group class="gap-3">
+                <Flex class="gap-3">
                     <p class="text-md">{{ activeProduct.name }}</p>
                     <p class="text-md text-gray-500">{{ activeProduct.art }}</p>
                 </Flex>
@@ -26,8 +26,8 @@
             <Button
             :appearance="'yellow'"
             :text="common.REVIEWS_CREATE"
-            :size="'lg'"
-            class="h-10 text-base"
+            :height="'h-10'"
+            class="px-6"
             @click="onClick"/>
         </Flex>
     </Group>

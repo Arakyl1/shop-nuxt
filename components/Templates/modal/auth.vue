@@ -2,24 +2,24 @@
     <Transition name="auth" :duration="300" mode="out-in">
         <Main v-if="!_userAnonim"/>
         <Login v-else-if="!state">
-            <div :class="className['footer-button']">
+            <Group class="gap-4"  :align="'center'":class="className['footer-button']">
                 <div class="decor-line"></div>
                 <Button
                 :mode="'link'"
                 :text="common.USER_REGISTER"
                 @click="update(!state)"
                 class="text-sm"/>
-            </div>
+            </Group>
         </Login>
         <Register v-else-if="state">
-            <div :class="className['footer-button']">
+            <Group class="gap-4" :align="'center'" :class="className['footer-button']">
                 <div class="decor-line"></div>
                 <Button
                 :mode="'link'"
                 :text="common.USER_LOGIN"
                 @click="update(!state)"
                 class="text-sm"/>
-            </div>
+            </Group>
         </Register>
     </Transition>
 </template>
@@ -31,6 +31,7 @@ import Login from "@/components/Templates/modal/auth/login.vue";
 import Register from "@/components/Templates/modal/auth/register.vue";
 import Main from "@/components/Templates/modal/auth/main.vue";
 import Button from "@/components/UI/Button/Button.vue";
+import Group from "@/components/UI/Group/Group.vue";
 import localState from "@/utils/localState";
 import { BASE_BUTTON as common } from '@/common/C'
 
@@ -57,10 +58,6 @@ watch(() => _userAnonim.value, () => {
 <style lang="css" module>
 /* purgecss ignore */
 .footer-button {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
     margin-top: 1rem;
-    align-items: center;
 }
 </style>

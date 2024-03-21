@@ -1,5 +1,5 @@
 <template>
-    <Group class="gap-y-6" :class="className['body']">
+    <Group class="gap-6" :class="className['body']">
         <Title :tag="'h3'" :text="common.TITLE"/>
         <div class="decor-line"></div>
         <Group v-if="favoriteLength" class="w-full">

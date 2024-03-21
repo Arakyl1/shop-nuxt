@@ -8,11 +8,11 @@
                 <template #trigger="{ activeOption, isActive, onClick }">
                     <Button :text="activeOption?.value"
                     :appearance="'blue-icon'"
-                    :rounded="'lg'"
                     :icon-transition="'select-icon'"
                     :icon-right="{ icon: isActive ? 'arrow' : 'arrow', size: '25_25' }"
-                    class="text-base w-full h-6 py-0.5 px-1"
+                    class="w-full py-0.5 px-1"
                     :class="[ activeOption?.value ? 'justify-between' : 'justify-end']"
+                    :height="'h-6'"
                     @click="onClick"/>
                 </template>
             </Select>

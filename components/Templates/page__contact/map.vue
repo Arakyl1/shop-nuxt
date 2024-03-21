@@ -3,8 +3,8 @@
         <template v-if="true">
             <div :class="className['button']" ref="modalbutton">
                 <Button :appearance="'white'"
-                :size="'lg'"
-                class="text-xl h-14 text-gray-500"
+                :height="'h-14'"
+                class="text-xl px-6 text-gray-500"
                 @click="update(true)"
                 :text="common.BUTTON_MODAL"/>
             </div>
@@ -12,11 +12,11 @@
             :onClose="() => update(false)"
             :bodyClass="className['modal']"
             :btClose="true">
-                <Group  class="gap-y-10">
+                <Group  class="gap-10">
                     <Title :tag="'h3'"
                     :text="common.BUTTON_MODAL"
                     class="text-black-300"/>
-                    <Flex :direction="'column'" class="gap-y-4">
+                    <Flex :direction="'column'" class="gap-4">
                         <Flex
                         :justify="'between'"
                         :class="className['item']"

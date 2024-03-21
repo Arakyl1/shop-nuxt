@@ -1,12 +1,12 @@
 <template>
     <Card :appearance="'gray'" :container="'xl'" :class="className['body']">
-        <Flex :direction="'column'" :align="'flex-start'" class="gap-y-6">
+        <Flex :direction="'column'" :align="'flex-start'" class="gap-6">
             <Title :text="common.TEXT_SPECIFICATIONS" :tag="'h3'" class="text-black-100" />
             <div class="decor-line"></div>
-            <Flex :direction="'column'" class="gap-y-4 w-full">
+            <Flex :direction="'column'" class="gap-4 w-full">
                 <div v-for="item in data" class="w-full">
                     <Title :tag="'h4'" :text="item.title" class="text-black-100" :class="className['title']" />
-                    <Flex :tag="'ul'" :direction="'column'" class="gap-y-3 w-full">
+                    <Flex :tag="'ul'" :direction="'column'" class="gap-3 w-full">
                         <Flex v-for="elem in item.content" :tag="'li'" :justify="'between'" :align="'flex-start'" class="w-full">
                             <p class="text-gray-500 w-1/2">{{ elem.name }}</p>
                             <div class="grow"></div>

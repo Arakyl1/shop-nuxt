@@ -1,5 +1,8 @@
 <template>
-    <Button v-bind="{ ...props }" :appearance="'red-icon'" :icon-left="{ icon: 'like', size: '28_28' }" :class="rootClass" />
+    <Button v-bind="{ ...props }"
+    :appearance="'red-icon'"
+    :icon-left="{ icon: 'like', size: '28_28' }"
+    :class="rootClass" />
 </template>
 <script setup lang="ts">
 import { default as Button, type Props as ButtonProps } from "@/components/UI/Button/Button.vue";

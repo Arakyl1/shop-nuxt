@@ -1,7 +1,7 @@
 <template>
   <Card :appearance="'gray'" :container="'xl'">
     <Grid :container="'xs'" class="gap-8">
-      <Group :tag="'fieldset'" class="grow gap-y-6">
+      <Group :tag="'fieldset'" class="grow gap-6">
         <Title :tag="'h3'" :text="common.TITLE_DESCRIPTION"/>
         <div class="decor-line"></div>
         <textarea
@@ -11,7 +11,7 @@
         :class="className['textarea']"
         :placeholder="commonInput.PRODUCT_CREATE_DESCRIPTION_TEXTAREA.PLACEHOLDER"></textarea>
       </Group>
-      <Group :tag="'fieldset'" class="grow gap-y-6">
+      <Group :tag="'fieldset'" class="grow gap-6">
         <Title :tag="'h3'" :text="common.TITLE_ADDITIONAL_OPTION"/>
         <div class="decor-line"></div>
         <Flex  v-if="otherData" class="gap-6 flex-wrap">

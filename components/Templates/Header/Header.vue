@@ -3,7 +3,7 @@
         <div class="bg-gray-100 w-full">
             <div class="container">
                 <Flex :justify="'between'" class="w-full py-2">
-                    <Flex class="gap-x-4">
+                    <Flex class="gap-4">
                         <template v-for="button in [HEADER_ROUTER[0], HEADER_ROUTER[1]]" :key="button?.title">
                             <Button 
                             tag="nuxt-link"
@@ -15,19 +15,19 @@
                     </Flex>
 
                     <div class="none /lg:block">
-                        <Flex :justify="'center'" class="grow gap-x-8">
+                        <Flex :justify="'center'" class="grow gap-8">
                             <p class="text-gray-300">{{ common.TOP_SLOGAN }}</p>
-                                <Flex class="gap-x-2" >
+                                <Flex class="gap-2" >
                                     <svg v-for="item in 3" :key="item"
                                     height="12" width="12px" xmlns="http://www.w3.org/2000/svg">
-                                    <circle r="5" cx="6" cy="6" class="fill-blue-500"></circle>
+                                    <circle r="5" cx="6" cy="6" :style="{ 'fill': 'var(--blue-500)' }"></circle>
                                 </svg>
                             </Flex>
                             <p>{{ common.TOP_CAPTION }}</p>
                         </Flex>
                     </div>
                     
-                    <Flex class="gap-x-4">
+                    <Flex class="gap-4">
                         <Button 
                         tag="nuxt-link"
                         :mode="'link'"
@@ -76,14 +76,14 @@
                 <Button
                 :tag="'nuxt-link'"
                 :appearance="'yellow'"
-                :size="'lg'"
-                class="h-10 text-bold /md:hidden"
+                :height="'h-10'"
+                class="text-bold px-8"
                 :text="common.BUTTON_ADDRESS_MARKER"/>
                 
                 <Button
                 :appearance="'blue'"
-                :size="'xs'"
-                class="h-10"
+                class="px-2"
+                :height="'h-10'"
                 :active="isBoolean(anonim) && !anonim"
                 :icon-left="{ icon: 'user', size: '24_24' }"
                 @click="storeModal.changeActiveModal('auth-user')"/>

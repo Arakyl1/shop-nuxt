@@ -6,7 +6,7 @@
   :rounded="'xl'"
   class="scrollbar-v1">
     <form ref="form">
-      <Group class="gap-y-6" :align="'center'">
+      <Group class="gap-6" :align="'center'">
         <Title :tag="'h3'"
         :text="MODAl_AUTH.TITLE_REGISTER" />
 
@@ -46,7 +46,7 @@
 
         <Button
         :appearance="'blue'"
-        class="text-md w-full justify-center h-12"
+        class="w-full justify-center"
         :text="BASE_BUTTON.USER_REGISTER"
         @click="onClick"/>
       </Group>

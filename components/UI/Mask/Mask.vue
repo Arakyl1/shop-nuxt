@@ -15,6 +15,8 @@ export interface Props {
     animation?: 'scale',
     animationMobile?: string,
     hideScroll?: boolean,
+    openDelay?: number,
+    closeDelay?: number,
     fun?: (...arg: any[]) => any
 }
 
@@ -24,6 +26,8 @@ const props = withDefaults(defineProps<Props>(), {
     position: 'fixed',
     animation: 'scale',
     hideScroll: true,
+    openDelay: 0,
+    closeDelay: 300,
     fun: () => false
 })
 const className = useCssModule()
@@ -50,23 +54,18 @@ function checkDevice() {
     return isDesktop && !isFirefox && !isAndroid && !isIos && checkScreenSizeMoreScrollSize()
 }
 
-watch(() => props.active, (newV) => {
-    if (!props.hideScroll) return
-   
-    if (newV) {
-        document.body.style.overflow = 'hidden'
+function addClassForBody(type:boolean) {
+    setTimeout(() => {
+        document.body.style.overflow = type ? 'hidden' : 'auto'
         if (checkDevice()) {
-            document.body.style.paddingRight = '16px'
-            
+            document.body.style.paddingRight = type ? '16px' : '0px'
         }
-    } else {
-        setTimeout(() => {
-            document.body.style.overflow = 'auto'
-            if (checkDevice()) {
-                document.body.style.paddingRight = '0'
-            }
-        }, 300)
-    }
+    }, type ? props.openDelay : props.closeDelay)
+}
+
+watch(() => props.active, (nV) => {
+    if (!props.hideScroll) return
+    addClassForBody(nV)
 })
 </script>
 
@@ -82,6 +81,7 @@ watch(() => props.active, (newV) => {
     transition: var(--opacity-transition-for-mask--base);
     z-index: -1;
 }
+ 
 
 .fixed {
     position: fixed;

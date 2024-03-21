@@ -1,5 +1,5 @@
 <template>
-    <Flex class="w-full gap-x-1" >
+    <Flex class="w-full gap-1" >
         <Input type="number"
             v-bind="{ ...attr }"
             :name="section.from.name"

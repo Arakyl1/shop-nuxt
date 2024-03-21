@@ -8,14 +8,14 @@
                     </fieldset>
                 </template>
             </form>
-            <form ref="form" class="flex flex-column gap-y-3" @input="getParamsFilter" @change="getParamsFilter">
+            <form ref="form" class="flex flex-column gap-3" @input="getParamsFilter" @change="getParamsFilter">
                 <template v-if="dataFilterList">
                     <template v-for="section, i in dataFilterList"
                     :key="Array.isArray(section) ? i : section.title">
                     <template v-if="Array.isArray(section)">
-                            <Group :tag="'fieldset'" class="w-full gap-y-2">
+                            <Group :tag="'fieldset'" class="w-full gap-2">
                                 <div class="decor-line"></div>
-                                <Group class="gap-y-2 w-full">
+                                <Group class="gap-2 w-full">
                                     <template v-for="item in section">
                                         <Flex v-if="item.type === 'radio'" :justify="'between'" class="w-full">
                                             <span class="text-md">{{ item.title }}</span>
@@ -29,13 +29,13 @@
                         <template v-else>
                             <div v-if="section.type === 'select'"></div>
 
-                            <Group v-else-if="section.type === 'number-range'" :tag="'fieldset'" class="gap-y-2" >
+                            <Group v-else-if="section.type === 'number-range'" :tag="'fieldset'" class="gap-2" >
                                 <div class="decor-line"></div>
                                 <Title :tag="'h4'" class="truncate">{{ section.title }}</Title>
                                 <RangeNumber :section="section" :mode="'outline'"/>
                             </Group>
 
-                            <Group v-else-if="section.type === 'star'" :tag="'fieldset'" class="gap-y-2">
+                            <Group v-else-if="section.type === 'star'" :tag="'fieldset'" class="gap-2">
                                 <Title tag="h4" class="truncate" :text="section.title"/>
                                 <div class="decor-line"></div>
                                 <Rating
@@ -47,13 +47,13 @@
                                 class="justify-between w-full"/>
                             </Group>
 
-                            <Group v-else-if="section.type === 'checkbox'" :tag="'fieldset'" class="gap-y-2">
+                            <Group v-else-if="section.type === 'checkbox'" :tag="'fieldset'" class="gap-2">
                                 <Title tag="h4" class="truncate" :text="section.title"/>
                                 <div class="decor-line"></div>
                                 <ListCheckBox :content="section" />
                             </Group>
 
-                            <Flex v-else-if="section.type === 'radio'" :justify="'between'" class="gap-x-2">
+                            <Flex v-else-if="section.type === 'radio'" :justify="'between'" class="gap-2">
                                 <span>{{ section.title }}</span>
                                 <Switch :name="section.name!" :value="section.value!" />
                             </Flex>
@@ -63,10 +63,11 @@
                     <Flex :justify="'end'" class=" pt-3">
                         <Button
                         :appearance="'blue'"
-                        :size="'base'"
                         :text="commonButton.FILTER_RESET"
                         :icon-left="{ icon: 'reload', size: '20_20' }"
-                        @click.prevent="resetData" class="text-md h-10"/>
+                        @click.prevent="resetData"
+                        :height="'h-10'"
+                        class="text-md px-4"/>
                     </Flex>
                 </template>
             </form>

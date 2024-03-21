@@ -29,9 +29,6 @@
 // просто укажите его элементу 
 // например: <Radio :name="'gender'" :mode="'primary'" :text="'Man'" :style="{ 'font-size': '1.5rem' }"/>
 
-//ВАЖНО!!!!! Пока времено убрал эту возможность
-// или через стили text-xs, text-sm и т.д, при этом обязательно добавив модификатори --imp
-// например: <Radio :name="'gender'" :mode="'primary'" :text="'Man'" class="text-2xl--imp"/>
 interface Props {
     disabled?: boolean,
     name?: string,

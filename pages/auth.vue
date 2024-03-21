@@ -7,7 +7,7 @@
         :rounded="'xl'"
         :class="className['card']">
             <form ref="form">
-                <Group class="gap-y-6" :align="'center'">
+                <Group class="gap-6" :align="'center'">
                     <Title :tag="'h3'" :text="MODAl_AUTH.TITLE_LOGIN"/>
                     <Input class="w-full h-12"
                     :span="common.USER_USERNAME.PLACEHOLDER"
@@ -26,7 +26,7 @@
 
                     <Button
                     :appearance="'blue'"
-                    class="text-md w-full justify-center h-12"
+                    class="text-md w-full justify-center"
                     :text="BASE_BUTTON.USER_LOGIN"
                     @click="onClick"/>
                 </Group>

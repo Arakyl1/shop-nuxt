@@ -2,20 +2,21 @@
     <Card :appearance="'gray'" :container="'xl'">
         <CardGridScroll :data="reviewsUpdate" :container="'xs'">
             <template #header="{ prev, next, listValueScroll }">
-                <Flex :direction="'column'" :align="'flex-start'" class="gap-y-6 ">
-                    <Flex class="gap-x-4 w-full">
+                <Flex :direction="'column'" :align="'flex-start'" class="gap-6 ">
+                    <Flex class="gap-4 w-full">
                         <Title :tag="'h3'"
                         :text="common.TEXT_REVIEWS"
                         class="text-black-100 grow" />
-                        <Flex class="gap-x-2">
+                        <Flex class="gap-2">
                             <ButtonArrow
                             :disabled="listValueScroll.current === 0"
                             @click="prev"
-                            class="-scale-100 h-10 " />
+                            :height="'h-10'"
+                            class="-scale-100" />
                             <ButtonArrow
                             :disabled="listValueScroll.current >= listValueScroll.max"
                             @click="next"
-                            class="h-10" />
+                            :height="'h-10'"/>
                         </Flex>
                     </Flex>
                     <div class="decor-line"></div>
@@ -28,14 +29,15 @@
                 <p v-if="!reviewsUpdate.length"
                 class="text-md text-gray-500 py-4"
                 >{{ common.TEXT_NOT_REVIEWS }}</p>
-                <Flex :align="'flex-end'" :direction="'column'" class="gap-y-4">
+                <Flex :align="'flex-end'" :direction="'column'" class="gap-4">
                     <div></div>
                     <div>
                         <Button v-if="!anonim"
                         :appearance="'yellow'"
                         :text="commonButton.REVIEWS_ADD"
                         @click="openModalCreateReviews"
-                        class="px-4 h-8 text-base" />
+                        :height="'h-8'"
+                        class="px-4" />
                     </div>
                 </Flex>
             </template>

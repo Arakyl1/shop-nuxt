@@ -78,16 +78,14 @@
                         </Group>
                     </Group>
                 </Group>
-                
-                
             </form>
 
             <Grid :size="'xs'">
                 <Button
                 :text="BASE_BUTTON.USER_SAVE"
                 :appearance="'green'"
-                :size="'lg'"
-                class="w-full  h-10"
+                :height="'h-10'"
+                class="w-full px-6"
                 @click="onClick"/>
             </Grid>
 
@@ -96,7 +94,7 @@
                 <Button
                 :text="BASE_BUTTON.USER_LOGOUT"
                 :mode="'link'"
-                class="text-base text-red-500"
+                class="text-red-500"
                 @click="async() => await _logout()"/>
             </Group>          
         </Group>
@@ -120,7 +118,7 @@ import Grid from "@/components/UI/Grid/Grid.vue";
 import { user as _user } from '@/stores/user';
 import Confirm from "@/components/Templates/modal/Confirm.vue";
 import { PAGE_USER_MAIN as common, PAGE_META, BASE_BUTTON, INPUT_CONTENT } from "@/common/C";
-import { setValueInput, searchInvalidElem } from '@/utils/formHelpers'
+import { setValueInput, searchInvalidElem, getFormData } from '@/utils/formHelpers'
 
 
 const { logout: _logout } = useAuth()
@@ -145,13 +143,13 @@ onMounted(() => {
 
 
 async function onClick() {
-    if(form.value instanceof HTMLFormElement) {
-        const formData = new FormData(form.value)
-        const urlEncoded = new URLSearchParams(formData).toString();
+    if(form.value instanceof HTMLFormElement && searchInvalidElem(form)) {
+        const body = getFormData(form)
+        if (!data) return
+
         await useFetch('/api/user/update', {
             method: 'POST',
-            body: urlEncoded,
-            
+            body,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

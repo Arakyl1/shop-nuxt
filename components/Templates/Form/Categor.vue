@@ -1,7 +1,7 @@
 <template>
-    <Group class="gap-y-3" v-if="dataSelect">
+    <Group class="gap-3" v-if="dataSelect">
         <Group v-for="(item, index) in dataSelect?.filter(_ => _)" :key="getTitle(index)"
-            class="gap-y-2 w-full">
+            class="gap-2 w-full">
             <Title :tag="'h4'"
             class="truncate"
             :text="getTitle(index)" />

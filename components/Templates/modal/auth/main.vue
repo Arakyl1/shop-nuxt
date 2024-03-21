@@ -2,8 +2,8 @@
     <Card :container="'xl'" v-if="_userData"
     :class="className['body']"
     class="scrollbar-v1">
-        <Group class="gap-y-6 w-full">
-            <Flex class="gap-x-8">
+        <Group class="gap-6 w-full">
+            <Flex class="gap-8">
                 <Image :square="true"
                 :src="_userData.profileImage"
                 :alt="`Photo users ${_userData.username}`"
@@ -17,14 +17,14 @@
 
             <Group  class="gap-3 w-full">
                 <template v-for="(elem, index) in MODAL_MENU_USER" :key="index">
-                    <Group :tag="'ul'" class="gap-y-2">
+                    <Group :tag="'ul'" class="gap-2">
                         <li v-for="item in elem" :key="item.title">
                             <Button
                             :tag="'nuxt-link'"
                             :to="item.href"
                             :mode="'link'"
                             :text="item.title"
-                            :size="'sm'"/>
+                            class="px-3"/>
                         </li>
                     </Group>
                 </template>
@@ -34,7 +34,7 @@
     
             <Button
             :mode="'link'"
-            :size="'xl'"
+            class="px-8"
             :text="common.USER_LOGOUT"
             :class="className['bt-logout']"
             @click="onClick"/>

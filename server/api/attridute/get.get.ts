@@ -1,5 +1,5 @@
 import { Prisma, } from "@prisma/client";
-import prisma from "~~/server/db";
+import prisma from "@/server/db";
 import { storageCategorData } from "~~/type/intex";
 
 
@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
             return categorAttributeRes
         }
     } catch (error) {
+        console.log(error)
         return null
     }
 })

@@ -78,3 +78,12 @@ export function setValueInput(elem: FORM, setData: Map<string, string[]> ) {
         }
     }
 }
+
+export function getFormData(form:FORM) {
+    const _form = unref(form)
+    if (_form instanceof HTMLFormElement) {
+        const formData = new FormData(form.value)
+        return new URLSearchParams(formData).toString();
+    }
+    return null
+}

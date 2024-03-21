@@ -1,7 +1,7 @@
 <template>
     <Flex :tag="'section'" class="text-gray-500 flex-wrap" :class="className['body']">
         <div class="">
-            <Group class="gap-y-8">
+            <Group class="gap-8">
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_COMMUNICATIONS"/>
                 <Flex class="gap-8" :class="className['']">
                     <Flex class="gap-4">
@@ -32,7 +32,7 @@
         </div>
         <div class="grow">
             <Card :appearance="'gray'" :container="'xl'">
-                <Group class="gap-y-2">
+                <Group class="gap-2">
                     <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_REQUISITES"/>
                     <ContentDoc path="/contact/requisites" v-slot="{ doc }">
                         <ul class="text-black-300">

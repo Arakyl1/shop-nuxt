@@ -78,7 +78,7 @@ const rootClass = computed(() => {
         [className['type--' + props.type]]: props.type,
         [className['size--' + props.padding]]: props.padding,
         [className[props.position]]: props.position,
-        [`rounded-${props.rounded}-imp`]: props.rounded,
+        [`rounded-${props.rounded}`]: props.rounded,
     }
 })
 

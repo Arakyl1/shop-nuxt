@@ -2,7 +2,7 @@
     <Card :appearance="'gray'" :container="'xl'">
         <Flex :direction="'column'"
         :align="'flex-start'"
-        class="gap-y-6">
+        class="gap-6">
             <Title :tag="'h3'"
             :text="common.TEXT_DESCRIPTION"
             class="text-black-100" />

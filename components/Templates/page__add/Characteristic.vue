@@ -1,19 +1,19 @@
 <template>
   <div>
     <Card :appearance="'gray'" :container="'xl'" :class="className['body']">
-      <Group class="gap-y-8" >
+      <Group class="gap-8" >
         <Flex class="gap-4 w-full flex-wrap" :class="className['bt-control']">
           <Button
           :appearance="'blue'"
-          :size="'sm'"
-          class="h-10 text-base grow justify-center"
+          :height="'h-10'"
+          class="px-3 grow justify-center"
           @click="addSection"
           :text="commonButton.ADD_SECTION"/>
 
           <Button
           :appearance="'red'"
-          :size="'sm'"
-          class="h-10 text-base grow justify-center"
+          :height="'h-10'"
+          class="px-3 grow justify-center"
           :disabled="!characteristicSection"
           @click="() => setStatus('cancel-create')"
           :text="commonButton.DELETE_SECTION"/>
@@ -30,7 +30,7 @@
           
           <Flex v-for="(item, index) in characteristicSection.children"
           :key="index"
-          class="gap-x-3 w-full">
+          class="gap-3 w-full">
             <FormField class="w-full">
               <Input
               :placeholder="commonInput.ADD_NAME.PLACEHOLDER"
@@ -55,24 +55,24 @@
           <Flex class="gap-4 w-full flex-wrap" :class="className['bt-control']">
             <Button
             :appearance="'blue'"
-            :size="'sm'"
             @click="addItem"
+            :height="'h-10'"
             :text="commonButton.ADD_FIELD"
-            class="h-10 text-base grow justify-center"/>
+            class="px-3 grow justify-center"/>
 
             <Button
             :appearance="'yellow'"
-            :size="'sm'"
-            class="h-10 text-base grow justify-center"
+            :height="'h-10'"
+            class="h-10 px-3 grow justify-center"
             @click="() => editActive ? setStatus('apply-change') : createSection()"
             :text="editActive ? commonButton.APPLY_CHANGES : commonButton.CREATE_SECTION"/>
           </Flex>
         </Group>
       </form>
-      <Group v-if="data.length" class="w-full gap-y-4">
+      <Group v-if="data.length" class="w-full gap-4">
         <Group v-for="item, index in data" :key="item.title" class="w-full">
-          <Group class="gap-y-3 w-full">
-            <Flex class="gap-x-8 w-full">
+          <Group class="gap-3 w-full">
+            <Flex class="gap-8 w-full">
               <Title :tag="'h3'" :text="item.title" class="grow truncate"/>
               <Button
               :appearance="'gray-icon'"

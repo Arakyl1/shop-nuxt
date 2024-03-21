@@ -1,21 +1,21 @@
 <template>
     <section>
-        <Group class="w-full gap-y-4">
+        <Group class="w-full gap-4">
             <Title :tag="'h2'"
             :text="data.name "
             :before-content="data.art"
             :before-content-class="'text-gray-300'"
             :class="className['name']"/>
             <div class="decor-line"></div>
-            <Flex :justify="'start'" class="gap-x-4 w-full">
+            <Flex :justify="'start'" class="gap-4 w-full">
                 <Rating :readonly="true"
                 :value="middleRating"
                 :width="26"
-                class="gap-x-8"/>
+                class="gap-8"/>
                 <p class="grow text-gray-500">{{ `${common.TEXT_REVIEWS} (${data.reviews.length})` }}</p>
             </Flex>
             <div class="decor-line"></div>
-            <Flex class="gap-x-5">
+            <Flex class="gap-5">
                 <p :class="className['attr']" @click="copyArticle(data.itemArt)">
                     <span class="text-gray-300">{{common.TEXT_ARTICLE  }} :</span>{{ data.itemArt }}
                 </p>
@@ -36,7 +36,7 @@
                         </template>
                         <template #footer="{ updateScrolLeft, indexActiveButton }" v-if="data?.image?.length > 1">
                             <ControlItem
-                            class="hidden gap-x-4"
+                            class="hidden gap-4"
                             :data="data.image.length"
                             :index-active-button="indexActiveButton"
                             :update-scroll="updateScrolLeft"
@@ -65,7 +65,7 @@
             </Flex>
             <Flex class="w-full gap-4">
                 <Button
-                class="text-base grow h-12 justify-center"
+                class="grow justify-center"
                 :text="common.BUTTON_BASKET_ADD"
                 :appearance="'blue'"
                 :icon-left="{ icon: 'basket', size: '25_25' }"
@@ -73,7 +73,7 @@
                 @click="add({ card_id: data.id, count: numberOfProduct })"/>
                 <ClientOnly>
                     <Button
-                    class="h-12 justify-center"
+                    class="justify-center"
                     :appearance="'blue'"
                     :square="true"
                     :icon-left="{ icon: 'like', size: '25_25' }"
@@ -82,7 +82,7 @@
                     @click="toggle({ card_id: data.id })"/>
                 </ClientOnly>
                 <Button
-                class="h-12 justify-center"
+                class="justify-center"
                 :appearance="'blue'"
                 :square="true"
                 :icon-left="{ icon: 'share', size: '25_25' }"

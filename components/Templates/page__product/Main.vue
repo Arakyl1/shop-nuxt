@@ -12,7 +12,7 @@
                         </template>
                         <template #footer="{ updateScrolLeft, indexActiveButton }" v-if="data?.image?.length > 1">
                             <ControlItem
-                            class="hidden gap-x-4"
+                            class="hidden gap-4"
                             :data="data.image.length"
                             :index-active-button="indexActiveButton"
                             :update-scroll="updateScrolLeft"
@@ -32,7 +32,7 @@
                 <Status :status="getStatus(data)" data-left :class="className['status']"  />
             </div>
             <Card :appearance="'gray'" :container="'xl'" class="h-full w-1/2">
-                <Flex class="relative gap-y-6" :direction="'column'" :align="'flex-start'">
+                <Flex class="relative gap-6" :direction="'column'" :align="'flex-start'">
                     <div :class="className['button-like']">
                         <ClientOnly>
                             <ButtonLike :active="checkAvailabilityItemInFavorites(data.id)"
@@ -45,11 +45,11 @@
                     :before-content-class="'text-gray-300'"
                     :class="className['name']"/>
                     <div class="decor-line"></div>
-                    <Flex :justify="'between'" class="gap-x-4 w-full">
+                    <Flex :justify="'between'" class="gap-4 w-full">
                         <Rating :readonly="true"
                         :value="middleRating"
                         :width="26"
-                        class="gap-x-8"/>
+                        class="gap-8"/>
                         <p class="grow text-gray-500">{{ `${common.TEXT_REVIEWS} (${data.reviews.length})` }}</p>
                         <Button
                         :icon-left="{ icon: 'share', size: '25_25' }"
@@ -58,7 +58,7 @@
                         
                     </Flex>
                     <div class="decor-line"></div>
-                    <Flex class="gap-x-5">
+                    <Flex class="gap-5">
                         <p :class="className['attr']" @click="copyArticle(data.itemArt)">
                             <span class="text-gray-300">{{common.TEXT_ARTICLE  }} :</span>{{ data.itemArt }}
                         </p>
@@ -76,7 +76,7 @@
                     <div class="decor-line"></div>
                     <Flex :justify="'between'" class="w-full">
                         <Button
-                        class="text-base px-16 h-12 lg:px-10"
+                        class="px-16  lg:px-10"
                         :text="common.BUTTON_BASKET_ADD"
                         :appearance="'blue'"
                         :icon-left="{ icon: 'basket', size: '25_25' }"

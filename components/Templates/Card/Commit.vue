@@ -3,8 +3,8 @@
     :direction="'column'"
     :align="'flex-start'"
     :class="className['body']"
-    class="gap-y-4">
-        <Flex class="gap-x-4">
+    class="gap-4">
+        <Flex class="gap-4">
             <Image
             :src="data.user.profileImage"
             :alt="data.user.username"
@@ -13,7 +13,7 @@
             class="w-12"/>
             <p class="text-md text-gray-500 grow
                         xl:text-lg sm:text-base" :class="className['username']">{{ data.user.username }}</p>
-            <Rating :value="data.ranting || 0" :width="16" :readonly="true" class="gap-x-2" />
+            <Rating :value="data.ranting || 0" :width="16" :readonly="true" class="gap-2" />
         </Flex>
         <div>
             <p class="text-black-500 text-md sm:text-base">{{ data.text }}</p>

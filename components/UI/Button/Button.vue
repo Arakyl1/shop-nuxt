@@ -46,14 +46,14 @@ export interface Props {
     // значение каждого из модификатора можно посмотреть в variables.scss переменая $ButtonBasicPadding
     // некоторые значения пусты, эт сделана на будущее, потом они заполняться
     // менять значения можно, только где указано "0", так же этот размер не должен быть разовым
-    size?: '2xs'|'xs'|'sm'|'base'|'lg'|'xl'|'2xl'|'3xl'|'4xl'|'none',
+    // size?: '2xs'|'xs'|'sm'|'base'|'lg'|'xl'|'2xl'|'3xl'|'4xl'|'none',
     text?: string | number, // текс кнопки
     iconLeft?: IconProps,
     iconRight?: IconProps,
     iconTransition?: string,
     square?: boolean,
     rounded?: 'none'|'xs'|'sm'|'base'|'lg'|'xl'|'full',
-    mode?: 'primary'|'secondary'|'outline'|'link'|'none',
+    mode?: 'primary'|'secondary'|'outline'|'link'|'none'|'empty',
     appearance?: 'white'|'black'|'gray'|'red'|'blue'|'green'|'yellow'|
     'white-icon'|'black-icon'|'gray-icon'|'red-icon'|'blue-icon'|'green-icon'|'yellow-icon',
     tag?: 'button'|'a'|'input'|'nuxt-link',
@@ -62,8 +62,11 @@ export interface Props {
     active?: boolean,
     disabled?: boolean,
     checkHoverParent?: boolean,
-    iconNon?: boolean
+    iconNon?: boolean,
+    height?: `h-${number}`,
+    // textSize?: `text-${'2xl'|'xl'|'lg'|'md'|'base'|'sm'|'xs'}`
 }
+
 
 
 // const props = defineProps({
@@ -159,12 +162,14 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     tag: 'button',
+    type: 'button',
     focus: false,
     active: false,
     checkHoverParent: false,
     disabled: false,
     iconNon: false,
-    rounded: 'lg'
+    rounded: 'lg',
+    height: 'h-12'
  })
 
 
@@ -185,13 +190,14 @@ const rootClass = computed(() => {
         {
             ['aspect-ratio--imp']: props.square,
             [className[props.mode!]]: props.mode,
-            [`rounded-${props.rounded}-imp`]: props.rounded,
-            [className['padding-' + props.size]]: props.size,
+            [`rounded-${props.rounded}`]: props.rounded && getTypeButton(),
+            // [className['padding-' + props.size]]: props.size,
             [className[props.appearance!]]: props.appearance,
             [className['focus']]: props.focus,
             [className['active']]: props.active,
             [className['hover']]: props.checkHoverParent,
             [className['disabled']]: props.disabled,
+            [props.height]: props.height && getTypeButton(),
             [className['icon-none']]: props.iconNon,
             [className['icon--disabled']]: props.disabled &&
                 !props.appearance &&
@@ -207,6 +213,12 @@ onMounted(() => {
 
 defineExpose({ button })
 
+
+function getTypeButton() {
+    return (props.appearance && !props.appearance?.endsWith('-icon')) ||
+        (props.mode && !['none','link'].includes(props.mode))
+
+}
 </script>
 
 <style lang="scss" module>
@@ -251,6 +263,7 @@ defineExpose({ button })
 }
 .button p {
     color: inherit;
+    font-size: inherit;
 }
 .button:not(.icon-none) use[type-icon=monocolor] {
     fill: var(--fill-color, var(--white));
@@ -453,11 +466,11 @@ defineExpose({ button })
     --fill-hover: var(--green-700);
 }
 
-$padding: '2xs', 'xs', 'sm', 'base','lg','xl','2xl','3xl','4xl';
-@each $name in $padding {
-  .padding-#{$name} {
-    padding: var(--button-base-padding-#{$name}) ;
-  } 
-}
+// $padding: '2xs', 'xs', 'sm', 'base','lg','xl','2xl','3xl','4xl';
+// @each $name in $padding {
+//   .padding-#{$name} {
+//     padding: var(--button-base-padding-#{$name}) ;
+//   } 
+// }
 
 </style>

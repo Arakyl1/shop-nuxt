@@ -6,9 +6,10 @@
                 :text="BASE_BUTTON.CATALOG"
                 :tag="'nuxt-link'"
                 to="/catalog?categor=1"
-                class="px-5 h-14 grow"
-                :iconLeft="{ icon: 'menu', size: '20_20' }"
                 appearance="blue"
+                class="px-5 grow"
+                :height="'h-14'"
+                :iconLeft="{ icon: 'menu', size: '20_20' }"
                 :class="className['button-menu']"/>
                
                 <Group  tag="ul"
@@ -20,9 +21,11 @@
                         <Button
                         :text="item.value"
                         :tag="'nuxt-link'"
+                        :height="'h-12'"
+                        :mode="'empty'"
                         :rounded="'none'"
                         :to="getBaseCategorRoute(item.id, $route)"
-                        class="w-full h-12 justify-between text-base"
+                        class="w-full justify-between"
                         :class="className['button-categor']"
                         :iconRight="{ icon: 'arrow-bold', size: '16_12' }"/>
                     </li>
@@ -45,9 +48,7 @@
                                             <Button
                                             :text="item.value"
                                             :tag="'nuxt-link'"
-                                            :rounded="'none'"
                                             :to="getBaseCategorRoute(item.id, $route)"
-                                            class="text-base"
                                             :class="className['link']"/>
                                         </Flex>
                                     </template>
@@ -59,7 +60,6 @@
                                                     <Button
                                                     :text="elem.value"
                                                     :tag="'nuxt-link'"
-                                                    :rounded="'none'"
                                                     :to="getBaseCategorRoute(elem.id, $route)"
                                                     class="pre-wrap"
                                                     :class="className['link']"/>

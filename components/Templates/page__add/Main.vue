@@ -17,7 +17,7 @@
                 @click.stop="removeItem(index)"/>
               </div>
               <div :class="className['info-img']">
-                <Flex class="gap-x-4">
+                <Flex class="gap-4">
                   <Transition name="path">
                     <div v-if="indexMainImage === -1">
                       <p class="text-white truncate bg-yellow-500 px-2 py-1 rounded-lg text-sm"
@@ -36,7 +36,7 @@
             :indexActiveButton="indexActiveButton"
             :updateScroll="updateScrolLeft"
             :itemClass="'aspect-ratio'"
-            class="gap-x-3">
+            class="gap-3">
               <template #default="{ item }">
                 <Flex :justify="'center'" class="rounded-lg p-0.5 aspect-ratio" :class="className['control-img']">
                   <img :src="changeValueImageSize(image[(item - 1)].link, { 'heigth': 'h_48' })" alt=""
@@ -60,7 +60,7 @@
         <slot></slot>
       </Group>
       <Card container="xl" :rounded="'xl'" :appearance="'gray'">
-        <Group class="gap-y-5">
+        <Group class="gap-5">
           <template v-if="dataSelect">
             <template v-for="(item,index) in dataSelect" :key="index">
               <Select  v-if="item"

@@ -5,12 +5,12 @@
       <Header class="none /md:block" />
       <HeaderMobile class="/md:hidden" />
     </header>
-    <div class="container">
+    <main class="container" :class="className['main']">
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition> -->
       <NuxtPage></NuxtPage>
-    </div>
+    </main>
     <Footer />
     <ModalRoot/>
     <ContentIcon hidden="true" class="none"/>
@@ -34,6 +34,9 @@ const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () =
 const { data } = storeToRefs(storeUser)
 const event = useRequestEvent()
 const { initAuth } = useAuth()
+const className = useCssModule()
+
+const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
 
 await useFetch('/api/attridute/get', {
@@ -55,34 +58,15 @@ onServerPrefetch(async () => {
   if (!data.value) {
     await initAuth(event)
   }
-  // if (Object.prototype.hasOwnProperty.call(headers, 'accept-language')) {
-  //   const userLocalLanguage = getLanguageUser(headers['accept-language']!)
-  //   const keyContent = userLocalLanguage.find(_ => _[0] !== 'en') || ['en', 0.9]
-  //   const key = keyContent[0].toString()
-  //   try {
-  //     import('@/content/language/ru.js').then(res => _content.value = res.content)
-  //   //   import(`@/content/language/${key || 'ru'}.js`).then(res => {  
-  //   //   if (res && 'content' in res) {
-  //   //     _content.value = res.content
-  //   //     console.log('read content find')
-  //   //   }
-  //   // })
-  //   } catch (error) {
-  //     import('@/content/language/ru.js').then(res => _content.value = res.content)
-  //     console.log('read content catch')
-  //   }  
-  // } else {
-  //   console.log('other Data')
-  //   import('@/content/language/ru.js').then(res => _content.value = res.content )
-  //   console.log('read content base')
-  // }
 })
 
-useSeoMeta({
-  title: () => route.meta.title ? `${config.public.NAME_APP} - ${route.meta.title}` : config.public.NAME_APP,
+useSeoMeta({})
+
+useHead({
+  titleTemplate: () => pageTitle.value,
+  // meta: [{ property: 'og:title', content: getPageTitle() }]
 })
 onMounted(() => console.log('App mounted'))
-
 
 
 // user data
@@ -107,5 +91,11 @@ onMounted(() => console.log('App mounted'))
 .path-leave-to {
   transform: translateX(30px);
   opacity: 0;
+}
+</style>
+
+<style lang="css" module>
+.main:empty {
+  min-height: 100vh;
 }
 </style>

@@ -15,7 +15,8 @@
                     <Button
                     :appearance="'blue'"
                     :text="common.BUTTON_SEARCH"
-                    class="h-6 px-2"
+                    class="px-2"
+                    :height="'h-6'"
                     @click="refresh"/>
                 </Flex>
             </slot>
@@ -26,7 +27,7 @@
                     <div class="p-3 scrollbar-v1" :class="className['container']">
                         <ul v-if="dataSearch?.length">
                             <li v-for="item in dataSearch" :key="item.id" class="py-1">
-                                <Flex class="gap-x-2">
+                                <Flex class="gap-2">
                                     <Image
                                     :src="changeValueImageSize(item.image[0].link, { 'heigth': 'h_28' })"
                                     :alt="item.name"
@@ -134,7 +135,6 @@ onMounted(() => {
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
 .body {
     position: absolute;
     top: calc(100% + 1rem);

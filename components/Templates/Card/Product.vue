@@ -28,7 +28,7 @@
 
                 </template>
             </div>
-            <Flex :direction="'column'" class="grow gap-y-2 w-full">
+            <Flex :direction="'column'" class="grow gap-2 w-full">
                 <div v-if="content" class="grow w-full">
                     <Button :tag="'nuxt-link'"
                     :to="`/catalog/${content.id}`"
@@ -38,12 +38,12 @@
                         <span class="text-gray-300 px-2">{{ content.art }}</span>
                     </Button>
                 </div>
-                 <Flex v-else :class="className['skeleton-elem']" :direction="'column'" class="gap-y-2 w-full">
+                 <Flex v-else :class="className['skeleton-elem']" :direction="'column'" class="gap-2 w-full">
                     <Skeleton tag="p" :loader="!Boolean(content)" />
                     <Skeleton tag="p" :loader="!Boolean(content)" />
                  </Flex>
 
-                <Flex :justify="'between'" class="w-full gap-x-4">
+                <Flex :justify="'between'" class="w-full gap-4">
                     <Skeleton v-if="!content"
                         :class="className['skeleton-elem-secondary']" 
                         tag="p" :animated="true"
@@ -65,7 +65,7 @@
                 :disabled="content.quantity === 0"
                 @click.stop="add({ 'card_id': content.id, count: 1 })"
                 :class="className['button-basket']"
-                class="h-12 justify-center"/>
+                class="justify-center"/>
             </slot> 
         </Flex>
     </Flex>

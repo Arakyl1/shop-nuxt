@@ -14,7 +14,6 @@
             <slot name="trigger" v-bind="{ activeOption, isActive, onClick }">
                 <Button :text="activeOption?.value"
                 :mode="'outline'"
-                :rounded="'lg'"
                 :icon-transition="'select-icon'"
                 :icon-right="{ icon: isActive ? 'arrow' : 'arrow', size: '25_25' }"
                 class="text-base w-full h-10 truncate"
@@ -40,7 +39,7 @@
                     @click="changeActive"
                     role="listbox"
                     tabindex="0"
-                    class="gap-y-1">
+                    class="gap-1">
                         <p v-for="item in data"
                         role="option"
                         :aria-selected="item.id === modelValue"

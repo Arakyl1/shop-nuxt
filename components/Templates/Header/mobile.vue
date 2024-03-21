@@ -37,8 +37,8 @@
                         @click="storeModal.changeActiveModal('auth-user')"/>
                         <Button
                         :appearance="'blue'"
-                        :size="'xs'"
-                        class="h-10"
+                        class="px-2"
+                        :height="'h-10'"
                         :icon-left="{ icon: 'menu' }"
                         @click="() => update(true)"/>
                     </Flex>

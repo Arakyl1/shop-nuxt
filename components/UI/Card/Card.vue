@@ -47,7 +47,7 @@ const rootClass = computed(() => {
         [className['card-' + props.mode]]: props.mode,
         [className['card-' + props.appearance]]: props.appearance,
         [className['card-' + props.content]]: props.content,
-        [`rounded-${props.rounded}-imp`]: props.rounded,
+        [`rounded-${props.rounded}`]: props.rounded,
     }
 })
 onMounted(() => {

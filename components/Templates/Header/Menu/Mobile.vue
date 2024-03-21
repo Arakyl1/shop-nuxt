@@ -1,16 +1,17 @@
 <template>
     <div :class="className['body']" >
         <div class="bg-blue-500 h-full py-12 px-4" ref="menu">
-            <Group class="w-full gap-y-4">
+            <Group class="w-full gap-4">
                 <Button
                 :tag="'nuxt-link'"
-                :to="'/'">
+                :to="'/'"
+                :height="'h-0'">
                     <img src="@/assets/img/logo.png" class="h-9.5"
                     :alt="`Logo market place ${config.public.NAME_APP}`">
                 </Button>
                 <div class="scrollbar-v1 w-full">
                     <Transition name="slide-up" mode="out-in" >
-                        <Group tag="ul" class="w-full gap-y-4" v-if="subcategoryData">
+                        <Group tag="ul" class="w-full gap-4" v-if="subcategoryData">
                             <li v-for="item in subcategoryData"
                                 :key="item.id" class="w-full">
 
@@ -21,14 +22,13 @@
                                             class="p-1"
                                             :square="true"
                                             :appearance="'black'"
+                                            :height="'h-6'"
                                             :icon-left="{ icon: 'add-plus', size: '16_16' }"
                                             @click.stop="() => isActive ? close() : onClick()"/>
                                             <Button
                                             :text="item.value"
                                             :tag="'nuxt-link'"
-                                            :rounded="'none'"
                                             :to="getBaseCategorRoute(item.id, $route)"
-                                            class="text-base"
                                             :class="className['link']"/>
                                         </Flex>
                                     </template>
@@ -41,7 +41,6 @@
                                                     <Button
                                                     :text="elem.value"
                                                     :tag="'nuxt-link'"
-                                                    :rounded="'none'"
                                                     :to="getBaseCategorRoute(elem.id, $route)"
                                                     class="pre-wrap"
                                                     :class="className['link']"/>
@@ -55,18 +54,19 @@
 
                         <Group tag="ul" v-else
                         :class="className['list-categor']"
-                        class="w-full">
+                        class="w-full ">
                             <li v-for="item in CATEGOR_DATA" :key="item.id" class="w-full"
                             :data-categor-id="item.id">
                                 <Button
                                 :text="item.value"
                                 :tag="checkAvailabilityChildren(item) ? 'button' : 'nuxt-link'"
                                 :rounded="'none'"
-                                v-bind="checkAvailabilityChildren(item) ? {} : getBaseCategorRoute(item.id, $route)"
-                                class="w-full h-12 justify-between text-base"
-                                :class="className['button-categor']"
+                                :mode="'empty'"
                                 :iconRight="{ 'icon': 'arrow-bold', size: '16_12' }"
-                                @click="() => setActiveCategor(item.id)"/>
+                                @click="() => setActiveCategor(item.id)"
+                                v-bind="checkAvailabilityChildren(item) ? {} : getBaseCategorRoute(item.id, $route)"
+                                :class="className['button-categor']"
+                                class="w-full justify-between"/>
                                 <div class="decor-line"></div>
                             </li>
                         </Group>

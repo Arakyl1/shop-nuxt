@@ -7,7 +7,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/device',
-    'nuxt-purgecss',
     // "nuxt-vercel-analytics",
     // '@nuxtjs/web-vitals',
     'nuxt-viewport',
@@ -44,10 +43,14 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { ssr: true },
-    '/add': { ssr: false },
-    '/delivery': { swr: true },
+    '/catalog/**': { ssr: true },
+    '/contact': { srr: true },
+    '/delivery': { static: true },
     '/user': { ssr: false, redirect: { to: '/user/main' } },
-    '/user/**': { ssr: false }
+    '/user/**': { ssr: false },
+    '/auth': { ssr: false },
+    '/add': { ssr: false },
+    '/ui': { ssr: false },
   },
   vite: {
     resolve: {
@@ -78,6 +81,12 @@ export default defineNuxtConfig({
 
     fallbackBreakpoint: 'lg'
   },
+  // 'purgecss': {
+  //   enabled: true,
+  //   paths: [
+  //     'assets/**/*.scss',
+  //   ],
+  // }
   // webVitals: {
   //   provider: 'log',
   //   debug: true, // debug enable metrics reporting on dev environments

@@ -1,5 +1,5 @@
 <template>
-    <Group class="gap-y-2">
+    <Group class="gap-2">
       <Checkbox v-for="item,i in content.data"
       :key="item"
       :attr="{

@@ -55,13 +55,13 @@ model ProductCard {
 }
 
 model Attribute {
-  id          Int           @id @default(autoincrement())
-  value       String        @default("")
-  name        String        @default("")
-  type        AttributeType @default(OTHER)
-  item        ProductCard[] @relation("AttributeToProductCard")
-  Attribute_A Attribute[]   @relation("ParentChildren")
-  Attribute_B Attribute[]   @relation("ParentChildren")
+  id       Int           @id @default(autoincrement())
+  value    String        @default("")
+  name     String        @default("")
+  type     AttributeType @default(OTHER)
+  item     ProductCard[] @relation("AttributeToProductCard")
+  children Attribute[]   @relation("ParentChildren")
+  parent   Attribute[]   @relation("ParentChildren")
 }
 
 model Image {

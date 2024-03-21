@@ -1,8 +1,8 @@
 <template>
-    <Group class="gap-y-6" :class="className['body']">
+    <Group class="gap-6" :class="className['body']">
         <Title :tag="'h3'" :text="common.TITLE"/>
         <div class="decor-line"></div>
-        <Group v-if="basketLength" class="gap-y-3 grow  w-full">
+        <Group v-if="basketLength" class="gap-3 grow  w-full">
             <Group class="grow w-full">
                 <article class="py-4 w-full" v-for="item in basket!.item" :key="item.cardId">
                     <Flex class="gap-6">
@@ -27,7 +27,10 @@
                             :discount="item.card.discount > 0" />
                         </div>
                         <div class="none /md:block">
-                            <Counter :value="item.count" :max-value="item.card.quantity" :class="className['counter']"/>
+                            <Counte
+                            :value="item.count"
+                            :max-value="item.card.quantity"
+                            :class="className['counter']"/>
                         </div>
                         <Button
                         :appearance="'gray-icon'"

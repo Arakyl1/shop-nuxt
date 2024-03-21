@@ -2,10 +2,13 @@
     <ModalCard :active="state" :on-close="() => update(false)" ref="modal" :animation-modal="'confirm'">
         <template #body>
             <Card :container="'xl'" :class="className['modal']" data-confirm>
-                <Group class="gap-y-6">
+                <Group class="gap-6">
                     <p class="text-md" >{{ title }}</p>
                     <Flex class="gap-4 w-full">
-                        <Button :appearance="'blue'" :text="common.OK" class="grow h-10 justify-center"
+                        <Button :appearance="'blue'"
+                        :text="common.OK"
+                        :height="'h-10'"
+                        class="grow justify-center"
                         data-promise-status="empty" />
                     </Flex>
                 </Group>

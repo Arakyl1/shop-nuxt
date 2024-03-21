@@ -17,6 +17,7 @@
                 :tag="'nuxt-link'"
                 to="/catalog"
                 class="px-5"
+                :height="'h-14'"
                 :iconLeft="{ icon: 'menu', size: '20_20' }"
                 appearance="blue"
                 @mouseenter.stop="onMouseenter"/>

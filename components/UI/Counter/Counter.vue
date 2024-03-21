@@ -52,7 +52,7 @@ const timerPointer = ref()
 
 
 onMounted(() => {
-    if (props.readonly && counter.value instanceof HTMLElement) {
+    if (!props.readonly && counter.value instanceof HTMLElement) {
         counter.value.addEventListener('pointerdown', onPointerDown)
         counter.value.addEventListener('pointerup', onPointerUp)
     }

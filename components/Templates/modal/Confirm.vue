@@ -2,12 +2,18 @@
     <ModalCard :active="state" :on-close="() => update(false)" ref="modal" :animation-modal="'confirm'">
         <template #body>
             <Card :container="'xl'" :class="className['modal']" data-confirm>
-                <Group class="gap-y-6">
+                <Group class="gap-6">
                     <Title :tag="'h3'" :text="title" />
                     <Flex class="gap-4 w-full grow">
-                        <Button :appearance="'red'" :text="common.REJECTION" class="grow h-10 justify-center"
+                        <Button :appearance="'red'"
+                        :text="common.REJECTION"
+                        :height="'h-10'"
+                        class="grow justify-center"
                         data-promise-status="rejection" />
-                        <Button :appearance="'green'" :text="common.ACCEPT" class="grow h-10 justify-center"
+                        <Button :appearance="'green'"
+                        :text="common.ACCEPT"
+                        :height="'h-10'"
+                        class="grow justify-center"
                         data-promise-status="accept" />
                     </Flex>
                 </Group>

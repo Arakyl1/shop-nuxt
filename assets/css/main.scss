@@ -74,11 +74,11 @@ html {
   overflow-x: hidden;
 }
 
-@-moz-document url-prefix() {
-    .scrollbar-v1{
-        padding-right: 6px;
-    }
-}
+// @-moz-document url-prefix() {
+//     .scrollbar-v1{
+//         padding-right: 6px;
+//     }
+// }
 @supports (scrollbar-width: auto) {
   .scrollbar-v1 {
     // scrollbar-width: thin;

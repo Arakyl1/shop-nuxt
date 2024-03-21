@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-start gap-x-2"
+    <div class="flex justify-start gap-2"
     ref="ranting"
     :data-ranting="instanse?.uid"
     :data-uid="instanse?.uid"

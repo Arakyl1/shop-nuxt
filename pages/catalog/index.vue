@@ -8,8 +8,9 @@
             <Button
             :appearance="'blue'"
             :square="true"
+            :height="'h-10'"
             :icon-left="{ icon: 'filter', size: '24_24' }"
-            class="h-10 /md:hidden justify-center"
+            class="/md:hidden justify-center"
             @click="() => update(true)"/>
         </Flex>
         <Flex :align="'flex-start'" class="gap-8">

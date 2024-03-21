@@ -28,16 +28,19 @@ const className = useCssModule()
     margin-bottom: 1.875rem;
 } */
 .panel {
-    min-height: 60vh;
+    min-height: 70vh;
 }
 .panel:empty {
-    height: 60vh;
+    height: 70vh;
 }
 .view {
     display: flex;
     flex-direction: column;
     gap: 6.25rem;
-    padding-top: 3.125rem;
+    padding-top: 0.5rem;
+}
+.view:empty {
+    height: 70vh;
 }
 .primary {
     display: flex;

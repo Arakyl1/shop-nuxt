@@ -49,12 +49,6 @@
   .gap-#{$name} {
     gap: calc(0.25rem * $value);
   }
-  .gap-y-#{$name} {
-    gap: calc(0.25rem * $value) 0;
-  }
-  .gap-x-#{$name} {
-    gap: 0 calc(0.25rem * $value);
-  }
   .h-#{$name} {
     height: calc(0.25rem * $value);
   }
@@ -91,9 +85,6 @@
 
 // border style
 @each $name, $size in $borderRadius {
-  .rounded-#{$name}-imp {
-    border-radius: var(--rounded-#{$name}) !important;
-  }
   .rounded-#{$name} {
     border-radius: var(--rounded-#{$name});
   }
@@ -104,23 +95,11 @@
   .text-#{$name} {
     color: var(--#{$name}) !important;
   }
-  .border-#{$name} {
-    border-color: var(--#{$name});
-  }
-  .border-#{$name}--imp {
-    border-color: var(--#{$name}) !important;
-  }
   .bg-#{$name}--imp {
     background-color: var(--#{$name}) !important;
   }
   .bg-#{$name} {
     background-color: var(--#{$name});
-  }
-  .fill-#{$name} {
-    fill: var(--#{$name});
-  }
-  .stroke-#{$name} {
-    stroke: var(--#{$name});
   }
 }
 .color-inherit {
@@ -132,18 +111,13 @@
   .text-#{$name} {
     font-size: var(--text-#{$name});
   }
-  // .text-#{$name}--imp {
-  //   font-size: var(--text-#{$name}) !important;
-  // }
 }
 
 @each $name, $value in $textWeight {
   .text-#{$name} {
     font-weight: #{$value};
   }
-  // .text-#{$name}--imp {
-  //   font-weight: #{$value} !important;
-  // }
+  
 }
 
 // visibility style

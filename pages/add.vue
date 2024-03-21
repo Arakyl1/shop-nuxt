@@ -5,14 +5,13 @@
                 <Main 
                 @image-data="(e) => imageData = e"
                 :download-json-data="downloadJSONData">
-                    <Flex :justify="'end'" class="gap-x-3 w-full">
+                    <Flex :justify="'end'" class="gap-3 w-full">
                         <p class="text-gray-500 text-center ">{{ common.DOWNLOAD_JSON }}</p>
                         <Button
                         :appearance="'green'"
-                        :size="'base'"
-                        :rounded="'xl'"
+                        :height="'h-10'"
                         :text="BASE_BUTTON.DOWNLOAD_JSON"
-                        class="h-10 text-base"
+                        class="px-4 "
                         @click="onClick"/>
                         <input type="file" name="" id="" accept=".json" hidden ref="inputfile" @change="onChange">
                     </Flex>
@@ -32,17 +31,17 @@
             <Flex class="gap-4 w-full flex-wrap" :class="className['bt-control']">
                 <Button
                 :appearance="'red'"
-                :size="'sm'"
                 :text="BASE_BUTTON.RESET_FORM"
-                class="h-12 text-md grow justify-center"
+                :height="'h-10'"
+                class="px-3 grow justify-center"
                 @click="setStatus('cancel-create')"/>
                 
                 <Button
                 :appearance="'green'"
-                :size="'sm'"
                 :icon-left="pending ? { icon: 'loader-circles', size: '24_24' } : undefined"
                 :text="BASE_BUTTON.ADD_PRODUCT"
-                class="h-12 text-md grow justify-center"
+                :height="'h-10'"
+                class="px-3 grow justify-center"
                 @click="createProduct"/>
             </Flex> 
         </Flex>
@@ -95,9 +94,9 @@ const downloadJSONData = ref<LoginJSONData | null>(null)
 const imageData = ref<{ link: string, main: boolean }[] | null>(null)
 const characteristic = ref<{ title: string, children: { name: string, value: string }[] }[] | null>(null)
 const { activeStatus, setStatus } = useConfirm<'cancel-create'|'check-characteristic'>()
-const listSetInput = [
+const listSetInput: Array<keyof ProductCard | 'maker'> = [
     'art', 'description', 'itemArt', 'itemMod','name','price','quantity','maker'
-] as Array<keyof ProductCard>
+]
 
 
 const searchReg = new RegExp(`^(${listWordsCharacteristic.join('|')})$`,'i')

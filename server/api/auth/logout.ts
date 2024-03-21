@@ -14,7 +14,7 @@ export default defineEventHandler(async(event) => {
         }
 
         const anonimSessionKey = getCookie(event, 'anonimSessionKey') || ''
-        let user = await handleSessionKey(event, anonimSessionKey)
+        let user = handleSessionKey(anonimSessionKey)
         return await $fetch('/api/auth/user',{ params: { ...user } })
     } catch (error) {
         return error
