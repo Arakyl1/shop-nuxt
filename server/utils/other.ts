@@ -47,13 +47,21 @@ export const _setCookie = async(
     event: ArgumentsSetCookie[0],
     key: CookieKey,
     value: string,
-    expires: Date = new Date(Date.now() + 604800000)
+    option: {
+        domain?: string, 
+        expires?: Date,
+        sameSite?: boolean | "lax" | "strict" | "none",
+        httpOnly?: boolean,
+        maxAge?: number,
+        path?: string,
+        priority?: "low" | "medium" | "high",
+        secure?: boolean,
+    } = {
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 604800000)
+    } 
 ) => {
     if (key && value) {
-        setCookie(event, key, value, {
-            httpOnly: true,
-            sameSite: 'strict',
-            expires: expires
-        })
+        setCookie(event, key, value, option)
     }
 }

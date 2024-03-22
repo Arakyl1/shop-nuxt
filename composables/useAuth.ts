@@ -9,9 +9,9 @@ export default () => {
 
     function handleResponse(response: any) {
         if (response.status > 400) {
-            handleResponseError(response._data)
+            handleResponseError(response)
         } else {
-            handleResponseOk(response._data)
+            handleResponseOk(response)
         }
     }
 
@@ -36,7 +36,7 @@ export default () => {
                 body: body,
                 server: true,
                 onResponse({ response }) {
-                    handleResponse(response)
+                    handleResponse(response._data)
                 },
             })
         } catch (error: any) {
@@ -52,7 +52,7 @@ export default () => {
                 body: body,
                 server: true,
                 onResponse({ response }) {
-                    handleResponse(response)
+                    handleResponse(response._data)
                 },
             
             })
@@ -67,7 +67,7 @@ export default () => {
             method: "GET",
             server: true,
             onResponse({ response }) {
-                handleResponse(response)
+                handleResponse(response._data)
             }
         })
         } catch (error) {
@@ -76,13 +76,13 @@ export default () => {
     }
 
     const initAuth = async(event: H3Event<EventHandlerRequest>) => {
-        await useAsyncData(async() => await fetchWithCookie(event, '/api/auth/auth', {
+        return useAsyncData(async() => await fetchWithCookie(event, '/api/auth/init', {
             retry: 3,
             onResponse({ response }) {
-                handleResponse(response)
-            },
+                handleResponse(response._data)
+            }
         }))
     }
     
-    return { login, logout, register, initAuth }
+    return { login, logout, register, initAuth, handleResponse }
 }

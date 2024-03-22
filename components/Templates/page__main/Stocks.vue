@@ -1,6 +1,6 @@
 <template>
     <section class="w-full" :class="className['body']">
-        <CardGridScroll v-if="data" :data="data.item" :container="'xs'">
+        <CardGridScroll v-if="!pending" :data="data.item" :container="'xs'">
             <template #default="{ elem }">
                 <div class="">
                     <picture class="relative rounded-xl block">
@@ -9,10 +9,11 @@
                             :srcset="photo"
                             :media="`(max-width: ${key}px)`"
                             lazy="true"
+                            loading="lazy"
                             class="h-full w-full">
                         </template>
                         <img :src="elem.mainPhoto" alt=""
-                        class="h-full w-full" lazy="true">
+                        class="h-full w-full" loading="lazy"/>
                     </picture>
                 </div>
             </template>
@@ -33,7 +34,7 @@
                 </Flex>
             </template>
         </CardGridScroll>
-        <Skeleton v-else :animated="true" class="h-full"/>
+        <Skeleton v-else :loader="pending" :animated="true" class="h-full"/>
     </section>
 </template>
 <script setup lang="ts">
@@ -45,7 +46,7 @@ import Skeleton from "@/components/UI/Skeleton/Skeleton.vue";
 import ControlButtonCenterAbsolute from "@/components/Templates/Carousel/ControlButtonCenterAbsolute.vue";
 import { PAGE_MAIN as common } from "@/common/C";
 
-const { data } = await useFetch('/api/mainSlider/data', { server: true })
+const { data, pending } = await useFetch('/api/mainSlider/data', { server: true, lazy: true })
 const className = useCssModule()
 const viewport = useViewport()
 

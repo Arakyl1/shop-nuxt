@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import prisma from "../../db";
 import { Prisma, User } from "@prisma/client";
 import { GET_CONTENT_KEY } from "../../utils/other";
-import { setNewSessionKey } from "@/server/utils/auth";
+import { setNewSessionKey, getUser } from "@/server/utils/auth";
 
 export default defineEventHandler(async (event: H3Event) => {
 
@@ -23,18 +23,18 @@ export default defineEventHandler(async (event: H3Event) => {
         let user: User | undefined
         try {
             user = await prisma.user.findUnique(searchParams)
-            if (!user) throw _createError(GET_CONTENT_KEY('AUTH_LOGINT_USER_IS_NOT_REGISTERED'))
+            if (!user) throw _createError(GET_CONTENT_KEY('AUTH_LOGIN_USER_IS_NOT_REGISTERED'))
             
         } catch (error) {
             throw _createError('error login data')
         }
 
         const doesThePasswordMatch = await bcrypt.compare(password, user.password!)
-        if (!doesThePasswordMatch) throw _createError(GET_CONTENT_KEY('AUTH_LOGINT_INVALID_PASSWORD'))
+        if (!doesThePasswordMatch) throw _createError(GET_CONTENT_KEY('AUTH_LOGIN_INVALID_PASSWORD'))
 
         // Generate new sessionKey
         await setNewSessionKey(event,user)
-        return await $fetch('/api/auth/user',{ params: { ...user } })
+        return await getUser(user)
         
     } catch (error) {
         return error

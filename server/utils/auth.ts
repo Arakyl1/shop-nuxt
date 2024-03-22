@@ -44,7 +44,8 @@ export function handleSessionKey(sessionKey: string) {
 
 
 export function defineAuthenticatedEventHandler<T, K extends { [k:string]: any }>(
-    handler: (event: H3Event, authUser: K) => T | Promise<T>
+    handler: (event: H3Event, authUser: K) => T | Promise<T>,
+    handlerReject?: (event: H3Event, error: unknown) => T | Promise<T>
 ) {
     return defineEventHandler(async(event) => {
         const sessionKey = getCookie(event, 'sessionKey') || ''
@@ -53,7 +54,11 @@ export function defineAuthenticatedEventHandler<T, K extends { [k:string]: any }
             return handler(event, user)
         } catch (error) {
             console.log(error)
-            return error
+            return handlerReject ? handlerReject(event, error) : error
         }
     })
+}
+
+export async function getUser<T extends { id: number, role: string }>(user: T) {
+    return await $fetch('/api/auth/user',{ params: { ...user } })
 }

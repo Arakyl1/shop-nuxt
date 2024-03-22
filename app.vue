@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Alert />
     <header>
       <Header class="/md:block none" />
       <HeaderMobile class="/md:hidden" />
@@ -12,7 +11,10 @@
       <NuxtPage></NuxtPage>
     </main>
     <Footer />
-    <ModalRoot/>
+    <ClientOnly>
+      <Alert/>
+      <ModalRoot/>
+    </ClientOnly>
     <ContentIcon hidden="true" class="none"/>
   </div>
 </template>
@@ -38,6 +40,7 @@ const className = useCssModule()
 
 const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
+await initAuth(event)
 
 await useFetch('/api/attridute/get', {
   server: true,
@@ -52,20 +55,14 @@ await useFetch('/api/attridute/get', {
   }
 })
 
-await initAuth(event)
 
-onServerPrefetch(async () => {
-  if (!data.value) {
-    await initAuth(event)
-  }
-})
-
-useSeoMeta({})
 
 useHead({
   titleTemplate: () => pageTitle.value,
   // meta: [{ property: 'og:title', content: getPageTitle() }]
 })
+
+onBeforeMount(async() => await initAuth(event))
 onMounted(() => console.log('App mounted'))
 
 
@@ -75,8 +72,8 @@ onMounted(() => console.log('App mounted'))
 // email qwe3@mail.r
 </script>
 
-<style lang="scss">
-@use "./assets/css/main.scss";
+<style lang="scss" >
+@use "@/assets/css/main.scss" ;
 
 .path-enter-active {
   transition: all 0.3s ease-in-out;

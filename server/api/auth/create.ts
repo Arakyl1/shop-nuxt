@@ -1,7 +1,5 @@
 import prisma from "@/server/db"
 
-
-
 export default defineEventHandler(async() => {
     try {
         return await prisma.user.create({

@@ -1,10 +1,10 @@
 
 import { CookieKey } from "~/type/intex"
 import prisma from "../../db"
-import { handleSessionKey } from "@/server/utils/auth";
+import { defineAuthenticatedEventHandler, handleSessionKey, getUser } from "@/server/utils/auth";
 
 
-export default defineEventHandler(async(event) => {
+export default defineAuthenticatedEventHandler(async(event, user) => {
     try {
         const keyCookie: CookieKey = 'sessionKey'
         const cookiesRefrech = getCookie(event, keyCookie)
@@ -15,7 +15,7 @@ export default defineEventHandler(async(event) => {
 
         const anonimSessionKey = getCookie(event, 'anonimSessionKey') || ''
         let user = handleSessionKey(anonimSessionKey)
-        return await $fetch('/api/auth/user',{ params: { ...user } })
+        return await getUser(user)
     } catch (error) {
         return error
     }

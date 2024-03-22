@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { ComponentInternalInstance, Events } from "nuxt/dist/app/compat/capi";
-import { KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
+import { CookieKey, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
 import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
 
 
@@ -123,3 +123,4 @@ export function getStatus(data:ProductCardBase | null) {
     return status
 }
 
+export const getKeyCookie = (k: CookieKey) => k

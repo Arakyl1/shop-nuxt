@@ -48,6 +48,9 @@ import { resetForm, searchInvalidElem } from "@/utils/formHelpers";
 import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 import { default as useAuth } from '@/composables/useAuth'
 
+definePageMeta({
+    middleware: ['1-auth']
+})
 
 const { login: userLogin } = useAuth()
 const form = ref<HTMLFormElement | null>(null)

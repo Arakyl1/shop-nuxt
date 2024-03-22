@@ -34,7 +34,7 @@
                         :icon-left="{ 'icon': 'add-list', size: '30_30' }"
                         :appearance="'yellow-icon'"
                         to="/add"/>
-                    <ClientOnly>
+                    
 
                         <Indicator :text="favoriteLength" :active="!!favoriteLength">
                             <ButtonLike
@@ -50,7 +50,7 @@
                             :active="!!basketLength"
                             @click="storeModal.changeActiveModal('basket-user')"/>
                         </Indicator>
-                    </ClientOnly>
+        
                     </Flex>
                 </Flex>
             </div>
@@ -81,7 +81,8 @@
                 
                 <Button
                 :appearance="'blue'"
-                class="px-2"
+                class="p-1 justify-center"
+                :square="true"
                 :active="isBoolean(anonim) && !anonim"
                 :icon-left="{ icon: 'user', size: '24_24' }"
                 @click="storeModal.changeActiveModal('auth-user')"/>

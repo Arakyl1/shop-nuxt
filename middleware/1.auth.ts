@@ -1,14 +1,14 @@
-import { user as _user } from "@/stores/user";
 import { alert as _alert } from "@/stores/alert";
 
-export default defineNuxtRouteMiddleware((to, from) => {
-    
-    const storeUser = _user()
-    const storeAlert = _alert()
-    const { data: userData, anonim } = storeToRefs(storeUser)
+export default defineNuxtRouteMiddleware(async(to, from) => {
 
-    if (anonim.value || !userData.value) {
+    const storeAlert = _alert()
+    const { data } = await useFetch('/api/auth/auth')
+    
+    if (to.path.startsWith('/auth') && data.value) {
+        return navigateTo('/')
+    } else if (!data.value && !from.path.startsWith('/auth')) {{
         storeAlert.create({ key: 'MIDDLEWARE_ADD_ROUTER_ERROR' , state: 'error' })
-        return navigateTo('/auth', { redirectCode: 307})
-    }
+        return navigateTo('/auth')
+    }}
 })

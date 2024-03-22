@@ -5,6 +5,7 @@ import prisma from "@/server/db";
 import { CookieKey } from "@/type/intex";
 import { setNewSessionKey } from "@/server/utils/auth";
 import { _createError } from "@/server/utils/message";
+import { getUser } from "@/server/utils/auth"
 
 export default defineEventHandler(async(event: H3Event) => {
 
@@ -48,7 +49,7 @@ export default defineEventHandler(async(event: H3Event) => {
         }
 
         await setNewSessionKey(event, { id: user.id, role: user.role })
-        return await $fetch('/api/auth/user',{ params: { ...user } })
+        return await getUser(user)
 
     } catch (error) {
         // console.log()

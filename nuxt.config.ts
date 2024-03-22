@@ -42,9 +42,9 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/': { ssr: true, prerender: true },
+    '/': { prerender: true },
     '/catalog': { swr: true },
-    '/catalog/**': { ssr: true, swr: 3600  },
+    '/catalog/**': { swr: 3600  },
     '/contact': { ssr: true },
     '/delivery': { ssr: true },
     '/user': { ssr: false, redirect: { to: '/user/main' } },
@@ -58,9 +58,21 @@ export default defineNuxtConfig({
       alias: {
         ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
       }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          'additionalData': '@use "v-calendar/style.css";'
+        }
+      }
     }
   },
-  css: ['v-calendar/style.css'],
+  postcss: {
+    'plugins': {
+      "autoprefixer": {},
+      "cssnano": {}
+    },
+  },
   app: {
     pageTransition: { name: 'blur', mode: 'out-in' },
   },
@@ -82,6 +94,7 @@ export default defineNuxtConfig({
 
     fallbackBreakpoint: 'lg'
   },
+  spaLoadingTemplate: false,
   // 'purgecss': {
   //   enabled: true,
   //   paths: [
