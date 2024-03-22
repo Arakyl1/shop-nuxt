@@ -2,7 +2,7 @@
   <div>
     <Alert />
     <header>
-      <Header class="none /md:block" />
+      <Header class="/md:block none" />
       <HeaderMobile class="/md:hidden" />
     </header>
     <main class="container" :class="className['main']">

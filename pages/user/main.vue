@@ -84,7 +84,6 @@
                 <Button
                 :text="BASE_BUTTON.USER_SAVE"
                 :appearance="'green'"
-                :height="'h-10'"
                 class="w-full px-6"
                 @click="onClick"/>
             </Grid>

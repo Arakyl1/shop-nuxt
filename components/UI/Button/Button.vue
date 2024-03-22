@@ -42,11 +42,6 @@ import { default as CreateIcon, Props as IconProps } from "@/utils/icon/index.vu
 // контент можно передать через слот
 
 export interface Props {
-    // размер падинга кнопки, передаеться одно из ниже приведенных мофихикатора,
-    // значение каждого из модификатора можно посмотреть в variables.scss переменая $ButtonBasicPadding
-    // некоторые значения пусты, эт сделана на будущее, потом они заполняться
-    // менять значения можно, только где указано "0", так же этот размер не должен быть разовым
-    // size?: '2xs'|'xs'|'sm'|'base'|'lg'|'xl'|'2xl'|'3xl'|'4xl'|'none',
     text?: string | number, // текс кнопки
     iconLeft?: IconProps,
     iconRight?: IconProps,
@@ -71,7 +66,7 @@ export interface Props {
 
 // const props = defineProps({
 //     // // размер падинга кнопки, передаеться одно из ниже приведенных мофихикатора,
-//     // // значение каждого из модификатора можно посмотреть в variables.scss переменая $ButtonBasicPadding
+//     // // значение каждого из модификатора можно посмотреть в variables.scss переменая
 //     // // некоторые значения пусты, эт сделана на будущее, потом они заполнться
 //     // // менять значения можно, только где указан "0", так же этот размер не должен быть разовым
 //     // size: { 
@@ -169,7 +164,7 @@ const props = withDefaults(defineProps<Props>(), {
     disabled: false,
     iconNon: false,
     rounded: 'lg',
-    height: 'h-12'
+    height: 'h-10'
  })
 
 
@@ -463,7 +458,7 @@ function getTypeButton() {
 
 .green-icon {
     --fill-color: var(--green-500);
-    --fill-hover: var(--green-700);
+    --fill-hover: var(--green-300);
 }
 
 // $padding: '2xs', 'xs', 'sm', 'base','lg','xl','2xl','3xl','4xl';

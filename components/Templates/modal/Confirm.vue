@@ -7,12 +7,10 @@
                     <Flex class="gap-4 w-full grow">
                         <Button :appearance="'red'"
                         :text="common.REJECTION"
-                        :height="'h-10'"
                         class="grow justify-center"
                         data-promise-status="rejection" />
                         <Button :appearance="'green'"
                         :text="common.ACCEPT"
-                        :height="'h-10'"
                         class="grow justify-center"
                         data-promise-status="accept" />
                     </Flex>

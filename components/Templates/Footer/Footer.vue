@@ -109,7 +109,7 @@
                             <Button :icon-left="{ icon: 'user-outline', size: '18_18' }"
                             :appearance="'blue'"
                             :text="common.BUTTON_TEXT"
-                            class="w-full px-4 text-bold justify-center"/>
+                            class="w-full px-4 text-bold justify-center /md:h-12"/>
 
                             <Paragraph :text="common.PAYMENT_METHODS" class="text-md text-white w-full"/>
 

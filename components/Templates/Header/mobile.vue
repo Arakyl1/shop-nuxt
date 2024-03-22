@@ -38,7 +38,6 @@
                         <Button
                         :appearance="'blue'"
                         class="px-2"
-                        :height="'h-10'"
                         :icon-left="{ icon: 'menu' }"
                         @click="() => update(true)"/>
                     </Flex>

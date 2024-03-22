@@ -4,17 +4,17 @@
             <Image :src="_userData.profileImage" :square="true"
             alt="user-image"
             :rounded="'xl'"
-            class="w-14 p-0.5"
+            class="w-12 /xl:w-14 p-0.5"
             :class="className['border']"/>
-            <p class="text-lg text-gray-900">{{ _userData.username }}</p>
+            <p class="text-md /xl:text-lg text-black-300">{{ _userData.username }}</p>
         </Flex>
         <div class="decor-line"></div>
         <form class="w-full" ref="form">
             <Group class="gap-3">
-                <Flex class="gap-3">
-                    <p class="text-md">{{ activeProduct.name }}</p>
-                    <p class="text-md text-gray-500">{{ activeProduct.art }}</p>
-                </Flex>
+                <p class="/xl:text-md ">
+                    <span >{{ activeProduct.name }}</span><br/>
+                    <span class="text-gray-500">{{ activeProduct.art }}</span>
+                </p>
                 <Rating :readonly="false" :step="1" :name="modelProp('Comment', 'ranting')"/>
                 <textarea rows="10"
                 class="rounded-xl w-full p-4"
@@ -26,7 +26,6 @@
             <Button
             :appearance="'yellow'"
             :text="common.REVIEWS_CREATE"
-            :height="'h-10'"
             class="px-6"
             @click="onClick"/>
         </Flex>

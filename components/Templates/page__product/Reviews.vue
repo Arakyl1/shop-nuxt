@@ -12,7 +12,7 @@
                             :disabled="listValueScroll.current === 0"
                             @click="prev"
                             :height="'h-10'"
-                            class="-scale-100" />
+                            class="-scale-100"/>
                             <ButtonArrow
                             :disabled="listValueScroll.current >= listValueScroll.max"
                             @click="next"
@@ -69,8 +69,6 @@ const storeCreateReviews = _createReviews()
 const { data: _userData, anonim } = storeToRefs(storeUser)
 
 const reviewsUpdate = computed(() => props.data.reviews.filter(el => el.text))
-// const reviewsRantingValue = computed(() => props.data.reviews.map(
-//     <T extends ProductCardFull['reviews'][0]>(el: T) => el.ranting as unknown as NonNullable<T['ranting']>))
 
 function openModalCreateReviews() {
     storeCreateReviews.updateData({ id: props.data.id, name: props.data.name, art: props.data.art })

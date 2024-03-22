@@ -7,10 +7,10 @@
                         <Title v-if="$slots.title"><slot name="title"></slot></Title>
                         <Title v-else-if="title" :text="title"/>
                         <Flex :class="className['control-button']">
-                            <ButtonArrow class="h-11 -scale-100"
+                            <ButtonArrow class="-scale-100"
                             :disabled="listValueScroll ? listValueScroll.current === 0 : false"
                             @click="prev"/>
-                            <ButtonArrow class="h-11 "
+                            <ButtonArrow 
                             :disabled="listValueScroll ? listValueScroll.max <= listValueScroll.current : false"
                             @click="next"/>
                         </Flex>

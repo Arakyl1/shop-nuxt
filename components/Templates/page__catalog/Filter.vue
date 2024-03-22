@@ -66,7 +66,6 @@
                         :text="commonButton.FILTER_RESET"
                         :icon-left="{ icon: 'reload', size: '20_20' }"
                         @click.prevent="resetData"
-                        :height="'h-10'"
                         class="text-md px-4"/>
                     </Flex>
                 </template>

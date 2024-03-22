@@ -4,172 +4,6 @@
   margin: 0 auto;
 }
 
-@each $name, $value in $containerWidth {
-  @media (min-width: #{$name}) {
-    .container {
-      max-width: $name;
-      padding: $value;
-    }
-  }
-}
-
-// MEDIA STYLE FOR HIDDEN
-@each $name, $value in $containerSize {
-  @media (min-width: $value) {
-    .\/#{$name}\:hidden {
-      display: none !important;
-    }
-    .\/#{$name}\:block {
-      display: block !important;
-    }
-  }
-}
-
-
-// flex style
-@each $name, $value in $justifyContent {
-  .justify-#{$name} {
-    justify-content: $value;
-  }
-}
-
-@each $name, $value in $alignItems {
-  .align-#{$name} {
-    align-items: $value;
-  }
-}
-
-@each $value in $flexDirection {
-  .flex-#{$value} {
-    flex-direction: #{$value};
-  }
-}
-
-@each $name, $value in $commonSize {
-  .gap-#{$name} {
-    gap: calc(0.25rem * $value);
-  }
-  .h-#{$name} {
-    height: calc(0.25rem * $value);
-  }
-  .w-#{$name} {
-    width: calc(0.25rem * $value);
-  }
-  .p-#{$name} {
-    padding: calc(0.25rem * $value);
-  }
-  .py-#{$name} {
-    padding-top: calc(0.25rem * $value);
-    padding-bottom: calc(0.25rem * $value);
-  }
-  .px-#{$name} {
-    padding-left: calc(0.25rem * $value);
-    padding-right: calc(0.25rem * $value);
-  }
-}
-
-
-// Grid style
-@each $name, $value in $justifyItems {
-  .justify-items-#{$name} {
-    justify-items: $value;
-  }
-}
-
-@each $name, $value in $alignContent {
-  .content-#{$name} {
-    align-content: $value;
-  }
-}
-
-
-// border style
-@each $name, $size in $borderRadius {
-  .rounded-#{$name} {
-    border-radius: var(--rounded-#{$name});
-  }
-}
-
-// Color style
-@each $name, $value in $color {
-  .text-#{$name} {
-    color: var(--#{$name}) !important;
-  }
-  .bg-#{$name}--imp {
-    background-color: var(--#{$name}) !important;
-  }
-  .bg-#{$name} {
-    background-color: var(--#{$name});
-  }
-}
-.color-inherit {
-  color: inherit;
-}
-
-// Text Style
-@each $name, $size in $fontSize {
-  .text-#{$name} {
-    font-size: var(--text-#{$name});
-  }
-}
-
-@each $name, $value in $textWeight {
-  .text-#{$name} {
-    font-weight: #{$value};
-  }
-  
-}
-
-// visibility style
-
-// Typography style
-$sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
-@each $value in $sizes {
-  .line-clamp-#{$value} {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-}
-h1 {
-  font-size: var(--text-2xl);
-}
-h2 {
-  font-size: var(--text-xl);
-}
-h3 {
-  font-size: var(--text-lg);
-}
-h4 {
-  font-size: var(--text-md);
-}
-
-@media screen and (max-width: 768px) {
-}
-@media screen and (max-width: 600px) {
-  h2 {
-    font-size: var(--text-lg);
-  }
-  h4 {
-    font-size: var(--text-base);
-  }
-}
-
-
-// SHADOW STYLE
-
-@each $name, $value in $shadow {
-  .#{$name} {
-    box-shadow: var(--#{$name});
-  }
-}
-
-
-
-
-/* purgecss start ignore */
-
 // object 
 
 .object-cover {
@@ -283,4 +117,204 @@ h4 {
 .flex-wrap {
   flex-wrap: wrap;
 }
-/* purgecss end ignore */
+
+
+@each $name, $value in $containerWidth {
+  @media (min-width: #{$name}) {
+    .container {
+      max-width: $name;
+      padding: $value;
+    }
+  }
+}
+
+// MEDIA STYLE FOR HIDDEN
+// @each $name, $value in $mediaScreen {
+ 
+// }
+
+
+// flex style
+@each $name, $value in $justifyContent {
+  .justify-#{$name} {
+    justify-content: $value;
+  }
+}
+
+@each $name, $value in $alignItems {
+  .align-#{$name} {
+    align-items: $value;
+  }
+}
+
+@each $value in $flexDirection {
+  .flex-#{$value} {
+    flex-direction: #{$value};
+  }
+}
+
+@each $name, $value in $commonSize {
+  .gap-#{$name} {
+    gap: calc(0.25rem * $value);
+  }
+  .h-#{$name} {
+    height: calc(0.25rem * $value);
+  }
+  .w-#{$name} {
+    width: calc(0.25rem * $value);
+  }
+  .p-#{$name} {
+    padding: calc(0.25rem * $value);
+  }
+  .py-#{$name} {
+    padding-top: calc(0.25rem * $value);
+    padding-bottom: calc(0.25rem * $value);
+  }
+  .px-#{$name} {
+    padding-left: calc(0.25rem * $value);
+    padding-right: calc(0.25rem * $value);
+  }
+}
+
+
+
+// Grid style
+@each $name, $value in $justifyItems {
+  .justify-items-#{$name} {
+    justify-items: $value;
+  }
+}
+
+@each $name, $value in $alignContent {
+  .content-#{$name} {
+    align-content: $value;
+  }
+}
+
+
+// border style
+@each $name, $size in $borderRadius {
+  .rounded-#{$name} {
+    border-radius: var(--rounded-#{$name});
+  }
+}
+
+// Color style
+@each $name, $value in $color {
+  .text-#{$name} {
+    color: var(--#{$name}) !important;
+  }
+  .bg-#{$name} {
+    background-color: var(--#{$name});
+  }
+}
+.color-inherit {
+  color: inherit;
+}
+
+// Text Style
+@each $name, $size in $fontSize {
+  .text-#{$name} {
+    font-size: var(--text-#{$name});
+  }
+}
+
+@each $name, $value in $textWeight {
+  .text-#{$name} {
+    font-weight: #{$value};
+  }
+}
+
+// visibility style
+
+// Typography style
+$sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+@each $value in $sizes {
+  .line-clamp-#{$value} {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+h1 {
+  font-size: var(--text-2xl);
+}
+h2 {
+  font-size: var(--text-lg);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+
+
+@media screen and (min-width: 1280px) {
+  
+  h2 {
+    font-size: var(--text-xl);
+  }
+}
+@media screen and (min-width: 600px) {
+  h4 {
+    font-size: var(--text-md);
+  }
+}
+
+
+// SHADOW STYLE
+
+@each $name, $value in $shadow {
+  .#{$name} {
+    box-shadow: var(--#{$name});
+  }
+}
+
+
+// MEDIA STYLE 
+@each $screenKey, $screenValue in $mediaScreen {
+  @media (min-width: $screenValue) {
+    .\/#{$screenKey}\:hidden {
+      display: none ;
+    }
+    .\/#{$screenKey}\:block {
+      display: block;
+    }
+    .\/#{$screenKey}\:flex {
+      display: flex;
+    }
+    .\/#{$screenKey}\:grid {
+      display: grid;
+    }
+
+    @each $name, $value in $commonSize {
+      .\/#{$screenKey}\:gap-#{$name} {
+        gap: calc(0.25rem * $value);
+      }
+      .\/#{$screenKey}\:h-#{$name} {
+        height: calc(0.25rem * $value);
+      }
+      .\/#{$screenKey}\:w-#{$name} {
+        width: calc(0.25rem * $value);
+      }
+      .\/#{$screenKey}\:p-#{$name} {
+        padding: calc(0.25rem * $value);
+      }
+      .\/#{$screenKey}\:py-#{$name} {
+        padding-top: calc(0.25rem * $value);
+        padding-bottom: calc(0.25rem * $value);
+      }
+      .\/#{$screenKey}\:px-#{$name} {
+        padding-left: calc(0.25rem * $value);
+        padding-right: calc(0.25rem * $value);
+      }
+    }
+
+    @each $name, $size in $fontSize {
+      .\/#{$screenKey}\:text-#{$name} {
+        font-size: var(--text-#{$name});
+      }
+    }
+  }
+}
+
+

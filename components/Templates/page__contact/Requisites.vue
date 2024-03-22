@@ -1,7 +1,6 @@
 <template>
-    <Flex :tag="'section'" class="text-gray-500 flex-wrap" :class="className['body']">
-        <div class="">
-            <Group class="gap-8">
+    <Flex :tag="'section'" class="text-gray-500 flex-wrap gap-4" :class="className['body']">
+        <Group class="gap-8">
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_COMMUNICATIONS"/>
                 <Flex class="gap-8" :class="className['']">
                     <Flex class="gap-4">
@@ -29,7 +28,6 @@
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TILE_SOCIAL"/>
                 <SocialIcon />
             </Group>
-        </div>
         <div class="grow">
             <Card :appearance="'gray'" :container="'xl'">
                 <Group class="gap-2">

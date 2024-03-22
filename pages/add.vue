@@ -9,7 +9,6 @@
                         <p class="text-gray-500 text-center ">{{ common.DOWNLOAD_JSON }}</p>
                         <Button
                         :appearance="'green'"
-                        :height="'h-10'"
                         :text="BASE_BUTTON.DOWNLOAD_JSON"
                         class="px-4 "
                         @click="onClick"/>
@@ -32,7 +31,6 @@
                 <Button
                 :appearance="'red'"
                 :text="BASE_BUTTON.RESET_FORM"
-                :height="'h-10'"
                 class="px-3 grow justify-center"
                 @click="setStatus('cancel-create')"/>
                 
@@ -40,7 +38,6 @@
                 :appearance="'green'"
                 :icon-left="pending ? { icon: 'loader-circles', size: '24_24' } : undefined"
                 :text="BASE_BUTTON.ADD_PRODUCT"
-                :height="'h-10'"
                 class="px-3 grow justify-center"
                 @click="createProduct"/>
             </Flex> 

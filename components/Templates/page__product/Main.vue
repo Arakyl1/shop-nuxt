@@ -2,12 +2,14 @@
     <section>
         <Flex class="w-full">
             <div class="relative w-1/2" :class="className['photo']">
-                <Flex :justify="'center'" class="px-16 xl:px-12">
+                <Flex :justify="'center'" class="px-8 lg:px-16">
                     <CardGridScroll :data="data.image" :container="'xs'">
                         <template #default="{ elem }">
-                            <Flex :justify="'center'" :class="className['picture']">
-                                <img :src="changeValueImageSize(elem.link, { 'crop': 'c_fill', 'obj': 'g_auto:subject', heigth: 'h_480' })"
-                                :alt="data.name">
+                            <Flex :justify="'center'" >
+                                <div :class="className['picture']">
+                                    <img :src="changeValueImageSize(elem.link, { 'crop': 'c_fill', 'obj': 'g_auto:subject', heigth: 'h_480' })"
+                                    :alt="data.name">
+                                </div>
                             </Flex>
                         </template>
                         <template #footer="{ updateScrolLeft, indexActiveButton }" v-if="data?.image?.length > 1">
@@ -19,10 +21,11 @@
                             :item-class="'aspect-ratio h-14 w-14 justify-center'">
                                 <template #default="{ item }">
                                     <Flex :justify="'center'"
-                                        :class="className['control-item']"
-                                        :data-border-color="(item-1) === indexActiveButton ? 'yellow' : 'blue'">
-                                        <img :src="changeValueImageSize(data.image[(item-1)].link, { 'heigth': 'h_48' })" :alt="data.name"
-                                            >
+                                    :class="className['control-item']"
+                                    :data-border-color="(item-1) === indexActiveButton ? 'yellow' : 'blue'">
+                                        <img :src="changeValueImageSize(data.image[(item-1)].link, { 'heigth': 'h_48' })"
+                                        :alt="data.name"
+                                        class="rounded-lg">
                                     </Flex>
                                 </template>
                             </ControlItem>
@@ -31,7 +34,7 @@
                 </Flex>
                 <Status :status="getStatus(data)" data-left :class="className['status']"  />
             </div>
-            <Card :appearance="'gray'" :container="'xl'" class="h-full w-1/2">
+            <Card :appearance="'gray'" :container="'xl'" class="h-full w-1/2 grow">
                 <Flex class="relative gap-6" :direction="'column'" :align="'flex-start'">
                     <div :class="className['button-like']">
                         <ClientOnly>
@@ -48,8 +51,8 @@
                     <Flex :justify="'between'" class="gap-4 w-full">
                         <Rating :readonly="true"
                         :value="middleRating"
-                        :width="26"
-                        class="gap-8"/>
+                        :width="24"
+                        class="gap-4 /lg:gap-8"/>
                         <p class="grow text-gray-500">{{ `${common.TEXT_REVIEWS} (${data.reviews.length})` }}</p>
                         <Button
                         :icon-left="{ icon: 'share', size: '25_25' }"
@@ -76,7 +79,7 @@
                     <div class="decor-line"></div>
                     <Flex :justify="'between'" class="w-full">
                         <Button
-                        class="px-16  lg:px-10"
+                        class="px-10 /lg:px-16 /md:h-12"
                         :text="common.BUTTON_BASKET_ADD"
                         :appearance="'blue'"
                         :icon-left="{ icon: 'basket', size: '25_25' }"
@@ -186,5 +189,10 @@ function copyArticle(key: string) {
 .attr >span {
     margin-right: 0.5rem;
 }
-/* class="absolute z-20 -right-1 top-1 sm:scale-75 sm:top-1.5 sm:right-1.5" */
+
+@media screen and (max-width: 1024px) {
+    .photo {
+        width: 40%;
+    }
+}
 </style>

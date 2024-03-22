@@ -76,14 +76,12 @@
                 <Button
                 :tag="'nuxt-link'"
                 :appearance="'yellow'"
-                :height="'h-10'"
-                class="text-bold px-8"
+                class="text-bold px-8 none /xl:flex"
                 :text="common.BUTTON_ADDRESS_MARKER"/>
                 
                 <Button
                 :appearance="'blue'"
                 class="px-2"
-                :height="'h-10'"
                 :active="isBoolean(anonim) && !anonim"
                 :icon-left="{ icon: 'user', size: '24_24' }"
                 @click="storeModal.changeActiveModal('auth-user')"/>

@@ -25,7 +25,6 @@ import Characteristic from '@/components/Templates/page__product/Characteristic.
 import Reviews from '@/components/Templates/page__product/Reviews.vue';
 import Panel from "@/components/UI/Panel/Panel.vue"
 import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
-import { getPageTitle} from '@/utils/other'
 
 const className = useCssModule()
 const route = useRoute()
@@ -46,15 +45,6 @@ const { data, refresh } = useAsyncData(GET_ASYNC_DATA_KEY('getFullInfoProduct'),
 useHead({
     titleTemplate: () => data.value ? `${data.value.name} ${data.value.art}` : META.CATALOG_ID.TITLE
 })
-
-// definePageMeta({
-//     title: getPageTitle(unref(data), META.CATALOG_ID.TITLE)
-// })
-
-// onMounted(() => {
-//     setHeaderTitle(data.value ? data.value.name : 'Каталог товаров')
-// })
-// onActivated(() => setHeaderTitle(data.value ? data.value.name : 'Каталог товаров'))
 
 </script>
 

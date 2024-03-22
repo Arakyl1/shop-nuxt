@@ -29,9 +29,7 @@
     --separator-background-color: var(--gray-500);
     // UI Components Button
     --button-border-focus-visible: solid;
-    @each $name, $value in $ButtonBasicPadding {
-        --button-base-padding-#{$name}: #{$value};
-    }
+
     --bt-transition--xs: all 0.18s ease-in-out;
     --bt-transition--sm: all 0.24s ease-in-out;
     --bt-transition--base: all 0.3s ease-in-out;

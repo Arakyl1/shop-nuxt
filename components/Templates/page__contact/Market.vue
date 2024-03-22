@@ -7,12 +7,14 @@
                         <ClientOnly>
                             <img :src="elem.img" alt="Market photo" class="object-cover w-full">
                         </ClientOnly>
-                        <p class="py-2 lg:text-sm /md:text-base">{{ elem.adress }}</p>
+                        <p class="py-2 text-sm">{{ elem.adress }}</p>
                     </div>
                 </template>
                 <template v-if="viewport.isGreaterOrEquals('sm')"
                 #center="{ prev, next, listValueScroll }" >
-                    <ControlButtonCenterAbsolute v-bind="{ listValueScroll, next, prev }"/>
+                    <ControlButtonCenterAbsolute
+                    v-bind="{ listValueScroll, next, prev }"
+                    :class="className['control-button']"/>
                 </template>
                 <template v-else #footer="{ prev, next, indexActiveButton, updateScrolLeft, listValueScroll }">
                     <div :class="className['control-button--mobile']">
@@ -30,8 +32,6 @@
 
 <script setup lang="ts">
 import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
-import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
-import ControlItem from "@/components/Templates/ControlElements/Item.vue";
 import ControlButtonCenterAbsolute from "@/components/Templates/Carousel/ControlButtonCenterAbsolute.vue";
 
 
@@ -41,7 +41,9 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
+.control-button {
+    top: 80px;
+}
 .control-button--mobile {
     margin-top: 1rem;
 }

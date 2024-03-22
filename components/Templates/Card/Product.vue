@@ -5,7 +5,10 @@
                 :class="[!content ? 'liner__gradient-loader' : 'bg-gray-100']"
                 :style="{ '--lin-grad-loader--deg': '90deg' }">
                 <template v-if="content">
-                    <Status :status="getStatus(content)" :class="className['status']" data-left />
+                    <Status :status="getStatus(content)"
+                    :class="className['status']"
+                    class=""
+                    data-left />
                     <div :class="className['button-like']">
                         <slot name="bt-favorite" v-bind="{ content }">
                             <ClientOnly>
@@ -15,7 +18,7 @@
                             </ClientOnly>
                         </slot>
                     </div>
-                    <div :class="className['image']">
+                    <div :class="className['image']" class="p-6 /md:p-8">
                         <Flex :tag="'picture'" class="h-full w-full" :justify="'center'">
                             <img :src="content.image.length ?
                                 changeValueImageSize(content.image[0].link, {
@@ -33,7 +36,8 @@
                     <Button :tag="'nuxt-link'"
                     :to="`/catalog/${content.id}`"
                     :mode="'link'"
-                    :class="className['button-link']">
+                    :class="className['button-link']"
+                    class="/xl:text-md">
                         <span class="color-inherit">{{ content.name }}</span>
                         <span class="text-gray-300 px-2">{{ content.art }}</span>
                     </Button>
@@ -50,7 +54,7 @@
                         :loader="!Boolean(content)" />
                     <ProductPrice v-else
                         :price="content.price"
-                        :class="className['price']" 
+                        class="/md:text-md /xl:text-lg" 
                         :discount="content.discount > 0" />
                     <Button
                     :appearance="'gray-icon'"
@@ -64,8 +68,7 @@
                 :appearance="'blue'"
                 :disabled="content.quantity === 0"
                 @click.stop="add({ 'card_id': content.id, count: 1 })"
-                :class="className['button-basket']"
-                class="justify-center"/>
+                class="justify-center p-2 w-full /md:h-12 text-sm /md:text-base"/>
             </slot> 
         </Flex>
     </Flex>
@@ -110,7 +113,6 @@ const content = computed<ProductCardBase | null>(() => props.data)
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 2rem;
     width: 100%;
     height: 100%;
     z-index: 10;
@@ -120,9 +122,6 @@ const content = computed<ProductCardBase | null>(() => props.data)
     max-width: 100%;
     max-height: 100%;
 }
-.button-link {
-    font-size: var(--text-md);
-}
 .button-link > p {
     text-wrap: wrap;
     -webkit-box-orient: vertical;
@@ -130,14 +129,7 @@ const content = computed<ProductCardBase | null>(() => props.data)
     display: -webkit-box;
     overflow: hidden;
 }
-.button-basket {
-    width: 100%;
-    font-size: var(--text-base);
-}
 
-.price {
-    font-size: var(--text-lg);
-}
 .skeleton-elem {
     font-size: var(--text-base);
 }
@@ -155,9 +147,6 @@ const content = computed<ProductCardBase | null>(() => props.data)
 }
 
 @media screen and (max-width: 768px) {
-    .button-basket {
-        padding: 0.5rem;
-    }
     .skeleton-elem-secondary {
         font-size: var(--text-base);
     }
@@ -167,20 +156,10 @@ const content = computed<ProductCardBase | null>(() => props.data)
 }
 
 @media screen and (max-width: 600px) {
-    .status {
-        padding: 0rem 0.5rem;
-    }
     .button-like {
         transform: scale(0.75);
         top: 0.25rem;
         right: 0.25rem;
-    }
-    .button-link {
-        font-size: var(--text-base);
-    }
-    .button-basket {
-        font-size: var(--text-sm);
-        height: 2.5rem !important;
     }
 }
 </style>

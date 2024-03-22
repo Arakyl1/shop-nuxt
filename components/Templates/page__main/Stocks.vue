@@ -25,7 +25,7 @@
                     <Button 
                     :appearance="'blue'"
                     :text="common.BUTTON_MORE_DETAILS"
-                     class="grow justify-center"/>
+                     class="grow justify-center /md:h-12"/>
                      <Flex class="gap-2">
                          <ButtonArrow @click="prev" class="-scale-100" />
                          <ButtonArrow @click="next" />
@@ -58,7 +58,6 @@ function transformData(item: NonNullable<typeof data.value>['item'][0]) {
 .body {
     aspect-ratio: 228/101;
 }
-
 
 .picture > * {
     object-fit: cover;

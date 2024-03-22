@@ -42,7 +42,6 @@ const { data } = await useAsyncData('delivery', () => queryContent('/delivery/')
 // }
 .delivery p {
     color: #9C9C9C;
-    font-size: var(--text-base);
 }
 
 .delivery :is(ul, ol)> :is(span, p, a, li) {

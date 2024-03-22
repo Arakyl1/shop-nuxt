@@ -3,7 +3,8 @@
         :class="{
             [bgColorByStatus[status]]: status,
             [className['status']]: true
-        }">
+        }"
+        class="px-2 py-0 /lg:px-3 /lg:py-1 text-sm /xl:text-base">
         {{ status ? textByStatus[status] : '' }}
     </p>
 </template>
@@ -32,7 +33,6 @@ const className = useCssModule()
     color: var(--white);
     text-transform: uppercase;
     position: absolute;
-    padding: 0.25rem 0.75rem;
     border-radius: var(--rounded-base);
     z-index: 20;
 }

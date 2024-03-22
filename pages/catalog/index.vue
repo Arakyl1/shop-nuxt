@@ -8,7 +8,6 @@
             <Button
             :appearance="'blue'"
             :square="true"
-            :height="'h-10'"
             :icon-left="{ icon: 'filter', size: '24_24' }"
             class="/md:hidden justify-center"
             @click="() => update(true)"/>

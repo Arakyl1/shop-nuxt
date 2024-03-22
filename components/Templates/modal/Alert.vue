@@ -7,7 +7,6 @@
                     <Flex class="gap-4 w-full">
                         <Button :appearance="'blue'"
                         :text="common.OK"
-                        :height="'h-10'"
                         class="grow justify-center"
                         data-promise-status="empty" />
                     </Flex>

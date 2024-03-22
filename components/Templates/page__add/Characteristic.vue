@@ -5,14 +5,12 @@
         <Flex class="gap-4 w-full flex-wrap" :class="className['bt-control']">
           <Button
           :appearance="'blue'"
-          :height="'h-10'"
           class="px-3 grow justify-center"
           @click="addSection"
           :text="commonButton.ADD_SECTION"/>
 
           <Button
           :appearance="'red'"
-          :height="'h-10'"
           class="px-3 grow justify-center"
           :disabled="!characteristicSection"
           @click="() => setStatus('cancel-create')"
@@ -56,13 +54,11 @@
             <Button
             :appearance="'blue'"
             @click="addItem"
-            :height="'h-10'"
             :text="commonButton.ADD_FIELD"
             class="px-3 grow justify-center"/>
 
             <Button
             :appearance="'yellow'"
-            :height="'h-10'"
             class="h-10 px-3 grow justify-center"
             @click="() => editActive ? setStatus('apply-change') : createSection()"
             :text="editActive ? commonButton.APPLY_CHANGES : commonButton.CREATE_SECTION"/>

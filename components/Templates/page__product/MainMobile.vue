@@ -65,7 +65,7 @@
             </Flex>
             <Flex class="w-full gap-4">
                 <Button
-                class="grow justify-center"
+                class="grow justify-center /sm:h-12"
                 :text="common.BUTTON_BASKET_ADD"
                 :appearance="'blue'"
                 :icon-left="{ icon: 'basket', size: '25_25' }"
@@ -73,7 +73,7 @@
                 @click="add({ card_id: data.id, count: numberOfProduct })"/>
                 <ClientOnly>
                     <Button
-                    class="justify-center"
+                    class="justify-center /sm:h-12"
                     :appearance="'blue'"
                     :square="true"
                     :icon-left="{ icon: 'like', size: '25_25' }"
@@ -82,7 +82,7 @@
                     @click="toggle({ card_id: data.id })"/>
                 </ClientOnly>
                 <Button
-                class="justify-center"
+                class="justify-center /sm:h-12"
                 :appearance="'blue'"
                 :square="true"
                 :icon-left="{ icon: 'share', size: '25_25' }"
