@@ -43,7 +43,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true },
-    '/contact': { prerender: true },
+    '/contact': { swr: true },
     '/catalog': { swr: true },
     '/catalog/**': { swr: 3600  },
     '/delivery': { ssr: true },

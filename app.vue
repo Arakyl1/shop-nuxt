@@ -59,9 +59,7 @@ useHead({
   titleTemplate: () => pageTitle.value,
 })
 
-onBeforeMount(async() => {
-  await initAuth()
-})
+onBeforeMount(async() => await initAuth())
 onMounted(() => console.log('App mounted'))
 
 
