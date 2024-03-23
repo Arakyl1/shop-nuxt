@@ -44,9 +44,9 @@ await useFetch('/api/attridute/get', {
   server: true,
   method: 'GET',
   params: { type: 'CATEGOR' },
-  key: 'attridute:CATEGOR',
   retry: 5,
   onResponse({ response }) {
+    console.log(response._data)
     if (response.status < 400) {
       CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
     }
