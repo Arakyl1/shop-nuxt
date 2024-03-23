@@ -30,19 +30,19 @@
             </Group>
         <div class="grow">
             <Card :appearance="'gray'" :container="'xl'">
-                <Group class="gap-2">
+                <Group class="gap-2 w-full">
                     <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_REQUISITES"/>
                     <ContentDoc path="/contact/requisites" v-slot="{ doc }">
-                        <ul class="text-black-300">
+                        <Group :tag="'ul'" class="text-black-300 gap-4 w-full">
                             <Flex v-for="item in doc.body"
                             :key="item.name"
                             :tag="'li'"
                             :justify="'between'"
-                            class="py-2 gap-4 text-md">
+                            class="w-full gap-4 /lg:text-md">
                                 <p>{{ item.name }}</p>
                                 <p class="text-gray-500">{{ item.value }}</p>
                             </Flex>
-                        </ul>
+                        </Group>
                     </ContentDoc>
                 </Group>
             </Card>

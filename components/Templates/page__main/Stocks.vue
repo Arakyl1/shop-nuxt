@@ -46,7 +46,7 @@ import Skeleton from "@/components/UI/Skeleton/Skeleton.vue";
 import ControlButtonCenterAbsolute from "@/components/Templates/Carousel/ControlButtonCenterAbsolute.vue";
 import { PAGE_MAIN as common } from "@/common/C";
 
-const { data, pending } = await useFetch('/api/mainSlider/data', { server: true, lazy: true })
+const { data, pending } = await useFetch('/api/mainSlider/data', { server: false, lazy: true })
 const className = useCssModule()
 const viewport = useViewport()
 

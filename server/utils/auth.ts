@@ -12,7 +12,7 @@ export async function setNewSessionKey<T extends { id: number, role: string }>(e
     } catch (error) {
         throw _createError('error white token in db')
     }
-    _setCookie(event, key, newSessionKey)
+    _setCookie(event, key, newSessionKey, { sameSite: 'strict', expires: new Date(Date.now() + 604800000), httpOnly: true  })
 }
 
 export type checkValidUserRoleParams = Parameters<typeof checkValidUserRole>

@@ -1,17 +1,18 @@
 <template>
-    <section class="relative mb-12">
+    <section class="relative">
         <template v-if="true">
             <div :class="className['button']" ref="modalbutton">
                 <Button :appearance="'white'"
                 :height="'h-14'"
-                class="text-xl px-6 text-gray-500"
+                class="text-xl px-6 text-gray-500 none /lg:flex"
                 @click="update(true)"
                 :text="common.BUTTON_MODAL"/>
             </div>
             <Modal :active="state"
             :onClose="() => update(false)"
             :bodyClass="className['modal']"
-            :btClose="true">
+            :btClose="true"
+            class="none /lg:block">
                 <Group  class="gap-10">
                     <Title :tag="'h3'"
                     :text="common.BUTTON_MODAL"

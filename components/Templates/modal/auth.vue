@@ -1,6 +1,6 @@
 <template>
     <Transition name="auth" :duration="300" mode="out-in">
-        <Main v-if="!_userAnonim"/>
+        <Main v-if="_userAnonim !== null && !_userAnonim"/>
         <Login v-else-if="!state">
             <Group class="gap-4"  :align="'center'":class="className['footer-button']">
                 <div class="decor-line"></div>

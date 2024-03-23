@@ -124,3 +124,6 @@ export function getStatus(data:ProductCardBase | null) {
 }
 
 export const getKeyCookie = (k: CookieKey) => k
+
+export const isClient = () => process.client
+export const isServer = () => process.server

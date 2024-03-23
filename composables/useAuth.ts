@@ -1,6 +1,5 @@
 import { alert as _alert } from "@/stores/alert";
 import { user as _user } from "@/stores/user"
-import { H3Event, EventHandlerRequest } from 'h3'
 
 
 export default () => {
@@ -75,13 +74,18 @@ export default () => {
         }
     }
 
-    const initAuth = async(event: H3Event<EventHandlerRequest>) => {
-        return useAsyncData(async() => await fetchWithCookie(event, '/api/auth/init', {
-            retry: 3,
-            onResponse({ response }) {
-                handleResponse(response._data)
-            }
-        }))
+    const initAuth = async() => {
+        try {
+            await $fetch('/api/auth/init',  {
+                retry: 3,
+                server: false,
+                onResponse({ response }) {
+                    handleResponse(response._data)
+                }
+             })
+        } catch (error) {
+            console.log(error)
+        }
     }
     
     return { login, logout, register, initAuth, handleResponse }

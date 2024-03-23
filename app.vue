@@ -40,8 +40,6 @@ const className = useCssModule()
 
 const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
-await initAuth(event)
-
 await useFetch('/api/attridute/get', {
   server: true,
   method: 'GET',
@@ -59,10 +57,11 @@ await useFetch('/api/attridute/get', {
 
 useHead({
   titleTemplate: () => pageTitle.value,
-  // meta: [{ property: 'og:title', content: getPageTitle() }]
 })
 
-onBeforeMount(async() => await initAuth(event))
+onBeforeMount(async() => {
+  await initAuth()
+})
 onMounted(() => console.log('App mounted'))
 
 
