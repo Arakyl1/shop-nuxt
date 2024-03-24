@@ -3,6 +3,7 @@ import { userTransform } from "~/server/utils/userTransform";
 import { getModelName } from '@/type/intex';
 import { Prisma, Role } from '@prisma/client';
 import { _createError } from "@/server/utils/message";
+import { GET_SERVER_RESPONSE_KEY } from "@/server/utils/other";
 import { checkValidUserId, checkValidUserRole, type checkValidUserRoleParams, type checkValidUserIdParams } from '@/server/utils/auth';
 
 
@@ -51,7 +52,7 @@ export default defineEventHandler(async(event) => {
             })
             return { user: userTransform(user) }
         } catch (error) {
-            throw _createError('the user with this id does not exist')
+            throw _createError(GET_SERVER_RESPONSE_KEY('AUTH_USER_WITH_THIS_ID_DOES_NOT_EXIST'))
         }
     } catch (error) {
         return error

@@ -1,15 +1,22 @@
 <template>
-    <component :is="tag" :class="rootClass" ref="grid" :data-grid="instanse?.uid" :data-uid="instanse?.uid"><slot></slot></component> 
+    <component :is="tag"
+    :class="rootClass"
+    ref="grid"
+    :data-grid="instanse?.uid"
+    :data-uid="instanse?.uid">
+        <slot></slot>
+    </component> 
 </template>
 
 <script setup lang="ts">
+import { CSS_JUSTIFY_ITEMS, CSS_ALIGN_CONTENT } from "@/type/intex";
 
 export interface Props {
     tag?: string,
     // col?: NumericRange<1, 24>,
     // row?: NumericRange<1, 24>,
-    justify?: 'center' | 'start' | 'end' | 'stretch',
-    align?: 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch',
+    justify?: CSS_JUSTIFY_ITEMS,
+    align?: CSS_ALIGN_CONTENT,
     container?: 'xs'|'sm'|'md'|'lg'|'xl'
 }
 

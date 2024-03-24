@@ -228,13 +228,13 @@
 // visibility style
 
 // Typography style
-$sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+$sizes: 1, 2, 3, 4;
 @each $value in $sizes {
   .line-clamp-#{$value} {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: #{$value};
   }
 }
 h1 {
@@ -286,34 +286,46 @@ h3 {
       display: grid;
     }
 
-    @each $name, $value in $commonSize {
-      .\/#{$screenKey}\:gap-#{$name} {
-        gap: calc(0.25rem * $value);
-      }
-      .\/#{$screenKey}\:h-#{$name} {
-        height: calc(0.25rem * $value);
-      }
-      .\/#{$screenKey}\:w-#{$name} {
-        width: calc(0.25rem * $value);
-      }
-      .\/#{$screenKey}\:p-#{$name} {
-        padding: calc(0.25rem * $value);
-      }
-      .\/#{$screenKey}\:py-#{$name} {
-        padding-top: calc(0.25rem * $value);
-        padding-bottom: calc(0.25rem * $value);
-      }
-      .\/#{$screenKey}\:px-#{$name} {
-        padding-left: calc(0.25rem * $value);
-        padding-right: calc(0.25rem * $value);
-      }
-    }
-
     @each $name, $size in $fontSize {
       .\/#{$screenKey}\:text-#{$name} {
         font-size: var(--text-#{$name});
       }
     }
+  }
+}
+
+@media (min-width: 640px) {
+  .\/sm\:h-12 {
+    height: calc(0.25rem * 12);
+  }
+}
+
+@media (min-width: 768px) {
+  .\/md\:h-12 {
+    height: calc(0.25rem * 12);
+  }
+  .\/md\:p-6 {
+    padding: calc(0.25rem * 6);
+  }
+  .\/md\:gap-4 {
+    gap: calc(0.25rem * 4);
+  }
+}
+@media (min-width: 1024px) {
+  .\/lg\:gap-8 {
+    gap: calc(0.25rem * 8);
+  }
+  .\/lg\:px-16 {
+    padding-left: calc(0.25rem * 16);
+    padding-right: calc(0.25rem * 16);
+  }
+  .\/lg\:px-3 {
+    padding-left: calc(0.25rem * 3);
+    padding-right: calc(0.25rem * 3);
+  }
+  .\/lg\:py-1 {
+    padding-top: calc(0.25rem * 1);
+    padding-bottom: calc(0.25rem * 1);
   }
 }
 

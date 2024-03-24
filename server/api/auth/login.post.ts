@@ -12,7 +12,7 @@ export default defineEventHandler(async (event: H3Event) => {
         const formData = await getFormDataInEvent(event, modelKey)
 
         checkValidFormData(formData, modelKey)
-       
+    
         
         const searchParams: Prisma.UserFindUniqueArgs = {
             where: { username: formData.username },

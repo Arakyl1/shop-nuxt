@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import { NuxtLink } from '#components';
+import { CSS_BORDER_RADIUS } from "@/type/intex";
 import { default as CreateIcon, Props as IconProps } from "@/utils/icon/index.vue";
 
 // элемент кнопка, через пропс можно передать текс, установить иконки справа или слева от текста
@@ -47,9 +48,9 @@ export interface Props {
     iconRight?: IconProps,
     iconTransition?: string,
     square?: boolean,
-    rounded?: 'none'|'xs'|'sm'|'base'|'lg'|'xl'|'full',
+    rounded?: CSS_BORDER_RADIUS,
     mode?: 'primary'|'secondary'|'outline'|'link'|'none'|'empty',
-    appearance?: 'white'|'black'|'gray'|'red'|'blue'|'green'|'yellow'|
+    appearance?: 'black'|'white'|'gray'|'red'|'blue'|'green'|'yellow'|
     'white-icon'|'black-icon'|'gray-icon'|'red-icon'|'blue-icon'|'green-icon'|'yellow-icon',
     tag?: 'button'|'a'|'input'|'nuxt-link',
     type?: 'button'|'reset'|'submit',
@@ -59,7 +60,6 @@ export interface Props {
     checkHoverParent?: boolean,
     iconNon?: boolean,
     height?: `h-${number}`,
-    // textSize?: `text-${'2xl'|'xl'|'lg'|'md'|'base'|'sm'|'xs'}`
 }
 
 
@@ -253,7 +253,7 @@ function getTypeButton() {
     outline: none;
     background-color: var(--bg-color);
     color: var(--color, var(--white));
-    transition: var(--transition, var(--bt-transition--sm));
+    transition: var(--transition, var(--transitions--sm));
     --base-outline: 1px var(--button-border-focus-visible) var(--gray-500) !important;
 }
 .button p {
@@ -262,12 +262,12 @@ function getTypeButton() {
 }
 .button:not(.icon-none) use[type-icon=monocolor] {
     fill: var(--fill-color, var(--white));
-    transition: var(--transition, var(--bt-transition--sm));
+    transition: var(--transition, var(--transitions--sm));
 }
 
 .button:not(.icon-none) use[type-icon=outline] {
     stroke: var(--fill-color, var(--white));
-    transition: var(--transition, var(--bt-transition--sm));
+    transition: var(--transition, var(--transitions--sm));
 }
 
 .button:hover:not(.disabled):not(.active)   {
@@ -376,12 +376,9 @@ function getTypeButton() {
     --bg-color: var(--white);
     --color: var(--gray-700);
     --fill-color: var(--gray-700);
-
     --color--hover: var(--gray-500);
     --fill-hover: var(--gray-500);
-
     --bg-color-active: var(--blue-500);
-
     --outline: none;
 }
 
@@ -392,7 +389,7 @@ function getTypeButton() {
 .white {
     --bg-color: var(--white);
     --color: var(--black-700);
-    --transition: var(--bt-transition--xs);
+    --transition: var(--transition--xs);
     --fill-color: var(--black-700);
     --bg-color--hover: var(--gray-100);
 }

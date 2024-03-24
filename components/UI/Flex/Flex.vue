@@ -3,12 +3,13 @@
 </template>
 
 <script setup lang="ts">
+import { CSS_FLEX_DIRECTION, CSS_JUSTIFY_CONTENT, CSS_ALIGN_ITEMS } from "@/type/intex";
 
 export interface Props {
     tag?: string,
-    direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse',
-    justify?: 'center' | 'start' | 'end' | 'left' | 'right' | 'evenly' | 'between' | 'around' | 'baseline' ,
-    align?: 'center' | 'flex-start' | 'flex-end',
+    direction?: CSS_FLEX_DIRECTION,
+    justify?: CSS_JUSTIFY_CONTENT,
+    align?: CSS_ALIGN_ITEMS,
 }
 
 const props = withDefaults(defineProps<Props>(), { 'tag': 'div', align: 'center' })

@@ -34,7 +34,7 @@ export async function createAnonimUser(event) {
 
 export function handleSessionKey(sessionKey: string) {
     const decoded = decodeToken(sessionKey,'refrech') as string | { [k: string]: string }
-    if (decoded === null || isString(decoded)) throw _createError(GET_CONTENT_KEY('AUTH_UNAUTHORIZED'))
+    if (decoded === null || isString(decoded)) throw _createError(GET_SERVER_RESPONSE_KEY('AUTH_INVALID_COOKIE'))
     
     if (!checkValidUserRole(decoded as checkValidUserRoleParams[0]) || !checkValidUserId(decoded as checkValidUserIdParams[0])) {
        return null

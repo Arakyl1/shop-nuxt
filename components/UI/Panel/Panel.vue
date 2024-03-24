@@ -19,14 +19,6 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
-/* .panel > [data-pagination] {
-    margin-top: 2rem;
-}
-
-.panel > [data-account-header] {
-    margin-bottom: 1.875rem;
-} */
 .panel {
     min-height: 70vh;
 }

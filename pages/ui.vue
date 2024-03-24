@@ -1,8 +1,11 @@
 <template>
-    <div>
-        <Button :appearance="'blue-icon'">
-            <CreateIcon :icon="'basket'" :active="true"/>
-        </Button>
+    <div class="container">
+        <div class="wrapper">
+            <div class="columns">
+                <Card v-for="item in 10" class="w-full h-16" :appearance="'warning'" :rounded="'lg'"/>
+            </div>
+        </div>
+
         <!-- <Pagination
             :total="120"
             :range-before="1"
@@ -46,23 +49,23 @@
                 <template #default>
                     <div :style="{ padding: `0.5rem 2rem` }">Accordion</div>
                 </template>
-                <template #content>
+<template #content>
                     <div>Accordion</div>
                 </template>
-            </Tooltip>
-            <div class="flex gap-2" :style="{ 'flex-wrap': 'wrap' }">
-                <template v-for="value,key in iconPath">
+</Tooltip>
+<div class="flex gap-2" :style="{ 'flex-wrap': 'wrap' }">
+    <template v-for="value,key in iconPath">
                     <Button :icon-left="{ key: key, size: '24_24' }"  :size="'xs'" :appearance="'blue'" />
                 </template>
-            </div>
-        </div>
-        <div class="flex gap-2" :style="{ 'flex-wrap': 'wrap' }">
-                
-                <Button :icon-left="{ key: 'loader', size: '36_36' }" class="h-12"  :size="'xs'" :appearance="'blue'" />
-                <Button :icon-left="{ key: 'loader-circles', size: '36_36' }" class="h-12"  :size="'xs'" :appearance="'blue'" />
-            </div>
-    </div> -->
 </div>
+</div>
+<div class="flex gap-2" :style="{ 'flex-wrap': 'wrap' }">
+
+    <Button :icon-left="{ key: 'loader', size: '36_36' }" class="h-12" :size="'xs'" :appearance="'blue'" />
+    <Button :icon-left="{ key: 'loader-circles', size: '36_36' }" class="h-12" :size="'xs'" :appearance="'blue'" />
+</div>
+</div> -->
+    </div>
 </template>
 
 
@@ -72,7 +75,7 @@ import CreateIcon from "@/utils/icon/index.vue";
 // import RangeNumber from "@/components/UI/Range/Number.vue";
 // import Password from "@/components/UI/Input/Password.vue";
 // import Pagination from "@/components/UI/Pagination/Pagination.vue";
-import Button from "@/components/UI/Button/Button.vue";
+import Card from "@/components/UI/Card/Card.vue";
 
 // const { activePage, updatePage, getInfoPagination } = paggination()
 // const data ={
@@ -105,7 +108,18 @@ function onClick() {
 
 
 <style>
-.test-ui-body {
-    width: 300px;
+.wrapper {
+    container-type: inline-size;
+}
+
+.columns {
+    display: grid;
+    gap: 2rem;
+}
+
+@media (min-width: calc(50ch * 2)) {
+    .columns {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>

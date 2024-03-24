@@ -8,7 +8,7 @@
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition> -->
-      <NuxtPage></NuxtPage>
+      <NuxtPage/>
     </main>
     <Footer />
     <ClientOnly>
@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { user as _user } from "@/stores/user";
 import type { CategorDataItem } from "@/type/intex";
 import Footer from "@/components/Templates/Footer/Footer.vue";
 import Header from "@/components/Templates/Header/Header.vue";
@@ -31,10 +30,7 @@ import ContentIcon from '@/components/content/Icon.vue'
 
 const config = useRuntimeConfig()
 const route = useRoute()
-const storeUser = _user()
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
-const { data } = storeToRefs(storeUser)
-const event = useRequestEvent()
 const { initAuth } = useAuth()
 const className = useCssModule()
 

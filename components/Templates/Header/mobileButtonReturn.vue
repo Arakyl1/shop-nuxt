@@ -4,7 +4,7 @@
     :justify="'between'"
     class="gap-10 /md:hidden w-full">
         <Button
-        :appearance="'black-icon'"
+        :appearance="'yellow-icon'"
         :icon-left="{ icon: 'arrow-right' }" />
         
         <Title :text="title"

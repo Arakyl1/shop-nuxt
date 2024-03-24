@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async(to, from) => {
     const storeAlert = _alert()
     const { data } = await useFetch('/api/auth/auth')
     
-   if (!data.value && !from.path.startsWith('/auth')) {{
+    if (!data.value && !to.path.startsWith('/auth')) {{
         storeAlert.create({ key: 'MIDDLEWARE_ADD_ROUTER_ERROR' , state: 'error' })
         return navigateTo('/auth')
     }}

@@ -119,7 +119,7 @@ function checkMessage() {
 }
 
 onMounted(() => checkMessage() && elem.value ? elem.value.addEventListener('invalid', onCheckValid, { capture: true, }) : null)
-onMounted(() => checkMessage() && elem.value ? elem.value.removeEventListener('invalid', onCheckValid) : null)
+onBeforeUnmount(() => checkMessage() && elem.value ? elem.value.removeEventListener('invalid', onCheckValid) : null)
 </script>
 
 <style lang="css" module>

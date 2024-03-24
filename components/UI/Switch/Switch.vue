@@ -28,7 +28,7 @@ export interface Props {
     name?: string | number,
     value?: string | number,
     mode?: 'primary' | 'secondary',
-    appearance?: 'red' | 'blue' | 'dark' | 'green'
+    appearance?: 'red' | 'blue'| 'green'
 }
 const props = withDefaults(defineProps<Props>(), { mode: 'secondary', appearance: 'blue' })
 
@@ -83,13 +83,13 @@ function onClick() {
     display: flex;
     align-items: center; 
     border-radius: 9999px;
-    transition: var(--input-transitions--sm);
+    transition: var(--transitions--sm);
 }
 
 .body {
     width: 100%;
     border-radius: 9999px;
-    transition: var(--input-transitions--sm);
+    transition: var(--transitions--sm);
 }
 .body:focus-visible {
     outline: none;
@@ -101,7 +101,7 @@ function onClick() {
     top: 0;
     left: 0;
     transform: translateX(0);
-    transition: var(--input-transitions--sm);
+    transition: var(--transitions--sm);
     border-radius: 9999px;
 }
 .circle:focus-visible {
@@ -160,7 +160,6 @@ function onClick() {
 
 /* appearance style */
 .blue {
-
     --switch-background: var(--gray-300);
     --body-background: var(--gray-300);
     --circle-background: var(--white);
@@ -188,13 +187,5 @@ function onClick() {
     --body-background--active: var(--valid);
     --circle-background--active: var(--white);
 }
-.dark {
-    --switch-background: var(--gray-300);
-    --body-background: var(--gray-300);
-    --circle-background: var(--white);
 
-    --switch-background--active: var(--black-700);
-    --body-background--active: var(--black-700);
-    --circle-background--active: var(--white);
-}
 </style>

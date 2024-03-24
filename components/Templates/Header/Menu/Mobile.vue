@@ -21,7 +21,7 @@
                                             <Button
                                             class="p-1"
                                             :square="true"
-                                            :appearance="'black'"
+                                            :appearance="'yellow'"
                                             :height="'h-6'"
                                             :icon-left="{ icon: 'add-plus', size: '16_16' }"
                                             @click.stop="() => isActive ? close() : onClick()"/>

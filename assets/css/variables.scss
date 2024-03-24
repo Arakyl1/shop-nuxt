@@ -170,6 +170,7 @@ $shadow: (
 
     --lin-grad-loader--deg: 135deg;
     --transition-blur: 1rem;
+    --gap: 1rem;
     // Shadow variable
     @each $name, $value in $shadow {
         --#{$name}: #{$value};

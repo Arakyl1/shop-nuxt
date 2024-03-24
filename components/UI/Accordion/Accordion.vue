@@ -115,7 +115,7 @@ watch(() => isActive.value, (newV) => emit('message', newV ? 'open' : 'close'))
 .body {
     height: 0;
     overflow: hidden;
-    transition: var(--bt-transition--sm);
+    transition: var(--transitions--sm);
 }
 
 .bt {

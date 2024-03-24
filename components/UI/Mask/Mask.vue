@@ -70,7 +70,9 @@ watch(() => props.active, (nV) => {
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
+/* 
+--bg-color-mask - цвет заднего фона маски
+*/
 .mask::after {
     content: '';
     position: absolute;
@@ -78,7 +80,7 @@ watch(() => props.active, (nV) => {
     left: 0;
     width: 100%;
     height: 100%;
-    transition: var(--opacity-transition-for-mask--base);
+    transition: var(--transition--base);
     z-index: -1;
 }
  
@@ -112,60 +114,12 @@ watch(() => props.active, (nV) => {
 
 .anim-scale::after {
     opacity: 0.8;
-    
+    background-color: var(--bg-color-mask, var(--transparent));
 }
 
-.dark::after {
-    background-color: var(--black-900);
-}
-
-
-
-/* OLD STYLE */
-/* .fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    transition-delay: 200ms;
-    
+.dark {
+    --bg-color-mask: var(--black-900);
 }
 
 
-.relative:not(.fixed)::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: v-bind('props.opacity');
-    transition: var(--opacity-transition-for-mask--base);
-    display: none;
-}
-
-.relative:not(.active):not(.fixed):hover::after {
-    display: block;
-}
-
-.relative.active:not(.fixed)::after {
-    display: block;
-}
-
-.white:not(.relative), .white::after {
-    background-color: var(--white);
-}
-
-
-.red:not(.relative), .red::after {
-    background-color: var(--red-500);
-}
-
-.gray:not(.relative), .gray::after {
-    background-color: var(--gray-300);
-}
-
-*:hover> .hover::after {
-    display: block;} */
 </style>

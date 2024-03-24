@@ -6,15 +6,17 @@
 
 <script setup lang="ts">
 // import { AppScreen } from 'type/type';
+import { CSS_BORDER_RADIUS } from "@/type/intex";
 
 export type Padding = `${number}rem` | `${number}rem ${number}rem`
+
 
 export interface Props {
     mode?: 'primary' | 'secondary' |'outline',
     appearance?: 'warning' | 'info' | 'gray' | 'gradient' | 'white',
     content?: 'text',
-    rounded?: 'none'|'xs'|'sm'|'base'|'lg'|'xl'|'2xl'|'full',
-    container?: 'xs'|'sm'|'m'|'lg'|'l'|'xl'|'2xl'|'3xl'
+    rounded?: CSS_BORDER_RADIUS,
+    container?: 'xs'|'sm'|'lg'|'xl'|'2xl'|'3xl'
     padding?: Padding,
     padding1024?: Padding,
     padding768?: Padding,
@@ -84,17 +86,10 @@ onMounted(() => {
     background: var(--gray-100)
 }
 
-.card-gradient{
-    background: linear-gradient(128deg, #BCFF9C 7.35%, #DCF99D 40.83%, #D3E4A1 65.25%, #F3E09C 159.64%), #FFF;
-}
-
 .card-text > * {
     font-size: var(--text-sm) !important;
 }
 
-// .card-padding {
-//     padding: v-bind('isPadding');
-// }
 
 .card-xs {
     padding: 0.75rem;
@@ -102,25 +97,16 @@ onMounted(() => {
 .card-sm {
     padding: 1.125rem;
 }
-.card-m {
-    padding: 1.25rem;
-}
+
 .card-lg {
     padding: 1.5rem;
 }
-.card-l {
-    padding: 1.875rem;
-}
+
 .card-xl {
     padding: 2rem;
     border-radius: var(--rounded-xl);
 }
-.card-2xl {
-    padding: 1.875rem 1.25rem;
-}
-.card-2xl {
-    padding: 2.5rem;
-}
+
 .card-3xl {
     padding: 3rem 2rem;
 }

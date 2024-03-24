@@ -16,7 +16,7 @@
                 :mode="'outline'"
                 :icon-transition="'select-icon'"
                 :icon-right="{ icon: isActive ? 'arrow' : 'arrow', size: '25_25' }"
-                class="text-base w-full h-10 truncate"
+                class="text-base w-full truncate"
                 :class="[ activeOption?.value ? 'justify-between' : 'justify-end']"
                 :style="{ padding: '0rem 0.25rem 0 0.75rem' }"
                 @click="onClick"/>
@@ -248,12 +248,16 @@ function sendEvent() {
 .body {
     overflow: hidden;
     position: absolute;
-    transition: var(--bt-transition--sm);
+    transition: var(--transitions--sm);
     z-index: 200;
     max-height: 200px;
     --value-indent: 0.75rem;
     border-radius: var(--rounded-lg);
     box-shadow: 0 2px 3px -2px var(--gray-300), 0 2px 3px -2px var(--gray-300);
+}
+.trigger {
+    --color-readonly: var(--black-500);
+    --fill-readonly: var(--black-500);
 }
 .card {
     height: 100%;

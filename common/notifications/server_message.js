@@ -11,8 +11,10 @@ export const SERVER_RESPONSE_CONTENT = {
     AUTH_REGISTER_SUCCESS: 'Пользователь зарегистрирован',
     AUTH_LOGIN_INVALID_PASSWORD: 'Неверный пароль',
     AUTH_USER_WITH_THAT_NAME_IS_NOT_REGISTERED: 'Пользователь с таким именем не зарегистрирован',
-    AUTH_ABSENT_COOKIE_ANONIM_SESSION_KEY: 'Отсутствует файл кук "anonimSessionKey"',
+    AUTH_USER_WITH_THIS_ID_DOES_NOT_EXIST: 'Пользователь с таким идентификатором не существует',
+    AUTH_ABSENT_COOKIE_ANONIM_SESSION_KEY: 'Файл кук "anonimSessionKey", отсутствует',
     AUTH_INVALID_COOKIE_ANONIM_SESSION_KEY: 'Файл кук "anonimSessionKey", невалидный',
+    AUTH_INVALID_COOKIE: 'Файл кук "anonimSessionKey" или "sessionKey", невалидный',
     // COMMENT MESSAGE
     COMMENT_CREATE_SUCCESS: 'Ваш отзыв добавлен',
     // PRODUCT MESSAGE

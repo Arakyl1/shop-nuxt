@@ -194,7 +194,7 @@ function onIconClick(event) {
     background-color: var(--bg-color);
     border-radius: var(--border-rounded, var(--rounded-xl));
     border: var(--border);
-    transition: var(--input-transition);
+    transition: var(--transitions--sm);
     display: flex;
     align-items: center;
 }
@@ -235,15 +235,15 @@ function onIconClick(event) {
     font-size: var(--text-sm);
     line-height: 1.1;
     color: var(--gray-300);
-    transition: var(--input-transitions-span--xs);
+    transition: var(--transitions--xs);
 }
 .input:not(.readonly) use[type-icon=monocolor] {
     fill: var(--fill-color, var(--gray-700));
-    transition: var(--transition, var(--input-transitions--sm));
+    transition: var(--transition, var(--transitions--sm));
 }
 .input:not(.readonly) use[type-icon=outline] {
     stroke: var(--fill-color, var(--gray-700));
-    transition: var(--transition, var(--input-transitions--sm));
+    transition: var(--transition, var(--transitions--sm));
 }
 
 .input.icon {
