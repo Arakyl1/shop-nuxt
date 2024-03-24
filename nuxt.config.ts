@@ -58,13 +58,6 @@ export default defineNuxtConfig({
       alias: {
         ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
       }
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          'additionalData': '@use "v-calendar/style.css";'
-        }
-      }
     }
   },
   postcss: {

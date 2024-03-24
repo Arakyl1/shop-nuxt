@@ -65,6 +65,7 @@ onMounted(() => console.log('App mounted'))
 </script>
 
 <style lang="scss" >
+@use "v-calendar/style.css";
 @use "@/assets/css/main.scss" ;
 
 .path-enter-active {
