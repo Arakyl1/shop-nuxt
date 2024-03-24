@@ -2,34 +2,32 @@ import { H3Event } from "h3"
 import bcrypt from 'bcryptjs';
 import { Prisma, User } from "@prisma/client";
 import prisma from "@/server/db";
-import { CookieKey } from "@/type/intex";
-import { setNewSessionKey } from "@/server/utils/auth";
 import { _createError } from "@/server/utils/message";
-import { getUser } from "@/server/utils/auth"
+import { getUser, setNewSessionKey } from "@/server/utils/auth"
+import { getFormDataInEvent, checkValidFormData } from "@/server/utils/formDataHelper";
+import { _deleteCookie, _getCookie, GET_SERVER_RESPONSE_KEY } from "@/server/utils/other";
 
 export default defineEventHandler(async(event: H3Event) => {
-
-    const body = await readBody<Pick<Prisma.UserCreateInput, 'email'|'password'|'username'>>(event)
-    const keyCookie: CookieKey = 'sessionKey'
-    const cookieSessionKey = getCookie(event, keyCookie)
-    const appConfig = useRuntimeConfig()
-    const { username, email, password } = body
-
     try {
+        const modelKey: Array<keyof User> = ['email','username','password']
+        const formData = await getFormDataInEvent(event, modelKey)
 
-        if (!username || !email || !password) throw _createError('invalid create data')
-        if (!cookieSessionKey) throw _createError('absent cookie sessionKey')
+        checkValidFormData(formData, modelKey)
+
+        const cookieSessionKey = _getCookie(event, 'anonimSessionKey')
+        if (!cookieSessionKey) throw _createError(GET_SERVER_RESPONSE_KEY('AUTH_ABSENT_COOKIE_ANONIM_SESSION_KEY'))
 
         const resUser = await prisma.refrechToken.findFirst({
             where: { token: cookieSessionKey },
             select: { 'user': { select: { id: true, role: true } } }
         })
 
-        console.log(resUser)
-        if (!resUser) throw _createError('invalid sessionKey')
+        if (!resUser) throw _createError(GET_SERVER_RESPONSE_KEY('AUTH_INVALID_COOKIE_ANONIM_SESSION_KEY'))
 
 
         const salt = bcrypt.genSaltSync(10);
+        const { username, email, password } = formData
+        const appConfig = useRuntimeConfig()
         const userCreateData = Prisma.validator<Prisma.UserUpdateArgs>()({
             where: { id: resUser.user.id },
             data: {
@@ -44,16 +42,15 @@ export default defineEventHandler(async(event: H3Event) => {
         let user: User | undefined
         try {
             user = await prisma.user.update(userCreateData)
+            _deleteCookie(event, 'anonimSessionKey')
         } catch (error) {
-            throw _createError('error update user data')
+            throw _createError(GET_SERVER_RESPONSE_KEY('CREATE_ERROR'))
         }
 
         await setNewSessionKey(event, { id: user.id, role: user.role })
         return await getUser(user)
-
     } catch (error) {
-        // console.log()
-        // return { messageKey: GET_CONTENT_KEY('AUTH_REGISTER_SUCH_USER_ALREADY_EXISTS')}
+        console.log(error)
         return error
     }
 })

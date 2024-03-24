@@ -117,7 +117,7 @@ import Grid from "@/components/UI/Grid/Grid.vue";
 import { user as _user } from '@/stores/user';
 import Confirm from "@/components/Templates/modal/Confirm.vue";
 import { PAGE_USER_MAIN as common, PAGE_META, BASE_BUTTON, INPUT_CONTENT } from "@/common/C";
-import { setValueInput, searchInvalidElem, getFormData } from '@/utils/formHelpers'
+import { searchInvalidElem, getFormDataURL } from '@/utils/formHelpers'
 
 
 const { logout: _logout } = useAuth()
@@ -130,11 +130,6 @@ const radioList = [
     { key: 'man', label: common.LIST_RADIO_GENDER_MAN },
     { key: 'woman', label: common.LIST_RADIO_GENDER_WOMAN },
 ]
-// const screen = useState<AppScreen>('APP_SCREEN')
-// когда будет нормальный стор для юзера тогда, данные его можно будет достать из стора и не отправлять запрос
-// const { data: userData } = await getData({ 'tab': 'user' }, {
-//     transform: (e) => e?.data?.objects
-// })
 
 onMounted(() => {
     // setValueInput(form)
@@ -143,8 +138,8 @@ onMounted(() => {
 
 async function onClick() {
     if(form.value instanceof HTMLFormElement && searchInvalidElem(form)) {
-        const body = getFormData(form)
-        if (!data) return
+        const body = getFormDataURL(form)
+        if (!data.value) return
 
         await useFetch('/api/user/update', {
             method: 'POST',
@@ -156,63 +151,6 @@ async function onClick() {
         
     }
 }
-
-
-// async function onClick({ target }: MouseEvent) {
-//     if (form.value instanceof HTMLFormElement && form.value.reportValidity()) {
-//        const formData = new FormData(form.value)
-//        const body: { [key:string]: any } = {}
-//        for (const [key, value] of formData) {
-//             if (value) {
-//                 body[key] = value
-//             }
-//        }
-//        const { data, error } = await useCustomFetch("/user/update", {
-//             method: 'PATCH',
-//             body: { user: { ...body } }
-//        });
-//        console.log(data, error)
-//     }
-// }
-
-// function checkValidForm() {
-//     if (form.value instanceof HTMLFormElement) {
-//         const valid = form.value.checkValidity()
-//         formValid.value = valid
-//     }
-// }
-
-
-// function setValueInput() {
-//     if (form.value instanceof HTMLFormElement && userData.value) {
-//         const elems = form.value.elements
-//         const event = new Event('input', { bubbles: false })
-//         for (const elem of elems) {
-//             if (elem instanceof HTMLInputElement &&
-//                 elem.name in userData.value &&
-//                 userData.value[elem.name] &&
-//                 userData.value[elem.name] !== 'null'
-//             ) {
-//                 switch (elem.type) {
-//                     case 'email':
-//                     case 'text': {
-//                         elem.value = userData.value[elem.name]
-//                         elem.dispatchEvent(event)
-//                         break;
-//                     }
-//                     case 'checkbox': {
-//                         elem.checked = userData.value[elem.name]
-//                     }
-//                     case "radio": {
-//                         if (elem.value === userData.value[elem.name]) {
-//                             elem.checked = true
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
 
 </script>
 

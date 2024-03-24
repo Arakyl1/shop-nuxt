@@ -4,6 +4,7 @@ import { generateToken, decodeToken } from "@/server/utils/jwt";
 import { Prisma, Role, User } from '@prisma/client';
 import { _createError } from "./message";
 import { CookieKey } from "@/type/intex";
+import { _getCookie } from "@/server/utils/other"
 
 export async function setNewSessionKey<T extends { id: number, role: string }>(event: H3Event, user: T, key: CookieKey = 'sessionKey') {
     const newSessionKey = generateToken({ id: user.id, role: user.role })
@@ -42,6 +43,19 @@ export function handleSessionKey(sessionKey: string) {
 
 }
 
+
+export async function handlerAnonimSessionKey(event: H3Event) {
+    try {
+        const anonimSessionKey = _getCookie(event, 'anonimSessionKey')
+
+        return anonimSessionKey ?
+            handleSessionKey(anonimSessionKey) || await createAnonimUser(event) :
+            await createAnonimUser(event)
+    } catch (error) {
+        console.log(error)
+        return _createError('handlerReject')
+    }  
+}
 
 export function defineAuthenticatedEventHandler<T, K extends { [k:string]: any }>(
     handler: (event: H3Event, authUser: K) => T | Promise<T>,

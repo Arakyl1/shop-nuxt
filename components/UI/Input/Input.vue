@@ -9,7 +9,7 @@
         @blur="onBlur"
         @focus="onFocus"
         @input="onInput"
-        :tabindex="props.readonly || Boolean(value) ? -1 : 1">
+        :tabindex="props.readonly || Boolean(value) ? -1 : 0">
         <span v-if="span && !placeholder"
         :class="[value ? className['active'] : '']"
         @click="() => elem ? elem.focus() : null">{{ span }}

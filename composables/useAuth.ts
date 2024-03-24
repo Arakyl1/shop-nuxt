@@ -7,7 +7,8 @@ export default () => {
     const storeUser = _user()
 
     function handleResponse(response: any) {
-        if (response.status > 400) {
+        console.log(response)
+        if (response.statusCode > 400) {
             handleResponseError(response)
         } else {
             handleResponseOk(response)
@@ -23,6 +24,7 @@ export default () => {
 
     function handleResponseError(responseErr: { message: any; }) {
         if (responseErr) {
+            console.log(responseErr.message)
             storeAlert.create({ key: responseErr.message, state: 'error' }) 
         }
     }
@@ -34,6 +36,9 @@ export default () => {
                 method: "POST",
                 body: body,
                 server: true,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
                 onResponse({ response }) {
                     handleResponse(response._data)
                 },
@@ -43,17 +48,18 @@ export default () => {
         }
     }
 
-    type LoginData = { username: string, email?: string, password: string }
-    const login = async<T extends LoginData>(body: T) => {
+    const login = async<T extends string | null>(body: T) => {
         try {
             useFetch('/api/auth/login', {
                 method: 'POST',
-                body: body,
+                body,
                 server: true,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
                 onResponse({ response }) {
                     handleResponse(response._data)
                 },
-            
             })
         } catch (error) {
             console.log(error);

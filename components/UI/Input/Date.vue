@@ -3,12 +3,10 @@
         <template #default="{ togglePopover, inputValue }">
             <Input
             :type="'text'"
-            v-bind="{ ...props }"
             :icon-clickable="true"
             :icon="{ 'icon': 'calendar' }"
-            :pattern="'\\d{4}-\\d{2}-\\d{2}|\\d{2}-\\d{2}-\\d{4}|\\d{2}\.\\d{2}\.\\d{4}'"
-            autocomplete="bday"
             :model-value="inputValue"
+            v-bind="{ ...props }"
             @icon-click="togglePopover"/>
         </template>
     </DatePicker>
@@ -18,10 +16,12 @@
 import { default  as Input, Props as InputProps } from "@/components/UI/Input/Input.vue";
 import { DatePicker } from 'v-calendar';
 
-interface Props extends Pick<InputProps, 'mode'|'name'|'span'|'placeholder'|'required'> {}
+interface Props extends Pick<InputProps, 'mode'|'name'|'span'|'placeholder'|'required'|'autocomplete'|'disabled'|'pattern'> {}
 
-const props = defineProps<Props>()
-
+const props = withDefaults(defineProps<Props>(), { 
+    autocomplete: 'bday',
+    pattern: '\\d{4}-\\d{2}-\\d{2}|\\d{2}-\\d{2}-\\d{4}|\\d{2}\.\\d{2}\.\\d{4}'
+})
 </script>
 
 

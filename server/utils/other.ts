@@ -1,4 +1,5 @@
 import { CookieKey, SERVER_RESPONSE_CONTENT_KEY } from "@/type/intex";
+import { H3Event } from "h3"
 
 export function isNumber(elem: unknown): elem is number {
     return typeof elem === 'number'
@@ -43,7 +44,7 @@ export const GET_CONTENT_KEY = (key: string) => key
 export const GET_SERVER_RESPONSE_KEY = (key: SERVER_RESPONSE_CONTENT_KEY) => key
 
 type ArgumentsSetCookie = Parameters<typeof setCookie>
-export const _setCookie = async(
+export const _setCookie = (
     event: ArgumentsSetCookie[0],
     key: CookieKey,
     value: string,
@@ -65,3 +66,6 @@ export const _setCookie = async(
         setCookie(event, key, value, option)
     }
 }
+
+export const _getCookie = (event: H3Event, k: CookieKey) => getCookie(event,k)
+export const _deleteCookie = (event: H3Event, k: CookieKey) => deleteCookie(event,k)

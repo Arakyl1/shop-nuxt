@@ -1,21 +1,21 @@
-
-import { CookieKey } from "~/type/intex"
 import prisma from "../../db"
-import { defineAuthenticatedEventHandler, handleSessionKey, getUser } from "@/server/utils/auth";
+import { defineAuthenticatedEventHandler, getUser, handlerAnonimSessionKey } from "@/server/utils/auth";
+import { _getCookie, _deleteCookie } from "@/server/utils/other";
 
 
 export default defineAuthenticatedEventHandler(async(event, user) => {
     try {
-        const keyCookie: CookieKey = 'sessionKey'
-        const cookiesRefrech = getCookie(event, keyCookie)
+        const cookiesRefrech = _getCookie(event, 'sessionKey')
         if (cookiesRefrech) {
-            deleteCookie(event, keyCookie)
+            _deleteCookie(event, 'sessionKey')
             await prisma.refrechToken.delete({ where: { token: cookiesRefrech } })
         }
 
-        const anonimSessionKey = getCookie(event, 'anonimSessionKey') || ''
-        let user = handleSessionKey(anonimSessionKey)
-        return await getUser(user)
+        const user = await handlerAnonimSessionKey(event)
+        if (!(user instanceof Error)) {
+            return getUser(user)
+        }
+        return null
     } catch (error) {
         return error
     }
