@@ -45,7 +45,7 @@ await useFetch('/api/attridute/get', {
       CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
     }
   }
-}) 
+})
 
 
 
