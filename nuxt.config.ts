@@ -89,6 +89,7 @@ export default defineNuxtConfig({
     fallbackBreakpoint: 'lg'
   },
   spaLoadingTemplate: false,
+  devtools: { enabled: true },
   // 'purgecss': {
   //   enabled: true,
   //   paths: [
