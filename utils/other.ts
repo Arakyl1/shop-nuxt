@@ -1,10 +1,9 @@
 import { Prisma } from "@prisma/client";
-import { ComponentInternalInstance, Events } from "nuxt/dist/app/compat/capi";
 import { CookieKey, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
 import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
 
 
-type sizeI = 28|48|56|60|64|72|80|92|96|224|320|480
+type sizeI = 28|48|56|60|64|72|80|92|96|240|320|480
 type num = 1|2|3|4|5|6|7|8|9|10
 
 type TransfornSize = {

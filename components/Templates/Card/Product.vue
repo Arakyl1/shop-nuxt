@@ -22,7 +22,7 @@
                         <Flex :tag="'picture'" class="h-full w-full" :justify="'center'">
                             <img :src="content.image.length ?
                                 changeValueImageSize(content.image[0].link, {
-                                    'heigth': 'h_320',
+                                    'heigth': 'h_240',
                                     'bgrem': 'co_white,e_make_transparent:1'
                                 }) :''"
                                 :alt="content.name">

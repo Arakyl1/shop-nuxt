@@ -35,7 +35,7 @@ import ContentIcon from '@/components/content/Icon.vue'
 import Panel from '@/components/UI/Panel/Panel.vue';
 import Flex from '@/components/UI/Flex/Flex.vue';
 import Button from '@/components/UI/Button/Button.vue';
-import { BASE_BUTTON as common } from '@/common/C'
+import { BASE_BUTTON as common, PAGE_META } from '@/common/C'
 import type { NuxtError } from '#app'
 
 const props = defineProps({
@@ -44,17 +44,13 @@ const props = defineProps({
 
 const handleError = () => clearError({ redirect: '/' })
 const config = useRuntimeConfig()
-const route = useRoute()
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
-const { initAuth } = useAuth()
-
-const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
 await useFetch('/api/attridute/get', {
     server: true,
     method: 'GET',
     params: { type: 'CATEGOR' },
-    retry: 5,
+    retry: 3,
     onResponse({ response }) {
         if (response.status < 400) {
             CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
@@ -64,11 +60,9 @@ await useFetch('/api/attridute/get', {
 
 
 useHead({
-    titleTemplate: () => pageTitle.value,
+    titleTemplate: () => `${PAGE_META.ERROR.TITLE} | ${config.public.NAME_APP}`
 })
 
-onBeforeMount(async () => await initAuth())
-onMounted(() => console.log('App mounted'))
 </script>
 
 <style lang="scss">

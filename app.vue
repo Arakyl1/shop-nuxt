@@ -39,7 +39,7 @@ await useFetch('/api/attridute/get', {
   server: true,
   method: 'GET',
   params: { type: 'CATEGOR' },
-  retry: 5,
+  retry: 3,
   onResponse({ response }) {
     if (response.status < 400) {
       CATEGOR_DATA.value = response._data.filter((_: { type: string; }) => _.type === 'CATEGOR')
@@ -66,18 +66,18 @@ onMounted(() => console.log('App mounted'))
 <style lang="scss" >
 @use "@/assets/css/main.scss" ;
 
-.path-enter-active {
-  transition: all 0.3s ease-in-out;
-}
+// .path-enter-active {
+//   transition: all 0.3s ease-in-out;
+// }
 
-.path-leave-active {
-  transition: all 0;
-}
+// .path-leave-active {
+//   transition: all 0;
+// }
 
 
-.path-enter-from,
-.path-leave-to {
-  transform: translateX(30px);
-  opacity: 0;
-}
+// .path-enter-from,
+// .path-leave-to {
+//   transform: translateX(30px);
+//   opacity: 0;
+// }
 </style>
