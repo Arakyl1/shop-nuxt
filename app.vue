@@ -4,7 +4,7 @@
       <Header class="/md:block none" />
       <HeaderMobile class="/md:hidden" />
     </header>
-    <main class="container" :class="className['main']">
+    <main class="container">
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition> -->
@@ -32,7 +32,6 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
 const { initAuth } = useAuth()
-const className = useCssModule()
 
 const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
@@ -65,7 +64,6 @@ onMounted(() => console.log('App mounted'))
 </script>
 
 <style lang="scss" >
-@use "v-calendar/style.css";
 @use "@/assets/css/main.scss" ;
 
 .path-enter-active {
@@ -81,11 +79,5 @@ onMounted(() => console.log('App mounted'))
 .path-leave-to {
   transform: translateX(30px);
   opacity: 0;
-}
-</style>
-
-<style lang="css" module>
-.main:empty {
-  min-height: 100vh;
 }
 </style>

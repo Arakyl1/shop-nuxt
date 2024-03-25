@@ -4,7 +4,7 @@
             <Header class="/md:block none" />
             <HeaderMobile class="/md:hidden" />
         </header>
-        <main class="container" :class="className['main']">
+        <main class="container">
             <Panel :mode="'primary'">
                 <Flex :justify="'center'">
                     <Button
@@ -47,7 +47,6 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const CATEGOR_DATA = useState<CategorDataItem[] | null>("CATEGOR_DATA_APP", () => null)
 const { initAuth } = useAuth()
-const className = useCssModule()
 
 const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
@@ -64,7 +63,6 @@ await useFetch('/api/attridute/get', {
 })
 
 
-
 useHead({
     titleTemplate: () => pageTitle.value,
 })
@@ -74,11 +72,5 @@ onMounted(() => console.log('App mounted'))
 </script>
 
 <style lang="scss">
-@use "@/assets/css/main.scss";
-</style>
-
-<style lang="css" module>
-.main:empty {
-    min-height: 100vh;
-}
+@use "@/assets/css/main.scss" ;
 </style>

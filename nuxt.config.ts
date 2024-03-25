@@ -60,6 +60,7 @@ export default defineNuxtConfig({
       }
     }
   },
+  css: ["v-calendar/style.css"],
   postcss: {
     'plugins': {
       "autoprefixer": {},

@@ -4,6 +4,10 @@
   margin: 0 auto;
 }
 
+main:empty {
+  min-height: 100vh;
+}
+
 // object 
 
 .object-cover {
