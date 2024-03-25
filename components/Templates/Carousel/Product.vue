@@ -30,27 +30,24 @@ import Card from '@/components/Templates/Card/Product.vue'
 import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Title from "@/components/UI/Title/Title.vue";
-import { ProductCard } from '@prisma/client';
 
 const props = defineProps<{
     params: { [key: string]: any },
     title?: string
 }>()
 const className = useCssModule()
-const data = ref<null | Array<ProductCard>>(null)
 
-const { pending } = useFetch('/api/product/get', {
+const { data } = await useFetch('/api/product/get', {
     method: "GET",
     server: true,
-    lazy: true,
     params: { ...props.params, },
-    onResponse({ response }) {
-        const res = response._data
-        console.log(res)
-        if (res && 'data' in res && Array.isArray(res.data)) {
-            data.value = res.data
-        }
-    },
+    key: generateKey(props.params),
+    transform: (context) => {
+        if (context && 'data' in context && Array.isArray(context.data)) {
+            return context.data
+        } else 
+        return null
+    }
 })
 </script>
 
