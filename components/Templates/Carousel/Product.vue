@@ -42,6 +42,7 @@ const data = ref<null | Array<ProductCard>>(null)
 const { pending } = useFetch('/api/product/get', {
     method: "GET",
     server: true,
+    lazy: true,
     params: { ...props.params, },
     onResponse({ response }) {
         const res = response._data
