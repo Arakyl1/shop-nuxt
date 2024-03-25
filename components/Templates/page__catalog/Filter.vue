@@ -147,7 +147,6 @@ function getFilterData() {
         server: true,
         params: { ...route.query },
         retry: 1,
-        lazy: false,
         onRequest() {
             pending.value = true
         },
