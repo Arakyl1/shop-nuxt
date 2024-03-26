@@ -22,13 +22,13 @@
             </slot>
         </div>
         <div :class="className['body']">
+            <ClientOnly>
             <Transition name="dropdown">
-                <ClientOnly>
-
+            
                     <Card :mode="'primary'" v-show="isActive">
                         <div class="p-3 scrollbar-v1 ver" :class="className['container']">
-                            <ul v-if="dataSearch?.length">
-                                <li v-for="item in dataSearch" :key="item.id" class="py-1">
+                            <ul v-if="data?.data?.length">
+                                <li v-for="item in data.data" :key="item.id" class="py-1">
                                     <Flex class="gap-2">
                                         <Image
                                         :src="changeValueImageSize(item.image[0].link, { 'heigth': 'h_28' })"
@@ -43,7 +43,6 @@
                                             :text="item.name + ' ' + item.art"
                                             class="grow text-xs"
                                             :style="{ maxWidth: '150px' }"
-                                            target="_blank"
                                             rel="noopener"/>
                                             <ProductPrice
                                             :discount="item.discount > 0"
@@ -60,8 +59,8 @@
                             <p class="text-center text-sm p-1 text-blue-500">Скрыть</p>
                         </div> -->
                     </Card>
-                </ClientOnly>
-            </Transition>
+                </Transition>
+            </ClientOnly>
         </div>
     </div>
 </template>
@@ -98,15 +97,17 @@ const { isActive, close, onFocus } = useShow(props, _watchEvent)
 const inputText = ref<string>('')
 
 
-const { error, data, pending, refresh } = await useAsyncData(() => $fetch('/api/product/get', {
+const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
     method: 'GET',
-    server: true,
+    server: false,
+    lazy: true,
     params: { search: inputText.value, limit: 15  },
 }), {
     watch: [inputText],
+    default: () => { data: [] }
 })
 
-const dataSearch = computed(() => data.value && 'data' in data.value ? data.value.data : [])
+
 
 onMounted(() => {
     instanse.value = getCurrentInstance()

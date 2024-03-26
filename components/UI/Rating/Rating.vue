@@ -11,6 +11,7 @@
             :required="required"
             v-bind="required ? { pattern: `[1-${star}]`} : {}"
             @input="onInput"
+            @change="onInput"
             @reset="onReset"
             :class="className['input']"/>
         <svg v-for="item in star" :key="item"

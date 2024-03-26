@@ -29,7 +29,7 @@
                             :discount="item.card.discount > 0" />
                         </div>
                         <div class="none /md:block">
-                            <Counte
+                            <Counter
                             :value="item.count"
                             :max-value="item.card.quantity"
                             :class="className['counter']"/>

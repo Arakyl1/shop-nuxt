@@ -9,8 +9,8 @@
                 </template>
             </form>
             <form ref="form" class="flex flex-column gap-3" @input="getParamsFilter" @change="getParamsFilter">
-                <template v-if="dataFilterList">
-                    <template v-for="section, i in dataFilterList"
+                <template v-if="data">
+                    <template v-for="section, i in data"
                     :key="Array.isArray(section) ? i : section.title">
                     <template v-if="Array.isArray(section)">
                             <Group :tag="'fieldset'" class="w-full gap-2">
@@ -95,44 +95,47 @@ import { resetForm, setValueInput } from "@/utils/formHelpers";
 const route = useRoute()
 const router = useRouter()
 const storeAlert = _alert()
-const pending = ref<boolean>(false)
+// const pending = ref<boolean>(false)
 const formCategory = ref<HTMLFormElement | null>(null)
 const form = ref<HTMLFormElement | null>(null)
-const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
+// const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
 const ratingStar = ref<number>(0)
+const mount = ref(true)
 
 
 const routeCategorId = computed(() => 'categor' in route.query ? route.query.categor : null)
 const sizePage = computed(() => 'limit' in route.query ? { limit: route.query.limit } : {})
-const selectData = computed(() => dataFilterList.value ? dataFilterList.value.find(_ => _.type === 'select' )?.data.map(_ => _.id) : [])
+const selectData = computed(() => data.value ? data.value.find(_ => _.type === 'select' )?.data.map(_ => _.id) : [])
 
-
-initFilterData()
 
 onMounted(() => {
-    getFilterData()
     nextTick(() => initFilter())
     window.addEventListener('restore', getParamsFilter, { passive: true })
 })
-
 
 onBeforeUnmount(() => {
     window.removeEventListener('restore', getParamsFilter)
 })
 
-watch(() => routeCategorId.value, () => {
-    if (form.value) {
-        resetForm(form.value)   
-        getFilterData()
+
+const { pending, data } = useLazyAsyncData<FilterData | null>(() => $fetch('/api/other/filter', {
+    params: { ...route.query },
+    retry: 1,
+    onRequest() {
+        resetForm(form.value) 
+    }
+}), {
+    server: false,
+    watch: [routeCategorId]
+})
+
+watch(() => pending.value, (nV) => {
+    if (!nV && mount.value) {
+        initFilter()
+        mount.value = false
     }
 })
 
-
-function initFilterData() {
-    if (!dataFilterList.value) {
-        getFilterData()
-    }
-}
 
 function initFilter() {
     if (form.value) {
@@ -142,22 +145,22 @@ function initFilter() {
 }
 
 // methods
-function getFilterData() {
-    useFetch('/api/other/filter', {
-        server: false,
-        params: { ...route.query },
-        retry: 1,
-        onRequest() {
-            pending.value = true
-        },
-        onResponse({ response }) {
-            if (response.status < 400) {
-                dataFilterList.value = response._data
-            }
-            pending.value = false
-        }
-    })
-}
+// function getFilterData() {
+//     useFetch('/api/other/filter', {
+//         server: false,
+//         params: { ...route.query },
+//         retry: 1,
+//         onRequest() {
+//             pending.value = true
+//         },
+//         onResponse({ response }) {
+//             if (response.status < 400) {
+//                 dataFilterList.value = response._data
+//             }
+//             pending.value = false
+//         }
+//     })
+// }
 
 
 function resetData(event: MouseEvent) {
@@ -205,9 +208,9 @@ function getParamsFilter() {
 
 
 function changeCategor({ target }: Event) {
-    if (target instanceof HTMLSelectElement) {
+    if (target instanceof HTMLSelectElement && !mount.value) {
         const _target = target
-        router.push({ query: { [_target.name]: _target.value, page: 1, ...sizePage.value } })
+        nextTick(() => router.push({ query: { [_target.name]: _target.value, page: 1, ...sizePage.value } }))
     }
 }
 
