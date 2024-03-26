@@ -372,8 +372,8 @@ export type ICON_ID_NAME = 'add-list' |'add-plus'|'arrow-right'|'calendar'|'icon
 export type CSS_BORDER_RADIUS = 'full'|'xl'|'lg'|'base';
 export type CSS_FONT_SIZE = '2xl'|'xl'|'lg'|'md'|'base'|'sm'|'xs';
 export type CSS_JUSTIFY_ITEMS = 'start'|'end'|'center'|'stretch';
-export type CSS_ALIGN_CONTENT = 'normal'|'center'|'start'|'end'|'space-between'|'space-around'|'space-evenly'|'baseline'|'stretch';
-export type CSS_JUSTIFY_CONTENT = |'center'|'start'|'end'|'left'|'right'|'space-between'|'space-around'|'space-evenly'|'baseline';
+export type CSS_ALIGN_CONTENT = 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch';
+export type CSS_JUSTIFY_CONTENT = |'center'|'start'|'end'|'left'|'right'|'between'|'around'|'evenly'|'baseline';
 export type CSS_ALIGN_ITEMS = 'center'|'flex-star'|'flex-end';
 export type CSS_FLEX_DIRECTION = 'row'|'row-reverse'|'column'|'column-reverse';
 

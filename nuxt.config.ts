@@ -42,9 +42,9 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/': { swr: 3600, prerender: true },
-    '/contact': { swr: true },
-    '/catalog': { swr: true },
+    '/': { swr: 3600 },
+    '/contact': { swr: 3600 },
+    '/catalog': { swr: 3600 },
     '/catalog/**': { swr: 3600  },
     '/delivery': { ssr: true },
     '/user': { ssr: false, redirect: { to: '/user/main' } },

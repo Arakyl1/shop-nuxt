@@ -9,7 +9,7 @@
                     <img src="@/assets/img/logo.png" class="h-9.5"
                     :alt="`Logo market place ${config.public.NAME_APP}`">
                 </Button>
-                <div class="scrollbar-v1 w-full">
+                <div class="scrollbar-v1 ver w-full">
                     <Transition name="slide-up" mode="out-in" >
                         <Group tag="ul" class="w-full gap-4" v-if="subcategoryData">
                             <li v-for="item in subcategoryData"

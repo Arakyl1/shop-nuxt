@@ -12,10 +12,10 @@
             class="/md:hidden justify-center"
             @click="() => update(true)"/>
         </Flex>
-        <Flex :align="'flex-start'" class="gap-8">
+        <Flex :align="'flex-star'" class="gap-8">
             <div ref="filter"
             :class="[className['filter']]" :data-show-filter=state>
-                <Card :container="'xl'" :appearance="'gray'" @scroll.prevent>
+                <Card :container="'xl'" :appearance="'gray'" @scroll.prevent class="h-full">
                     <Filter/>
                 </Card>
             </div> 

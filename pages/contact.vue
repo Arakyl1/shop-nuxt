@@ -2,7 +2,7 @@
     <Panel :mode="'primary'">
         <Title :tag="'h2'" :text="META.CONTACT.TITLE" />
         <div>
-            <p class="text-lg py-4">{{ PAGE_CONTACT.HOUR_WORK }}</p>
+            <p class="/lg:text-lg py-4">{{ PAGE_CONTACT.HOUR_WORK }}</p>
             <Map />
         </div>
         <Market/>

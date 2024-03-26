@@ -8,19 +8,17 @@ main:empty {
   min-height: 100vh;
 }
 
-// object 
+// object
 
 .object-cover {
   object-fit: cover;
 }
-
 
 // TRANSFORM STYLE \
 // scale
 .-scale-100 {
   transform: scaleX(-1);
 }
-
 
 .text-center {
   text-align: center;
@@ -96,7 +94,6 @@ main:empty {
   cursor: no-drop !important;
 }
 
-
 .h-px {
   height: 1px;
 }
@@ -122,7 +119,6 @@ main:empty {
   flex-wrap: wrap;
 }
 
-
 @each $name, $value in $containerWidth {
   @media (min-width: #{$name}) {
     .container {
@@ -134,9 +130,8 @@ main:empty {
 
 // MEDIA STYLE FOR HIDDEN
 // @each $name, $value in $mediaScreen {
- 
-// }
 
+// }
 
 // flex style
 @each $name, $value in $justifyContent {
@@ -180,8 +175,6 @@ main:empty {
   }
 }
 
-
-
 // Grid style
 @each $name, $value in $justifyItems {
   .justify-items-#{$name} {
@@ -195,6 +188,24 @@ main:empty {
   }
 }
 
+$sizes: 20ch, 30ch;
+@each $size in $sizes {
+  @media (min-width: calc(#{$size} * 2)) {
+    .\/#{$size} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: calc(#{$size} * 3)) {
+    .\/#{$size} {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: calc(#{$size} * 4)) {
+    .\/#{$size} {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
 
 // border style
 @each $name, $size in $borderRadius {
@@ -251,9 +262,7 @@ h3 {
   font-size: var(--text-lg);
 }
 
-
 @media screen and (min-width: 1280px) {
-  
   h2 {
     font-size: var(--text-xl);
   }
@@ -264,7 +273,6 @@ h3 {
   }
 }
 
-
 // SHADOW STYLE
 
 @each $name, $value in $shadow {
@@ -273,12 +281,11 @@ h3 {
   }
 }
 
-
-// MEDIA STYLE 
+// MEDIA STYLE
 @each $screenKey, $screenValue in $mediaScreen {
   @media (min-width: $screenValue) {
     .\/#{$screenKey}\:hidden {
-      display: none ;
+      display: none;
     }
     .\/#{$screenKey}\:block {
       display: block;
@@ -332,5 +339,3 @@ h3 {
     padding-bottom: calc(0.25rem * 1);
   }
 }
-
-

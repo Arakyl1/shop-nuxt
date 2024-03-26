@@ -70,8 +70,15 @@ html {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+ 
+}
+.scrollbar-v1.ver {
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.scrollbar-v1.hor {
+  overflow-y: hidden;
+  overflow-x: scroll;
 }
 
 // @-moz-document url-prefix() {

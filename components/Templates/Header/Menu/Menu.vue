@@ -14,7 +14,7 @@
                
                 <Group  tag="ul"
                 :class="className['list-categor']"
-                class="w-full grow scrollbar-v1"
+                class="w-full grow scrollbar-v1 ver"
                 @mouseout.stop="onMouseout">
                     <li v-for="item in CATEGOR_DATA" :key="item.id" class="w-full"
                     :data-categor-id="item.id">
@@ -34,7 +34,7 @@
             <Transition name="slide-right">
                 <Group v-if="groupSubcategory" :align="'flex-start'" :class="className['subcategory-list']">
                     <div :class="className['header']"></div>
-                    <Flex :align="'flex-start'"  class="w-full h-full scrollbar-v1 px-3">
+                    <Flex :align="'flex-start'"  class="w-full h-full scrollbar-v1 ver px-3">
                         <Group tag="ul" class="grow w-1/2 gap-3 py-3" v-for="group in groupSubcategory">
                             <li v-for="item in group"
                                 :key="item.id" class="w-full">

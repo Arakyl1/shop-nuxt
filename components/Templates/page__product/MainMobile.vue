@@ -23,7 +23,7 @@
                     <span class="text-gray-300">{{ common.TEXT_MODEL }} :</span>{{ data.itemMod }}
                 </p>
             </Flex>
-            <div class="relative" :class="className['photo']">
+            <div class="relative w-full" :class="className['photo']">
                 <Flex :justify="'center'" class="">
                     <CardGridScroll :data="data.image" :container="'xs'">
                         <template #default="{ elem }">
@@ -40,7 +40,7 @@
                             :data="data.image.length"
                             :index-active-button="indexActiveButton"
                             :update-scroll="updateScrolLeft"
-                            :item-class="'aspect-ratio h-14 w-14 justify-center'">
+                            :item-class="'aspect-ratio h-10 w-10 justify-center'">
                                 <template #default="{ item }">
                                     <Flex :justify="'center'"
                                         :class="className['control-item']"

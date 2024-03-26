@@ -40,7 +40,7 @@
                 }"></slot>
             </div>
         </div>
-        <div v-if="$slots.footer">
+        <div v-if="$slots.footer" class="w-full">
             <slot name="footer" v-bind="{
                 prev,
                 next,

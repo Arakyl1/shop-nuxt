@@ -13,23 +13,26 @@
                             </Flex>
                         </template>
                         <template #footer="{ updateScrolLeft, indexActiveButton }" v-if="data?.image?.length > 1">
-                            <ControlItem
-                            class="hidden gap-4"
-                            :data="data.image.length"
-                            :index-active-button="indexActiveButton"
-                            :update-scroll="updateScrolLeft"
-                            :item-class="'aspect-ratio h-14 w-14 justify-center'">
-                                <template #default="{ item }">
-                                    <Flex :justify="'center'"
-                                    :class="className['control-item']"
-                                    :data-border-color="(item-1) === indexActiveButton ? 'yellow' : 'blue'">
+                        
+
+                                <ControlItem
+                                class="hidden gap-4"
+                                :data="data.image.length"
+                                :index-active-button="indexActiveButton"
+                                :update-scroll="updateScrolLeft"
+                                :item-class="'aspect-ratio h-14 w-14 justify-center'">
+                                    <template #default="{ item }">
+                                        <Flex :justify="'center'"
+                                        :class="className['control-item']"
+                                        :data-border-color="(item-1) === indexActiveButton ? 'yellow' : 'blue'">
                                         <img :src="changeValueImageSize(data.image[(item-1)].link, { 'heigth': 'h_48' })"
                                         :alt="data.name"
                                         class="rounded-lg">
                                     </Flex>
                                 </template>
                             </ControlItem>
-                        </template>
+                        
+                    </template>
                     </CardGridScroll>
                 </Flex>
                 <Status :status="getStatus(data)" data-left :class="className['status']"  />

@@ -34,7 +34,7 @@
                 mode="outline"
                 :container="'xs'"
                 :class="className['card']"
-                class="scrollbar-v1">
+                class="scrollbar-v1 ver">
                     <Group
                     @click="changeActive"
                     role="listbox"

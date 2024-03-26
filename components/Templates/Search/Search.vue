@@ -24,7 +24,7 @@
         <div :class="className['body']">
             <Transition name="dropdown">
                 <Card :mode="'primary'" v-show="isActive">
-                    <div class="p-3 scrollbar-v1" :class="className['container']">
+                    <div class="p-3 scrollbar-v1 ver" :class="className['container']">
                         <ul v-if="dataSearch?.length">
                             <li v-for="item in dataSearch" :key="item.id" class="py-1">
                                 <Flex class="gap-2">

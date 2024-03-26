@@ -1,7 +1,7 @@
 <template>
     <Card :container="'xl'" v-if="_userData"
     :class="className['body']"
-    class="scrollbar-v1">
+    class="scrollbar-v1 ver h-full">
         <Group class="gap-6 w-full">
             <Flex class="gap-8">
                 <Image :square="true"

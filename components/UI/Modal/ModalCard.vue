@@ -16,7 +16,7 @@
                     :content="content"
                     data-modal-body="true"
                     :class="[className['body']]"
-                    class="scrollbar-v1">
+                    class="scrollbar-v1 ver">
                         <Button v-if="btClose"
                         :icon-left="{ icon: 'close', size: '20_20' }"
                         @click="onClick"

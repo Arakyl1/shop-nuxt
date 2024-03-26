@@ -2,7 +2,7 @@
     <Flex :tag="'section'" class="text-gray-500 flex-wrap gap-4" :class="className['body']">
         <Group class="gap-8">
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_COMMUNICATIONS"/>
-                <Flex class="gap-8" :class="className['']">
+                <GridInline class="gap-8 w-full" >
                     <Flex class="gap-4">
                         <div :class="className['circle']" class="shadow-md">
                             <img src="@/assets/img/svg/phone.svg" alt="">
@@ -24,7 +24,7 @@
                         :href="`mailto:${common.MAIL}`"
                         class="text-md"/>
                     </Flex>
-                </Flex>
+                </GridInline>
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TILE_SOCIAL"/>
                 <SocialIcon />
             </Group>
@@ -34,14 +34,14 @@
                     <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_REQUISITES"/>
                     <ContentDoc path="/contact/requisites" v-slot="{ doc }">
                         <Group :tag="'ul'" class="text-black-300 gap-4 w-full">
-                            <Flex v-for="item in doc.body"
+                            <GridInline :tag="'li'"
+                            v-for="item in doc.body"
                             :key="item.name"
-                            :tag="'li'"
                             :justify="'between'"
                             class="w-full gap-4 /lg:text-md">
-                                <p>{{ item.name }}</p>
+                                <p class="w-full ">{{ item.name }}</p>
                                 <p class="text-gray-500">{{ item.value }}</p>
-                            </Flex>
+                            </GridInline>
                         </Group>
                     </ContentDoc>
                 </Group>
@@ -55,6 +55,7 @@ import Title from "@/components/UI/Title/Title.vue";
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
+import GridInline from "@/components/UI/Grid/Inline.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import SocialIcon from "@/components/Templates/Other/SocialIcon";
 import { PAGE_CONTACT as common } from "@/common/C";
@@ -63,7 +64,6 @@ const className = useCssModule()
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
 .body > *:nth-child(1) {
     width: calc((100% /12) *5);
 }

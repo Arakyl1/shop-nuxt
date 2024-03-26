@@ -4,7 +4,7 @@
     :appearance="'white'"
     :mode="'primary'"
     :rounded="'xl'"
-    class="scrollbar-v1">
+    class="scrollbar-v1 ver h-full">
         <form ref="form">
             <Group class="gap-6" :align="'center'">
                 <Title :tag="'h3'" :text="MODAl_AUTH.TITLE_LOGIN"/>

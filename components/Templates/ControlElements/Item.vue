@@ -1,7 +1,8 @@
 <template>
-    <ul ref="ul" :class="className['body']" @click.stop="onClick">
-        <li v-for="item in data" :key="item" v-bind="{ [dataKey('index')]: (item - 1) }" :class="[itemClass]">
-            <slot v-bind="{ item, indexActiveButton, ul }">
+    
+        <ul ref="ul" :class="className['body']" @click.stop="onClick">
+            <li v-for="item in data" :key="item" v-bind="{ [dataKey('index')]: (item - 1) }" :class="[itemClass, className['item']]">
+                <slot v-bind="{ item, indexActiveButton, ul }">
                 <div data-control-element-circle :class="[indexActiveButton === (item - 1) ? 'bg-blue-500' : 'bg-blue-100']">
                 </div>
             </slot>
@@ -55,8 +56,8 @@ function onClick({ target }: MouseEvent) {
 
 .body {
     display: grid;
-    grid-auto-flow: column;
-    justify-content: center;
+    grid-auto-flow: column dense;
+    /* justify-content: center; */
     overflow-x: scroll;
     overscroll-behavior-inline: contain;
     scroll-snap-type: x mandatory;
@@ -73,6 +74,9 @@ function onClick({ target }: MouseEvent) {
 
 .body::-webkit-scrollbar {
     display: none;
+}
+.item {
+    scroll-snap-align: start;
 }
 [data-control-element-circle] {
     aspect-ratio: 1;
