@@ -17,7 +17,7 @@
             @pointerup.stop.passive="onPointerUp"
             @pointerleave.stop.passive="onPointerLeave"
             @dragstart.stop.prevent>
-                <li v-for="elem, key in data"
+                <li v-for="elem, key in data || 9"
                     :class="className['item']">
                     <slot v-bind="{
                         elem,

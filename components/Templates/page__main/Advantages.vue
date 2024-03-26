@@ -1,7 +1,7 @@
 <template>
     <section v-if="data">
         <slot name="title">
-            <Title :text="common.ADVANTAGES_TITLE" :class="className['head']"/>
+            <Title :text="common?.ADVANTAGES_TITLE" :class="className['head']"/>
         </slot>
         <CardGridScroll :data="data.body" class="relative" :container="'lg'">
             <template #default="{ elem }">
