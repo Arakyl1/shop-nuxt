@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CardGridScroll :data="data">
+        <CardGridScroll :data="data?.data">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
                     <Flex :justify="'between'" class="w-full">
@@ -41,13 +41,8 @@ const { data } = await useFetch('/api/product/get', {
     method: "GET",
     server: true,
     params: { ...props.params, },
+    retry: 2,
     key: generateKey(props.params),
-    transform: (context) => {
-        if (context && 'data' in context && Array.isArray(context.data)) {
-            return context.data
-        } else 
-        return null
-    }
 })
 </script>
 

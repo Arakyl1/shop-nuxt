@@ -2,7 +2,7 @@
     <Flex :tag="'section'" class="text-gray-500 flex-wrap gap-4" :class="className['body']">
         <Group class="gap-8">
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_COMMUNICATIONS"/>
-                <GridInline class="gap-8 w-full" >
+                <Grid class="gap-8 w-full" :container="'xs'">
                     <Flex class="gap-4">
                         <div :class="className['circle']" class="shadow-md">
                             <img src="@/assets/img/svg/phone.svg" alt="">
@@ -24,7 +24,7 @@
                         :href="`mailto:${common.MAIL}`"
                         class="text-md"/>
                     </Flex>
-                </GridInline>
+                </Grid>
                 <Title :tag="'h3'" class="text-gray-500" :text="common.TILE_SOCIAL"/>
                 <SocialIcon />
             </Group>
@@ -34,14 +34,15 @@
                     <Title :tag="'h3'" class="text-gray-500" :text="common.TITLE_REQUISITES"/>
                     <ContentDoc path="/contact/requisites" v-slot="{ doc }">
                         <Group :tag="'ul'" class="text-black-300 gap-4 w-full">
-                            <GridInline :tag="'li'"
+                            <Grid :tag="'li'"
+                            :container="'xs'"
                             v-for="item in doc.body"
                             :key="item.name"
-                            :justify="'between'"
+                            :justify="'start'"
                             class="w-full gap-4 /lg:text-md">
                                 <p class="w-full ">{{ item.name }}</p>
                                 <p class="text-gray-500">{{ item.value }}</p>
-                            </GridInline>
+                            </Grid>
                         </Group>
                     </ContentDoc>
                 </Group>
@@ -55,7 +56,7 @@ import Title from "@/components/UI/Title/Title.vue";
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import GridInline from "@/components/UI/Grid/Inline.vue";
+import Grid from "@/components/UI/Grid/Grid.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import SocialIcon from "@/components/Templates/Other/SocialIcon";
 import { PAGE_CONTACT as common } from "@/common/C";
