@@ -9,7 +9,7 @@
                 <Reviews :data="data" :refresh="refresh"/>
             </section>
             <Carousel
-            :params="{ 'createAt': `gte:${new Date(Date.now() - 11604800000).getTime()}`, limit: 24  }"
+            :params="{ 'discount': 'gte:1', limit: 24  }"
             :title="common.CAROUSEL_TITLE"/>
         </template>
     </Panel>

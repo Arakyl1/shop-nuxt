@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CardGridScroll :data="data?.data">
+        <CardGridScroll :data="data?.data || []">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
                     <Flex :justify="'between'" class="w-full">
