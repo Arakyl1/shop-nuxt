@@ -12,7 +12,7 @@
             #footer="{ prev,  next, indexActiveButton, updateScrolLeft, listValueScroll }">
                 <div :class="className['control-button--mobile']">
                     <ControlItem
-                    class="gap-4"
+                    class="gap-4 justify-center"
                     :data="data.body.length"
                     :indexActiveButton="indexActiveButton"
                     :updateScroll="updateScrolLeft" />
@@ -22,7 +22,8 @@
             #center="{ prev, next, listValueScroll }" >
                 <ControlButtonCenterAbsolute
                 v-bind="{ listValueScroll, next, prev }"
-                :class="className['control-button']"/>
+                :class="className['control-button']"
+                />
             </template>
            
         </CardGridScroll>

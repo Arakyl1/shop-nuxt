@@ -168,6 +168,7 @@ function onClick() {
         border-bottom-right-radius: 0 !important;
         padding-top: 3rem;
         padding-bottom: 2rem;
+        width: 100%
     }
 }
 </style>

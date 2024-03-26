@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     '/': { swr: 3600 },
     '/contact': { swr: 3600 },
     '/catalog': { swr: 3600 },
-    '/catalog/**': { swr: 3600  },
+    '/catalog/**': { swr: 3600 },
     '/delivery': { ssr: true },
     '/user': { ssr: false, redirect: { to: '/user/main' } },
     '/user/**': { ssr: false },

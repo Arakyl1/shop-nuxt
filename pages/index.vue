@@ -29,6 +29,7 @@ import { PAGE_MAIN as common, PAGE_META as META } from "@/common/C";
 
 definePageMeta({
    title: META.MAIN.TITLE,
+   keepalive: true,
 })
 </script>
 

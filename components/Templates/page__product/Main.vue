@@ -16,7 +16,7 @@
                         
 
                                 <ControlItem
-                                class="hidden gap-4"
+                                class="hidden gap-4 justify-start"
                                 :data="data.image.length"
                                 :index-active-button="indexActiveButton"
                                 :update-scroll="updateScrolLeft"

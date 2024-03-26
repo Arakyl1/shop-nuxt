@@ -22,7 +22,7 @@
             <template v-else #footer="{ prev, next, indexActiveButton, updateScrolLeft, listValueScroll }">
                 <div :class="className['control-button--mobile']">
                     <ControlItem
-                    class="gap-4"
+                    class="gap-4 justify-center"
                     :data="data.body.length"
                     :indexActiveButton="indexActiveButton"
                     :updateScroll="updateScrolLeft" />
