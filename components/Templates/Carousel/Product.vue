@@ -19,7 +19,7 @@
                 </Flex>
             </template>
             <template #default="{ elem }">
-                <Card :data="pending ? null : elem"/>
+                <Card :data="elem"/>
             </template>
         </CardGridScroll>
     </div>
