@@ -30,6 +30,7 @@ import Card from '@/components/Templates/Card/Product.vue'
 import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
 import Flex from "@/components/UI/Flex/Flex.vue";
 import Title from "@/components/UI/Title/Title.vue";
+import { isServer } from "@/utils/other";
 
 const props = defineProps<{
     params: { [key: string]: any },
@@ -41,6 +42,7 @@ const { data, pending } = await useFetch('/api/product/get', {
     method: "GET",
     params: { ...props.params, },
     retry: 2,
+    server: isServer(),
 
 })
 </script>
