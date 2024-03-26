@@ -1,6 +1,6 @@
 <template>
-    <div v-if="data?.data">
-        <CardGridScroll :data="data?.data">
+    <div v-if="data">
+        <CardGridScroll :data="data">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
                     <Flex :justify="'between'" class="w-full">
@@ -36,13 +36,19 @@ const props = defineProps<{
     title?: string
 }>()
 const className = useCssModule()
+const data = ref<null>(null)
 
-const { data } = await useFetch('/api/product/get', {
+useFetch('/api/product/get', {
     method: "GET",
     server: true,
     params: { ...props.params, },
     retry: 2,
     key: generateKey(props.params),
+    onResponse({ response }) {
+        if (response.status < 400) {
+            data.value = response._data?.data
+        }
+    },
 })
 </script>
 

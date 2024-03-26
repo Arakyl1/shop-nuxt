@@ -374,7 +374,7 @@ export type CSS_FONT_SIZE = '2xl'|'xl'|'lg'|'md'|'base'|'sm'|'xs';
 export type CSS_JUSTIFY_ITEMS = 'start'|'end'|'center'|'stretch';
 export type CSS_ALIGN_CONTENT = 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch';
 export type CSS_JUSTIFY_CONTENT = |'center'|'start'|'end'|'left'|'right'|'between'|'around'|'evenly'|'baseline';
-export type CSS_ALIGN_ITEMS = 'center'|'flex-star'|'flex-end';
+export type CSS_ALIGN_ITEMS = 'center'|'flex-start'|'flex-end';
 export type CSS_FLEX_DIRECTION = 'row'|'row-reverse'|'column'|'column-reverse';
 
 

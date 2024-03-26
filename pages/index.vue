@@ -2,7 +2,7 @@
     <Panel :mode="'view'"> 
         <Stocks />
         <Carousel
-        :params="{ 'discount': 'gt:0', limit: 24 }"
+        :params="{ 'discount': 'gte:1', limit: 24 }"
         :title="common.CAROUSEL_TITLE_1"/>
         <Carousel
         :params="{ 'createAt': `gte:${new Date(Date.now() - 11604800000).getTime()}`, limit: 24  }"
