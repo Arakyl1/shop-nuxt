@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    if (!to.query.page || !to.query.limit) {
+    if ((!to.query.page || !to.query.limit) && !from.path.startsWith('/catalog')) {
         return navigateTo({
             path: to.path, query: {
                 ...to.query,

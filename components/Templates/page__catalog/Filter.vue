@@ -144,7 +144,7 @@ function initFilter() {
 // methods
 function getFilterData() {
     useFetch('/api/other/filter', {
-        server: true,
+        server: false,
         params: { ...route.query },
         retry: 1,
         onRequest() {

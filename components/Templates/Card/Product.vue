@@ -38,7 +38,8 @@
                     :mode="'link'"
                     :class="className['button-link']"
                     class="/xl:text-md"
-                    target="_blank">
+                    target="_blank"
+                    rel="noopener">
                         <span class="color-inherit">{{ content.name }}</span>
                         <span class="text-gray-300 px-2">{{ content.art }}</span>
                     </Button>

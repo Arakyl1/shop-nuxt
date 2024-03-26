@@ -1,6 +1,6 @@
 import { onBeforeUnmount, onMounted, reactive } from 'vue'
 
-export function mouseElemPosition<T extends HTMLElement>(elem: T | null) {
+export function mouseElemPosition<T extends Ref<HTMLElement | null>>(elem: T) {
  
     const _elem = ref(elem)
     const mouseStartPos = reactive({ x: 0, y: 0, started: false, vector: 0 })

@@ -43,7 +43,8 @@
                                             :text="item.name + ' ' + item.art"
                                             class="grow text-xs"
                                             :style="{ maxWidth: '150px' }"
-                                            target="_blank"/>
+                                            target="_blank"
+                                            rel="noopener"/>
                                             <ProductPrice
                                             :discount="item.discount > 0"
                                             :price="item.price"

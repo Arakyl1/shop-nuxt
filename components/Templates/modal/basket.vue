@@ -17,7 +17,8 @@
                             :text="item.card.name"
                             :mode="'link'"
                             target="_blank"
-                            class="text-md"/>
+                            class="text-md"
+                            rel="noopener"/>
                             <p class="text-gray-500 text-md ">{{ item.card.art }}</p>
                         </div>
 

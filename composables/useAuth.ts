@@ -7,7 +7,6 @@ export default () => {
     const storeUser = _user()
 
     function handleResponse(response: any) {
-        console.log(response)
         if (response.statusCode > 400) {
             handleResponseError(response)
         } else {
@@ -24,7 +23,6 @@ export default () => {
 
     function handleResponseError(responseErr: { message: any; }) {
         if (responseErr) {
-            console.log(responseErr.message)
             storeAlert.create({ key: responseErr.message, state: 'error' }) 
         }
     }

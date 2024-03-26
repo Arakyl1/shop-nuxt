@@ -63,6 +63,7 @@ import Button from "@/components/UI/Button/Button.vue";
 import SelectSize from '@/components/Templates/page__catalog/SelectSize.vue'
 import Pagination from "@/components/UI/Pagination/Pagination.vue";
 import { PAGE_META as META, PAGE_CATALOG } from "@/common/C";
+import { isServer } from "@/utils/other";
 
 
 definePageMeta({
@@ -85,38 +86,25 @@ const paramsRouteQuery = computed(() => Object.values(route.query).map((el: any)
 const countItem = computed(() => data.value?.countItem || 0)
 const dataLength = computed(() => pending.value ? sizePage.value : data.value?.data.length)
 
-const { error, data, pending, refresh } = await useAsyncData(async() => await $fetch('/api/product/get', {
-    method: 'POST',
-    params: { ...route.query,  }
+
+const { error, data, pending, refresh } = await useAsyncData(paramsRouteQuery.value, () => $fetch('/api/product/get', {
+    method: 'get',
+    params: { ...route.query }
 }), {
-    transform: (context) => {
-        if (context && 'data' in context && 'countItem' in context && Array.isArray(context.data)) {
-            return context
-        }
-        return { data: [], nextPageLength: 0, countItem: 0 }
+    server: true,
+    watch: [paramsRouteQuery],
+    default: () => ({ data: [], nextPageLength: 0, countItem: 0 })
+}) 
+
+
+watch(() => toucheData.vector, (nV) => checkVector(() => visibleFilter(false),nV))
+watch(() => mouseData.vector, (nV) => checkVector(() => visibleFilter(false),nV))
+
+function checkVector(handler: (...arg: any[]) => any, resV: number | null, hasV: number = 3) {
+    if (resV && resV === hasV) {
+        handler()
     }
-})
-
-
-
-watch(() => toucheData.vector, (newVector) => {
-    if (newVector === 3) {
-        visibleFilter(false)
-    }
-})
-
-watch(() => mouseData.vector, (newVector) => {
-    if (newVector === 3) {
-        visibleFilter(false)
-    }
-})
-
-watch(() => paramsRouteQuery.value, () => {
-    setTimeout(() => {
-        refresh()
-    }, 0);
-})
-
+}
 
 
 function visibleFilter(state: boolean) {
