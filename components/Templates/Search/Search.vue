@@ -23,39 +23,43 @@
         </div>
         <div :class="className['body']">
             <Transition name="dropdown">
-                <Card :mode="'primary'" v-show="isActive">
-                    <div class="p-3 scrollbar-v1 ver" :class="className['container']">
-                        <ul v-if="dataSearch?.length">
-                            <li v-for="item in dataSearch" :key="item.id" class="py-1">
-                                <Flex class="gap-2">
-                                    <Image
-                                    :src="changeValueImageSize(item.image[0].link, { 'heigth': 'h_28' })"
-                                    :alt="item.name"
-                                    :rounded="'sm'"
-                                    :square="true"
-                                    class="h-7 w-7"/>
-                                    <Group class="grow">
-                                        <Button :tag="'nuxt-link'"
-                                        :to="`/catalog/${item.id}`"
-                                        :appearance="'gray-icon'"
-                                        :text="item.name + ' ' + item.art"
-                                        class="grow text-xs"
-                                        :style="{ maxWidth: '150px' }"/>
-                                        <ProductPrice
-                                        :discount="item.discount > 0"
-                                        :price="item.price"
-                                        class="text-sm"/>
-                                    </Group>
-                                </Flex>
-                            </li>
-                        </ul>
-                        <p v-else class="text-xs text-gray-700">{{ common.EMPTY_RESULT  }}</p>
-                    </div>
-                    <!-- <div class="border-t border-gray-300"
-                    @click="updateState(false)">
-                        <p class="text-center text-sm p-1 text-blue-500">Скрыть</p>
-                    </div> -->
-                </Card>
+                <ClientOnly>
+
+                    <Card :mode="'primary'" v-show="isActive">
+                        <div class="p-3 scrollbar-v1 ver" :class="className['container']">
+                            <ul v-if="dataSearch?.length">
+                                <li v-for="item in dataSearch" :key="item.id" class="py-1">
+                                    <Flex class="gap-2">
+                                        <Image
+                                        :src="changeValueImageSize(item.image[0].link, { 'heigth': 'h_28' })"
+                                        :alt="item.name"
+                                        :rounded="'sm'"
+                                        :square="true"
+                                        class="h-7 w-7"/>
+                                        <Group class="grow">
+                                            <Button :tag="'nuxt-link'"
+                                            :to="`/catalog/${item.id}`"
+                                            :appearance="'gray-icon'"
+                                            :text="item.name + ' ' + item.art"
+                                            class="grow text-xs"
+                                            :style="{ maxWidth: '150px' }"
+                                            target="_blank"/>
+                                            <ProductPrice
+                                            :discount="item.discount > 0"
+                                            :price="item.price"
+                                            class="text-sm"/>
+                                        </Group>
+                                    </Flex>
+                                </li>
+                            </ul>
+                            <p v-else class="text-xs text-gray-700">{{ common.EMPTY_RESULT  }}</p>
+                        </div>
+                        <!-- <div class="border-t border-gray-300"
+                            @click="updateState(false)">
+                            <p class="text-center text-sm p-1 text-blue-500">Скрыть</p>
+                        </div> -->
+                    </Card>
+                </ClientOnly>
             </Transition>
         </div>
     </div>
@@ -91,13 +95,11 @@ const _watchEvent = watchEvent('data-search', instanse, () => close())
 const { isActive, close, onFocus } = useShow(props, _watchEvent)
 
 const inputText = ref<string>('')
-//const dataSearch = ref<ProductCardBase[]|void|null>(null)
-// ..const route = useRoute()
-
 
 
 const { error, data, pending, refresh } = await useAsyncData(() => $fetch('/api/product/get', {
     method: 'GET',
+    server: true,
     params: { search: inputText.value, limit: 15  },
 }), {
     watch: [inputText],

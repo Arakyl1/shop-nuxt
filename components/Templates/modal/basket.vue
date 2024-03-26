@@ -16,6 +16,7 @@
                             :to="`/catalog/${item.cardId}`"
                             :text="item.card.name"
                             :mode="'link'"
+                            target="_blank"
                             class="text-md"/>
                             <p class="text-gray-500 text-md ">{{ item.card.art }}</p>
                         </div>

@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div v-if="data?.data">
         <CardGridScroll :data="data?.data">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
                     <Flex :justify="'between'" class="w-full">
                         <Title v-if="$slots.title"><slot name="title"></slot></Title>
                         <Title v-else-if="title" :text="title"/>
-                        <Flex :class="className['control-button']">
+                        <Flex class="gap-2 /lg:gap-3 /xl:gap-4">
                             <ButtonArrow class="-scale-100"
                             :disabled="listValueScroll ? listValueScroll.current === 0 : false"
                             @click="prev"/>
@@ -47,27 +47,15 @@ const { data } = await useFetch('/api/product/get', {
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
 .header {
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
-.control-button {
-    gap: 1rem;
-}
 
 @media screen and (max-width: 1024px) {
-    .control-button {
-        gap: 0.75rem;
-    }
     .header {
         gap: 1rem;
         margin-bottom: 1.5rem;
-    }
-}
-@media screen and (max-width: 600px) {
-    .control-button {
-        gap: 0.5rem;
     }
 }
 </style>

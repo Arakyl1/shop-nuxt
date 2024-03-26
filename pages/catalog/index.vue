@@ -85,11 +85,10 @@ const paramsRouteQuery = computed(() => Object.values(route.query).map((el: any)
 const countItem = computed(() => data.value?.countItem || 0)
 const dataLength = computed(() => pending.value ? sizePage.value : data.value?.data.length)
 
-const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
+const { error, data, pending, refresh } = await useAsyncData(async() => await $fetch('/api/product/get', {
     method: 'POST',
     params: { ...route.query,  }
 }), {
-    'lazy': true,
     transform: (context) => {
         if (context && 'data' in context && 'countItem' in context && Array.isArray(context.data)) {
             return context

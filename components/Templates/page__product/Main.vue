@@ -13,8 +13,6 @@
                             </Flex>
                         </template>
                         <template #footer="{ updateScrolLeft, indexActiveButton }" v-if="data?.image?.length > 1">
-                        
-
                                 <ControlItem
                                 class="hidden gap-4 justify-start"
                                 :data="data.image.length"
@@ -31,7 +29,6 @@
                                     </Flex>
                                 </template>
                             </ControlItem>
-                        
                     </template>
                     </CardGridScroll>
                 </Flex>
