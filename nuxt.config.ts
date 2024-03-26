@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/': { ssr: true },
+    '/': { 'swr': 3600 },
     '/contact': { swr: 3600 },
     '/catalog': { swr: 3600 },
     '/catalog/**': { swr: 3600 },
