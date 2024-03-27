@@ -24,17 +24,15 @@ import Description from '@/components/Templates/page__product/Description.vue';
 import Characteristic from '@/components/Templates/page__product/Characteristic.vue';
 import Reviews from '@/components/Templates/page__product/Reviews.vue';
 import Panel from "@/components/UI/Panel/Panel.vue"
-import { isServer } from "@/utils/other";
 import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
 
 const className = useCssModule()
 const route = useRoute()
 const id = route.params.id
-const { data, pending, refresh } = useLazyAsyncData(() => $fetch('/api/product/get', {
+const { data, pending, refresh } = await useAsyncData(() => $fetch('/api/product/get', {
     params: { id: id, fullinfo: true, unique: true },
 }), {
     'server': true,
-    pick: ['data'],
     default: () => null
 })
 
