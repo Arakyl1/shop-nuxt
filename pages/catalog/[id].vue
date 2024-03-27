@@ -1,12 +1,12 @@
 <template>
     <Panel :mode="'primary'">
-        <template v-if="data">
-            <Main :data="data" class="none /md:block" />
-            <MainMobile :data="data" class="/md:hidden" />
+        <template v-if="data?.data">
+            <Main :data="data?.data" class="none /md:block" />
+            <MainMobile :data="data?.data" class="/md:hidden" />
             <section class="gap-8" :class="className['content']">
-                <Characteristic :data="data.characteristic" />
-                <Description :data="data"/>
-                <Reviews :data="data" :refresh="refresh"/>
+                <Characteristic :data="data?.data.characteristic" />
+                <Description :data="data?.data"/>
+                <Reviews :data="data?.data" :refresh="refresh"/>
             </section>
             <Carousel
             :params="{ 'discount': 'gte:1', limit: 24  }"
@@ -24,25 +24,24 @@ import Description from '@/components/Templates/page__product/Description.vue';
 import Characteristic from '@/components/Templates/page__product/Characteristic.vue';
 import Reviews from '@/components/Templates/page__product/Reviews.vue';
 import Panel from "@/components/UI/Panel/Panel.vue"
+import { isServer } from "@/utils/other";
 import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
 
 const className = useCssModule()
 const route = useRoute()
 const id = route.params.id
-const { data, refresh } = useAsyncData(GET_ASYNC_DATA_KEY('getFullInfoProduct'), async() => await $fetch('/api/product/get', {
-    method: 'GET',
+const { data, pending, refresh } = useLazyAsyncData(() => $fetch('/api/product/get', {
     params: { id: id, fullinfo: true, unique: true },
 }), {
     'server': true,
-    transform: (context) => {
-        if (context.data && !Array.isArray(context.data)) {
-            return context.data as ProductCardFull
-        } else { return null }
-    }
+    pick: ['data'],
+    default: () => null
 })
 
+
+
 useHead({
-    titleTemplate: () => data.value ? `${data.value.name} ${data.value.art}` : META.CATALOG_ID.TITLE
+    titleTemplate: () => data.value?.data ? `${data.value.data?.name} ${data.value.data?.art}` : META.CATALOG_ID.TITLE
 })
 
 </script>
