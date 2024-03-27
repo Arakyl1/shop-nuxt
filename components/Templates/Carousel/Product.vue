@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CardGridScroll :data="data?.data || []">
+        <CardGridScroll :data="data?.data">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
                     <Flex :justify="'between'" class="w-full">
@@ -32,14 +32,14 @@ import Flex from "@/components/UI/Flex/Flex.vue";
 import Title from "@/components/UI/Title/Title.vue";
 import { isServer } from "@/utils/other";
 
+
 const props = defineProps<{
     params: { [key: string]: any },
     title?: string
 }>()
 const className = useCssModule()
 
-const { data, pending } = await useFetch('/api/product/get', {
-    method: "GET",
+const { data, pending } = useLazyFetch('/api/product/get', {
     params: { ...props.params, },
     retry: 2,
     server: isServer(),

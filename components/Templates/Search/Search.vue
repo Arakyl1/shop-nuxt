@@ -97,14 +97,12 @@ const { isActive, close, onFocus } = useShow(props, _watchEvent)
 const inputText = ref<string>('')
 
 
-const { error, data, pending, refresh } = useAsyncData(() => $fetch('/api/product/get', {
-    method: 'GET',
+const { error, data, pending, refresh } = useLazyAsyncData(() => $fetch('/api/product/get', {
     server: false,
-    lazy: true,
     params: { search: inputText.value, limit: 15  },
 }), {
     watch: [inputText],
-    default: () => { data: [] }
+    default: () => ({ data: [] })
 })
 
 

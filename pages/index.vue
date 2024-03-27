@@ -28,8 +28,7 @@ import Panel from "@/components/UI/Panel/Panel.vue"
 import { PAGE_MAIN as common, PAGE_META as META } from "@/common/C";
 
 definePageMeta({
-   title: META.MAIN.TITLE,
-   keepalive: true
+   title: META.MAIN.TITLE
 })
 </script>
 

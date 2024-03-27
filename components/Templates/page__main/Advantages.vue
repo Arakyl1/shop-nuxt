@@ -40,7 +40,7 @@ import ControlItem from "@/components/Templates/ControlElements/Item.vue";
 import ControlButtonCenterAbsolute from "@/components/Templates/Carousel/ControlButtonCenterAbsolute.vue";
 import { PAGE_MAIN as common } from "@/common/C";
 
-const { data } = await useAsyncData('advantages', () => queryContent('/main/advantages').findOne())
+const { data } = useLazyAsyncData('advantages', () => queryContent('/main/advantages').findOne(), { server: true })
 const className = useCssModule()
 const viewport = useViewport()
 
