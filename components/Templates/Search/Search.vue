@@ -110,29 +110,6 @@ const { error, data, pending, refresh } = useLazyAsyncData(() => $fetch('/api/pr
 onMounted(() => {
     instanse.value = getCurrentInstance()
 })
-// async function getSearch(searchText: string) {
-//     if (pending.value || searchText.length < 2) { return }
-//    useFetch('/api/product/get', {
-//         method: 'GET',
-//         server: true,
-//         params: { search: searchText, limit: 15  },
-//         onRequest({ response }) {
-//             if (!pending.value) {
-//                 pending.value = true
-//             }
-//         },
-//         onResponse({ response }) {
-//             if ('data' in response._data) {
-//                 dataSearch.value = response._data.data
-//             }
-//             pending.value = false
-//             if (searchText !== inputText.value) {   
-//                 getSearch(inputText.value)
-//             }
-//         }
-//     })
-// }
-
 
 </script>
 

@@ -35,9 +35,8 @@ const { initAuth } = useAuth()
 
 const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
-await useFetch('/api/attridute/get', {
+useLazyFetch('/api/attridute/get', {
   server: true,
-  method: 'GET',
   params: { type: 'CATEGOR' },
   retry: 3,
   onResponse({ response }) {
