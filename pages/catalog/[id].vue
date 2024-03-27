@@ -1,6 +1,6 @@
 <template>
     <Panel :mode="'primary'">
-        <template v-if="data?.data">
+        <template>
             <Main :data="data?.data" class="none /md:block" />
             <MainMobile :data="data?.data" class="/md:hidden" />
             <section class="gap-8" :class="className['content']">
