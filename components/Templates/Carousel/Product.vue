@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!pending && data?.data">
         <CardGridScroll :data="data?.data">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
@@ -39,10 +39,11 @@ const props = defineProps<{
 }>()
 const className = useCssModule()
 
-const { data, pending } = useLazyFetch('/api/product/get', {
+const { data, pending } = await useFetch('/api/product/get', {
     params: { ...props.params, },
     retry: 2,
-    server: isServer(),
+    server: false,
+    default: () => null
 
 })
 </script>

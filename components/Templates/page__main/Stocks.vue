@@ -47,7 +47,7 @@ import ControlButtonCenterAbsolute from "@/components/Templates/Carousel/Control
 import { PAGE_MAIN as common } from "@/common/C";
 import { isServer } from "@/utils/other";
 
-const { data, pending } = useFetch('/api/mainSlider/data', { server: isServer(), lazy: true })
+const { data, pending } = await useFetch('/api/mainSlider/data', { server: false })
 const className = useCssModule()
 const viewport = useViewport()
 

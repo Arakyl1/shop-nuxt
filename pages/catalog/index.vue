@@ -87,12 +87,11 @@ const countItem = computed(() => data.value?.countItem || 0)
 const dataLength = computed(() => pending.value ? sizePage.value : data.value?.data.length)
 
 
-const { error, data, pending, refresh } = useAsyncData(paramsRouteQuery.value, () => $fetch('/api/product/get', {
+const { error, data, pending, refresh } = useLazyAsyncData(paramsRouteQuery.value, () => $fetch('/api/product/get', {
     method: 'get',
     params: { ...route.query }
 }), {
     server: true,
-    lazy: true,
     watch: [paramsRouteQuery],
     default: () => ({ data: [], nextPageLength: 0, countItem: 0 })
 }) 

@@ -80,9 +80,9 @@ export default () => {
 
     const initAuth = async() => {
         try {
-            await $fetch('/api/auth/init',  {
+            $fetch('/api/auth/init',  {
                 retry: 3,
-                server: false,
+                server: true,
                 onResponse({ response }) {
                     handleResponse(response._data)
                 }

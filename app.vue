@@ -35,7 +35,7 @@ const { initAuth } = useAuth()
 
 const pageTitle = computed(() => route.meta.title ? `${route.meta.title} | ${config.public.NAME_APP}` : config.public.NAME_APP)
 
-useLazyFetch('/api/attridute/get', {
+await useFetch('/api/attridute/get', {
   server: true,
   params: { type: 'CATEGOR' },
   retry: 3,
@@ -52,7 +52,7 @@ useHead({
   titleTemplate: () => pageTitle.value,
 })
 
-onBeforeMount(async() => await initAuth())
+onBeforeMount(() => initAuth())
 onMounted(() => console.log('App mounted'))
 
 
