@@ -46,7 +46,7 @@ const rootClass = computed(() => {
         [className['card']]: true,
         [className['card-' + props.container]]: props.container,
         // [className['card-padding']]:  props.padding || props.padding1024 || props.padding768 || props.paddingMob,
-        [className['card-' + props.mode]]: props.mode,
+        [className[props.mode]]: props.mode,
         [className['card-' + props.appearance]]: props.appearance,
         [className['card-' + props.content]]: props.content,
         [`rounded-${props.rounded}`]: props.rounded,
@@ -66,13 +66,13 @@ onMounted(() => {
     background-color: var(--white);
 }
 
-.card-outline {
+.outline {
     border: 1px solid var(--gray-700);
     border-radius: var(--rounded-lg);
     box-shadow: 0px 2px 3px 0px var(--gray-300);
 }
 
-.card-primary{
+.primary{
     border-radius: var(--rounded-lg);
     box-shadow: 0px 2px 9px 0px var(--gray-300);
 }

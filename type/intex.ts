@@ -282,7 +282,7 @@ export interface BasketItem {
     count: number,
     cardId: number,
     basketId: number,
-    card: Array<ProductCardBase>
+    card: ProductCardBase
 }
 
 export interface Basket {

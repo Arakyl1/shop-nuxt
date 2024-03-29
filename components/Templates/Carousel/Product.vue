@@ -1,6 +1,6 @@
 <template>
-    <div v-if="!pending && data?.data">
-        <CardGridScroll :data="data?.data">
+    <div v-if="!pending && data">
+        <CardGridScroll :data="data">
             <template #header="{ prev, next, listValueScroll }">
                 <Flex :direction="'column'" :class="className['header']">
                     <Flex :justify="'between'" class="w-full">
@@ -39,13 +39,29 @@ const props = defineProps<{
 }>()
 const className = useCssModule()
 
-const { data, pending } = await useFetch('/api/product/get', {
-    params: { ...props.params, },
-    retry: 2,
-    server: false,
-    default: () => null
 
+const data = ref<null | ProductCardFull>()
+const pending = ref<boolean>(false)
+
+
+onBeforeMount(async() => {
+    await useFetch('/api/product/get', {
+        params: { ...props.params },
+        server: true,
+        retry: 2,
+        default: () => null,
+        onRequest({ response }) {
+            pending.value = true
+        },
+        onResponse({ response }) {
+            if (response.status < 400  && response._data) {
+                data.value = response._data?.data
+            }
+            pending.value = false
+        },
+    })
 })
+
 </script>
 
 <style lang="css" module>

@@ -71,24 +71,25 @@ const instanse = ref()
 const className = useCssModule()
 
 onMounted(() => {
-    if (!props.readonly && ranting.value instanceof HTMLElement) {
-        ranting.value.addEventListener('mouseenter', onMouseenter)
-        ranting.value.addEventListener('mousemove', onMousemove)
-        ranting.value.addEventListener('mouseleave', onMouseleave)
-        ranting.value.addEventListener('click', onClick)
-    }
     instanse.value = getCurrentInstance()
+    if (!(ranting.value instanceof HTMLElement) || props.readonly) return
+
+    ranting.value.addEventListener('mouseenter', onMouseenter)
+    ranting.value.addEventListener('mousemove', onMousemove)
+    ranting.value.addEventListener('mouseleave', onMouseleave)
+    ranting.value.addEventListener('click', onClick)
+    
+    
 })
 
 
 onBeforeUnmount(() => {
-    if (!props.readonly && ranting.value instanceof HTMLElement) {
-        ranting.value.removeEventListener('mouseenter', onMouseenter)
-        ranting.value.removeEventListener('mousemove', onMousemove)
-        ranting.value.removeEventListener('mouseleave', onMouseleave)
-        ranting.value.removeEventListener('click', onClick)
-    }
-    
+    if (!(ranting.value instanceof HTMLElement) || props.readonly) return
+
+    ranting.value.removeEventListener('mouseenter', onMouseenter)
+    ranting.value.removeEventListener('mousemove', onMousemove)
+    ranting.value.removeEventListener('mouseleave', onMouseleave)
+    ranting.value.removeEventListener('click', onClick)
 })
 
 watch(() => oldValue.value, (newV) => {
@@ -114,9 +115,7 @@ function getOffset(num: number | string, value: number |string, stop = 'start') 
 }
 
 function onMouseenter({ target }: MouseEvent) {
-    if (target instanceof Element) {
-        updateValue(ratValue.value)
-    }
+    target instanceof Element ?  updateValue(ratValue.value) : undefined
 }
 
 function onMousemove({ target, clientX }: MouseEvent) {
@@ -124,36 +123,35 @@ function onMousemove({ target, clientX }: MouseEvent) {
         const elem = target.closest('[data-star]')
         if (elem instanceof HTMLElement || elem instanceof SVGElement) {
            const value = parseInt(elem.dataset.star!)
-           const rect = elem.getBoundingClientRect()
-           const difX = clientX - rect.left
-           const res = (value - 1) + (Math.round(Number((props.step / rect.width) * difX)) / props.step)
-           if (res >= 0 && res <= 100 ) {
-                updateRatValue(props.star - res > 0.3 ? res : props.star)
-           }
+        //    const rect = elem.getBoundingClientRect()
+        //    const difX = clientX - rect.left
+        //    const res = (value - 1) + (Math.round(Number((props.step / rect.width) * difX)) / props.step)
+        //    if (res >= 0 && res <= 100 ) {
+        //         updateRatValue(props.star - res > 0.3 ? res : props.star)
+        //    }
+        updateRatValue(value)
         }
     }
 }
 
 function onMouseleave({ target }: MouseEvent) {
-    if (target instanceof Element) {
-        updateRatValue(oldValue.value)
-    }
+    target instanceof Element ? updateRatValue(oldValue.value) : undefined
 }
 
 function onClick({ target }: MouseEvent) {
-    if (target instanceof Element) {
-        updateValue(ratValue.value)
-        nextTick(() => {
-            setCustomEvent()
-        })
-    }
+    if (!(target instanceof Element)) return
+    
+    updateValue(ratValue.value)
+    nextTick(() => {
+        setCustomEvent()
+    })
 }
 
 function setCustomEvent() {
-    if (input.value instanceof HTMLInputElement) {
-        const event = new Event('change', { bubbles: true })
-        input.value.dispatchEvent(event)
-    }
+    if (!(input.value instanceof HTMLInputElement)) return
+    
+    const event = new Event('change', { bubbles: true })
+    input.value.dispatchEvent(event)
 }
 
 function checkValidValue(value: number | string) {
@@ -169,9 +167,8 @@ function updateValue(value: number | string) {
 }
 
 function onInput({ target }: Event) {
-    if (target instanceof HTMLInputElement) {
-        updateValue(toFixed(Number(target.value)))
-    } 
+    target instanceof HTMLInputElement ?
+        updateValue(toFixed(Number(target.value))) : undefined
 }
 
 function onReset() {

@@ -1,5 +1,5 @@
 import prisma from "~~/server/db"
-import { db } from "@/utils/dbcategor";
+import { db } from "@/utils/db/dbcategor";
 
 export default defineEventHandler(async () => {
 

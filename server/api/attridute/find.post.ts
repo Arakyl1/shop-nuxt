@@ -6,17 +6,15 @@ export default defineEventHandler(async (event) => {
 
     try {
         let storageKey = ''
-        for (const key in body) {
-            if (Object.prototype.hasOwnProperty.call(body, key)) {
-                const elem = body[key];
-                if (Array.isArray(elem)) {
-                    storageKey = 'NO KEY REQUIRED'
-                    break
-                } else {
-                    storageKey += elem
-                }
+        Object.entries(body).forEach(_ => {
+            const [key, value] = _
+            if (Array.isArray(value)) {
+                storageKey = 'NO KEY REQUIRED'
+                return
+            } else {
+                storageKey += value
             }
-        }
+        })
         
         
         if (storageKey === 'NO KEY REQUIRED') {

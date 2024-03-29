@@ -6,7 +6,7 @@ import { storageCategorData } from "~~/type/intex";
 const AttributeKey: Array<keyof Prisma.AttributeWhereInput> = ['children', 'id', 'item', 'name', 'parent', 'type', 'value']
 type WhereIntFilterKey = (keyof Prisma.IntFilter)
 
-function initFindParams(data: QueryObject) {
+function initFindParams<T extends { [k: string]: unknown }>(data: T) {
     const findParams = Prisma.validator<Prisma.AttributeFindManyArgs>()({
         where: {
             'AND': [],
@@ -14,21 +14,16 @@ function initFindParams(data: QueryObject) {
         include: { 'children': { include: { 'children': true } } }
     })
 
-    for (const key in data) {
-        if (Object.prototype.hasOwnProperty.call(data, key)) {
-            const _key = key as keyof Prisma.AttributeWhereInput
-            const value = data[_key];
-            if (_key.startsWith('type')) {
-                const arrValue = (value as string).split(',')
-                const params: Prisma.Enumerable<Prisma.AttributeWhereInput> = []
-                for (let i = 0, l = arrValue.length; i < l; i++) {
-                    const item = arrValue[i];
-                    params.push({ type: item } as never)
-                }
-                findParams.where.AND.push({ OR: params } as never)
-            }
+    Object.entries(data).forEach(_ => {
+        const [key, value] = _ as [keyof Prisma.AttributeWhereInput, string]
+        if (key.startsWith('type')) {
+            const arrValue = value.split(',')
+            const params: Prisma.Enumerable<Prisma.AttributeWhereInput> = []
+
+            arrValue.forEach(_v => params.push({ type: _v } as never))
+            findParams.where.AND.push({ OR: params } as never)
         }
-    }
+    })
 
     return findParams
 }

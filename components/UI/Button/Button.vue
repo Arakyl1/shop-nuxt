@@ -62,99 +62,6 @@ export interface Props {
     height?: `h-${number}`,
 }
 
-
-
-// const props = defineProps({
-//     // // размер падинга кнопки, передаеться одно из ниже приведенных мофихикатора,
-//     // // значение каждого из модификатора можно посмотреть в variables.scss переменая
-//     // // некоторые значения пусты, эт сделана на будущее, потом они заполнться
-//     // // менять значения можно, только где указан "0", так же этот размер не должен быть разовым
-//     // size: { 
-//     //     type: String,
-//     //     validator(value) {
-//     //         return ['2xs','xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(value)
-//     //     }
-//     // },
-//     // текс кнопки
-//     text: { type: [String, Number] },
-//     // иконка слева от текста, передаеться компонент иконка из библеотеки "@element-plus/icons-vue";
-//     iconLeft: { type: Object },
-//     // иконка справа от текста, передаеться компонент иконка из библеотеки "@element-plus/icons-vue";
-//     iconRight: { type: Object },
-//     // размер иконки число
-//     iconSize: {
-//         type: Number,
-//         default: 16
-//     },
-//     iconTransition: {
-//         type: String,
-//     },
-//     // сделать кнопку квадратной
-//     square: { type: Boolean },
-//     // указать скругление кнопки, передаеться один из модификаторов
-//     // значение каждого из модификатора можно посмотреть в variables.scss переменая $borderRadius
-//     rounded: {
-//         type: String,
-//         validator(value) {
-//             return ['none', 'xs', 'sm', 'base', 'lg', 'xl', 'full'].includes(value)
-//         }
-//     },
-//     // стиль кнопки, на данный момент есть только "outline"
-//     mode: {
-//         type: String,
-//         validator(value) {
-//             return ['primary', 'secondary', 'outline', 'outline-2', 'link', 'none'].includes(value)
-//         }
-//     },
-//     // внешний вид кнопки, задний фон, цвет текста для обычного состояние, с классом ".active", :hover, :focus
-//     // на данный момент, есть только 'white', 'black', 'grey', буду доделывать по мере необходимости или когда будет UI Kit
-//     appearance: {
-//         type: String,
-//         validator(value) {
-//             return ['white', 'black', 'dark', 'grey', 'grey-2', 'rose', 'rose-2'].includes(value)
-//         }
-//     },
-//     // tag элемента, ниже примедены возможные варианты
-//     tag: {
-//         type: String,
-//         default: 'button',
-//         validator(value) {
-//             return ['button', 'a', 'input', 'nuxt-link'].includes(value)
-//         }
-//     },
-//     // если tag элемнта "button", можно указать тип кнопки
-//     type: {
-//         type: String,
-//         validator(value) {
-//             return ['button', 'rest', 'submit'].includes(value)
-//         }
-//     },
-//     // установить стили для элемента в фокусе
-//     focus: {
-//         type: Boolean, default: false
-//     },
-//     // активна ли кнопка
-//     active: {
-//       type: Boolean,
-//       default: false  
-//     },
-//     // состояние отключенего элменета 
-//     disabled: {
-//         type: Boolean,
-//         default: false
-//     },
-//     // при включеном параметре состояние :hover будет срабатывать при наведениие на родителя
-//     checkHoverParent: { 
-//         type: Boolean,
-//         default: false
-//     },
-//     iconNon: {
-//         type: Boolean,
-//         default: false
-//     }
-// })
-
-
 const props = withDefaults(defineProps<Props>(), {
     tag: 'button',
     type: 'button',
@@ -186,7 +93,6 @@ const rootClass = computed(() => {
             ['aspect-ratio--imp']: props.square,
             [className[props.mode!]]: props.mode,
             [`rounded-${props.rounded}`]: props.rounded && getTypeButton(),
-            // [className['padding-' + props.size]]: props.size,
             [className[props.appearance!]]: props.appearance,
             [className['focus']]: props.focus,
             [className['active']]: props.active,
@@ -457,12 +363,5 @@ function getTypeButton() {
     --fill-color: var(--green-500);
     --fill-hover: var(--green-300);
 }
-
-// $padding: '2xs', 'xs', 'sm', 'base','lg','xl','2xl','3xl','4xl';
-// @each $name in $padding {
-//   .padding-#{$name} {
-//     padding: var(--button-base-padding-#{$name}) ;
-//   } 
-// }
 
 </style>

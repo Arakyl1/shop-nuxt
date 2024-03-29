@@ -1,12 +1,12 @@
 <template>
     <Panel :mode="'primary'">
-        <template>
-            <Main :data="data?.data" class="none /md:block" />
-            <MainMobile :data="data?.data" class="/md:hidden" />
+        <template v-if="data">
+            <Main :data="data" class="none /md:block" />
+            <MainMobile :data="data" class="/md:hidden" />
             <section class="gap-8" :class="className['content']">
-                <Characteristic :data="data?.data.characteristic" />
-                <Description :data="data?.data"/>
-                <Reviews :data="data?.data" :refresh="refresh"/>
+                <Characteristic :data="data.characteristic" />
+                <Description :data="data"/>
+                <Reviews :data="data" />
             </section>
             <Carousel
             :params="{ 'discount': 'gte:1', limit: 24  }"
@@ -28,18 +28,23 @@ import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
 
 const className = useCssModule()
 const route = useRoute()
-const id = route.params.id
-const { data, pending, refresh } = await useAsyncData(() => $fetch('/api/product/get', {
-    params: { id: id, fullinfo: true, unique: true },
-}), {
-    'server': true,
-    default: () => null
+const data = ref<null | ProductCardFull>()
+
+onBeforeMount(async() => {
+    await useFetch('/api/product/get', {
+        params: { id: route.params.id, fullinfo: true, unique: true },
+        server: true,
+        default: () => null,
+        onResponse({ response }) {
+            if (response.status < 400  && response._data) {
+                data.value = response._data?.data
+            }
+        },
+    })
 })
 
-
-
 useHead({
-    titleTemplate: () => data.value?.data ? `${data.value.data?.name} ${data.value.data?.art}` : META.CATALOG_ID.TITLE
+    titleTemplate: () => data.value ? `${data.value?.name} ${data.value?.art}` : META.CATALOG_ID.TITLE
 })
 
 </script>

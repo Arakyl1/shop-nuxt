@@ -2,6 +2,7 @@ export default (props, watchFun) => {
 
     const isActive = ref(false)
     const timer = ref(null)
+    const route = useRoute()
 
     const mapEvent = {
         hover: { name: 'mouseenter', opt: { 'capture': true } },
@@ -34,6 +35,8 @@ export default (props, watchFun) => {
 
         window.removeEventListener('resize', onResize)
     })
+
+    watch(() => route.fullPath, () => close())
     
 
     function open() {

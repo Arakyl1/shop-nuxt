@@ -85,6 +85,7 @@ const instanse = ref()
 const watchElement = watchEvent('data-accordion', instanse, () => close())
 const { isActive, close, onClick, open, onFocus, onHover, onContextMenu } = useShow(props, watchElement)
 let size: ReturnType<typeof useHeight> | undefined
+    
 if (props.animated !== 'none') {
    size = useHeight(accordion)
 }

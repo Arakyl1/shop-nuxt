@@ -1,5 +1,6 @@
-import { CookieKey, SERVER_RESPONSE_CONTENT_KEY } from "@/type/intex";
+import { CookieKey, Enumerable, SERVER_RESPONSE_CONTENT_KEY } from "@/type/intex";
 import { H3Event } from "h3"
+import { _createResponseMessage } from "./message";
 
 export function isNumber(elem: unknown): elem is number {
     return typeof elem === 'number'
@@ -69,3 +70,21 @@ export const _setCookie = (
 
 export const _getCookie = (event: H3Event, k: CookieKey) => getCookie(event,k)
 export const _deleteCookie = (event: H3Event, k: CookieKey) => deleteCookie(event,k)
+
+export function isParameterPresentAndValueNumber<T extends { [k: string]: string }>(query: T, key: keyof T) {
+    return key in query && query[key] && isNumeric(query[key as never])
+}
+
+export function createResponse(
+    data: unknown | null = null,
+    message: null | ReturnType<typeof _createResponseMessage> = null,
+    oth?: { [k: string]: string }
+) {
+    return { data, message, ...oth }
+}
+
+
+export function hasProperty<T extends { [k: PropertyKey]: any }>(odj: T, key: Enumerable<string>) {
+    const listKey = Object.keys(odj)
+    return (Array.isArray(key) ? key.filter(_ => listKey.includes(_)).length === key.length : listKey.includes(key))
+}

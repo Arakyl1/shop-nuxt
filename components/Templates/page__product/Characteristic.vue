@@ -7,10 +7,15 @@
                 <div v-for="item in data" class="w-full">
                     <Title :tag="'h4'" :text="item.title" class="text-black-100" :class="className['title']" />
                     <Flex :tag="'ul'" :direction="'column'" class="gap-3 w-full">
-                        <Flex v-for="elem in item.content" :tag="'li'" :justify="'between'" :align="'flex-start'" class="w-full">
-                            <p class="text-gray-500 w-1/2">{{ elem.name }}</p>
-                            <div class="grow"></div>
-                            <p class="text-black-100">{{ elem.value.replace(/\//g,', ') }}</p>
+                        <Flex v-for="elem in item.content"
+                        :tag="'li'"
+                        :justify="'between'"
+                        :align="'flex-start'"
+                        class="w-full gap-2 text-sm /sm:text-base"
+                        :class="className['item']">
+                            <p class="text-gray-500">{{ elem.name }}</p>
+                            <div class="grow h-4"></div>
+                            <p class="text-black-100 w-1/2">{{ elem.value.replace(/\//g,', ') }}</p>
                         </Flex>
                     </Flex>
                 </div>
@@ -39,5 +44,11 @@ const className = useCssModule()
 }
 .title {
     margin-bottom: 0.75rem;
+}
+.item > p:first-child{
+    max-width: 50%
+}
+.item > div {
+    border-bottom: 1px dashed var(--gray-500);
 }
 </style>

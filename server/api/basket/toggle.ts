@@ -1,8 +1,9 @@
 import { H3Event } from "h3"
 import prisma from "@/server/db"
 import { selectBasketItem } from "@/server/utils/selectData"
-import { GET_SERVER_RESPONSE_KEY } from "@/server/utils/other"
-import type { AlertItemCreate } from "type/intex"
+import type { AlertItemCreate } from "@/type/intex"
+import { _createResponseMessage } from "@/server/utils/message"
+import { createResponse, isParameterPresentAndValueNumber } from "@/server/utils/other"
 
 
 type QueryListKey = 'basket_id' | 'card_id' | 'item_id' | 'count' | 'type'
@@ -11,55 +12,56 @@ export type QueryList = { [K in QueryListKey]?: K extends 'type' ? 'add' | 'remo
 export default defineEventHandler(async (event: H3Event) => {
     const query = getQuery<QueryList>(event)
 
-    if (!query?.type) return { data: null, message: { key: GET_SERVER_RESPONSE_KEY('BASKET_TYPE_ERROR'), state: 'error' } }
+    if (!query?.type) return createResponse(null, _createResponseMessage('BASKET_TYPE_ERROR','error'))
 
     let message: AlertItemCreate | null = null
     try {
         switch (query?.type) {
-            case 'add': {
-                if (query?.basket_id && query?.card_id && isNumeric(query?.basket_id) && isNumeric(query?.card_id)) {
-                    const findRes = await prisma.basketItem.findFirst({
-                        where: { basketId: Number(query.basket_id), cardId: Number(query.card_id) }
-                    })
-
-                    if (!findRes) {
-                        await prisma.basketItem.create({
-                            data: {
-                                'basketId': Number(query.basket_id),
-                                cardId: Number(query.card_id),
-                                count: query?.count ? Number(query.count) : 1
-                            }
-                        })
-                        message = { key: GET_SERVER_RESPONSE_KEY('BASKET_ADD_SUCCESSFULLY'), state: 'success' }
-                    } else {
-                        message = { key: GET_SERVER_RESPONSE_KEY('BASKET_ALREADY_AVAILABLE_SUCCESSFULLY'), state: 'info' }
-                    }
-                }
+            case 'add': 
+                message = await handlerAddItem(query)
                 break;
-            }
-            case 'remove': {
-                if (query?.item_id && isNumeric(query.item_id)) {
-                    await prisma.basketItem.delete({
-                        where: { id: Number(query.item_id) },
-                    })
-                    message = { key: GET_SERVER_RESPONSE_KEY('BASKET_REMOVE_SUCCESSFULLY'), state: 'info' }
-                }
+            case 'remove': 
+                message = await handlerRemoveItem(query)
                 break;
-            }
         }
 
-        if (query.basket_id && isNumeric(query.basket_id)) {
-            const findRes = await prisma.basket.findUnique({
-                where: { id: Number(query.basket_id) },
-                include: { item: { select: selectBasketItem() } }
-            })
+        if (!isParameterPresentAndValueNumber(query, 'basket_id')) return createResponse()
 
-            return { data: findRes, message }
-        }
-        // return { data: null, message: { key: GET_SERVER_RESPONSE_KEY('BASKET_ADD_ERROR_BASKET_ID'), state: 'error' } }
-        return { data: null, message }
+        const findRes = await prisma.basket.findUnique({
+            where: { id: Number(query.basket_id) },
+            include: { item: { select: selectBasketItem() } }
+        })
+
+        return { data: findRes, message }
     } catch (error) {
         console.log(error)
-        return { data: null, message: { key: GET_SERVER_RESPONSE_KEY('SERVER_ERROR'), state: 'error' } }
+        return createResponse(null, _createResponseMessage('SERVER_ERROR','error'))
     }
 })
+
+
+async function handlerAddItem(query: QueryList) {
+    if (!isParameterPresentAndValueNumber(query, 'card_id') && !isParameterPresentAndValueNumber(query, 'basket_id')) return null
+
+    const whereParams = { basketId: Number(query.basket_id), cardId: Number(query.card_id) }
+    const findRes = await prisma.basketItem.findFirst({ where: whereParams })
+
+    if (findRes) return _createResponseMessage('BASKET_ALREADY_AVAILABLE_SUCCESSFULLY')
+
+    await prisma.basketItem.create({
+        data: { ...whereParams, count: query?.count ? Number(query.count) : 1 }
+    })
+        
+    return _createResponseMessage('BASKET_ADD_SUCCESSFULLY','success')
+}
+
+async function handlerRemoveItem(query: QueryList) {
+    if (!isParameterPresentAndValueNumber(query, 'item_id')) return null
+    await prisma.basketItem.delete({
+        where: { id: Number(query.item_id) },
+    })
+   return _createResponseMessage('BASKET_REMOVE_SUCCESSFULLY')
+}
+
+
+

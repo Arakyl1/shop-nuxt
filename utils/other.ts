@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { CookieKey, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
 import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
+import { RouteMeta } from "vue-router";
 
 
 type sizeI = 28|48|56|60|64|72|80|92|96|240|320|480

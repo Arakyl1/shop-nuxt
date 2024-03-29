@@ -57,9 +57,8 @@ onMounted(() => console.log('App mounted'))
 
 
 // user data
-// name PPPPPPPP
-// password vTyJWA5X
-// email qwe3@mail.r
+// name chert
+// password !YBmGCx4kawQYRF
 </script>
 
 <style lang="scss" >

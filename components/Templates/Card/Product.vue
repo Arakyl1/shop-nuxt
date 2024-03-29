@@ -38,7 +38,7 @@
                     :mode="'link'"
                     :class="className['button-link']"
                     class="/xl:text-md"
-                    target="_blank"
+                    :target="!isProductCardPage($route) ? '_blank' : '_self'"
                     rel="noopener">
                         <span class="color-inherit">{{ content.name }}</span>
                         <span class="text-gray-300 px-2">{{ content.art }}</span>
@@ -84,6 +84,7 @@ import Skeleton from "@/components/UI/Skeleton/Skeleton.vue";
 import { default as Status } from "@/components/UI/Status/Status.vue";
 import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
 import { getStatus } from '@/utils/other';
+import { isProductCardPage } from "@/utils/routerHelper";
 import { BASE_BUTTON as common } from "@/common/C";
 
 
@@ -100,7 +101,7 @@ const content = computed<ProductCardBase | null>(() => props.data)
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
+
 .status {
     top: 1rem;
 }

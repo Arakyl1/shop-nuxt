@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    if (to.params.id && from.params.id) {
-        return abortNavigation()
+    if (to.path !== from.path) {
+        return navigateTo({ ...to, meta: { ...to.meta, newWindow: true } })
     }
     return
 })

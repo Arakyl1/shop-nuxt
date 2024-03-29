@@ -55,7 +55,6 @@ export default defineEventHandler(async (event) => {
         response = await addImageCloud(_file.filepath, 0)
     } else if ('type' in params && params.type === 'String') {
         const body = await readBody<{ link: string }>(event)
-        console.log(body)
         response = await addImageCloud(body.link, 0)
     }
     return response

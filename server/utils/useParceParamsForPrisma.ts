@@ -150,12 +150,7 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
         }
     
         const [key, value] = item;
-        
-        
-        if (!WhereIntFilterKey.includes(key as never)) {
-            handleUnknownOperatorError(key);
-            return;
-        }
+        if (!WhereIntFilterKey.includes(key as never)) return handleUnknownOperatorError(key)
         
         
         switch (key as WhereIntFilterKey) {
@@ -194,10 +189,7 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
     
         const [key, value] = item;
     
-        if (!WhereDateFilterKey.includes(key as never)) {
-            handleUnknownOperatorError(key);
-            return;
-        }
+        if (!WhereDateFilterKey.includes(key as never)) return handleUnknownOperatorError(key)
       
         switch (key) {
             case 'equals':
@@ -236,10 +228,8 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
         const addParams = (key: string, value: any) => findParams[key] = value
     
         if (parseStr.length && parseStr[0].length > 1) {
-            for (let i = 0, l = parseStr.length; i < l; i++) {
-                const item = parseStr[i];
-                fn(item, addParams)
-            }
+            parseStr.forEach(_ => fn(_, addParams))
+            
             return { data: findParams, error: methodError }
         } else { return { data: str, error: methodError } }
     }
@@ -248,11 +238,7 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
         const option: { [x: string]: any } = {};
         const data = value.split('_').slice(1).map(_ => _.split(';').map(e => e.split(':')))[0];
         
-        if (data) {
-            data.forEach(item => {
-                handleIncludeOptionItem(item, option);
-            });
-        }
+        if (data) data.forEach(item => handleIncludeOptionItem(item, option));
         
         return { data: option };
     }
@@ -355,9 +341,8 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
     function handleSearchProperty(...arg: HandlerParamsParams) {
         const [key, value, addParams] = arg
         const res = parseSearchParams(value, MODEL_DATA.SEARCH_KEY)
-        if (res.OR.length) {
-            addParams('where', res)
-        }
+
+        if (res.OR.length) addParams('where', res)
     }
 
     function handleOrderByProperty(...arg: HandlerParamsParams) {
@@ -427,22 +412,21 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
             where: { id: 0 },
             select: undefined
         }
-        for (const key in query) {
-            if (Object.prototype.hasOwnProperty.call(query, key)) {
-                const value = query[key];
-                switch (key) {
-                    case 'id':{
-                        if (!isNumeric(value)) return handleInvalidValueError(value, '45')
-    
-                        searchParams.where.id = parseInt(value as string) as never
-                        break;
-                    }
-                    case 'fullinfo': 
-                        searchParams.select = MODEL_DATA.FULL_KEY as never
-                        break;
+        Object.entries(query).forEach(_ => {
+            const [key,value] = _
+
+            switch (key) {
+                case 'id':{
+                    if (!isNumeric(value)) return handleInvalidValueError(value, '45')
+
+                    searchParams.where.id = parseInt(value as string) as never
+                    break;
                 }
+                case 'fullinfo': 
+                    searchParams.select = MODEL_DATA.FULL_KEY as never
+                    break;
             }
-        }
+        })
     }
 
 
@@ -477,13 +461,9 @@ export default (query: { [k:string]: string }, MODEL_DATA: MODEL_DATA) => {
                 include: Object.fromEntries(MODEL_DATA.RELATION_KEY.map(_ => [_, false])) 
                     
             }
-           
-            for (const key in query) {
-                if (Object.prototype.hasOwnProperty.call(query, key)) {
-                    const value = query[key];
-                    handleParseFullParams(key, value, addParams, addError, checkForErrors, handleDefaultCase)
-                }
-            }
+            Object.entries(query).forEach(_ => {
+                return handleParseFullParams(_[0], _[1], addParams, addError, checkForErrors, handleDefaultCase)
+            })
         }
         
         return returnParseData()
