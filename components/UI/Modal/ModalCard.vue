@@ -160,7 +160,7 @@ function onClick() {
         position: fixed;
         left: 0;
         bottom: 0;
-        top: auto;
+        top: 15svh;
         width: 100%;
     }
     .modal [data-card] {
