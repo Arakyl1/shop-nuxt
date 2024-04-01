@@ -71,7 +71,7 @@ import FormField from "@/components/UI/FormField/FormField.vue";
 import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import { searchInvalidElem, getFormDataObJ, getFormDataURL } from '@/utils/formHelpers'
+import { searchInvalidElemInForm, getFormDataObJ, getFormDataURL } from '@/utils/formHelpers'
 import { alert as _alert } from "@/stores/alert";
 import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 
@@ -121,6 +121,6 @@ function checkPassword(data: { [key:string]: any }): boolean {
 
 
 function checkValidData(data: { [key:string]: any }): boolean{
-  return !!searchInvalidElem(form) && checkPassword(data)
+  return !!searchInvalidElemInForm(form) && checkPassword(data)
 }
 </script>

@@ -84,7 +84,7 @@ export function createResponse(
 }
 
 
-export function hasProperty<T extends { [k: PropertyKey]: any }>(odj: T, key: Enumerable<string>) {
+export function hasProperty<T extends { [k: PropertyKey]: any }>(odj: T, key: Enumerable<string>): boolean {
     const listKey = Object.keys(odj)
-    return (Array.isArray(key) ? key.filter(_ => listKey.includes(_)).length === key.length : listKey.includes(key))
+    return Array.isArray(key) ? Boolean(key.find(_ => !hasProperty(odj, _))) || true : listKey.includes(key)
 }

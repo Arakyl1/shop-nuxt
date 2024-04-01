@@ -115,9 +115,8 @@ import Group from "@/components/UI/Group/Group.vue";
 import FormField from "@/components/UI/FormField/FormField.vue";
 import Grid from "@/components/UI/Grid/Grid.vue";
 import { user as _user } from '@/stores/user';
-import Confirm from "@/components/Templates/modal/Confirm.vue";
 import { PAGE_USER_MAIN as common, PAGE_META, BASE_BUTTON, INPUT_CONTENT } from "@/common/C";
-import { searchInvalidElem, getFormDataURL } from '@/utils/formHelpers'
+import { searchInvalidElemInForm, getFormDataURL, setValueInput } from '@/utils/formHelpers'
 
 
 const { logout: _logout } = useAuth()
@@ -131,13 +130,27 @@ const radioList = [
     { key: 'woman', label: common.LIST_RADIO_GENDER_WOMAN },
 ]
 
-onMounted(() => {
-    // setValueInput(form)
+const userInfo = computed(() => {
+    if (!data.value) return null
+
+    const userInfo = new Map<string, (string)[]>()
+
+    Object.entries(data.value).forEach(_ => {
+        let [key, value] = _
+        if (!['basket','favorites', 'id','createAt','role'].includes(key)) {
+            userInfo.set(key, [value])
+        }
+    })
+    return userInfo
 })
 
 
+
+watch(() => userInfo.value, () => setValueInput(form, userInfo.value) )
+
+
 async function onClick() {
-    if(form.value instanceof HTMLFormElement && searchInvalidElem(form)) {
+    if(form.value instanceof HTMLFormElement && searchInvalidElemInForm(form)) {
         const body = getFormDataURL(form)
         if (!data.value) return
 

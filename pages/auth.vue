@@ -44,7 +44,7 @@ import Input from "@/components/UI/Input/Input.vue";
 import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import { resetForm, searchInvalidElem } from "@/utils/formHelpers";
+import { resetForm, searchInvalidElemInForm } from "@/utils/formHelpers";
 import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 import { default as useAuth } from '@/composables/useAuth'
 
@@ -75,7 +75,7 @@ async function onClick() {
             loginUserData[key] = value
         }
     }
-    if (searchInvalidElem(form) && !('username' in loginUserData) && !('password' in loginUserData)) return
+    if (searchInvalidElemInForm(form) && !('username' in loginUserData) && !('password' in loginUserData)) return
 
     await userLogin(loginUserData as { username: string, password: string })  
 }

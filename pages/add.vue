@@ -67,7 +67,7 @@ import Alert from "@/components/Templates/modal/Alert.vue";
 import Characteristic from '@/components/Templates/page__add/Characteristic.vue';
 import Parameters from '@/components/Templates/page__add/Parameters.vue';
 import { PAGE_META as META, CONFIRM_TITLE as commonConfirm, PAGE_ADD as common, BASE_BUTTON } from "@/common/C";
-import { resetForm, setValueInput, searchInvalidElem } from '@/utils/formHelpers';
+import { resetForm, setValueInput, searchInvalidElemInForm } from '@/utils/formHelpers';
 import { listWordsCharacteristic, listSectionsToSkip } from '@/utils/checkListWords'
 import { ProductCard } from '@prisma/client';
 
@@ -183,7 +183,7 @@ function _setValueForm() {
 function checkValidCreateData() {
     if (form.value instanceof  HTMLFormElement) {
         switch (true) {
-            case !searchInvalidElem(form):
+            case !searchInvalidElemInForm(form):
                 return false
             case !imageData.value:
                 storeAlert.create({ key: 'CREATE_DOWNLOAD_PHOTO', state: 'info' })

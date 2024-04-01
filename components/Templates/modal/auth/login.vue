@@ -46,7 +46,7 @@ import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import FormField from "@/components/UI/FormField/FormField.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import { resetForm, searchInvalidElem, getFormDataURL } from "@/utils/formHelpers";
+import { resetForm, searchInvalidElemInForm, getFormDataURL } from "@/utils/formHelpers";
 import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 import { default as useAuth } from '@/composables/useAuth'
 
@@ -63,7 +63,7 @@ function onRestore() {
 }
 
 async function onClick() {
-    if (form.value instanceof HTMLFormElement && searchInvalidElem(form)) {
+    if (form.value instanceof HTMLFormElement && searchInvalidElemInForm(form)) {
         const body = getFormDataURL(form)
         await userLogin(body)
     }

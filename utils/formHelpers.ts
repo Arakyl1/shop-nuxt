@@ -1,6 +1,6 @@
 type FORM = Ref<HTMLFormElement | null> | HTMLFormElement | null
 
-export function checkValidForm<T extends (form: HTMLFormElement) => any>(elem: FORM, handle: T): ReturnType<typeof handle> | null {
+export function isThisForm<T extends (form: HTMLFormElement) => any>(elem: FORM, handle: T): ReturnType<typeof handle> | null {
     const _form = unref(elem)
     if (_form instanceof HTMLFormElement) {
        return handle(_form)
@@ -9,7 +9,7 @@ export function checkValidForm<T extends (form: HTMLFormElement) => any>(elem: F
 }
 
 export function resetForm(form: FORM) {
-    return checkValidForm(form, (_form) => {
+    return isThisForm(form, (_form) => {
         _form.reset()
         const customEvent = new CustomEvent('reset', { bubbles: false })
         for (const elem of _form.elements) {
@@ -24,8 +24,8 @@ export function resetForm(form: FORM) {
     })
 }
 
-export function searchInvalidElem(form: FORM) {
-    return checkValidForm(form, (_form) => {
+export function searchInvalidElemInForm(form: FORM) {
+    return isThisForm(form, (_form) => {
         if (_form.checkValidity()) return true
 
         for (const elem of _form.elements) {
@@ -44,8 +44,10 @@ export function searchInvalidElem(form: FORM) {
     }) 
 }
 
-export function setValueInput(form: FORM, setData: Map<string, string[]> ) {
-    return checkValidForm(form, (_form) => {
+export function setValueInput(form: FORM, setData: Map<string, string[]> | null ) {
+    return isThisForm(form, (_form) => {
+        if (!setData || setData.size === 0) return
+
         const event = new Event('change', { bubbles: true })
 
         function dispatchEvent(elem: HTMLInputElement | HTMLTextAreaElement) {
@@ -85,7 +87,7 @@ export function setValueInput(form: FORM, setData: Map<string, string[]> ) {
 }
 
 export function getFormData(form:FORM) {
-    return checkValidForm(form, (_form) => {
+    return isThisForm(form, (_form) => {
         return new FormData(_form)
     })
 }

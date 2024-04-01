@@ -1,40 +1,41 @@
 <template>
     <section class="w-full" :class="className['body']">
-        <CardGridScroll v-if="!pending" :data="data.item" :container="'xs'">
-            <template #default="{ elem }">
-                <div class="">
-                    <picture class="relative rounded-xl block">
-                        <template v-for="photo,key in transformData(elem as any)", :key="photo">
-                            <source v-if="photo"
-                            :srcset="photo"
-                            :media="`(max-width: ${key}px)`"
-                            lazy="true"
-                            loading="lazy"
-                            class="h-full w-full">
-                        </template>
-                        <img :src="elem.mainPhoto" alt=""
-                        class="h-full w-full" loading="lazy"/>
-                    </picture>
-                </div>
-            </template>
-            <template v-if="viewport.isGreaterOrEquals('md')"
-            #center="{ prev, next, listValueScroll }" >
-                <ControlButtonCenterAbsolute v-bind="{ listValueScroll, next, prev }"/>
-            </template>
-            <template #footer="{ next, prev }" v-if="viewport.isLessThan('md')">
-                <Flex :justify="'end'" class="gap-4">
-                    <Button 
-                    :appearance="'blue'"
-                    :text="common.BUTTON_MORE_DETAILS"
-                     class="grow justify-center /md:h-12"/>
-                     <Flex class="gap-2">
-                         <ButtonArrow @click="prev" class="-scale-100" />
-                         <ButtonArrow @click="next" />
+        <Transition name="fade" :duration="250" :mode="'out-in'" >
+
+            <CardGridScroll v-if="!pending" :data="data.item" :container="'xs'">
+                <template #default="{ elem }">
+                    <div class="">
+                        <picture class="relative rounded-xl block">
+                            <template v-for="photo,key in transformData(elem as any)", :key="photo">
+                                <source v-if="photo"
+                                :srcset="photo"
+                                :media="`(max-width: ${key}px)`"
+                                class="h-full w-full">
+                            </template>
+                            <img :src="elem.mainPhoto" alt=""
+                            class="h-full w-full" />
+                        </picture>
+                    </div>
+                </template>
+                <template v-if="viewport.isGreaterOrEquals('md')"
+                #center="{ prev, next, listValueScroll }" >
+                    <ControlButtonCenterAbsolute v-bind="{ listValueScroll, next, prev }"/>
+                </template>
+                <template #footer="{ next, prev }" v-if="viewport.isLessThan('md')">
+                    <Flex :justify="'end'" class="gap-4">
+                        <Button 
+                        :appearance="'blue'"
+                        :text="common.BUTTON_MORE_DETAILS"
+                        class="grow justify-center /md:h-12"/>
+                        <Flex class="gap-2">
+                            <ButtonArrow @click="prev" class="-scale-100" />
+                            <ButtonArrow @click="next" />
+                        </Flex>
                     </Flex>
-                </Flex>
-            </template>
-        </CardGridScroll>
-        <Skeleton v-else :loader="pending" :animated="true" class="h-full"/>
+                </template>
+            </CardGridScroll>
+            <Skeleton v-else :loader="pending" :animated="true" class="h-full"/>
+        </Transition>
     </section>
 </template>
 <script setup lang="ts">

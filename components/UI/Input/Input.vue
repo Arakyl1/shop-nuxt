@@ -9,6 +9,7 @@
         @blur="onBlur"
         @focus="onFocus"
         @input="onInput"
+        @change="onInput"
         :tabindex="props.readonly || Boolean(value) ? -1 : 0">
         <span v-if="span && !placeholder"
         :class="[value ? className['active'] : '']"

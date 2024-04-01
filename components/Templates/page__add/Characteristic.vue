@@ -120,7 +120,7 @@ import Card from "@/components/UI/Card/Card.vue";
 import Confirm from "@/components/Templates/modal/Confirm.vue";
 import { alert as _alert } from "@/stores/alert";
 import FormField from "@/components/UI/FormField/FormField.vue";
-import { searchInvalidElem } from '@/utils/formHelpers'
+import { searchInvalidElemInForm } from '@/utils/formHelpers'
 import { BASE_BUTTON as commonButton, INPUT_CONTENT as commonInput, CONFIRM_TITLE as commonConfirm } from "@/common/C";
 import { CharacteristicSection } from "@/type/intex";
 
@@ -187,7 +187,7 @@ function parseJSONData<T extends itemJSONData>(jsonData:T) {
 
 
 function formCheck() {
-  if (form.value instanceof HTMLFormElement && searchInvalidElem(form)) {
+  if (form.value instanceof HTMLFormElement && searchInvalidElemInForm(form)) {
     if (characteristicSection.value?.children.length! > 0) {
       return true
     } else {

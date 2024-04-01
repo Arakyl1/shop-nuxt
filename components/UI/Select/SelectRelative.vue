@@ -62,7 +62,7 @@
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Group from "@/components/UI/Group/Group.vue";
-import { watchEvent, initSize, checkThisComponent } from "@/utils/elemHelper";
+import { watchEvent, initSize, isThisComponent } from "@/utils/elemHelper";
 import { isNumber, isNumeric, getScreenSize } from '@/utils/other'
 import useShow from '@/composables/useShow'
 
@@ -236,7 +236,7 @@ function onEvent() {
 }
 
 function sendEvent() {
-    if (select.value instanceof HTMLElement && checkThisComponent(body.value, unref(instanse))) {
+    if (select.value instanceof HTMLElement && isThisComponent(body.value, unref(instanse))) {
         const event = new Event('change', { bubbles: true })
         select.value.dispatchEvent(event)
     }
