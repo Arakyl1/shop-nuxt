@@ -151,7 +151,7 @@ function getParamsFilter() {
     const paramsData = new Map<string, { key: string, value: (string | number)[] }>()
 
     const changeStr = (s: string) => s.trim().replace(/\s/, '__')
-    const getValueParams = (key: string) => paramsData.get(key)!.value || []
+    const getValueParams = (key: string) => paramsData.get(key)?.value || []
     const formData = getFormData(form)
 
     if (!formData) return
