@@ -52,6 +52,7 @@ export default defineNuxtConfig({
     '/auth': { ssr: false },
     '/add': { ssr: false },
     '/ui': { ssr: false },
+    '/admin/**': { ssr: false },
   },
   vite: {
     resolve: {

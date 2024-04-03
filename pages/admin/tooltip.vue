@@ -5,7 +5,7 @@
                 <ListLinks :data="PAGE_ADMIN_TOOLTIP"/>
             </div>
             <div class="w-1/2">
-                <NuxtPage :transition="{ 'mode': 'in-out', name: 'blur' }"/>
+                <NuxtPage :transition="{ name: 'blur' }" mode="out-in"/>
             </div>
         </Flex>
     </Panel>

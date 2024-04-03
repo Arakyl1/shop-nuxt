@@ -1,5 +1,5 @@
 <template>
-    <NuxtPage :transition="{ 'mode': 'in-out', name: 'blur' }"/>
+     <NuxtPage :transition="{ name: 'blur' }" mode="out-in"/>
 </template>
 
 <script setup lang="ts">

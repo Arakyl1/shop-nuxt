@@ -5,7 +5,7 @@
                 <ListLinks :data="PAGE_USER"/>
             </div>
             
-            <NuxtPage :transition="{ 'mode': 'in-out', name: 'blur' }"/>
+            <NuxtPage :transition="{ name: 'blur' }" mode="out-in"/>
         </Flex>
     </Panel>
 </template>

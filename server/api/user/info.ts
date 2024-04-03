@@ -17,7 +17,8 @@ export default defineAuthenticatedEventHandler(async(event, authUser) => {
                         'ProductCard': {
                             'select': selectProductCardMin()
                         }
-                    })
+                    }),
+                    'take': 24
                 }
             }
             break;
