@@ -79,11 +79,10 @@ import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 const { register: userRegister} = useAuth()
 const form = ref<HTMLFormElement | null>(null)
 const storeAlert = _alert()
+const { addToWatchEventRestore } = useForm()
 
 
-onMounted(() => [
-    window.addEventListener('restore', onRestore, { passive: true })
-])
+addToWatchEventRestore(onRestore)
 
 function onRestore() {
     resetForm(form)
@@ -91,24 +90,9 @@ function onRestore() {
 
 async function onClick() {
   const formDataObj = getFormDataObJ(form)
-  if (!checkValidData(formDataObj)) return false
+  if (!formDataObj || !checkValidData(formDataObj)) return false
 
-  await userRegister(getFormDataURL(form))
-
-  // if (form.value instanceof HTMLFormElement) {
-
-  //   const formData = new FormData(form.value)
-  //   const registerData: { [key:string]: any }  = {}
-    
-  //   // for (const [key, value] of formData) {
-  //   //     if (['username','password','email','repeatPassword'].includes(key)) {
-  //   //       registerData[key] = value
-  //   //     }
-  //   // }
-  //   if (!checkValidData(registerData)) return false
-    
-  //   await userRegister(registerData)
-  // }
+  await userRegister(getFormDataURL(form) as string)
 }
 
 function checkPassword(data: { [key:string]: any }): boolean {

@@ -23,5 +23,6 @@ export const BASE_BUTTON = {
     OK: 'Хорошо',
     REJECTION: 'Нет',
     ACCEPT: 'Да',
-    PAGE_ERROR_BUTTON: 'Вернуться на главную страницу'
+    PAGE_ERROR_BUTTON: 'Вернуться на главную страницу',
+    TOOLTIP_CREATE: 'Создать'
 }

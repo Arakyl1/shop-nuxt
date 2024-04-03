@@ -93,11 +93,13 @@ model Characteristic {
 }
 
 model CharacteristicItem {
+  id               Int            @id @default(autoincrement())
   name             String
   value            String
   characteristicId Int
-  id               Int            @id @default(autoincrement())
   Characteristic   Characteristic @relation(fields: [characteristicId], references: [id])
+  tooltipId        Int?
+  Tooptip          Tooltip?        @relation(fields: [tooltipId], references: [id])
 }
 
 model Basket {
@@ -156,6 +158,15 @@ model MainSliderItem {
   main600   String?
   parentId  Int
   parent    MainSlider @relation(fields: [parentId], references: [id], map: "MainSladerItem_parentId_fkey")
+}
+
+model Tooltip {
+  id                 Int                  @id @default(autoincrement())
+  createAt           DateTime             @default(now())
+  updateAt           DateTime             @updatedAt
+  name               String?
+  text               String
+  characteristicItem CharacteristicItem[]
 }
 
 enum Role {

@@ -64,5 +64,11 @@ export const INPUT_CONTENT = {
     },
     PRODUCT_CREATE_DESCRIPTION_TEXTAREA: {
         PLACEHOLDER: 'Описание товара'
+    },
+    TOOLTIP_CREATE_NAME: {
+        PLACEHOLDER: 'Сокрашеное имя подсказки'
+    },
+    TOOLTIP_CREATE_DESCRIPTION: {
+        PLACEHOLDER: 'Основной текст подсказки'
     }
 }

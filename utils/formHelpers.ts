@@ -1,15 +1,18 @@
 type FORM = Ref<HTMLFormElement | null> | HTMLFormElement | null
 
-export function isThisForm<T extends (form: HTMLFormElement) => any>(elem: FORM, handle: T): ReturnType<typeof handle> | null {
+export function isThisForm(elem: FORM): boolean {
     const _form = unref(elem)
-    if (_form instanceof HTMLFormElement) {
-       return handle(_form)
-    }
-    return null
+    return _form instanceof HTMLFormElement
+}
+
+export function handlerForForm<T extends (form: HTMLFormElement) => any>(elem: FORM, handle: T): ReturnType<typeof handle> | null {
+    if (!isThisForm(elem)) return null
+
+    return handle(unref(elem)!)
 }
 
 export function resetForm(form: FORM) {
-    return isThisForm(form, (_form) => {
+    return handlerForForm(form, (_form) => {
         _form.reset()
         const customEvent = new CustomEvent('reset', { bubbles: false })
         for (const elem of _form.elements) {
@@ -25,7 +28,7 @@ export function resetForm(form: FORM) {
 }
 
 export function searchInvalidElemInForm(form: FORM) {
-    return isThisForm(form, (_form) => {
+    return handlerForForm(form, (_form) => {
         if (_form.checkValidity()) return true
 
         for (const elem of _form.elements) {
@@ -45,7 +48,7 @@ export function searchInvalidElemInForm(form: FORM) {
 }
 
 export function setValueInput(form: FORM, setData: Map<string, string[]> | null ) {
-    return isThisForm(form, (_form) => {
+    return handlerForForm(form, (_form) => {
         if (!setData || setData.size === 0) return
 
         const event = new Event('change', { bubbles: true })
@@ -87,7 +90,7 @@ export function setValueInput(form: FORM, setData: Map<string, string[]> | null 
 }
 
 export function getFormData(form:FORM) {
-    return isThisForm(form, (_form) => {
+    return handlerForForm(form, (_form) => {
         return new FormData(_form)
     })
 }
@@ -106,4 +109,10 @@ export function getFormDataObJ(form: FORM) {
         data[key] = value
     }
     return data
+}
+
+
+export function searchMissingParamsInFormDataURl(data:string, searchKey: Array<string | number>) {
+    const dataKey = data.split('&').map(_ => _.split('=')[0])
+    return Array.isArray(searchKey) ? searchKey.find(_ => !dataKey.includes(_.toString())) || false : dataKey.includes(searchKey) || false
 }

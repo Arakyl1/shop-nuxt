@@ -28,21 +28,17 @@
 
 <script setup lang="ts">
 import { default as CreateIcon, Props as IconProps } from "@/utils/icon/index.vue";
+import { FormElementsBaseParams } from "@/type/intex";
 
 // родитель может отлавливать событие клика по иконке через @icon-click=""
 // при условие что установлена иконка и включена функция клика по иконке
 
-export interface Props {
+export interface Props extends FormElementsBaseParams {
     // тип input
     type?: 'text'|'number'|'email'|'password'|'search'|'tel', 
-    // стили оформления input
-    mode?: 'primary'|'secondary'|'outline'|'none', 
-    // имя input
-    name?: string,
     step?: number,
     min?: number,
     max?: number,
-    autocomplete?: string,
     // анимерованный placeholder вместо базового
     // если было передано значение для базового placeholder (эт пропс placeholder)
     // то приоритет отдается базовому 
@@ -50,17 +46,8 @@ export interface Props {
     // регулярное выражение для проверки валидности текста в импуте
     pattern?: string,
     modelValue?: number | string,
-    // базовый placeholder
-    placeholder?: string,
-    // сделать инпут обязательным
-    required?: boolean,
-    // сделать доступным только для чтения
-    readonly?: boolean,
-    // сделать неактивным
-    disabled?: boolean,
     icon?: IconProps,
     iconClickable?: boolean
-
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -159,7 +146,6 @@ function onIconClick(event) {
 </script>
 
 <style lang="css" module>
-/* purgecss start ignore */
 
 /* Список всех доступных переменых для цветовой настройки input 
 --bg-color - задний фон в обычном состояние
@@ -313,7 +299,7 @@ function onIconClick(event) {
 
 .input.focus:not(.input.readonly) {
     border-color: var(--focus-border, var(--blue-500));
-    box-shadow: var(--focus-shadow, 0 0 0 2px #e7f3ff);
+    box-shadow: var(--focus-shadow, var(--box-shadow-for-state-focus--base));
     caret-color: var(--focus-border, var(--blue-500));
 }
 
@@ -351,7 +337,6 @@ function onIconClick(event) {
     --color: var(--black-500);
     --border-hover: var(--blue-500);
 }
-/* purgecss end ignore */
 </style>
 
 

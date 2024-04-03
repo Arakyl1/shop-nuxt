@@ -33,7 +33,7 @@
                         :mode="'link'"
                         :icon-left="{ 'icon': 'add-list', size: '30_30' }"
                         :appearance="'yellow-icon'"
-                        to="/add"/>
+                        :to="ROOTER[22].href"/>
                     
 
                         <Indicator :text="favoriteLength" :active="!!favoriteLength">
@@ -102,7 +102,7 @@ import Search from "@/components/Templates/Search/Search.vue";
 import Bottom from "./Bottom.vue";
 import { user as _user } from "@/stores/user";
 import { modal as _modal } from "@/stores/modal";
-import { HEADER_ROUTER } from "@/utils/router";
+import { HEADER_ROUTER, ROOTER } from "@/utils/router";
 import { HEADER as common } from "@/common/C";
 
 const storeUser = _user()

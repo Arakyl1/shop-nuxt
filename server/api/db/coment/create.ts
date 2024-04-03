@@ -25,11 +25,11 @@ export default defineEventHandler(async () => {
     
     const d = productCardList.map(async(pro) => {
         const res = getRandomLengthArray().fill('dd').map(async() => {
-            const rating = getRandomNum(5) || 1
+            const rating = (getRandomNum(5) || 1) as keyof typeof textListForComment
             return await prisma.comment.create({
                 data: {
                     ranting: rating,
-                    text: (textListForComment[rating as 1])[getRandomNum(textListForComment[rating as 1].length - 1)],
+                    text: (textListForComment[rating])[getRandomNum(textListForComment[rating].length - 1)],
                     'cardId': pro.id,
                     'userId': 193,
                 },

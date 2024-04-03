@@ -72,11 +72,11 @@
               <Title :tag="'h3'" :text="item.title" class="grow truncate"/>
               <Button
               :appearance="'gray-icon'"
-              :icon-left="{ icon: 'edit', size: '24_24' }"
+              :icon-left="{ icon: 'edit', size: '24_24', 'type': 'outline' }"
               @click="makeEditingActive(index)"/>
               <Button
               :appearance="'gray-icon'"
-              :icon-left="{ icon: 'delete', size: '24_24' }"
+              :icon-left="{ icon: 'delete', size: '24_24', 'type': 'outline' }"
               @click="initDeleteGroup(index)"/>
             </Flex>
             <div class="decor-line"></div>
@@ -140,6 +140,7 @@ const indexEditGroup = ref<number | null>(null)
 const indexDeleteGroup = ref<number | null>(null)
 const storeAlert = _alert()
 const className = useCssModule()
+const { addToWatchEventRestore } = useForm()
 const { activeStatus, setStatus } = useConfirm<'delete-section'|'apply-change'|'cancel-create'>()
 const form = ref<HTMLFormElement | null>(null)
 
@@ -147,12 +148,8 @@ const form = ref<HTMLFormElement | null>(null)
 onMounted(() => {
   setStatus(null)
   onRestore()
-  window.addEventListener('restore', onRestore)
 })
 
-onBeforeUnmount(() => {
-  window.removeEventListener('restore', onRestore)
-})
 
 // watch
 watch(data, (newV) => {
@@ -165,6 +162,8 @@ watch(() => props.downloadJsonData, (newV) => {
     parseJSONData(newV)
   }
 })
+
+addToWatchEventRestore(onRestore)
 
 
 function onRestore() {

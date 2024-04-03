@@ -40,13 +40,11 @@ const storeUser = _user()
 const { data: _userData, anonim: _userAnonim } = storeToRefs(storeUser);
 const  className = useCssModule()
 const { state, update } = localState()
+const { createAndSendEventRestore } = useForm()
 
 
 function resetData() {
-    nextTick(() => {
-        const event = new CustomEvent('restore')
-        window.dispatchEvent(event)
-    })
+    nextTick(() => createAndSendEventRestore())
 }
 
 watch(() => _userAnonim.value, () => {

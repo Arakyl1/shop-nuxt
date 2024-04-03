@@ -114,7 +114,7 @@ import FileImage from "@/components/UI/File/Image.vue";
 import ControlElements from "@/components/Templates/ControlElements/Item.vue";
 import { Attribute, Image as PrismaImage } from "@prisma/client";
 import { INPUT_CONTENT as commonInput, PAGE_ADD as common } from "@/common/C";
-import { CategorDataItem, LoginJSONData, _HTMLInputElement } from "@/type/intex";
+import { LoginJSONData, _HTMLInputElement } from "@/type/intex";
 import { alert as _alert } from "@/stores/alert";
 import selectCategorHelper from "@/utils/selectCategorHelper";
 
@@ -134,17 +134,9 @@ const { download: _downloadImage } = useImage()
 const storeAlert = _alert()
 type ImageCreateData = Pick<PrismaImage, 'link' | 'main'>
 const image = ref<ImageCreateData[] | null>(null)
+const { addToWatchEventRestore } = useForm()
 const { activeId, dataSelect, updateActiveId, resetSelect, addCategor } = selectCategorHelper()
 
-
-
-onMounted(() => {
-  window.addEventListener('restore', onRestore)
-}) 
-
-onBeforeUnmount(() => {
-  window.removeEventListener('restore', onRestore)
-})
 
 watch(() => props.downloadJsonData, (newV) => {
   if (newV) { parseJSONData(newV) }
@@ -154,6 +146,8 @@ watch(() => props.downloadJsonData, (newV) => {
 watch(() => image.value && image.value.length, (newV) => {
   if (newV && newV > 0) { emit('image-data', image.value) }
 })
+
+addToWatchEventRestore(onRestore)
 
 
 // methods
@@ -287,7 +281,6 @@ const dataInput: (Model | Model[] | { decorLine: boolean })[] = [
 </script>
 
 <style lang="css" module>
-/* purgecss ignore */
 .file {
  display: flex;
  justify-content: center;

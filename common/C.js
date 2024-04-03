@@ -18,4 +18,5 @@ export * from "./page/catalogId";
 export * from "./page/contact";
 export * from "./page/main";
 export * from "./page/user/main";
+export * from "./page/admin/tooltip";
 export * from "./page/meta";

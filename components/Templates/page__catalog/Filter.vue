@@ -89,16 +89,14 @@ import FilterSkeleton from '@/components/Templates/page__catalog/filterSkeleton.
 import { FilterData } from '~~/type/intex';
 import { alert as _alert } from "@/stores/alert";
 import { BASE_BUTTON as commonButton } from "@/common/C";
-import { resetForm, setValueInput } from "@/utils/formHelpers";
+import { resetForm, setValueInput, isThisForm, getFormData } from "@/utils/formHelpers";
 
 
 const route = useRoute()
 const router = useRouter()
-const storeAlert = _alert()
-// const pending = ref<boolean>(false)
 const formCategory = ref<HTMLFormElement | null>(null)
 const form = ref<HTMLFormElement | null>(null)
-// const dataFilterList = useState<FilterData | null>('dataFilterList', () => null)
+const { addToWatchEventRestore, createAndSendEventRestore } = useForm()
 const ratingStar = ref<number>(0)
 const mount = ref(true)
 
@@ -108,15 +106,9 @@ const sizePage = computed(() => 'limit' in route.query ? { limit: route.query.li
 const selectData = computed(() => data.value ? data.value.find(_ => _.type === 'select' )?.data.map(_ => _.id) : [])
 
 
-onMounted(() => {
-    nextTick(() => initFilter())
-    window.addEventListener('restore', getParamsFilter, { passive: true })
-})
+onMounted(() => nextTick(() => initFilter()))
 
-onBeforeUnmount(() => {
-    window.removeEventListener('restore', getParamsFilter)
-})
-
+addToWatchEventRestore(getParamsFilter)
 
 const { pending, data } = useLazyAsyncData<FilterData | null>(() => $fetch('/api/other/filter', {
     params: { ...route.query },
@@ -138,71 +130,49 @@ watch(() => pending.value, (nV) => {
 
 
 function initFilter() {
-    if (form.value) {
-        const params = getFilterActiveParamsByRouteQuery()       
-        setValueInput(form.value, params)
-    }   
+    if (!isThisForm(form)) return null
+
+    const params = getFilterActiveParamsByRouteQuery()       
+    setValueInput(form.value, params)
 }
 
-// methods
-// function getFilterData() {
-//     useFetch('/api/other/filter', {
-//         server: false,
-//         params: { ...route.query },
-//         retry: 1,
-//         onRequest() {
-//             pending.value = true
-//         },
-//         onResponse({ response }) {
-//             if (response.status < 400) {
-//                 dataFilterList.value = response._data
-//             }
-//             pending.value = false
-//         }
-//     })
-// }
 
 
-function resetData(event: MouseEvent) {
+function resetData() {
     form.value ? resetForm(form!) : null
-    nextTick(() => {
-        const event = new CustomEvent('restore')
-        window.dispatchEvent(event)
-    })
+    nextTick(() => createAndSendEventRestore())
 }
 
 function getParamsFilter() {
+    if (!isThisForm(form) || !form.value.checkValidity()) return
+    
     const queryParams = { ...route.query }
-    if (form.value) {
-        if (!form.value.checkValidity()) return
+    let finalParams: { [key: string]: string } = {}
+    const paramsData = new Map<string, { key: string, value: (string | number)[] }>()
 
-        const changeStr = (s: string) => s.trim().replace(/\s/, '__')
-        let finalParams: { [key: string]: string } = {}
-        const formData = new FormData(form.value)
-        const paramsData = new Map<string, { key: string, value: (string | number)[] }>()
+    const changeStr = (s: string) => s.trim().replace(/\s/, '__')
+    const getValueParams = (key: string) => paramsData.get(key)!.value || []
+    const formData = getFormData(form)
 
-        for (const [key, value] of formData) {
-            if (isString(value) && Boolean(value) && value !== '0') {
-                const keyArr = key.split('.')
-                const _key = keyArr[0]
-                const _value = `${keyArr.slice(1).join('.')}${keyArr.length > 1 ? ':' : ''}${value}` 
-                
-                if (paramsData.has(key)) {
-                    const paramsItem = paramsData.get(key)
-                    paramsData.set(key, { key: _key, value: [...paramsItem!.value, changeStr(_value)] })
-                } else {
-                    paramsData.set(key, { key: _key, value: [changeStr(_value)] })
-                }
-            }
+    if (!formData) return
+
+    for (const [key, value] of formData) {
+        if (isString(value) && Boolean(value) && value !== '0') {
+            const keyArr = key.split('.')
+            const _key = keyArr[0]
+            const _value = `${keyArr.slice(1).join('.')}${keyArr.length > 1 ? ':' : ''}${value}` 
+            
+            paramsData.set(key, { key: _key, value: [...getValueParams(key), changeStr(_value)] })
         }
-      
-        for (const [key, value] of paramsData) {
-            finalParams[value['key']] = value.value.join(',')
-        }
-
-        let page = 'page' in queryParams ? { page: 1 } : {}
-        router.push({ query: { 'categor': routeCategorId.value, ...finalParams, ...page, ...sizePage.value } })
     }
+    
+
+    for (const [key, value] of paramsData) {
+        finalParams[value['key']] = value.value.join(',')
+    }
+
+    let page = 'page' in queryParams ? { page: 1 } : {}
+    router.push({ query: { 'categor': routeCategorId.value, ...finalParams, ...page, ...sizePage.value } })
 }
 
 
@@ -218,13 +188,13 @@ function getFilterActiveParamsByRouteQuery() {
     const activeParams = { ...route.query }
     const params = new Map<string, (string)[]>()
 
-    for (const key in activeParams) {
-        const value = activeParams[key]
-        const attr = (value as string).split(':')
+    Object.entries(activeParams).forEach(_ => {
+        const [key,value] = _ as unknown as string[]
+        const attr = value.split(':')
         const _key = `${key}${attr.length > 1 ? ('.' + attr[0]) : ''}`
         const _value = (attr.length > 1 ? attr.slice(1): attr).join(':').split(',').map(_ => _.split('__').join(' '))
         params.set(_key, _value)
-    }
+    })
 
     return params
 }

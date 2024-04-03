@@ -12,14 +12,18 @@ export default (selectWatchKey: 'id'|'value' = 'value') => {
         let nowActiveList: CategorDataItem[] | null = CATEGOR_DATA.value
         const selectList = []
 
-        for (let i = 0, l = activeId.value.length; i < l; i++) {
-            const categor = activeId.value[i];
-            selectList.push(transformDataForSelect(nowActiveList))
-            const findRes = nowActiveList.find(_ => _[selectWatchKey] === categor)!
-            if ('children' in findRes) {
-                nowActiveList = findRes.children as never
-            } else { nowActiveList = null as never }
-        }
+        activeId.value.forEach(categor => {
+          selectList.push(transformDataForSelect(nowActiveList))
+          const findRes = nowActiveList.find(_ => _[selectWatchKey] === categor)!
+          if ('children' in findRes) {
+              nowActiveList = findRes.children as never
+          } else { nowActiveList = null as never }
+        })
+
+        // for (let i = 0, l = activeId.value.length; i < l; i++) {
+        //     const categor = activeId.value[i];
+           
+        // }
         return [...selectList, nowActiveList ? transformDataForSelect(nowActiveList) : undefined]
     })
 

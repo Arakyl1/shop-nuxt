@@ -46,28 +46,27 @@ import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import FormField from "@/components/UI/FormField/FormField.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import { resetForm, searchInvalidElemInForm, getFormDataURL } from "@/utils/formHelpers";
+import { resetForm, searchInvalidElemInForm, getFormDataURL, isThisForm } from "@/utils/formHelpers";
 import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 import { default as useAuth } from '@/composables/useAuth'
 
 
 const { login: userLogin } = useAuth()
+const { addToWatchEventRestore } = useForm()
 const form = ref<HTMLFormElement | null>(null)
-
-onMounted(() => [
-    window.addEventListener('restore', onRestore, { passive: true })
-])
 
 function onRestore() {
     resetForm(form)
 }
 
 async function onClick() {
-    if (form.value instanceof HTMLFormElement && searchInvalidElemInForm(form)) {
+    if (isThisForm(form) && searchInvalidElemInForm(form)) {
         const body = getFormDataURL(form)
         await userLogin(body)
     }
 }
+
+addToWatchEventRestore(onRestore)
 
 
 </script>

@@ -19,4 +19,7 @@ export const SERVER_RESPONSE_CONTENT = {
     COMMENT_CREATE_SUCCESS: 'Ваш отзыв добавлен',
     // PRODUCT MESSAGE
     PRODUCT_CREATE_SUCCESS: 'Товар добавлен',
+    // TOOLTIP
+    TOOLTIP_CREATE_SUCCESS: 'Подсказка создана',
+    TOOLTIP_CREATE_ERROR: 'Возникла ошибка при создание подсказки',
 }

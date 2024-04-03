@@ -14,8 +14,17 @@ export const PAGE_META = {
     CONTACT: {
         TITLE: "Контакты"
     },
-    ADD: {
+    ADMIN: {
+        TITLE: "Админ"
+    },
+    ADMIN__CREATE_PRODUCT: {
         TITLE: "Добавить товар"
+    },
+    ADMIN__TOOLTIP: {
+        TITLE: 'Управление подсказками'
+    },
+    ADMIN__TOOLTIP__CREATE: {
+        TITLE: 'Создать подсказку'
     },
     USER_MAIN: {
         TITLE: 'Личные данные',

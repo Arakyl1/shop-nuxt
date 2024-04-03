@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { CookieKey, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
+import { CookieKey, Enumerable, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
 import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
 import { RouteMeta } from "vue-router";
 
@@ -35,17 +35,24 @@ export function checkDate(date:string, pastDate: number =  60480000000): boolean
    return new Date(date).getTime() > (Date.now() - pastDate)
 }
 
-
+// UncheckedCreateInput
 
 type Model = {
     User: Prisma.UserUncheckedCreateInput;
     RefrechToken: Prisma.RefrechTokenUncheckedCreateInput;
     ProductCard: Prisma.ProductCardUncheckedCreateInput;
+    Attribute: Prisma.AttributeUncheckedCreateInput;
+    Image: Prisma.ImageUncheckedCreateInput;
     Comment: Prisma.CommentUncheckedCreateInput;
     Characteristic: Prisma.CharacteristicUncheckedCreateInput;
     CharacteristicItem: Prisma.CharacteristicItemCreateInput;
-    Image: Prisma.ImageUncheckedCreateInput;
-    Attribute: Prisma.AttributeUncheckedCreateInput
+    Basket: Prisma.BasketUncheckedCreateInput;
+    BasketItem: Prisma.BasketItemUncheckedCreateInput;
+    Favorite: Prisma.UserFavoriteProductUncheckedCreateInput;
+    FavoriteItem: Prisma.UserFavoriteProductItemUncheckedCreateInput;
+    MainSlider: Prisma.MainSliderUncheckedCreateInput;
+    MainSliderItem: Prisma.MainSliderItemUncheckedCreateInput;
+    Tooltip: Prisma.TooltipUncheckedCreateInput;
 }
 type f = Prisma.ModelName
 type g = { [P in f]: Model[P] }
@@ -127,3 +134,8 @@ export const getKeyCookie = (k: CookieKey) => k
 
 export const isClient = () => process.client
 export const isServer = () => process.server
+
+export function hasProperty<T extends { [k: PropertyKey]: any }>(odj: T, key: Enumerable<string>): boolean {
+    const listKey = Object.keys(odj)
+    return Array.isArray(key) ? !key.find(_ => !hasProperty(odj, _)) : listKey.includes(key)
+}

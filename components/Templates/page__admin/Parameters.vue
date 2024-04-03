@@ -2,17 +2,16 @@
   <Card :appearance="'gray'" :container="'xl'">
     <Grid :container="'xs'" class="gap-8">
       <Group :tag="'fieldset'" class="grow gap-6">
-        <Title :tag="'h3'" :text="common.TITLE_DESCRIPTION"/>
+        <Title :tag="'h3'" :text="common?.TITLE_DESCRIPTION"/>
         <div class="decor-line"></div>
-        <textarea
+        <Textarea
+        class="h-40"
+        :mode="'secondary'"
         :name="modelProp('ProductCard', 'description')"
-        autocapitalize="words" ref="textarea"
-        class="bg-white p-6 w-full"
-        :class="className['textarea']"
-        :placeholder="commonInput.PRODUCT_CREATE_DESCRIPTION_TEXTAREA.PLACEHOLDER"></textarea>
+        :placeholder="commonInput.PRODUCT_CREATE_DESCRIPTION_TEXTAREA.PLACEHOLDER"/>
       </Group>
       <Group :tag="'fieldset'" class="grow gap-6">
-        <Title :tag="'h3'" :text="common.TITLE_ADDITIONAL_OPTION"/>
+        <Title :tag="'h3'" :text="common?.TITLE_ADDITIONAL_OPTION"/>
         <div class="decor-line"></div>
         <Flex  v-if="otherData" class="gap-6 flex-wrap">
           <Checkbox v-for="item in otherData" :key="item.value"
@@ -36,10 +35,11 @@ import Grid from "@/components/UI/Grid/Grid.vue";
 import Title from "@/components/UI/Title/Title.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Checkbox from "@/components/UI/Checkbox/Checkbox.vue";
+import Textarea from "@/components/UI/Textarea/Textarea.vue";
 import { INPUT_CONTENT as commonInput, PAGE_ADD as common } from "@/common/C";
 
 const randomNum = ref(1)
-const className = useCssModule()
+const { addToWatchEventRestore } = useForm()
 const otherData = ref()
 
 await useFetch('/api/attridute/get', {
@@ -54,14 +54,7 @@ await useFetch('/api/attridute/get', {
     }
 })
 
-
-onMounted(() => {
-  window.addEventListener('restore', onRestore)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('restore', onRestore)
-})
+addToWatchEventRestore(onRestore)
 
 function onRestore() {
   nextTick(() => { randomNum.value = ++randomNum.value })
@@ -70,20 +63,6 @@ function onRestore() {
 function checkRandomNum() {
   return Math.random() > 0.35
 }
-// style
+
 </script>
 
-
-<style lang="css" module>
-/* purgecss ignore */
-.textarea {
-  height: 20rem;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--rounded-xl);
-  resize: vertical;
-  font-size: var(--text-md);
-}
-.textarea:focus-visible {
-  outline: none;
-}
-</style>

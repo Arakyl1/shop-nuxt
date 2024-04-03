@@ -44,7 +44,8 @@ import Input from "@/components/UI/Input/Input.vue";
 import Password from "@/components/UI/Input/Password.vue";
 import Button from "@/components/UI/Button/Button.vue";
 import Card from "@/components/UI/Card/Card.vue";
-import { resetForm, searchInvalidElemInForm } from "@/utils/formHelpers";
+import { resetForm, searchInvalidElemInForm, searchMissingParamsInFormDataURl, getFormDataURL } from "@/utils/formHelpers";
+// import { hasProperty } from "@/utils/other";
 import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
 import { default as useAuth } from '@/composables/useAuth'
 
@@ -55,29 +56,19 @@ definePageMeta({
 const { login: userLogin } = useAuth()
 const form = ref<HTMLFormElement | null>(null)
 const className = useCssModule()
+const { addToWatchEventRestore } = useForm()
 
-onMounted(() => [
-    window.addEventListener('restore', onRestore, { passive: true })
-])
+addToWatchEventRestore(onRestore)
 
 function onRestore() {
     resetForm(form)
 }
 
 async function onClick() {
-    if (!form.value) return
-
-    const formData = new FormData(form.value)
-    const loginUserData: { [key:string]: any }  = {}
+    const formData = getFormDataURL(form)
+    if (!formData || !searchInvalidElemInForm(form) || searchMissingParamsInFormDataURl(formData, ['username','password'])) return
     
-    for (const [key, value] of formData) {
-        if (['username','password'].includes(key)) {
-            loginUserData[key] = value
-        }
-    }
-    if (searchInvalidElemInForm(form) && !('username' in loginUserData) && !('password' in loginUserData)) return
-
-    await userLogin(loginUserData as { username: string, password: string })  
+    await userLogin(formData)  
 }
 
 </script>

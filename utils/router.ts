@@ -23,6 +23,10 @@ export const ROOTER = {
     19: { title: 'Уведомления', href: '/user' },
     20: { title: 'Отзывы', href: '/user/reviews' },
     21: { title: 'Вопросы', href: '/user' },
+    22: { title: 'Админ', href: '/admin' },
+    23: { title: 'Создать товар', href: '/admin/create_product' },
+    24: { title: 'Управление подсказками', href: '/admin/tooltip' },
+    25: { title: 'Создать подсказку', href: '/admin/tooltip/create' },
 }
 
 export const FOOTER_ROUTER = [
@@ -41,6 +45,7 @@ export const FOOTER_ROUTER = [
         title: 'Служба поддержки',
         links: [
             ROOTER[17],
+            ROOTER[22],
         ]
     },
     {
@@ -69,4 +74,13 @@ export const MODAL_MENU_USER = [
 export const PAGE_USER = [
     ROOTER[15],ROOTER[16],ROOTER[19],ROOTER[18],
     ROOTER[20],ROOTER[21],ROOTER[14],
+]
+
+
+export const PAGE_ADMIN = [
+    ROOTER[22],ROOTER[23],ROOTER[24],
+]
+
+export const PAGE_ADMIN_TOOLTIP = [
+    ROOTER[25]
 ]

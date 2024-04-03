@@ -8,16 +8,11 @@ export function isThisComponent(target, instanse) {
 export function watchEvent(key, instanse, fun) {
     if (!key && !instanse && !fun) return null
     return ({ target }) => {
-        if (target instanceof Element) {
-            const _target = target.closest(`[${key}]`)
-            if (_target) {
-                if (!isThisComponent(_target, unref(instanse))) {
-                    fun()
-                }
-            } else {
-                fun()
-            }
-        }
+        if (!(target instanceof Element)) return null
+        const _target = target.closest(`[${key}]`)
+        if (!_target) return fun()
+
+        if (!isThisComponent(_target, unref(instanse))) return fun()
     }
 }
 

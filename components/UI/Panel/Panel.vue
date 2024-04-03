@@ -11,7 +11,8 @@ const props = defineProps({
         type: String,
         validator(value) {
             return ['view', 'primary', 'card', 'none'].includes(value)
-        }
+        },
+        default: () => 'primary'
     }
 })
 

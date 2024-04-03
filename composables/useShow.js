@@ -70,8 +70,7 @@ export default (props, watchFun) => {
     }
     
     function onHover(e) {
-        if (!props.triggers.includes('hover')) return
-        open()
+        if (props.triggers.includes('hover')) open()   
     }
     
     function onContextMenu(e) {
@@ -81,20 +80,15 @@ export default (props, watchFun) => {
     }
     
     function onFocus() {
-        if (!props.triggers.includes('focus')) return
-        open()
+        if (props.triggers.includes('focus')) open()
     }
     
     function watchElements(event) {
-        if (isActive.value && watchFun) {
-            watchFun(event)
-        }
+        if (isActive.value && watchFun) watchFun(event)
     }
 
     function onResize() {
-        if (isActive.value) {
-            close()
-        }
+        if (isActive.value) close()
     }
 
     return { isActive, timer, open, close, onClick, onHover, onContextMenu, onFocus }

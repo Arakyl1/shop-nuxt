@@ -121,7 +121,6 @@ import { searchInvalidElemInForm, getFormDataURL, setValueInput } from '@/utils/
 
 const { logout: _logout } = useAuth()
 const form = ref<HTMLFormElement | null>(null)
-const formValid = ref(false)
 const storeUser = _user()
 const { data } = storeToRefs(storeUser)
 const className = useCssModule()
@@ -144,19 +143,17 @@ const userInfo = computed(() => {
     return userInfo
 })
 
+onMounted(() => _setValueInput())
 
-
-watch(() => userInfo.value, () => setValueInput(form, userInfo.value) )
+watch(() => userInfo.value, () => _setValueInput())
 
 
 async function onClick() {
-    if(form.value instanceof HTMLFormElement && searchInvalidElemInForm(form)) {
-        const body = getFormDataURL(form)
-        if (!data.value) return
-
+    if(searchInvalidElemInForm(form)) {
+        // if (!data.value) return
         await useFetch('/api/user/update', {
             method: 'POST',
-            body,
+            body: getFormDataURL(form),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -165,6 +162,10 @@ async function onClick() {
     }
 }
 
+
+function _setValueInput() {
+    setValueInput(form, userInfo.value)
+}
 </script>
 
 <style lang="css" module>
