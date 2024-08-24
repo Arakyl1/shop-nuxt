@@ -1,0 +1,303 @@
+@import './variables';
+
+.relative {
+    position: relative;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.-scale-100 {
+    transform: scale(-1);
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-full {
+    flex: 1;
+}
+
+@each $name, $value in $justify-content {
+    .justify-#{$name} {
+        justify-content: $value;
+    }
+}
+
+@each $name, $value in $align-items {
+    .align-#{$name} {
+        align-items: $value;
+    }
+}
+
+@each $value in $flex-direction {
+    .flex-#{$value} {
+        flex-direction: #{$value};
+    }
+}
+
+@each $name, $value in $justify-items {
+    .items-#{$name} {
+        justify-self: $value;
+    }
+
+}
+
+// width style
+.w-full {
+    width: 100%;
+}
+
+.w-1\/4 {
+    width: 25%;
+}
+
+.w-1\/2 {
+    width: 50%;
+}
+
+.w-3\/4 {
+    width: 75%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.-mt:not(em) {
+    margin-top: -1px;
+}
+
+.-mb:not(em)   {
+    margin-bottom: -1px;
+}
+
+/* stylelint-disable */
+.-mt-1:not(em):not(br) {
+    margin-top: -2px;
+}
+/* stylelint-enable */
+
+.-mb-1:not(em)   {
+    margin-bottom: -2px;
+}
+
+.-mr:not(em) {
+    margin-right: -1px;
+}
+
+.-ml:not(em)   {
+    margin-left: -1px;
+}
+
+.mt:not(em) {
+    margin-top: 1px;
+}
+
+.mb:not(em)   {
+    margin-bottom: 1px;
+}
+
+.mr:not(em) {
+    margin-right: 1px;
+}
+
+.ml:not(em)   {
+    margin-left: 1px;
+}
+
+.mt-1:not(em) {
+    margin-top: 2px;
+}
+
+.mb-1:not(em)   {
+    margin-bottom: 2px;
+}
+
+
+.mt-1\.5:not(em) {
+    margin-top: 3px;
+}
+
+.mb-1\.5:not(em)   {
+    margin-bottom: 3px;
+}
+
+.mb-20 {
+    margin-bottom: 5rem;
+}
+
+.aspect-ratio {
+    aspect-ratio: 1/1;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.not-allowed[data-button-id] {
+    cursor: not-allowed;
+}
+
+@each $name, $value in $commonSize {
+    .gap-#{$name} {
+        gap: calc(4px * $value);
+    }
+    .h-#{$name} {
+        height: calc(4px * $value);
+    }
+    .w-#{$name} {
+        width: calc(4px * $value);
+    }
+    .p-#{$name} {
+        padding: calc(4px * $value);
+    }
+    .py-#{$name} {
+        padding-top: calc(4px * $value);
+        padding-bottom: calc(4px * $value);
+    }
+    .px-#{$name} {
+        padding-right: calc(4px * $value);
+        padding-left: calc(4px * $value);
+    }
+}
+
+.gap-2:not(em) {
+   gap: 8px;
+}
+
+// border style
+@each $name, $size in $borderRadius {
+    .rounded-#{$name} {
+        border-radius: var(--rounded-#{$name});
+    }
+}
+
+
+// Color style
+@each $name, $value in $color {
+    .color-#{$name} {
+        color: var(--#{$name});
+    }
+    .bg-#{$name} {
+        background-color: var(--#{$name});
+    }
+    .stroke-#{$name} {
+        stroke: var(--#{$name});
+    }
+}
+
+.color-inherit {
+    color: inherit;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.text-medium {
+    font-weight: 500;
+}
+
+
+
+.text-center {
+    text-align: center;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.text-nowrap {
+    text-wrap: nowrap;
+}
+
+/* stylelint-disable */
+.line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+/* stylelint-enable */
+
+.scrollbar {
+
+    transition: all cubic-bezier(0.333, 0.5, 0.65, 1) 0.6s;
+    -webkit-touch-callout: none;
+  }
+
+  .scrollbar.ver {
+    overflow: hidden scroll;
+  }
+  
+  .scrollbar.hor {
+    overflow: scroll hidden;
+  }
+  
+  // @-moz-document url-prefix() {
+  //     .scrollbar-v1{
+  //         padding-right: 6px;
+  //     }
+  // }
+  @supports (scrollbar-width: auto) {
+    .scrollbar {
+    //   scrollbar-width: thin;
+      scrollbar-color: var(--base-04);
+    }
+  }
+  
+  @supports selector(::-webkit-scrollbar) {
+    .scrollbar::-webkit-scrollbar {
+        width: 2px;
+    }
+   
+    .scrollbar::-webkit-scrollbar-thumb {
+        border-radius: 99px;
+        border: 1px solid transparent;
+        background-color: var(--base-04);
+    }
+  }
+
+  .hidden {
+    overflow: hidden;
+  }
+
+  *.Expand_Container_2 {
+    width: calc(100% + 2rem);
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+
+
+.text-lg {
+    font-size: var(--text-lg);
+    line-height: 28px;
+}
+
+.text-md {
+    font-size: var(--text-md);
+    line-height: 24px;
+}
+
+.text-sm {
+    font-size: var(--text-sm);
+    line-height: 22px;
+}
+
+.text-xs {
+    font-size: var(--text-xs);
+    line-height: 18px;
+}
+
+.text-2xs {
+    font-size: var(--text-2xs);
+    line-height: 18px;
+}

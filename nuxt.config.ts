@@ -4,6 +4,10 @@ export default defineNuxtConfig({
   // nitro: {
   //   preset: 'vercel-edge',
   // },
+  extends: [['./UI', { install: true }]],
+    alias: {
+        ui: '~/UI'
+    },
   modules: [
     '@nuxt/content',
     '@nuxtjs/device',

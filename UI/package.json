@@ -1,0 +1,33 @@
+{
+  "name": "my-nuxt-layer",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground", 
+    "lint": "eslint .",
+    "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "build:icons": "npx tsx utils/icon/build-icons.mts",
+    "build:scss-types": "typed-scss-modules assets/**/{ui,base}.scss --exportType default --exportTypeInterface IStyles --nameFormat none --outputFolder type/UI/CSS --watch"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "chokidar": "^3.6.0",
+    "normalize.css": "^8.0.1",
+    "postcss-html": "^1.6.0",
+    "sass": "^1.72.0",
+    "nuxt": "^3.10.3",
+    "typed-scss-modules": "^8.0.1",
+    "v-calendar": "^3.1.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
+    "node-html-parser": "^6.1.13"
+  }
+}

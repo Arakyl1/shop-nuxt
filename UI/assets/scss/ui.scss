@@ -1,0 +1,182 @@
+// button primary
+// Список всех доступных переменых для цветовой настройки кнопки
+// --bg-color - задний фон в обычном состояние
+// --color - цвет текста в обычном состояние
+// --stroke-color - цвет заливки или обводки иконки в обычном состояние
+// --bg-color-hover - задний фон в hover состояние
+// --color-hover - цвет текста в hover состояние
+// --stroke-hover - цвет заливки или обводки иконки в hover состояние
+// --bg-color-active - задний фон в active состояние
+// --color-active - цвет текста в active состояние
+// --stroke-active - цвет заливки или обводки иконки в active состояние
+// --bg-color-disabled - задний фон в disabled состояние
+// --color-disabled - цвет текста в disabled состояние
+// --stroke-disabled - цвет заливки или обводки иконки в disabled состояние
+// --icon-bg-color-disabled - задний фон в disabled состояние(эт если в кнопке есть только иконка)
+// --icon-stroke-disabled - цвет заливки или обводки иконки в disabled состояние(эт если в кнопке есть только иконка)
+// --outline - настройка outline кнопки в состояние :focus-visible
+// --transition - настройка transition кнопки и иконки
+
+// button primary
+.btM-primary {
+    --bg-color: var(--transparent);
+    --stroke-color: var(--base-05);
+    --bg-color-hover: var(--base-03);
+    --color-hover: var(--green-500);
+    --stroke-hover: var(--green-500);
+    --bg-color-active: var(--base-03);
+    --color-active: var(--green-500);
+    --stroke-active: var(--green-500);
+
+    outline-color: var(--green-100);
+}
+
+.btM-secondary {
+    --bg-color: var(--transparent);
+    --bg-color-hover: var(--green-100);
+    --bg-color-active: var(--base-02);
+    --color-hover: var(--green-500);
+}
+
+.btM-outline {
+    --border: 1px solid var(--base-04);
+    --color: var(--text-01);
+    --stroke-color: var(--green-500);
+    --border-hover: 1px solid var(--base-05);
+}
+
+.btM-tabs {
+    --color: var(--green-500);
+    --stroke-color: var(--green-300);
+    --border: none;
+
+    border-radius: 0;
+}
+
+.btM-tabs:after {
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--green-500);
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: all ease-in-out 0.25s;
+}
+
+.btM-tabs[aria-current='page'],
+.btM-tabs[aria-current='page']:hover {
+    --color: var(--text-01);
+}
+
+.btM-tabs[aria-current='page']:after,
+.btM-tabs[aria-current='page']:hover:after {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.btM-pagination {
+    --border: 1px solid var(--base-04);
+    --border-active: 1px solid var(--transparent);
+    --bg-color-active: var(--green-100);
+    --color: var(--text-01);
+    --stroke-color: var(--text-01);
+    --bg-color-disabled: --transparent;
+    --border-disabled: 1px solid var(--base-03);
+    --color-disabled: var(--text-04);
+    --stroke-disabled: var(--text-04);
+}
+
+.btM-dropdown {
+    --color: var(--text-01);
+    --stroke-color: var(--base-05);
+    --border: 1px solid var(--base-04);
+    --bg-color-active: var(--green-100);
+    --stroke-active: var(--green-500);
+    --border-active: 1px solid var(--transparent);
+}
+
+.btM-link {
+    --color: var(--green-500);
+    --stroke-color: var(--green-300);
+}
+
+.btM-icon {
+    --stroke-color: var(--base-05);
+    --stroke-hover: var(--green-500);
+}
+
+.btM-sort-bt {
+    font-weight: 500;
+
+    --color: var(--text-03);
+    --stroke-color: var(--text-03);
+    --color-active: var(--text-01);
+    --stroke-active: var(--text-01);
+}
+
+
+/* Список всех доступных переменых для цветовой настройки input 
+--bg-color - задний фон в обычном состояние
+--padding - величина полей
+--border - стиль обводки
+--border-rounded - величина скругления обводки
+--padding-with-icon - величина отступа справа при установленой иконке
+--padding-input - величина полей для input
+--color - цвет текста в обычном состояние
+--color-placeholder - цвет текста (placeholder)
+--stroke-color - цвет обводки иконки в обычном состояние
+--border-hover - цвет обводки в hover состояние
+--transition - настройка transition input и иконки
+--color-readonly - цвет текста при статусе readonly
+--bg-color-readonly - цвет заднего фона при статусе readonly
+--stroke-readonly - цвет иконки при статусе readonly
+--border-readonly - цвет обводки при статусе readonly
+--focus-border - цвет обводки при статусе focus
+*/
+
+
+.input-primary {
+    --bg-color: var(--base-01);
+    --padding: 0 7px 0 11px;
+    --border: 1px solid var(--base-04);
+    --color: var(--text-01);
+    --stroke-color: var(--text-04);
+    --border-hover: var(--base-05);
+    --stroke-hover: var(--text-03);
+    --padding-with-icon: 6px;
+    --focus-stroke: var(--text-03);
+}
+
+.input-secondary {
+    justify-content: center;
+
+    --bg-color: var(--base-01);
+    --padding: 0.375rem;
+    --border: 1px solid var(--base-04);
+    --color: var(--text-01);
+    --stroke-color: var(--text-04);
+    --border-hover: var(--green-500);
+}
+
+.input-secondary input:not([type='number']) {
+    min-width: 0;
+    text-align: center;
+}
+
+.input-outline {
+    --bg-color: var(--base-01);
+    --padding: 0 7px 0 11px;
+    --border: 1px solid var(--base-04);
+    --color: var(--text-01);
+    --stroke-color: var(--base-05);
+    --border-hover: var(--base-05);
+    --padding-with-icon: 6px;
+}
+
+.input-black {
+    --bg-color: var(--base-01); 
+}
