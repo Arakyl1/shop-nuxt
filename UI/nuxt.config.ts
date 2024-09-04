@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: ["@nuxtjs/svg-sprite"],
-  css: ['normalize.css/normalize.css',"v-calendar/style.css", join(currentDir, "./assets/scss/main.scss")],
+  css: ["v-calendar/style.css", join(currentDir, "./assets/scss/main.scss")],
   //   css: ["./assets/css/main.css"],
   // alias: { '@': resolve('./') },
 
