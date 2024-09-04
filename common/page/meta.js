@@ -1,4 +1,4 @@
-export const PAGE_META = {
+const PAGE_META = {
     MAIN: {
         TITLE: 'Главная страница'
     },
@@ -34,3 +34,5 @@ export const PAGE_META = {
         TITLE: 'По этому адресу нет страницы'
     }
 }
+
+export default { PAGE_META };

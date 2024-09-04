@@ -4,30 +4,36 @@
   "version": "0.0.1",
   "main": "./nuxt.config.ts",
   "scripts": {
+    "init": "npm i",
+    "dev:type": "npm-run-all --parallel build:icons build:scss-types",
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
     "build": "nuxt build .playground",
     "generate": "nuxt generate .playground",
-    "preview": "nuxt preview .playground", 
+    "preview": "nuxt preview .playground",
     "lint": "eslint .",
     "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "build:icons": "npx tsx utils/icon/build-icons.mts",
-    "build:scss-types": "typed-scss-modules assets/**/{ui,base}.scss --exportType default --exportTypeInterface IStyles --nameFormat none --outputFolder type/UI/CSS --watch"
+    "build:scss-types": "typed-scss-modules assets/**/{ui,lib,variables}.scss --exportType default --exportTypeInterface IStyles --nameFormat none --outputFolder type/CSS --watch"
   },
   "dependencies": {
+    "@nuxtjs/svg-sprite": "^1.0.2",
     "@popperjs/core": "^2.11.8",
     "chokidar": "^3.6.0",
     "normalize.css": "^8.0.1",
+    "npm-run-all": "^4.1.5",
+    "nuxt": "^3.10.3",
     "postcss-html": "^1.6.0",
     "sass": "^1.72.0",
-    "nuxt": "^3.10.3",
     "typed-scss-modules": "^8.0.1",
     "v-calendar": "^3.1.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
+    "autoprefixer": "^10.4.20",
     "fs-extra": "^11.2.0",
     "glob": "^11.0.0",
-    "node-html-parser": "^6.1.13"
+    "node-html-parser": "^6.1.13",
+    "postcss": "^8.4.41"
   }
 }

@@ -1,8 +1,8 @@
 import { Attribute, Prisma, Role, User } from "@prisma/client";
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
-import { SERVER_RESPONSE_CONTENT } from "@/common/C";
 import { DefaultArgs } from "@prisma/client/runtime/library";
-export * from "./UI"
+// export * from "./UI"
+export * from "../UI/type/index"
 // import { UserBuyer } from "server/api/auth/user.get";
 
 
@@ -11,7 +11,7 @@ export type NAMEAPP = 'MARKET_5kv'
 export type CookieKey = 'refrech_token' | 'anonimSessionKey' | 'sessionKey'
 export type KeyAsyncData = 'getFullInfoProduct'
 export type PP = { title: string, name: string, value: boolean | string | number }
-export type GG = { id: number, art: string, name: string }
+export type GG = { id: number, art: string, name: string };
 
 
 export type unknownObj = { [prop: string]: any }
@@ -359,7 +359,7 @@ export interface UserLocationDate extends Record<UserLocationDateKey, string> { 
 
 
 // SERVER_RESPONSE_CONTENT_KEY
-export type SERVER_RESPONSE_CONTENT_KEY = keyof typeof SERVER_RESPONSE_CONTENT
+export type SERVER_RESPONSE_CONTENT_KEY = keyof typeof Common['SERVER_RESPONSE_CONTENT']
 
 
 
@@ -369,13 +369,13 @@ export type ICON_ID_NAME = 'add-list' |'add-plus'|'arrow-right'|'calendar'|'icon
 
 
 
-export type CSS_BORDER_RADIUS = 'full'|'xl'|'lg'|'base';
-export type CSS_FONT_SIZE = '2xl'|'xl'|'lg'|'md'|'base'|'sm'|'xs';
-export type CSS_JUSTIFY_ITEMS = 'start'|'end'|'center'|'stretch';
-export type CSS_ALIGN_CONTENT = 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch';
-export type CSS_JUSTIFY_CONTENT = |'center'|'start'|'end'|'left'|'right'|'between'|'around'|'evenly'|'baseline';
-export type CSS_ALIGN_ITEMS = 'center'|'flex-start'|'flex-end';
-export type CSS_FLEX_DIRECTION = 'row'|'row-reverse'|'column'|'column-reverse';
+// export type CSS_BORDER_RADIUS = 'full'|'xl'|'lg'|'base';
+// export type CSS_FONT_SIZE = '2xl'|'xl'|'lg'|'md'|'base'|'sm'|'xs';
+// export type CSS_JUSTIFY_ITEMS = 'start'|'end'|'center'|'stretch';
+// export type CSS_ALIGN_CONTENT = 'normal'|'center'|'start'|'end'|'between'|'around'|'evenly'|'baseline'|'stretch';
+// export type CSS_JUSTIFY_CONTENT = |'center'|'start'|'end'|'left'|'right'|'between'|'around'|'evenly'|'baseline';
+// export type CSS_ALIGN_ITEMS = 'center'|'flex-start'|'flex-end';
+// export type CSS_FLEX_DIRECTION = 'row'|'row-reverse'|'column'|'column-reverse';
 
 
 

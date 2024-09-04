@@ -1,5 +1,6 @@
 <template>
-    <Panel :mode="'primary'" class="align-center">
+    <div></div>
+    <!-- <Panel :mode="'primary'" class="align-center">
         <Card
         :container="'3xl'"
         :appearance="'white'"
@@ -33,20 +34,20 @@
             </form>
             <slot></slot>
         </Card>
-    </Panel>
+    </Panel> -->
 </template>
 
 <script setup lang="ts">
-import Panel from "@/components/UI/Panel/Panel.vue";
-import Title from "@/components/UI/Title/Title.vue";
-import Group from "@/components/UI/Group/Group.vue";
-import Input from "@/components/UI/Input/Input.vue";
-import Password from "@/components/UI/Input/Password.vue";
-import Button from "@/components/UI/Button/Button.vue";
-import Card from "@/components/UI/Card/Card.vue";
+// import Panel from "@/components/UI/Panel/Panel.vue";
+// import Title from "@/components/UI/Title/Title.vue";
+// import Group from "@/components/UI/Group/Group.vue";
+// import Input from "@/components/UI/Input/Input.vue";
+// import Password from "@/components/UI/Input/Password.vue";
+// import Button from "@/components/UI/Button/Button.vue";
+// import Card from "@/components/UI/Card/Card.vue";
 import { resetForm, searchInvalidElemInForm, searchMissingParamsInFormDataURl, getFormDataURL } from "@/utils/formHelpers";
 // import { hasProperty } from "@/utils/other";
-import { INPUT_CONTENT as common, BASE_BUTTON, MODAl_AUTH } from '@/common/C'
+import { t } from "#imports";
 import { default as useAuth } from '@/composables/useAuth'
 
 definePageMeta({
@@ -55,7 +56,6 @@ definePageMeta({
 
 const { login: userLogin } = useAuth()
 const form = ref<HTMLFormElement | null>(null)
-const className = useCssModule()
 const { addToWatchEventRestore } = useForm()
 
 addToWatchEventRestore(onRestore)

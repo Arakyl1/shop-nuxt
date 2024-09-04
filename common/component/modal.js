@@ -1,17 +1,17 @@
-import { EMPTY_CONTENT } from '../C'
-
-export const MODAL_FAVORITE = {
+const MODAL_FAVORITE = {
     TITLE: 'Ваши избранный',
-    EMPTY_CONTENT: EMPTY_CONTENT.MODAL_EMPTY_FAVORITES
+    EMPTY_CONTENT: 'У вас пока нет избранных товаров'
 }
 
-export const MODAL_BASKET = {
+const MODAL_BASKET = {
     TITLE: 'Ваша корзина',
     TOTAL_SUM: 'Общая сумма заказа: ',
-    EMPTY_CONTENT: EMPTY_CONTENT.MODAL_EMPTY_BASKET
+    EMPTY_CONTENT: 'Ваша корзина пуста'
 }
 
-export const MODAl_AUTH = {
+const MODAl_AUTH = {
     TITLE_LOGIN: 'Вход',
     TITLE_REGISTER: 'Регистрация',
 }
+
+export default { MODAl_AUTH, MODAL_BASKET, MODAL_FAVORITE };

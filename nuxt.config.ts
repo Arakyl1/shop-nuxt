@@ -5,28 +5,21 @@ export default defineNuxtConfig({
   //   preset: 'vercel-edge',
   // },
   extends: [['./UI', { install: true }]],
-    alias: {
-        ui: '~/UI'
+  modules: ['@nuxt/content',
+  '@nuxtjs/svg-sprite', // "nuxt-vercel-analytics",
+  '@nuxtjs/device', // '@nuxtjs/web-vitals',
+  'nuxt-viewport', ['@kevinmarrec/nuxt-pwa', {
+    icon: {
+      source: 'assets/logo.png'
     },
-  modules: [
-    '@nuxt/content',
-    '@nuxtjs/device',
-    // "nuxt-vercel-analytics",
-    // '@nuxtjs/web-vitals',
-    'nuxt-viewport',
-    ['@kevinmarrec/nuxt-pwa', {
-      icon: {
-        source: 'assets/logo.png'
-      },
-      meta: {
-        theme_color: '#685e6f'
+    meta: {
+      theme_color: '#685e6f'
+    }
+  }], ['@pinia/nuxt', {
+          autoImports: ['defineStore', 'storeToRefs'],
       }
-    }],
-    ['@pinia/nuxt', {
-            autoImports: ['defineStore', 'storeToRefs'],
-        }
-    ],
-  ],
+  ]],
+  components: [{ path: "./UI/components", prefix: "UIT" }],
   runtimeConfig: {
     cloudinaryName: process.env.CLOUDINARY__NAME,
     cloudinaryApiKey: process.env.CLOUDINARY__KEY,
@@ -69,9 +62,10 @@ export default defineNuxtConfig({
   postcss: {
     'plugins': {
       "autoprefixer": {},
-      "cssnano": {}
+      tailwindcss: {},
     },
   },
+
   app: {
     pageTransition: { name: 'blur', mode: 'out-in' },
   },
@@ -95,6 +89,7 @@ export default defineNuxtConfig({
   },
   spaLoadingTemplate: false,
   devtools: { enabled: true },
+  ignore: ['./pages/admin', './pages/catalog', './pages/user']
   // 'purgecss': {
   //   enabled: true,
   //   paths: [

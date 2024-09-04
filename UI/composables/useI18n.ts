@@ -1,5 +1,4 @@
-// import { default as Common } from '@/common/_C';
-import C_Ru from '@/common/ru.json';
+import Common from '@/common/C_ru.js';
 import { ref } from '#imports';
 
 type DotPrefix<T extends string> = T extends '' ? '' : `.${T}`;
@@ -10,7 +9,10 @@ type DotNestedKeys<T> = (
     ? Extract<D, string>
     : never;
 
+type KEY_TEXT = DotNestedKeys<typeof Common>;
+
 type KEY_LOCALE = 'ru' | 'en';
+
 
 const locales = [
     {
@@ -23,14 +25,12 @@ const locales = [
     }
 ];
 
-type KEY_TEXT = DotNestedKeys<typeof C_Ru>;
 
-const locale = ref(locales[0]);
-// let common = null;
 
-// import(`@/common/${locale.value.code}.json`).then((_) => {
-//     common = _;
-// });
+const locale = ref();
+let common: null | KEY_TEXT = null;
+
+
 // async function loadCommon() {
 //     common.value = await import(`@/common/${locale.value.code}.json`);
 //     console.log(common.value);
@@ -44,23 +44,44 @@ const locale = ref(locales[0]);
 //     }
 // );
 
+function importLocale(locale: string) {
+    return import(`../../common/C_${locale}.js`)
+}
+
+async function setCommon() {
+    const res = await importLocale(locale.value.code)
+    common = res.default || {}
+}
+
 export const t = useI18n().t;
 
 export function useI18n() {
-    function initI18n(code: KEY_LOCALE) {
-        setLocale(code);
+
+    function initI18n() {
+        let _locale;
+        // if (window) {
+        //     console.log(localStorage.getItem('locale') )
+        // }
+        setLocale(_locale || null);
     }
 
-    async function setLocale(code: KEY_LOCALE) {
-        if (locale.value.code !== code) {
-            locale.value = locales.find((l) => l.code === code) || locales[0];
+    function setLocale(code: KEY_LOCALE | null) {
+
+        if (!locale.value || locale.value.code !== code) {
+            const newLocale = locales.find((l) => l.code === code) || locales[0];
+            locale.value = newLocale;
+
+            // if (window) {
+            //     localStorage.setItem('locale', JSON.stringify(newLocale));
+            // }
         }
     }
 
-    function t(msg: KEY_TEXT, param = null) {
-        let val = msg.split('.').reduce((val, part) => val[part], C_Ru);
-        if (param) {
-            val = val.replace('{0}', param);
+    function t(msg: KEY_TEXT, param: { replace: string, declination?: number } | null = null) {
+        if (!common) return;
+        let val = msg.split('.').reduce((val, part) => val?.[part] || '', common);
+        if (param?.replace) {
+            val = (val as string).replace('{0}', param.replace);
         }
         return val as unknown as string;
     }
@@ -73,3 +94,7 @@ export function useI18n() {
         setLocale
     };
 }
+
+useI18n().initI18n();
+
+setCommon()

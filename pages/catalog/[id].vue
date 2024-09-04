@@ -1,5 +1,6 @@
 <template>
-    <Panel :mode="'primary'">
+    <div></div>
+    <!-- <Panel :mode="'primary'">
         <template v-if="data">
             <Main :data="data" class="none /md:block" />
             <MainMobile :data="data" class="/md:hidden" />
@@ -12,21 +13,20 @@
             :params="{ 'discount': 'gte:1', limit: 24  }"
             :title="common.CAROUSEL_TITLE"/>
         </template>
-    </Panel>
+    </Panel> -->
 </template>
 
 <script setup lang="ts">
 import { ProductCardFull } from '~~/type/intex'
-import Carousel from '@/components/Templates/Carousel/Product.vue';
-import Main from '@/components/Templates/page__product/Main.vue';
-import MainMobile from '@/components/Templates/page__product/MainMobile.vue';
-import Description from '@/components/Templates/page__product/Description.vue';
-import Characteristic from '@/components/Templates/page__product/Characteristic.vue';
-import Reviews from '@/components/Templates/page__product/Reviews.vue';
-import Panel from "@/components/UI/Panel/Panel.vue"
-import { PAGE_CATALOG_ID as common, PAGE_META as META } from "@/common/C";
+// import Carousel from '@/components/Templates/Carousel/Product.vue';
+// import Main from '@/components/Templates/page__product/Main.vue';
+// import MainMobile from '@/components/Templates/page__product/MainMobile.vue';
+// import Description from '@/components/Templates/page__product/Description.vue';
+// import Characteristic from '@/components/Templates/page__product/Characteristic.vue';
+// import Reviews from '@/components/Templates/page__product/Reviews.vue';
+// import Panel from "@/components/UI/Panel/Panel.vue"
+import { t } from "#imports";
 
-const className = useCssModule()
 const route = useRoute()
 const data = ref<null | ProductCardFull>()
 
@@ -44,7 +44,7 @@ onBeforeMount(async() => {
 })
 
 useHead({
-    titleTemplate: () => data.value ? `${data.value?.name} ${data.value?.art}` : META.CATALOG_ID.TITLE
+    titleTemplate: () => data.value ? `${data.value?.name} ${data.value?.art}` : t('PAGE_META.CATALOG_ID.TITLE') || ''
 })
 
 </script>

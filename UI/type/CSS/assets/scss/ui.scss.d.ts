@@ -1,0 +1,53 @@
+export type IStyles = {
+  'btM_black': string;
+  'btM_black-icon': string;
+  'btM_blue': string;
+  'btM_blue-icon': string;
+  'btM_gray': string;
+  'btM_gray-icon': string;
+  'btM_green': string;
+  'btM_green-icon': string;
+  'btM_link': string;
+  'btM_none': string;
+  'btM_outline': string;
+  'btM_primary': string;
+  'btM_red': string;
+  'btM_red-icon': string;
+  'btM_white': string;
+  'btM_white-icon': string;
+  'btM_yellow': string;
+  'btM_yellow-icon': string;
+  'Ca_blue-hover': string;
+  'Ca_gray': string;
+  'Ca_outline': string;
+  'Ca_primary': string;
+  'Ca_warning': string;
+  'Ca_white': string;
+  'Co_lg': string;
+  'Co_sm': string;
+  'Co_xs': string;
+  'CoG_lg': string;
+  'CoG_sm': string;
+  'drM_outline': string;
+  'drM_primary': string;
+  'GS_lg': string;
+  'GS_xl': string;
+  'GS_xs': string;
+  'InpM_outline': string;
+  'InpM_primary': string;
+  'InpM_secondary': string;
+  'MaM_dark': string;
+  'Pa_primary': string;
+  'Pa_view': string;
+  'ProM_black': string;
+  'RadPrM_blue': string;
+  'RadSecM_blue': string;
+  'SkeM_blue': string;
+  'SkeM_gray': string;
+};
+
+export type ClassNames = keyof IStyles;
+
+declare const styles: IStyles;
+
+export default styles;

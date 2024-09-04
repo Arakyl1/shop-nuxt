@@ -1,4 +1,4 @@
-export const BASE_BUTTON = {
+const BASE_BUTTON = {
     BASKET_ADD: 'В корзину',
     REVIEWS_ADD: 'Оставить отзыв',
     FILTER_RESET: 'Сбросить',
@@ -26,3 +26,5 @@ export const BASE_BUTTON = {
     PAGE_ERROR_BUTTON: 'Вернуться на главную страницу',
     TOOLTIP_CREATE: 'Создать'
 }
+
+export default { BASE_BUTTON };

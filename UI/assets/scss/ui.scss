@@ -1,4 +1,4 @@
-// button primary
+// Button mode variant !!!Prefix "btM_"
 // Список всех доступных переменых для цветовой настройки кнопки
 // --bg-color - задний фон в обычном состояние
 // --color - цвет текста в обычном состояние
@@ -17,108 +17,127 @@
 // --outline - настройка outline кнопки в состояние :focus-visible
 // --transition - настройка transition кнопки и иконки
 
+
+// button link 
+.btM_link {
+    --bg-color: none;
+    --color: var(--black-500);
+    --fill-color: var(--black-500);
+    --bg-color-hover: none;
+    --color-hover: var(--blue-500)
+}
+
+// button none
+.btM_none {
+    --bg-color: none;
+    --color: var(--black-700);
+    --fill-color: var(--black-700);
+
+    --bg-color-hover: none;
+    --outline: none
+}
+
+// кнопка с обводкой
+.btM_outline {
+    border: 1px solid var(--gray-500);
+    border-radius: var(--rounded-sm);
+    --color: var(--black-500);
+    --fill-color: var(--gray-700);
+}
+
 // button primary
-.btM-primary {
-    --bg-color: var(--transparent);
-    --stroke-color: var(--base-05);
-    --bg-color-hover: var(--base-03);
-    --color-hover: var(--green-500);
-    --stroke-hover: var(--green-500);
-    --bg-color-active: var(--base-03);
-    --color-active: var(--green-500);
-    --stroke-active: var(--green-500);
-
-    outline-color: var(--green-100);
+.btM_primary {
+    box-shadow: 0px 0px 15px -2px var(--gray-500);
+    --bg-color: var(--white);
+    --color: var(--gray-700);
+    --fill-color: var(--gray-700);
+    --color-hover: var(--gray-500);
+    --fill-hover: var(--gray-500);
+    --bg-color-active: var(--blue-500);
+    --outline: none;
 }
 
-.btM-secondary {
-    --bg-color: var(--transparent);
-    --bg-color-hover: var(--green-100);
-    --bg-color-active: var(--base-02);
-    --color-hover: var(--green-500);
+.btM_black {
+    --bg-color: var(--black-700);
+    --bg-color-hover: var(--black-100);
 }
 
-.btM-outline {
-    --border: 1px solid var(--base-04);
-    --color: var(--text-01);
-    --stroke-color: var(--green-500);
-    --border-hover: 1px solid var(--base-05);
+.btM_white {
+    --bg-color: var(--white);
+    --color: var(--black-700);
+    --transition: var(--transition--xs);
+    --fill-color: var(--black-700);
+    --bg-color-hover: var(--gray-100);
 }
 
-.btM-tabs {
-    --color: var(--green-500);
-    --stroke-color: var(--green-300);
-    --border: none;
-
-    border-radius: 0;
+.btM_gray {
+    --bg-color: var(--gray-200);
+    --color: var(--black-700);
+    --fill-color: var(--black-700);
+    --bg-color-hover: var(--black-100);
+}
+.btM_blue {
+    --color: var(--white);
+    --bg-color: var(--blue-500);
+    --bg-color-hover: var(--blue-300);
+    --bg-color-active: var(--yellow-500);
+    --stroke-color: var(--white);
 }
 
-.btM-tabs:after {
-    content: ' ';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--green-500);
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: all ease-in-out 0.25s;
+.btM_red {
+    --bg-color: var(--red-500);
+    --bg-color-hover: var(--red-300);
 }
 
-.btM-tabs[aria-current='page'],
-.btM-tabs[aria-current='page']:hover {
-    --color: var(--text-01);
+.btM_yellow {
+    --bg-color: var(--yellow-500);
+    --bg-color-hover: var(--yellow-300);
 }
 
-.btM-tabs[aria-current='page']:after,
-.btM-tabs[aria-current='page']:hover:after {
-    opacity: 1;
-    transform: scaleY(1);
+.btM_green {
+    --bg-color: var(--green-500);
+    --bg-color-hover: var(--green-300);
 }
 
-.btM-pagination {
-    --border: 1px solid var(--base-04);
-    --border-active: 1px solid var(--transparent);
-    --bg-color-active: var(--green-100);
-    --color: var(--text-01);
-    --stroke-color: var(--text-01);
-    --bg-color-disabled: --transparent;
-    --border-disabled: 1px solid var(--base-03);
-    --color-disabled: var(--text-04);
-    --stroke-disabled: var(--text-04);
+.btM_white-icon {
+    --fill-color: var(--white);
+    --fill-hover: var(--yellow-100);
 }
 
-.btM-dropdown {
-    --color: var(--text-01);
-    --stroke-color: var(--base-05);
-    --border: 1px solid var(--base-04);
-    --bg-color-active: var(--green-100);
-    --stroke-active: var(--green-500);
-    --border-active: 1px solid var(--transparent);
+.btM_black-icon {
+    --fill-color: var(--black-300);
+    --fill-hover: var(--blue-500);
 }
 
-.btM-link {
-    --color: var(--green-500);
-    --stroke-color: var(--green-300);
+.btM_gray-icon {
+    --color: var(--gray-700);
+    --stroke-color: var(--gray-300);
+    --stroke-hover: var(--red-300);
+    --stroke-active: var(--red-500)
 }
 
-.btM-icon {
-    --stroke-color: var(--base-05);
-    --stroke-hover: var(--green-500);
+.btM_blue-icon {
+    --color: var(--blue-500);
+    --stroke-color: var(--blue-500);
+    --stroke-hover: var(--blue-300);
+}
+.btM_red-icon {
+    --stroke-color: var(--gray-300);
+    --stroke-hover: var(--red-300);
+    --stroke-active: var(--red-500);
+}
+.btM_yellow-icon {
+    --fill-color: var(--yellow-500);
+    --fill-hover: var(--blue-300);
 }
 
-.btM-sort-bt {
-    font-weight: 500;
-
-    --color: var(--text-03);
-    --stroke-color: var(--text-03);
-    --color-active: var(--text-01);
-    --stroke-active: var(--text-01);
+.btM_green-icon {
+    --fill-color: var(--green-500);
+    --fill-hover: var(--green-300);
 }
 
 
+// Input mode variant !!!Prefix "InpM_"
 /* Список всех доступных переменых для цветовой настройки input 
 --bg-color - задний фон в обычном состояние
 --padding - величина полей
@@ -138,8 +157,20 @@
 --focus-border - цвет обводки при статусе focus
 */
 
+.InpM_outline {
+    --bg-color: var(--white);
+    --padding: 0 7px 0 11px;
+    --border: 1px solid var(--gray-500);
+    --color: var(--gray-500);
+    --stroke-color: var(--gray-500);
+    --stroke-hover: var(--gray-300);
+    --border-hover: var(--gray-300);
+    --padding-with-icon: 6px;
+    --focus-border:  var(--blue-500);
+    --focus-stroke:  var(--black-100);
+}
 
-.input-primary {
+.InpM_primary {
     --bg-color: var(--base-01);
     --padding: 0 7px 0 11px;
     --border: 1px solid var(--base-04);
@@ -151,7 +182,7 @@
     --focus-stroke: var(--text-03);
 }
 
-.input-secondary {
+.InpM_secondary {
     justify-content: center;
 
     --bg-color: var(--base-01);
@@ -162,21 +193,227 @@
     --border-hover: var(--green-500);
 }
 
-.input-secondary input:not([type='number']) {
+.InpM_secondary input:not([type='number']) {
     min-width: 0;
     text-align: center;
 }
 
-.input-outline {
-    --bg-color: var(--base-01);
-    --padding: 0 7px 0 11px;
-    --border: 1px solid var(--base-04);
-    --color: var(--text-01);
-    --stroke-color: var(--base-05);
-    --border-hover: var(--base-05);
-    --padding-with-icon: 6px;
+
+// container for CardGrigScroll, !!!Prefix "GS_"
+
+.GS_xs {
+    grid-auto-columns: calc(100%);
 }
 
-.input-black {
-    --bg-color: var(--base-01); 
+.GS_lg {
+    grid-auto-columns: calc(100% / 4);
+    margin-right: -1rem;
+    margin-left: -1rem;
+}
+.GS_lg > li {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.GS_xl {
+    grid-auto-columns: calc(100% / 4);
+    margin-right: -1rem;
+    margin-left: -1rem;
+}
+.GS_xl > li {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .GS_lg {
+        grid-auto-columns: calc(100% / 3);
+    }
+
+    .GS_xl {
+        grid-auto-columns: calc(100% / 3);
+    }
+}
+
+@media (max-width: 768px) {
+    .GS_lg {
+        grid-auto-columns: calc(100% / 2);
+        margin-right: -0.75rem;
+        margin-left: -0.75rem;
+    }
+
+    .GS_lg > li {
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
+    }
+
+    .GS_xl {
+        grid-auto-columns: calc(100% / 3);
+        margin-right: -0.75rem;
+        margin-left: -0.75rem;
+    }
+
+    .GS_xl > li {
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .GS_lg {
+        grid-auto-columns: calc(100% / 1);
+        margin-right: -0.5rem;
+        margin-left: -0.5rem;
+    }
+
+    .GS_lg > li {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+    .GS_xl {
+        grid-auto-columns: calc(100% / 2);
+        margin-right: -0.5rem;
+        margin-left: -0.5rem;
+    }
+
+    .GS_xl > li {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+    }
+}
+
+// Component Container, !!!Prefix "Co_
+.Co_xs {
+    padding: 9px 8px;
+}
+
+.Co_sm {
+    padding: 1.125rem;
+}
+
+.Co_lg {
+    padding: 1.5rem;
+}
+
+// Component Panel, !!!Prefix "Pa_
+.Pa_primary {
+    display: flex;
+    flex-direction: column;
+    gap: 3.125rem;
+    padding: 3.125rem 0 6.25rem 0;
+}
+
+.Pa_view {
+    display: flex;
+    flex-direction: column;
+    gap: 6.25rem;
+}
+
+@media (max-width: 768px) {
+    .Pa_view {
+        gap: 5.25rem;
+    }  
+}
+
+@media (max-width: 640px) {
+    .Pa_view {
+        gap: 4.75rem;
+    }  
+}
+
+// Component Card, !!!Prefix "Ca_"
+.Ca_white {
+    background-color: var(--white);
+}
+
+.Ca_outline {
+    border: 1px solid var(--gray-700);
+    border-radius: var(--rounded-lg);
+    box-shadow: 0px 2px 3px 0px var(--gray-300);
+}
+
+.Ca_primary{
+    border-radius: var(--rounded-lg);
+    box-shadow: 0px 2px 9px 0px var(--gray-200);
+}
+.Ca_warning {
+    background: var(--invalid);
+}
+.Ca_gray{
+    background: var(--gray-100)
+}
+
+.Ca_blue-hover:hover,
+.Ca_blue-hover:focus {
+    background-color: var(--blue-30);
+}
+
+// Component Container Grid, !!!Prefix "CoG_
+.CoG_lg {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.CoG_sm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+// Component Dropdown, !!!Prefix "DrM_
+.drM_primary {
+    box-shadow: var(--box-shadow-md);
+}
+
+.drM_outline {
+    transform: translateY(calc(100% + 0.5rem));
+}
+
+// Component Select, !!!Prefix "SelM_
+// .SelM_primary {}
+
+// Component Mask mode, !!!Prefix "MaM_
+// --bg-color-mask - цвет фона маски
+.MaM_dark {
+    --bg-color-mask: var(--black-100);
+}
+
+// Component Progress mode, !!!Prefix "ProM_
+.ProM_black {
+    border-radius: 999px;
+    background-color: var(--blue-500);
+}
+
+// Component Radio primary mode, !!!Prefix "RadPrM_
+
+.RadPrM_blue {
+    --default-border: 1px solid var(--gray-300);
+    
+    --check-focus-shodow: var(--box-shadow-primary);
+    --check-hover-border: 1px solid var(--blue-500);
+
+    --check-disabled-border: 1px solid var(--gray-300);
+    --check-disabled-bg: var(--gray-200);
+
+    --check-checked-border: 4px solid var(--blue-500);
+
+    --check-checked-hover-border: 4px solid var(--blue-500);
+    --check-checked-hover-shabow: var(--box-shadow-primary);
+
+    --check-checked-disabled-border: 4px solid var(--gray-300);
+}
+
+// Component Radio secondary mode, !!!Prefix "RadSecM_
+
+.RadSecM_blue {
+    --svg-checked-stroke: var(--blue-500);
+}
+
+// Component Skeleton mode, !!!Prefix "SkeM_
+.SkeM_gray {
+    background-image: linear-gradient(var(--lin-grad-loader--deg, 135deg), var(--white), var(--gray-200), var(--white), var(--gray-200));
+    background-size: 400% 400%;
+}
+
+.SkeM_blue {
+    background-image: linear-gradient(var(--lin-grad-loader--deg, 135deg), var(--white), var(--blue-30), var(--white), var(--blue-30));
+    background-size: 400% 400%;
 }

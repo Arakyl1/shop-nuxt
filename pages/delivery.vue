@@ -1,5 +1,6 @@
 <template>
-    <Panel :mode="'primary'" class="mb-12">
+    <div></div>
+    <!-- <Panel :mode="'primary'" class="mb-12">
         <Grid :container="'xs'" class="gap-8 /md:gap-4 w-full" :class="className['body']">
             <Group class="gap-8  /md:gap-4" v-for="section,index in data"
             :key="index">
@@ -11,21 +12,19 @@
                 </Card>
             </Group>
         </Grid>
-    </Panel>
+    </Panel> -->
 </template>
 
 <script setup lang="ts">
-import Grid from "@/components/UI/Grid/Grid.vue";
-import Card from "@/components/UI/Card/Card.vue";
-import Group from "@/components/UI/Group/Group.vue";
-import Panel from "@/components/UI/Panel/Panel.vue";
-import { PAGE_META as META } from "@/common/C";
+// import Grid from "@/components/UI/Grid/Grid.vue";
+// import Card from "@/components/UI/Card/Card.vue";
+// import Group from "@/components/UI/Group/Group.vue";
+// import Panel from "@/components/UI/Panel/Panel.vue";
+import { t } from "#imports";
 
 definePageMeta({
-    title: META.DELIVERY.TITLE
+    title: t('PAGE_META.DELIVERY.TITLE')
 })
-
-const className = useCssModule()
 
 const { data } = await useAsyncData('delivery', () => queryContent('/delivery/').find(), {
     transform (res) {

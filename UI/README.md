@@ -1,3 +1,5 @@
+Стили заполполнять в файле "./assets/scss/ui.scss" для каждого комопнента есть сфой префикс. Так же для некоторых комонентов достпны список пременых для детальной настройки (Пример компонентов: Button, Input, Checkbox и т.д.)
+
 # Nuxt Layer Starter
 
 Create Nuxt extendable layer with this GitHub template.

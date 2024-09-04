@@ -1,6 +1,7 @@
 <template>
     <div>
-        <header>
+        <Button :mode="'blue'" :text="'sdfsdff'" />
+        <!-- <header>
             <Header class="/md:block none" />
             <HeaderMobile class="/md:hidden" />
         </header>
@@ -20,23 +21,24 @@
             <Alert />
             <ModalRoot />
         </ClientOnly>
-        <ContentIcon hidden="true" class="none" />
+        <ContentIcon hidden="true" class="none" /> -->
     </div>
 </template>
 
 <script setup lang="ts">
 import type { CategorDataItem } from "@/type/intex";
-import Footer from "@/components/Templates/Footer/Footer.vue";
-import Header from "@/components/Templates/Header/Header.vue";
-import HeaderMobile from "@/components/Templates/Header/mobile.vue";
-import ModalRoot from '@/components/Templates/modal/ModalRoot.vue'
-import Alert from '@/components/Templates/Alert/Alert.vue'
-import ContentIcon from '@/components/content/Icon.vue'
-import Panel from '@/components/UI/Panel/Panel.vue';
-import Flex from '@/components/UI/Flex/Flex.vue';
-import Button from '@/components/UI/Button/Button.vue';
-import { BASE_BUTTON as common, PAGE_META } from '@/common/C'
+// import { Button as UITButton } from "#components";
+// import Footer from "@/components/Templates/Footer/Footer.vue";
+// import Header from "@/components/Templates/Header/Header.vue";
+// import HeaderMobile from "@/components/Templates/Header/mobile.vue";
+// import ModalRoot from '@/components/Templates/modal/ModalRoot.vue'
+// import Alert from '@/components/Templates/Alert/Alert.vue'
+// import ContentIcon from '@/components/content/Icon.vue'
+// import Panel from '@/components/UI/Panel/Panel.vue';
+// import Flex from '@/components/UI/Flex/Flex.vue';
+// import Button from 'components/UI/Button/index.vue';
 import type { NuxtError } from '#app'
+import { t } from '#imports'
 
 const props = defineProps({
     error: Object as () => NuxtError
@@ -60,11 +62,9 @@ await useFetch('/api/attridute/get', {
 
 
 useHead({
-    titleTemplate: () => `${PAGE_META.ERROR.TITLE} | ${config.public.NAME_APP}`
+    titleTemplate: () => `${t('PAGE_META.ERROR.TITLE')} | ${config.public.NAME_APP}`
 })
 
 </script>
 
-<style lang="scss">
-@use "@/assets/css/main.scss" ;
-</style>
+<style lang="scss"></style>

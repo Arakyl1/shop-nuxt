@@ -1,32 +1,49 @@
 <template>
   <div>
-    <header>
+    <!-- <UITBlockContainer :container="'sm'">
+      <p>sdfsdf</p>
+      <UITButton :mode="'blue'" :text="'sdfdf'" :icon-left="{ icon: 'arrow-bold', size: '28_28' }" />
+      <UITAnimationLoader />
+      
+      <UITFormAccordion :text="'sdgsdgs'" :auto-close="false">
+        <p>sdgsdgsddsgsdg</p>
+        <div>
+        <UITFormRadio :input-attr="{ name: 'dksjfsdf', value: '1' }" :mode="'secondary'"/>
+        <UITFormRadio :input-attr="{ name: 'dksjfsdf', value: '2' }" :mode="'secondary'"/>
+      </div>
+      </UITFormAccordion>
+      <UITFormSelect :data="[{ 'id': 1, name: '1' },{ 'id': 2, name: '2' } ,{ 'id': 3, name: '3' }]" :input-name="'test'" class="test-select" />
+    </UITBlockContainer> -->
+    
+     <!-- <header>
       <Header class="/md:block none" />
       <HeaderMobile class="/md:hidden" />
-    </header>
-    <main class="container">
+    </header>-->
+    <main class="container mx-auto">
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
-      </Transition> -->
+      </Transition>  -->
       <NuxtPage/>
     </main>
-    <Footer />
+    <!-- <Footer />
     <ClientOnly>
       <Alert/>
       <ModalRoot/>
-    </ClientOnly>
-    <ContentIcon hidden="true" class="none"/>
+    </ClientOnly> 
+     <ContentIcon hidden="true" class="none"/> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import type { CategorDataItem } from "@/type/intex";
-import Footer from "@/components/Templates/Footer/Footer.vue";
-import Header from "@/components/Templates/Header/Header.vue";
-import HeaderMobile from "@/components/Templates/Header/mobile.vue";
-import ModalRoot from '@/components/Templates/modal/ModalRoot.vue'
-import Alert from '@/components/Templates/Alert/Alert.vue'
-import ContentIcon from '@/components/content/Icon.vue'
+import { UITButton, UITBlockContainer, UITFormSelect, UITAnimationLoader, UITFormRadio, UITFormAccordion } from "#components";
+// import { Button } from "#components";
+// import Footer from "@/components/Templates/Footer/Footer.vue";
+// import Header from "@/components/Templates/Header/Header.vue";
+// import HeaderMobile from "@/components/Templates/Header/mobile.vue";
+// import ModalRoot from '@/components/Templates/modal/ModalRoot.vue'
+// import Alert from '@/components/Templates/Alert/Alert.vue'
+// import ContentIcon from '@/components/content/Icon.vue'
 
 const config = useRuntimeConfig()
 const route = useRoute()
@@ -61,10 +78,10 @@ onMounted(() => console.log('App mounted'))
 // password !YBmGCx4kawQYRF
 </script>
 
-<style lang="scss" >
-@use "@/assets/css/main.scss" ;
+<style lang="css" >
+@import './assets/css/main.css';
 
-// .path-enter-active {
+/* // .path-enter-active {
 //   transition: all 0.3s ease-in-out;
 // }
 
@@ -77,5 +94,5 @@ onMounted(() => console.log('App mounted'))
 // .path-leave-to {
 //   transform: translateX(30px);
 //   opacity: 0;
-// }
+// } */
 </style>

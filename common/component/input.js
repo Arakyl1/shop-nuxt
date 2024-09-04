@@ -1,6 +1,4 @@
-import { INPUT_VALIDITY_BASE } from '../C.js'
-
-export const INPUT_CONTENT = {
+const INPUT_CONTENT = {
     USER_NAME: {
         PLACEHOLDER: 'Имя',
     },
@@ -72,3 +70,5 @@ export const INPUT_CONTENT = {
         PLACEHOLDER: 'Основной текст подсказки'
     }
 }
+
+export default { INPUT_CONTENT };

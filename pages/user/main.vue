@@ -1,12 +1,12 @@
 <template>
     <div class="w-full">
         <!-- <Header :title="PAGE_META.USER_MAIN.TITLE"/> -->
-        <Group :class="className['body']" class="gap-10">
-            <!-- <Tag
+        <!-- <Group :class="className['body']" class="gap-10">
+            <Tag
             :type="'dark'"
             :padding-size="'lg'"
             :text="common.HEADER_SPAN"
-            class="text-sm--imp justify-center w-full"/> -->
+            class="text-sm--imp justify-center w-full"/>
             <form ref="form" class="w-full">
                 <Group class="w-full gap-12">
                     <Group class="w-full gap-7">
@@ -96,26 +96,26 @@
                 class="text-red-500"
                 @click="async() => await _logout()"/>
             </Group>          
-        </Group>
+        </Group> -->
     </div>
 </template>
 
 <script setup lang="ts">
-import Title from "@/components/UI/Title/Title.vue";
-// import FileImage from "@/components/UI/File/Image.vue";
-import Input from "@/components/UI/Input/Input.vue";
-import Button from "@/components/UI/Button/Button.vue";
-// import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
-import Date from "@/components/UI/Input/Date.vue";
-import Radio from "@/components/UI/Radio/Radio.vue";
-import Flex from "@/components/UI/Flex/Flex.vue";
-import Checkbox from "@/components/UI/Checkbox/Checkbox.vue";
-import Group from "@/components/UI/Group/Group.vue";
-// import Tag from "@/components/UI/Tag/Tag.vue";
-import FormField from "@/components/UI/FormField/FormField.vue";
-import Grid from "@/components/UI/Grid/Grid.vue";
+// import Title from "@/components/UI/Title/Title.vue";
+// // import FileImage from "@/components/UI/File/Image.vue";
+// import Input from "@/components/UI/Input/Input.vue";
+// import Button from "components/UI/Button/index.vue";
+// // import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
+// import Date from "@/components/UI/Input/Date.vue";
+// import Radio from "@/components/UI/Radio/Radio.vue";
+// import Flex from "@/components/UI/Flex/Flex.vue";
+// import Checkbox from "@/components/UI/Checkbox/Checkbox.vue";
+// import Group from "@/components/UI/Group/Group.vue";
+// // import Tag from "@/components/UI/Tag/Tag.vue";
+// import FormField from "@/components/UI/FormField/FormField.vue";
+// import Grid from "@/components/UI/Grid/Grid.vue";
 import { user as _user } from '@/stores/user';
-import { PAGE_USER_MAIN as common, PAGE_META, BASE_BUTTON, INPUT_CONTENT } from "@/common/C";
+import { t } from "#imports";
 import { searchInvalidElemInForm, getFormDataURL, setValueInput } from '@/utils/formHelpers'
 
 
@@ -123,10 +123,9 @@ const { logout: _logout } = useAuth()
 const form = ref<HTMLFormElement | null>(null)
 const storeUser = _user()
 const { data } = storeToRefs(storeUser)
-const className = useCssModule()
 const radioList = [
-    { key: 'man', label: common.LIST_RADIO_GENDER_MAN },
-    { key: 'woman', label: common.LIST_RADIO_GENDER_WOMAN },
+    { key: 'man', label: t('PAGE_USER_MAIN.LIST_RADIO_GENDER_MAN') },
+    { key: 'woman', label: t('PAGE_USER_MAIN.LIST_RADIO_GENDER_WOMAN') },
 ]
 
 const userInfo = computed(() => {

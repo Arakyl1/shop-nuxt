@@ -1,9 +1,9 @@
 <template>
     <div class="container">
         <div class="wrapper">
-            <div class="columns">
+            <!-- <div class="columns">
                 <Card v-for="item in 10" class="w-full h-16" :appearance="'warning'" :rounded="'lg'"/>
-            </div>
+            </div> -->
         </div>
 
         <!-- <Pagination
@@ -70,12 +70,12 @@
 
 
 <script setup lang="ts">
-import CreateIcon from "@/utils/icon/index.vue";
+// import CreateIcon from "@/utils/icon/index.vue";
 // import Input from "@/components/UI/Input/Input.vue";
 // import RangeNumber from "@/components/UI/Range/Number.vue";
 // import Password from "@/components/UI/Input/Password.vue";
 // import Pagination from "@/components/UI/Pagination/Pagination.vue";
-import Card from "@/components/UI/Card/Card.vue";
+// import Card from "@/components/UI/Card/Card.vue";
 
 // const { activePage, updatePage, getInfoPagination } = paggination()
 // const data ={

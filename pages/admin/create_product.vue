@@ -1,5 +1,6 @@
 <template>
-    <Panel :mode="'primary'">
+    <div></div>
+    <!-- <Panel :mode="'primary'">
         <Group class="gap-8 l">
             <form ref="form" class="w-full">                
                 <Main 
@@ -51,22 +52,22 @@
         :title="commonConfirm.CHECK_CHARACTERISTIC.replace('/REPLACE/',listCharacteristic)"
         :open="activeStatus === 'check-characteristic'"
         @close-confirm="setStatus(null)"/>
-    </Panel>
+    </Panel> -->
 </template>
 <script setup lang="ts">
 import type { LoginJSONData } from '@/type/intex';
 import { user as _user } from "@/stores/user";
 import { alert as _alert } from "@/stores/alert";
-import Panel from "@/components/UI/Panel/Panel.vue";
-import Flex from "@/components/UI/Flex/Flex.vue";
-import Group from "@/components/UI/Group/Group.vue";
-import Button from "@/components/UI/Button/Button.vue";
-import Main from '@/components/Templates/page__admin/Main.vue';
-import Confirm from "@/components/Templates/modal/Confirm.vue";
-import Alert from "@/components/Templates/modal/Alert.vue";
-import Characteristic from '@/components/Templates/page__admin/Characteristic.vue';
-import Parameters from '@/components/Templates/page__admin/Parameters.vue';
-import { PAGE_META as META, CONFIRM_TITLE as commonConfirm, PAGE_ADD as common, BASE_BUTTON } from "@/common/C";
+// import Panel from "@/components/UI/Panel/Panel.vue";
+// import Flex from "@/components/UI/Flex/Flex.vue";
+// import Group from "@/components/UI/Group/Group.vue";
+// import Button from "components/UI/Button/index.vue";
+// import Main from '@/components/Templates/page__admin/Main.vue';
+// import Confirm from "@/components/Templates/modal/Confirm.vue";
+// import Alert from "@/components/Templates/modal/Alert.vue";
+// import Characteristic from '@/components/Templates/page__admin/Characteristic.vue';
+// import Parameters from '@/components/Templates/page__admin/Parameters.vue';
+import { t } from "#imports";
 import { resetForm, setValueInput, searchInvalidElemInForm, isThisForm } from '@/utils/formHelpers';
 import { listWordsCharacteristic, listSectionsToSkip } from '@/utils/checkListWords'
 import { ProductCard } from '@prisma/client';
@@ -75,10 +76,9 @@ import { ProductCard } from '@prisma/client';
 const numberProperty = ['price', 'quantity']
 
 definePageMeta({
-    title: META.ADMIN__CREATE_PRODUCT.TITLE
+    title: t('PAGE_META.ADMIN__CREATE_PRODUCT.TITLE')
 })
 
-const className = useCssModule()
 const storeUser = _user()
 const storeAlert = _alert()
 const { data: userData } = storeToRefs(storeUser)

@@ -1,16 +1,14 @@
-import { NOTIFICATIONS_MESSAGE, SERVER_RESPONSE_CONTENT } from "@/common/C";
-import { AlertItem, AlertItemCreate } from "type/intex";
+import type { AlertItem, AlertItemCreate,  } from "@/type/intex";
 
 export const alert = defineStore('alert', () => {
 
     const data = ref<AlertItem[]>([])
-    const listKey = Object.assign(NOTIFICATIONS_MESSAGE, SERVER_RESPONSE_CONTENT)
 
-    function create(item: AlertItemCreate<keyof typeof listKey>) {
+    function create(item: AlertItemCreate<''>) {
         if (item && item.key) {
             const createItem = {
                 state: item.state || 'info',
-                text: listKey[item.key] || item.key, 
+                text: item.key, 
                 active: true,
                 createAt: Date.now()
             }

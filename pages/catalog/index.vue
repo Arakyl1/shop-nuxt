@@ -1,5 +1,6 @@
 <template>
-    <Panel :mode="'primary'">
+    <div></div>
+    <!-- <Panel :mode="'primary'">
         <Flex :justify="'between'" >
             <Title :tag="'h2'" :text="META.CATALOG.TITLE" class="grow"/>
             <div class="none /md:block">
@@ -47,28 +48,28 @@
             class="gap-4"
             />
         </Flex>
-    </Panel>
+    </Panel> -->
 </template>
 
-<script setup lang="ts">
+ <script setup lang="ts">
 import localState from "@/utils/localState";
-import Grid from "@/components/UI/Grid/Grid.vue";
-import Card from "@/components/UI/Card/Card.vue";
-import Flex from "@/components/UI/Flex/Flex.vue";
-import Panel from "@/components/UI/Panel/Panel.vue";
-import Title from "@/components/UI/Title/Title.vue";
-import CardProduct from '@/components/Templates/Card/Product.vue'
-import Filter from '@/components/Templates/page__catalog/Filter.vue'
-import Button from "@/components/UI/Button/Button.vue";
-import SelectSize from '@/components/Templates/page__catalog/SelectSize.vue'
-import Pagination from "@/components/UI/Pagination/Pagination.vue";
-import { PAGE_META as META, PAGE_CATALOG } from "@/common/C";
+// import Grid from "@/components/UI/Grid/Grid.vue";
+// import Card from "@/components/UI/Card/Card.vue";
+// import Flex from "@/components/UI/Flex/Flex.vue";
+// import Panel from "@/components/UI/Panel/Panel.vue";
+// import Title from "@/components/UI/Title/Title.vue";
+// import CardProduct from '@/components/Templates/Card/Product.vue'
+// import Filter from '@/components/Templates/page__catalog/Filter.vue'
+// import Button from "components/UI/Button/index.vue";
+// import SelectSize from '@/components/Templates/page__catalog/SelectSize.vue'
+// import Pagination from "@/components/UI/Pagination/Pagination.vue";
+import { t } from "#imports";
 import { isServer } from "@/utils/other";
 
 
 definePageMeta({
     middleware: ['catalog'],
-    title: META.CATALOG.TITLE,
+    title: t('PAGE_META.CATALOG.TITLE'),
     keepalive: true
 })
 

@@ -1,7 +1,7 @@
 <template>
      <div class="w-full">
         <template v-if="data">
-            <Group class="gap-10 w-full">
+            <!-- <Group class="gap-10 w-full">
                 <template v-for="item in data" :key="item.id">
                     <Card>
                         <Flex class="w-full gap-6" :align="'flex-start'">
@@ -24,7 +24,7 @@
                     </Card>
                     <div class="decor-line"></div>
                 </template>
-            </Group>
+            </Group> -->
                     <!-- <div class="flex" :class="className['status']"> -->
                         <!-- <Popover v-if="item.status === 'error'" :type="'primary'" :padding="'2xl'">
                             <template #content="{ close }">
@@ -123,22 +123,22 @@
 </template>
 
 <script setup lang="ts">
-import Panel from "@/components/UI/Panel/Panel.vue";
-import Accordion from "@/components/UI/Accordion/Accordion.vue";
-import Group from "@/components/UI/Group/Group.vue";
-// import TagIcon from "@/components/UI/Tag/Icon.vue";
-import Rating from "@/components/UI/Rating/Rating.vue";
-import Tooltip from "@/components/UI/Tooltip/Tooltip.vue";
-import Flex from "@/components/UI/Flex/Flex.vue";
-import Image from "@/components/UI/Image/Image.vue";
-import Card from "@/components/UI/Card/Card.vue";
-import Button from "@/components/UI/Button/Button.vue";
-import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
-import Popover from "@/components/UI/Popover/Popover.vue";
-import Pagination from "@/components/UI/Pagination/Pagination.vue";
+// import Panel from "@/components/UI/Panel/Panel.vue";
+// import Accordion from "@/components/UI/Accordion/Accordion.vue";
+// import Group from "@/components/UI/Group/Group.vue";
+// // import TagIcon from "@/components/UI/Tag/Icon.vue";
+// import Rating from "@/components/UI/Rating/Rating.vue";
+// import Tooltip from "@/components/UI/Tooltip/Tooltip.vue";
+// import Flex from "@/components/UI/Flex/Flex.vue";
+// import Image from "@/components/UI/Image/Image.vue";
+// import Card from "@/components/UI/Card/Card.vue";
+// import Button from "components/UI/Button/index.vue";
+// import Paragraph from "@/components/UI/Paragraph/Paragraph.vue";
+// import Popover from "@/components/UI/Popover/Popover.vue";
+// import Pagination from "@/components/UI/Pagination/Pagination.vue";
 
 // import Placeholder from "@/components/UI/Placeholder/Placeholder.vue";
-import { } from "@/common/C";
+import { t } from "#imports";
 
 const { data } = await useFetch('/api/user/info', {
     params: { 'tag': 'reviews' },
@@ -148,7 +148,6 @@ const { data } = await useFetch('/api/user/info', {
 const sizePage = ref(10)
 const cardLength = ref(65)
 const { activePage, updatePage, getInfoPagination } = paggination()
-const className = useCssModule()
 
 function getTextByStatus(status) {
     switch (status) {

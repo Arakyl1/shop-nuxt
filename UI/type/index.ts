@@ -1,3 +1,6 @@
+import { CSS_BORDER_RADIUS, CSS_COLOR, SkeletonMode } from './CSS/index';
+import { IconName } from './Icon/name';
+
 // COMPOSABLE TYP
 export interface useShowProps {
     autoClose?: boolean;
@@ -15,5 +18,35 @@ export type NotificationItem = {
 export type NotificationItemStateKey = NotificationItem['state'];
 export type NotificationItemCreate<T = string> = Pick<NotificationItem, 'state'> & { key: T; skip?: boolean };
 
-export * from './UI/CSS/index';
-export * from './UI/Element';
+export type * from './CSS/index';
+export type * from './UI/Element';
+export type * from './Icon/name'
+
+
+interface DefaultAttrforUI {
+    selectTriggerIcon?: IconName;
+    selectTriggerIconActive?: IconName;
+    selectDataTriggerInputIcon?: IconName;
+    selectDataButtonRightIcon?: IconName;
+    selectDataButtonLeftIcon?: IconName;
+    animationLoaderColor?: CSS_COLOR;
+    skeletonBaseColor?: CSS_COLOR;
+    skeletonDefaultMode?: SkeletonMode;
+    skeletonDefaultRounded?: CSS_BORDER_RADIUS;
+    titleDefaultColor?: CSS_COLOR,
+}
+
+const defaultAttrforUI: DefaultAttrforUI = {
+    selectTriggerIcon: 'Arrow-Primary-Top',
+    selectTriggerIconActive: 'Arrow-Primary-Bottom',
+    selectDataTriggerInputIcon: 'calendar',
+    selectDataButtonRightIcon: 'arrow-right',
+    selectDataButtonLeftIcon: 'arrow-right',
+    animationLoaderColor: 'blue-300',
+    skeletonBaseColor: 'gray-100',
+    skeletonDefaultMode: 'gray',
+    skeletonDefaultRounded: 'xl',
+    titleDefaultColor: 'black-500'
+}
+
+export { defaultAttrforUI }

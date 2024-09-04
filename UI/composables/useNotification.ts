@@ -1,6 +1,6 @@
 import { useState } from '#imports';
 
-import type { NotificationItem, NotificationItemCreate } from '../../type/index';
+import type { NotificationItem, NotificationItemCreate } from '../type/index';
 
 export default () => {
     const notificationData = () => useState<Array<NotificationItem>>('notification');

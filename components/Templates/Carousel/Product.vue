@@ -1,36 +1,38 @@
 <template>
     <div v-if="!pending && data">
-        <CardGridScroll :data="data">
+        <UITBlockGridScroll :data="data">
             <template #header="{ prev, next, listValueScroll }">
-                <Flex :direction="'column'" :class="className['header']">
-                    <Flex :justify="'between'" class="w-full">
-                        <Title v-if="$slots.title"><slot name="title"></slot></Title>
-                        <Title v-else-if="title" :text="title"/>
-                        <Flex class="gap-2 /lg:gap-3 /xl:gap-4">
-                            <ButtonArrow class="-scale-100"
+                <UITBlockFlex :direction="'column'" :class="className['header']">
+                    <UITBlockFlex :justify="'between'" class="w-full">
+                        <UITParagraphTitle>
+                            <slot v-if="$slots.title" name="title"></slot>
+                            <template v-else-if="title">{{ title }}</template>
+                        </UITParagraphTitle>
+                        <!-- <UITParagraphTitle  :text=""/> -->
+                        <UITBlockFlex class="gap-2 /lg:gap-3 /xl:gap-4" :width-full="false">
+                            <AtomButtonArrow class="-scale-100"
                             :disabled="listValueScroll ? listValueScroll.current === 0 : false"
                             @click="prev"/>
-                            <ButtonArrow 
+                            <AtomButtonArrow 
                             :disabled="listValueScroll ? listValueScroll.max <= listValueScroll.current : false"
                             @click="next"/>
-                        </Flex>
-                    </Flex>
+                        </UITBlockFlex>
+                    </UITBlockFlex>
                     <div class="decor-line"></div>
-                </Flex>
+                </UITBlockFlex>
             </template>
             <template #default="{ elem }">
-                <Card :data="elem"/>
+                <ProductCard :data="elem"/>
             </template>
-        </CardGridScroll>
+        </UITBlockGridScroll>
     </div>
 </template>
 <script setup lang="ts">
-import CardGridScroll from '@/components/UI/CardGridScroll/CardGridScroll.vue'
-import Card from '@/components/Templates/Card/Product.vue'
-import ButtonArrow from '@/components/Templates/Button/ButtonArrow.vue'
-import Flex from "@/components/UI/Flex/Flex.vue";
-import Title from "@/components/UI/Title/Title.vue";
+import { UITBlockGridScroll, UITBlockFlex, UITBlockCard, UITParagraphTitle } from '#components';
+import AtomButtonArrow from "@/components/Atom/Button/Arrow.vue";
+import ProductCard from "@/components/Molecules/Card/Product.vue";
 import { isServer } from "@/utils/other";
+import { ProductCardFull } from '@/type/intex';
 
 
 const props = defineProps<{

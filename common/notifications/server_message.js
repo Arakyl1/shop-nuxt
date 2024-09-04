@@ -1,4 +1,4 @@
-export const SERVER_RESPONSE_CONTENT = {
+const SERVER_RESPONSE_CONTENT = {
     SERVER_ERROR: 'Something went wrong',
     CREATE_ERROR: 'Произошла ощибка, повторите попытку позже',
     // BASKET MESSAGE
@@ -23,3 +23,5 @@ export const SERVER_RESPONSE_CONTENT = {
     TOOLTIP_CREATE_SUCCESS: 'Подсказка создана',
     TOOLTIP_CREATE_ERROR: 'Возникла ошибка при создание подсказки',
 }
+
+export default { SERVER_RESPONSE_CONTENT };

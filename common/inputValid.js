@@ -1,4 +1,4 @@
-export const INPUT_VALIDITY_BASE = {
+const INPUT_VALIDITY_BASE = {
     BAD_INPUT: 'Неверный формат значения',
     CUSTOM_ERROR: '',
     PATTERN_MISMATCH: 'Значение не соответствует заданному паттерну',
@@ -10,3 +10,5 @@ export const INPUT_VALIDITY_BASE = {
     TYPE_MISMATCH: 'Неверный формат значения',
     VALUE_MISSING: 'Заполните поле',
 }
+
+export default { INPUT_VALIDITY_BASE };

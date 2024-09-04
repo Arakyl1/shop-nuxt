@@ -1,5 +1,6 @@
 <template>
-    <form ref="form" class="w-2/4">
+    <div></div>
+    <!-- <form ref="form" class="w-2/4">
         <Group class="gap-6 w-full">
             <Title :tag="'h3'" :text="common.TITLE"/>
             <FormField class="w-full">
@@ -22,27 +23,22 @@
                 @keyup.enter.stop="onClick"/>
             </Flex>
         </Group>
-    </form>
+    </form> -->
 </template>
 
 <script setup lang="ts">
-import Flex from "@/components/UI/Flex/Flex.vue";
-import Group from "@/components/UI/Group/Group.vue";
-import Title from "@/components/UI/Title/Title.vue";
-import Button from "@/components/UI/Button/Button.vue";
-import Input from "@/components/UI/Input/Input.vue";
-import FormField from "@/components/UI/FormField/FormField.vue";
-import Textarea from "@/components/UI/Textarea/Textarea.vue";
+// import Flex from "@/components/UI/Flex/Flex.vue";
+// import Group from "@/components/UI/Group/Group.vue";
+// import Title from "@/components/UI/Title/Title.vue";
+// import Button from "components/UI/Button/index.vue";
+// import Input from "@/components/UI/Input/Input.vue";
+// import FormField from "@/components/UI/FormField/FormField.vue";
+// import Textarea from "@/components/UI/Textarea/Textarea.vue";
 import { resetForm, searchInvalidElemInForm, getFormDataURL, isThisForm } from "@/utils/formHelpers";
-import {
-    PAGE_META as META,
-    INPUT_CONTENT as commonInput,
-    PAGE_ADMIN_TOOLTIP_CREATE as common,
-    BASE_BUTTON
-} from "@/common/C";
+import { t } from "#imports";
 
 definePageMeta({
-    title: META.ADMIN__TOOLTIP__CREATE.TITLE,
+    title: t('PAGE_META.ADMIN__TOOLTIP.TITLE'),
 })
 
 const { create } = useTooltip()

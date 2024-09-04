@@ -1,4 +1,4 @@
-export const PAGE_USER_MAIN = {
+const PAGE_USER_MAIN = {
   SECTION_1_TITLE: "Личные данные",
   SECTION_2_TITLE: "Контакты",
 
@@ -7,3 +7,5 @@ export const PAGE_USER_MAIN = {
   CHECKBOX_DECRYPTION: "Получать информацию о скидках и акциях",
 
 };
+
+export default { PAGE_USER_MAIN };

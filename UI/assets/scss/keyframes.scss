@@ -1,0 +1,219 @@
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 90% 90%;
+    }
+}
+
+// animation
+.animate-loader-data {
+  animation: gradient 2s linear infinite;
+}
+
+// // Vue transitions
+
+// .slide-up-enter-active,
+// .slide-up-leave-active {
+//   transition: all 0.25s ease-out;
+// }
+
+// .slide-up-enter-from,
+// .slide-up-leave-to {
+//   opacity: 0;
+//   transform: translateX(30px);
+// }
+
+
+
+// .slide-right-enter-active {
+//   transition: transform 0.15s ease-out, opacity 0.1s ease-out 0.05s;
+// }
+// .slide-right-leave-active {
+//   transition: transform 0.15s ease-out 0.1s, opacity 0.05s ease-out;
+// }
+// .slide-right-enter-from,
+// .slide-right-leave-to {
+//   opacity: 0;
+//   transform: translateX(-30px);
+// }
+
+
+
+// .slide-down-enter-active,
+// .slide-down-leave-active {
+//   transition: all 0.5s ease;
+// }
+// .slide-down-enter-from,
+// .slide-down-leave-to {
+//   opacity: 0;
+//   transform: translateY(-30px);
+// }
+
+
+// .dropdown-enter-active,
+// .dropdown-leave-active {
+//     transition: all 0.15s ease-out;
+// }
+
+// .dropdown-leave-to,
+// .dropdown-enter-from {
+//     opacity: 0;
+//     transform: translateY(-15px);
+// }
+
+// .dropdown-icon-enter-active,
+// .dropdown-icon-leave-active {
+//     transition: all 0.25s ease-out;
+// }
+
+
+// .dropdown-icon-enter-from {
+//     transform: translateY(3px);
+//     opacity: 0;
+// }
+// .dropdown-icon-leave-to {
+//     transform: translateY(-3px);
+//     opacity: 0;
+// }
+
+
+// .list-enter-active,
+// .list-leave-active {
+//     transition: all 0.5s ease;
+// }
+
+// .list-enter-from,
+// .list-leave-to {
+//     opacity: 0;
+//     transform: translateX(10px);
+// }
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// .fade-primary-enter-active,
+// .fade-primary-leave-active {
+//   transition: all 0.3s ease-in-out;
+// }
+// .fade-primary-enter-from,
+// .fade-primary-leave-to {
+//   opacity: 0;
+// }
+
+
+// .flip-enter-active,
+// .flip-leave-active {
+//   transition: all 0.25s cubic-bezier(.91,1,.13,.01);
+// }
+
+
+// .flip-enter-from,
+// .flip-leave-to {
+//   transform: rotateY(-90deg);
+// }
+
+// .flipper {
+//   width: 13.75rem;
+//   aspect-ratio: 1.69/1;
+//   perspective: 1000px;
+//   transform-style: preserve-3d;
+// }
+
+
+// .opacity-enter-active {
+//   transition: all 0.35s ease-out;
+// }
+
+// .opacity-leave-active {
+//   transition: all 0s;
+// }
+
+// .opacity-enter-from,
+// .opacity-leave-to {
+//   opacity: 0;
+
+// }
+
+
+// .modal_search-enter-to,
+// .modal_search-leave-from {
+//   opacity: 0;
+//   transition: all ease-in-out 0.17s;
+// }
+
+// .modal_search-enter-from,
+// .modal_search-leave-to{
+//   transform: translateY(-10px) scaleY(0);
+// }
+// .modal_search-container::-webkit-scrollbar {
+//   display: none;
+// }
+
+// /* анимация модального окна */
+// .modal-enter-active,
+// .modal-leave-active {
+//   transition: all 0.25s ease-out;
+// }
+
+// @media (min-width: 769px) {
+//   .modal-enter-from,
+//   .modal-leave-to{
+//     -webkit-transform: translate(-50%, -50%) scale(1.02);
+//     transform: translate(-50%, -50%) scale(1.05);
+//     opacity: 0;
+//     transition: all ease-in-out 0.36s;
+//   }
+// }
+
+// @media (max-width: 768px) {
+//   .modal-enter-from,
+//   .modal-leave-to {
+//       opacity: 0;
+//       transform: translateY(120%);
+      
+//   }
+// }
+// // анимация смены окон между login и registration
+
+// .auth-enter-active,
+// .auth-leave-active {
+//   transition: all 0.25s ease;
+// }
+
+// @media (min-width: 769px) { 
+//   .auth-enter-from,
+//   .auth-leave-to {
+//     opacity: 0;
+//     transform: translateX(10px);
+//   }
+// }
+// @media (max-width: 768px)  {
+//   .auth-enter-from,
+//   .auth-leave-to {
+//     opacity: 0;
+//     transform: translateY(90%);
+//   }
+// }
+
+
+// CONFIRM ANIMATION
+.confirm-enter-from,
+.confirm-leave-to{
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 0;
+  transition: all ease-in-out 0.36s;
+}
+
+.confirm-enter-active,
+.confirm-leave-active {
+  transition: all 0.25s ease-out;
+}
