@@ -11,7 +11,7 @@ export default () => {
         return _form instanceof HTMLFormElement;
     }
 
-    function handlerForForm<T extends (form: HTMLFormElement) => any>(elem: FORM, handle: T): ReturnType<typeof handle> | null {
+    function handlerForForm<T extends (form: HTMLFormElement) => string>(elem: FORM, handle: T): ReturnType<typeof handle> | null {
         if (!isThisForm(elem)) return null;
         return handle(unref(elem)!);
     }
@@ -43,7 +43,7 @@ export default () => {
         const formData = getFormData(form);
         if (!formData) return null;
 
-        const data: { [k: string]: any } = {};
+        const data: { [k: string]: string } = {};
         for (const [key, value] of formData) {
             data[key] = value;
         }
@@ -245,8 +245,8 @@ export default () => {
         window.dispatchEvent(event);
     };
 
-    // eslint-disable-next-line no-undef
-    const addToWatchEventRestore = (handler: (...arg: any[]) => any, option: AddEventListenerOptions | boolean = { passive: true }) => {
+     
+    const addToWatchEventRestore = (handler: (...arg: string[]) => string, option: AddEventListenerOptions | boolean = { passive: true }) => {
         onMounted(() => window.addEventListener('reset', handler, option));
         onBeforeUnmount(() => window.removeEventListener('reset', handler));
     };

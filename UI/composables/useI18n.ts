@@ -1,13 +1,6 @@
-import Common from '@/common/C_ru.js';
+import type Common from '@/common/C_ru.js';
 import { ref } from '#imports';
-
-type DotPrefix<T extends string> = T extends '' ? '' : `.${T}`;
-
-type DotNestedKeys<T> = (
-    T extends object ? { [K in Exclude<keyof T, symbol>]: `${K}${DotPrefix<DotNestedKeys<T[K]>>}` }[Exclude<keyof T, symbol>] : ''
-) extends infer D
-    ? Extract<D, string>
-    : never;
+import type { DotNestedKeys } from "../type/index";
 
 type KEY_TEXT = DotNestedKeys<typeof Common>;
 

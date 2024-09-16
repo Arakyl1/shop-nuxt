@@ -82,7 +82,9 @@ const props = withDefaults(defineProps<Props>(), {
     ariaPageLabel: 'Страница',
     ariaCurrentLabel: 'Текушая страница',
     afterContent: false,
-    beforeContent: false
+    beforeContent: false,
+    btClass: undefined,
+    kitButton: undefined
 });
 
 // отправляет номер страницы, а родительский элемент прослушывает это событие, уже изменяет текуший номер страницы
@@ -154,7 +156,7 @@ function checkValidCurrent() {
     return pageCount.value < props.current;
 }
 
-function getPage(num: number, options: { [k: string]: any } = {}) {
+function getPage(num: number, options: { [k: string]: unknown } = {}) {
     return {
         number: num,
         isCurrent: props.current === num,

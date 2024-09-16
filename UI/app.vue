@@ -1,6 +1,3 @@
 <template>
-    <div></div>
+    <div>dsdsd</div>
 </template>
-
-<script setup lang="ts">
-</script>

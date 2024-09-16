@@ -8,11 +8,13 @@ export type IStyles = {
   'btM_green': string;
   'btM_green-icon': string;
   'btM_link': string;
+  'btM_link-white': string;
   'btM_none': string;
   'btM_outline': string;
   'btM_primary': string;
   'btM_red': string;
   'btM_red-icon': string;
+  'btM_Wh-lint': string;
   'btM_white': string;
   'btM_white-icon': string;
   'btM_yellow': string;

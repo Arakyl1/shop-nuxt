@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Button :mode="'blue'" :text="'sdfsdff'" />
+        <!-- <Button :mode="'blue'" :text="'sdfsdff'" /> -->
         <!-- <header>
             <Header class="/md:block none" />
             <HeaderMobile class="/md:hidden" />

@@ -1,6 +1,6 @@
 <template>
-    <component :is="tag" :class="{ [`text-${size}`]: size, [`text-${weight}`]: weight, [`color-${color}`]: color }"
-        ><slot v-if="!text"></slot>{{ text }}</component
+    <component :is="tag" :class="{ [`text-${size}`]: size, [`font-${weight}`]: weight, [`text-${color}`]: color }"
+        ><slot v-if="!text"/>{{ text }}</component
     >
 </template>
 
@@ -13,5 +13,5 @@ export interface Props {
     weight?: CSS_FONT_WEIGHT;
     color?: CSS_COLOR;
 }
-withDefaults(defineProps<Props>(), { tag: 'p', color: 'black-500', size: 'md' });
+withDefaults(defineProps<Props>(), { tag: 'p', color: 'black-500', size: '' });
 </script>

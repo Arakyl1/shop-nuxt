@@ -1,7 +1,4 @@
 import { defineNuxtConfig } from "nuxt/config";
-// import { createResolver } from "@nuxt/kit";
-
-// const { resolve } = createResolver(import.meta.url);
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
@@ -9,19 +6,18 @@ const currentDir = dirname(fileURLToPath(import.meta.url));
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
-  modules: ["@nuxtjs/svg-sprite"],
-  css: ["v-calendar/style.css", join(currentDir, "./assets/scss/main.scss")],
-  //   css: ["./assets/css/main.css"],
-  // alias: { '@': resolve('./') },
-
-  //   components: [{ path: "@/components", prefix: "M" }],
-  //   css: ['./assets/css/main.css'],
-  // postcss: {
-  //   plugins: {
-  //     autoprefixer: {},
-  //   },
-  // },
+  modules: [
+    join(currentDir, './node_modules/@nuxtjs/tailwindcss')
+  ],
+//'@nuxtjs/stylelint-module'
+  css: [join(currentDir, "./assets/css/style.scss"), "v-calendar/style.css"],
   ssr: true,
-  compatibilityDate: "2024-08-29",
+  tailwindcss: {
+    cssPath: [join(currentDir, './assets/css/tailwind.css'), { injectPosition: "first" }],
+    configPath: join(currentDir, './tailwind.config.ts'),
+    exposeConfig: true,
+    
+    config: {},
+    viewer: true,
+  }
 });

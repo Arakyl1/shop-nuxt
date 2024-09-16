@@ -1,4 +1,4 @@
-import { CategorDataItem } from "@/type/intex";
+import type { CategorDataItem } from "@/type/intex";
 
 export default (selectWatchKey: 'id'|'value' = 'value') => {
 

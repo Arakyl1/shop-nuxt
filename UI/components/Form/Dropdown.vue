@@ -2,7 +2,7 @@
     <div ref="dropdown" data-dropdown>
         <div ref="trigger" class="w-full">
             <slot name="trigger" v-bind="{ isActive, close, onClick, open, onHover, onContextMenu, onFocus }">
-                <Button
+                <UButton
                     :mode="'outline'"
                     class="text-sm text-medium"
                     :class="$style.Dropdown_Botton"
@@ -11,8 +11,8 @@
                     @click="isActive ? close() : onClick()"
                 >
                     <Paragraph :size="'xs'" :text="text" />
-                    <slot name="button-content-after-text" v-bind="{ active, text }"></slot>
-                </Button>
+                    <slot name="button-content-after-text" v-bind="{ active, text }"/>
+                </UButton>
             </slot>
         </div>
         <Transition name="dropdown">
@@ -24,24 +24,24 @@
                 :rounded="rounded"
                 dropdown-body
             >
-                <slot v-bind="{ isActive, close, onClick, open, onHover, onContextMenu, onFocus }"></slot>
+                <slot v-bind="{ isActive, close, onClick, open, onHover, onContextMenu, onFocus }"/>
             </Card>
         </Transition>
     </div>
 </template>
 
 <script setup lang="ts">
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 import { createPopper, preventOverflow } from '@popperjs/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 import { onMounted, ref, unref, watch } from 'vue';
 
 import type { Props as ButtonProps } from '../Button/Button.vue';
 import type { Props as CardProps } from '../Block/Card.vue';
-import Button from '../Button/Button.vue';
+import UButton from '../Button/Button.vue';
 import Card from '../Block/Card.vue';
 import Paragraph from '../Paragraph/Text.vue';
-import useShow from '@/composables/useShow';
+import useShow from '../../composables/useShow';
 import type { useShowProps, DropdownMode } from '../../type/index';
 // компонент dropdown, реализует открывание и загрывание dropdown,
 // открыть dropdown можно при с помошью этих событий (click, hover, focus, contextMenu)

@@ -1,25 +1,36 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
+const isDevelopment = process.env.NODE_ENV === 'development';
 export default defineNuxtConfig({
   // nitro: {
   //   preset: 'vercel-edge',
   // },
   extends: [['./UI', { install: true }]],
-  modules: ['@nuxt/content',
-  '@nuxtjs/svg-sprite', // "nuxt-vercel-analytics",
-  '@nuxtjs/device', // '@nuxtjs/web-vitals',
-  'nuxt-viewport', ['@kevinmarrec/nuxt-pwa', {
-    icon: {
-      source: 'assets/logo.png'
-    },
-    meta: {
-      theme_color: '#685e6f'
-    }
-  }], ['@pinia/nuxt', {
+
+  modules: [
+    ...(isDevelopment ? ['@nuxt/eslint'] : []),
+    '@nuxt/content',
+    // '@nuxtjs/web-vitals',
+    // "nuxt-vercel-analytics",
+    '@nuxtjs/svg-sprite',
+    // '@nuxtjs/device',
+    'nuxt-viewport',
+    ['@kevinmarrec/nuxt-pwa', {
+      icon: {
+        source: 'assets/logo.png'
+      },
+      meta: {
+        theme_color: '#685e6f'
+      }
+    }],
+    ['@pinia/nuxt', {
           autoImports: ['defineStore', 'storeToRefs'],
       }
-  ]],
-  components: [{ path: "./UI/components", prefix: "UIT" }],
+    ]
+  ],
+
+  components: [{ path: "./UI/components", prefix: "UIT" }, { path: './components', prefix: '' }],
+
   runtimeConfig: {
     cloudinaryName: process.env.CLOUDINARY__NAME,
     cloudinaryApiKey: process.env.CLOUDINARY__KEY,
@@ -38,12 +49,13 @@ export default defineNuxtConfig({
       NAME_APP: 'GOOSE',
     }
   },
+
   routeRules: {
     '/': { 'swr': 3600 },
     '/contact': { swr: 3600 },
     '/catalog': { swr: 3600 },
     '/catalog/**': { swr: 3600 },
-    '/delivery': { ssr: true },
+    '/delivery': {  ssr: true },
     '/user': { ssr: false, redirect: { to: '/user/main' } },
     '/user/**': { ssr: false },
     '/auth': { ssr: false },
@@ -51,24 +63,30 @@ export default defineNuxtConfig({
     '/ui': { ssr: false },
     '/admin/**': { ssr: false },
   },
+
   vite: {
     resolve: {
       alias: {
         ".prisma/client/index-browser": "./node_modules/.prisma/client/index-browser.js"
       }
-    }
-  },
-  css: ["v-calendar/style.css"],
-  postcss: {
-    'plugins': {
-      "autoprefixer": {},
-      tailwindcss: {},
     },
+    customLogger: undefined,
   },
+
+  css: [],
+  logLevel: 'silent',
+
+  // postcss: {
+  //   'plugins': {
+  //     "autoprefixer": {},
+  //     tailwindcss: {},
+  //   },
+  // },
 
   app: {
     pageTransition: { name: 'blur', mode: 'out-in' },
   },
+
   viewport: {
     breakpoints: {
       xs: 320,
@@ -87,20 +105,21 @@ export default defineNuxtConfig({
 
     fallbackBreakpoint: 'lg'
   },
+
   spaLoadingTemplate: false,
   devtools: { enabled: true },
-  ignore: ['./pages/admin', './pages/catalog', './pages/user']
-  // 'purgecss': {
-  //   enabled: true,
-  //   paths: [
-  //     'assets/**/*.scss',
-  //   ],
-  // }
+
+  // eslint: {
+  //   checker: true // <---
+  // },
   // webVitals: {
   //   provider: 'log',
   //   debug: true, // debug enable metrics reporting on dev environments
   //   disabled: false
   // }
+  ignore: ['./pages/admin', './pages/catalog', './pages/user'],
+
+  compatibilityDate: '2024-09-16'
 });
 
 // const viewport = useViewport() v-if="viewport.isGreaterOrEquals('sm')"

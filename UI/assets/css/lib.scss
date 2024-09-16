@@ -1,0 +1,145 @@
+// @import "./variables";
+
+// // border style
+// @each $name, $size in $borderRadius {
+//   .rounded-#{$name} {
+//     border-radius: var(--rounded-#{$name});
+//   }
+// }
+
+// // FLex style
+
+// .flex {
+//   display: flex;
+// }
+
+// .flex-full {
+//   flex: 1;
+// }
+
+// .grow {
+//   flex-grow: 1;
+// }
+
+// @each $name, $value in $justify-content {
+//   .justify-#{$name} {
+//     justify-content: $value;
+//   }
+// }
+
+// @each $name, $value in $align-items {
+//   .align-#{$name} {
+//     align-items: $value;
+//   }
+// }
+
+// @each $value in $flex-direction {
+//   .flex-#{$value} {
+//     flex-direction: #{$value};
+//   }
+// }
+
+// @each $name, $value in $justify-items {
+//   .items-#{$name} {
+//     justify-self: $value;
+//   }
+// }
+
+// // Color style start
+// @each $name, $value in $color {
+//   .color-#{$name} {
+//     color: var(--#{$name});
+//   }
+//   .bg-#{$name} {
+//     background-color: var(--#{$name});
+//   }
+//   .stroke-#{$name} {
+//     stroke: var(--#{$name});
+//   }
+// }
+
+// .color-inherit {
+//   color: inherit;
+// }
+
+// // Size style start
+// .w-full {
+//   width: 100%;
+// }
+
+// .w-1\/4 {
+//   width: 25%;
+// }
+
+// .w-1\/2 {
+//   width: 50%;
+// }
+
+// .w-3\/4 {
+//   width: 75%;
+// }
+
+// .h-full {
+//   height: 100%;
+// }
+
+// @each $name, $value in $commonSize {
+//   .gap-#{$name} {
+//     gap: calc(4px * $value);
+//   }
+//   .h-#{$name} {
+//     height: calc(4px * $value);
+//   }
+//   .w-#{$name} {
+//     width: calc(4px * $value);
+//   }
+//   .p-#{$name} {
+//     padding: calc(4px * $value);
+//   }
+//   .py-#{$name} {
+//     padding-top: calc(4px * $value);
+//     padding-bottom: calc(4px * $value);
+//   }
+//   .px-#{$name} {
+//     padding-right: calc(4px * $value);
+//     padding-left: calc(4px * $value);
+//   }
+// }
+// Size style end
+
+// Font size
+// .text-lg {
+//   font-size: var(--text-lg);
+//   line-height: 28px;
+// }
+
+// .text-md {
+//   font-size: var(--text-md);
+//   line-height: 24px;
+// }
+
+// .text-sm {
+//   font-size: var(--text-sm);
+//   line-height: 22px;
+// }
+
+// .text-xs {
+//   font-size: var(--text-xs);
+//   line-height: 18px;
+// }
+
+// .text-2xs {
+//   font-size: var(--text-2xs);
+//   line-height: 18px;
+// }
+
+
+
+// // Font weight
+// .textW-bold {
+//   font-weight: 700;
+// }
+
+// .textW-medium {
+//   font-weight: 500;
+// }

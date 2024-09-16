@@ -10,8 +10,7 @@
         v-bind="{ placeholder, required, name, autocomplete, disabled }"
         @input="onInput"
         @change="onInput"
-    >
-    </textarea>
+    />
 </template>
 
 <script setup lang="ts">

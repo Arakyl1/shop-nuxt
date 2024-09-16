@@ -52,7 +52,7 @@
 </template>
 
  <script setup lang="ts">
-import localState from "@/utils/localState";
+import { localState } from "@/UI/utils/other/localState.js";
 // import Grid from "@/components/UI/Grid/Grid.vue";
 // import Card from "@/components/UI/Card/Card.vue";
 // import Flex from "@/components/UI/Flex/Flex.vue";
@@ -63,8 +63,8 @@ import localState from "@/utils/localState";
 // import Button from "components/UI/Button/index.vue";
 // import SelectSize from '@/components/Templates/page__catalog/SelectSize.vue'
 // import Pagination from "@/components/UI/Pagination/Pagination.vue";
-import { t } from "#imports";
-import { isServer } from "@/utils/other";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { t, isServer } from "#imports";
 
 
 definePageMeta({

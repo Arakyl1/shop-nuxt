@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag" ref="content" :class="{ [$style[mode]]: mode, [`Co_${container}`]: container }"><slot></slot></component>
+    <component :is="tag" ref="content" :class="[mode ? $style[mode] : '', container ? `Co_${container}` : '']"><slot/></component>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +12,7 @@ export interface Props {
     container?: ContainerSize;
 }
 
-withDefaults(defineProps<Props>(), { tag: 'div' });
+withDefaults(defineProps<Props>(), { tag: 'div', mode: undefined, container: undefined });
 
 const content = ref<HTMLElement | null>(null);
 

@@ -1,7 +1,7 @@
 <template>
     <div :class="[`Pa_${props.mode}`, $style.panel]">
-        <slot></slot>
-        <div v-if="mode === 'view'"></div>
+        <slot/>
+        <div v-if="mode === 'view'"/>
     </div>
 </template>
 
@@ -12,8 +12,6 @@ interface Props {
 };
 
 const props = withDefaults(defineProps<Props>(), { mode: 'primary' });
-
-const className = useCssModule()
 </script>
 
 <style lang="css" module>

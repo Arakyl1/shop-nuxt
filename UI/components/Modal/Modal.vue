@@ -11,7 +11,7 @@
                 <slot name="body" v-bind="{ isActive, onClick }">
                     <!-- Для разных приложений эту часть можно подстраивать под необходимый дизайн -->
                     <Card v-bind="{ rounded, container }" :appearance="'white'" data-modal-body="true" :class="$style.body">
-                        <Button
+                        <UButton
                             v-if="btClose"
                             :icon-left="{ icon: 'close', size: '24_24' }"
                             :class="$style['bt-close']"
@@ -19,7 +19,7 @@
                             data-modal-bt-close="true"
                             @click="onClick"
                         />
-                        <slot v-bind="{ isActive, onClick }"></slot>
+                        <slot v-bind="{ isActive, onClick }"/>
                     </Card>
                 </slot>
             </div>
@@ -33,7 +33,7 @@ import { ref, watch } from 'vue';
 
 import Card from '../Block/Card.vue';
 import Mask from '../Mask/Mask.vue';
-import Button from '../Button/Button.vue';
+import UButton from '../Button/Button.vue';
 import type { Props as CardProps } from '../Block/Card.vue';
 import type { Props as MaskProps } from '../Mask/Mask.vue';
 
@@ -72,7 +72,7 @@ watch(
     }
 );
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 function onClick() {
     if (props.onClose) {
         props.onClose();

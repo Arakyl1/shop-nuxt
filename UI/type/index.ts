@@ -1,6 +1,13 @@
-import { CSS_BORDER_RADIUS, CSS_COLOR, SkeletonMode } from './CSS/index';
-import { IconName } from './Icon/name';
+import type { CSS_BORDER_RADIUS, CSS_COLOR, SkeletonMode } from './CSS/index';
+import type { IconName } from './Icon/name';
 
+export type DotPrefix<T extends string, S extends string> = T extends '' ? '' : `${S}${T}`;
+
+export type DotNestedKeys<T, S extends string = '.'> = (
+    T extends object ? { [K in Exclude<keyof T, symbol>]: `${K}${DotPrefix<DotNestedKeys<T[K]>, S>}` }[Exclude<keyof T, symbol>] : ''
+) extends infer D
+    ? Extract<D, string>
+    : never;
 // COMPOSABLE TYP
 export interface useShowProps {
     autoClose?: boolean;

@@ -7,7 +7,7 @@
     }
 }
 
-// animation
+/* // animation
 .animate-loader-data {
   animation: gradient 2s linear infinite;
 }
@@ -158,7 +158,7 @@
 //   display: none;
 // }
 
-// /* анимация модального окна */
+//  анимация модального окна
 // .modal-enter-active,
 // .modal-leave-active {
 //   transition: all 0.25s ease-out;
@@ -202,10 +202,10 @@
 //     opacity: 0;
 //     transform: translateY(90%);
 //   }
-// }
+// } */
 
 
-// CONFIRM ANIMATION
+/* // CONFIRM ANIMATION */
 .confirm-enter-from,
 .confirm-leave-to{
   transform: translate(-50%, -50%) scale(1.05);

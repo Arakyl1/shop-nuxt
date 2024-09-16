@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div/>
     <!-- <Panel :mode="'primary'" class="mb-12">
         <Grid :container="'xs'" class="gap-8 /md:gap-4 w-full" :class="className['body']">
             <Group class="gap-8  /md:gap-4" v-for="section,index in data"

@@ -10,7 +10,7 @@
                     updateScrollLeft,
                     listValueScroll
                 }"
-            ></slot>
+            />
         </div>
         <div :class="$style.body" data-card-grid-scroll>
             <ul
@@ -34,7 +34,7 @@
                             updateScrollLeft,
                             listValueScroll
                         }"
-                    ></slot>
+                    />
                 </li>
             </ul>
             <div v-if="$slots.center">
@@ -47,7 +47,7 @@
                         updateScrollLeft,
                         listValueScroll
                     }"
-                ></slot>
+                />
             </div>
         </div>
         <div v-if="$slots.footer" class="w-full">
@@ -60,17 +60,17 @@
                     updateScrollLeft,
                     listValueScroll
                 }"
-            ></slot>
+            />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, onUpdated, ref } from '#imports';
+import { onActivated, onBeforeUnmount, onDeactivated, onMounted, onUpdated, ref } from '#imports';
 import type { GridScrollContainer } from "../../type/index";
 
 export interface Props {
-    data: Array<{ [key: PropertyKey]: any }>;
+    data: Array<{ [key: PropertyKey]: unknown }>;
     container?: GridScrollContainer;
 }
 
@@ -81,7 +81,7 @@ withDefaults(defineProps<Props>(), {
 
 const list = ref<HTMLElement | null>(null);
 const indexActiveButton = ref(0);
-const cordsScroll = ref(null);
+const cordsScroll = ref<null | { startX: number; startSx: number; difX: number; active: boolean; }>(null);
 const buttonActive = ref(false);
 const isScrolling = ref();
 const listValueScroll = ref({ current: 0, max: 0 });
@@ -102,7 +102,7 @@ onDeactivated(() => window.removeEventListener('resize', getValueScroll));
 
 onUpdated(() => setTimeout(() => getValueScroll(), 100));
 
-const fixedNumber = (num, valFix = 0) => Number(num.toFixed(valFix));
+const fixedNumber = (num: number, valFix = 0) => Number(num.toFixed(valFix));
 
 function prev() {
     if (!list.value) return;
@@ -113,12 +113,12 @@ function next() {
     list.value.scrollBy({ left: list.value.clientWidth });
 }
 
-function updateScrollLeft(index) {
+function updateScrollLeft(index: number) {
     if (!list.value) return;
     list.value.scrollLeft = Math.ceil(list.value.clientWidth * index);
 }
 
-function onScroll(e) {
+function onScroll(e: Event) {
     if (list.value && e.type === 'scroll') {
         const sc = fixedNumber(list.value.scrollLeft);
         const cl = fixedNumber(list.value.clientWidth);
@@ -127,13 +127,13 @@ function onScroll(e) {
         window.clearTimeout(isScrolling.value);
         isScrolling.value = setTimeout(() => {
             if (!buttonActive.value) {
-                list.value.style.setProperty('scroll-snap-type', 'x mandatory');
+                list.value!.style.setProperty('scroll-snap-type', 'x mandatory');
             }
         }, 400);
     }
 }
 
-function onPointerDown(event) {
+function onPointerDown(event: PointerEvent) {
     const { clientX, type, pointerType } = event;
     if (list.value && type === 'pointerdown' && pointerType === 'mouse') {
         cordsScroll.value = { startX: clientX, startSx: list.value.scrollLeft, difX: 0, active: true };
@@ -145,7 +145,7 @@ function onPointerDown(event) {
     }
 }
 
-function onPointerMove(event) {
+function onPointerMove(event: PointerEvent) {
     const { clientX, buttons, type, pointerId, pointerType } = event;
     if (type === 'pointermove' && pointerType === 'mouse') {
         if (cordsScroll.value && cordsScroll.value.active && list.value && buttons !== 0) {
@@ -153,13 +153,13 @@ function onPointerMove(event) {
             cordsScroll.value.startX = clientX;
             list.value.scrollLeft += difX;
         } else {
-            resetScrollData(pointerId, list.value);
+            resetScrollData(pointerId, list.value!);
             cordsScroll.value = null;
         }
     }
 }
 
-function onPointerUp(event) {
+function onPointerUp(event: PointerEvent) {
     const { type, pointerId, pointerType } = event;
     if (type === 'pointerup' && pointerType === 'mouse') {
         resetScrollData(pointerId, list.value);
@@ -167,7 +167,7 @@ function onPointerUp(event) {
     }
 }
 
-function onPointerLeave(event) {
+function onPointerLeave(event: PointerEvent) {
     const { type, pointerId, pointerType } = event;
     if (type === 'pointerleave' && pointerType === 'mouse') {
         resetScrollData(pointerId, list.value);
@@ -175,7 +175,7 @@ function onPointerLeave(event) {
     }
 }
 
-function resetScrollData(pointerId, elem) {
+function resetScrollData(pointerId: number, elem: null | HTMLElement) {
     if (elem) {
         elem.style.setProperty('scroll-behavior', 'smooth');
         const widthCols = window.getComputedStyle(elem).getPropertyValue('grid-auto-columns');
@@ -193,7 +193,7 @@ function resetScrollData(pointerId, elem) {
     }
 }
 
-function valueScroll(elem) {
+function valueScroll(elem: null | HTMLElement) {
     if (elem) {
         const c = elem.clientWidth,
             o = elem.offsetWidth,

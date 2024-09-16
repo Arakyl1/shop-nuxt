@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+    :root {
+        --white: #fff;
+        --invalid: #ef5959;
+        --valid: #22c55e;
+        --blue-30: rgba(119, 177, 245, 0.1);
+        --blue-50: rgba(16, 116, 235, 0.3);
+        --blue-100: rgb(119, 177, 245);
+        --blue-300: #4a98f5;
+        --blue-500: rgb(16, 116, 235);
+        --gray-100: #f7f7f7;
+        --gray-200: #e7e7e7;
+        --gray-300: #9c9c9c;
+        --gray-500: #7d7d7d;
+        --gray-700: #757575;
+      
+        --yellow-100: #ffc773;
+        --yellow-300: #ffb240;
+        --yellow-500: #ff9900;
+      
+        --red-300: #f87171;
+        --red-500: #ef4444;
+    
+        --green-300: #4ade80;
+        --green-500: #22c55e;
+    
+        --black-50: rgb(40, 40, 40, 0.8);
+        --black-100: #575757;
+        --black-300: #383838;
+        --black-500: #323232;
+        --black-700: #2d2d2d;
+        --black-900: #282828;
+
+        --text-3xl: 4rem;
+        --text-2xl: 2rem;
+        --text-xl: 1.5rem;
+        --text-lg: 1.125rem;
+        --text-md: 1rem;
+        --text-sm: 0.875rem;
+        --text-xs: 0.75rem;
+    }
+
+    h1 {
+        font-size: var(--text-3xl);
+        line-height: 78px;
+    }
+    
+    h2 {
+        font-size: var(--text-xl);
+        line-height: 28px;
+    }
+    
+    h3 {
+        font-size: var(--text-xl);
+        line-height: 34px;
+    }
+    
+    h4 {
+        font-size: var(--text-lg);
+        line-height: 28px;
+    }
+
+    @media screen and  (min-width: 768px) {
+        h2 {
+            font-size: var(--text-2xl);
+            line-height: 38px;
+        }
+    }
+}

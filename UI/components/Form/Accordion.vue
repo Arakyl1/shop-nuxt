@@ -2,7 +2,7 @@
     <div ref="accordion" data-accordion class="relative">
         <div ref="trigger" class="w-full">
             <slot name="trigger" v-bind="{ isActive, close, onClick, open, onHover, onContextMenu, onFocus }">
-                <Button
+                <UButton
                     :mode="'outline'"
                     class="text-sm text-medium"
                     :class="$style.Dropdown_Botton"
@@ -11,17 +11,18 @@
                     @click="isActive ? close() : onClick()"
                 >
                     <Paragraph :size="'xs'" :text="text" />
-                </Button>
+                </UButton>
             </slot>
         </div>
         <Transition :name="animation || ''">
+            <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
             <div
+                ref="body"
                 :class="$style.body"
                 :style="[isActive ? { height: size && animation ? size.h : 'auto' } : {}]"
-                ref="body"
                 accordion-body
             >
-                <slot v-bind="{ isActive, close, onClick, open, onHover, onContextMenu, onFocus }"></slot>
+                <slot v-bind="{ isActive, close, onClick, open, onHover, onContextMenu, onFocus }"/>
             </div>
         </Transition>
     </div>
@@ -33,7 +34,7 @@ import { onMounted, ref, unref, watch } from 'vue';
 
 import type { Props as ButtonProps } from '../Button/Button.vue';
 import type { Props as CardProps } from '../Block/Card.vue';
-import Button from '../Button/Button.vue';
+import UButton from '../Button/Button.vue';
 // import Card from '../Container/Card.vue';
 import Paragraph from '../Paragraph/Text.vue';
 import useShow from '../../composables/useShow';

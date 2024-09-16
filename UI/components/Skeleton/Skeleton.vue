@@ -1,6 +1,7 @@
 
 <template>
-    <component :is="tag" :hidden="!loader" :class="[
+    <component
+:is="tag" :hidden="!loader" :class="[
         animated ? 'liner__gradient-loader animate-loader-data' : `bg-${baseColor}`,
         $style.body, `rounded-${rounded}`, `SkeM_${mode}`
     ]">_</component>

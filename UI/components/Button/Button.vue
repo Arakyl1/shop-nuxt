@@ -1,13 +1,7 @@
 <template>
     <component
-        :is="isTag"
-        ref="button"
-        :type="isType"
-        :class="rootClass"
-        :tabindex="disabled || $attrs?.disabled ? -1 : 0"
-        :disabled="disabled"
-        data-button
-    >
+    :is="isTag" ref="button" :type="isType" :class="[rootClass, $style.button]"
+        :tabindex="disabled || $attrs?.disabled ? -1 : 0" :disabled="disabled" data-button>
         <template v-if="iconLeft">
             <Transition v-if="iconTransition" :name="iconTransition" mode="out-in">
                 <Icon v-bind="{ ...iconLeft }" aria-hidden="true" />
@@ -59,6 +53,11 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+    text: undefined,
+    iconLeft: undefined,
+    iconRight: undefined,
+    iconTransition: undefined,
+    mode: undefined,
     tag: 'button',
     type: 'button',
     focus: false,
@@ -80,22 +79,19 @@ const isType = computed(() =>
 const isTag = computed(() => (props.tag === 'nuxt-link' ? NuxtLink : props.tag));
 
 const rootClass = computed(() => {
-    return [
-        className['button'],
-        {
-            ['aspect-ratio']: props.square,
-            [`btM_${props.mode}`]: props.mode,
-            [`rounded-${props.rounded}`]: props.rounded,
-            // [className[props.appearance!]]: props.appearance,
-            [className['focus']]: props.focus,
-            [className['active']]: props.active,
-            [className['hover']]: props.checkHoverParent,
-            [className['disabled']]: props.disabled,
-            [props.height]: props.height,
-            [className['icon-none']]: props.iconNon,
-            [className['icon--disabled']]: props.disabled && !props.mode && (props.iconLeft || props.iconRight)
-        }
-    ];
+    return {
+        ['aspect-square']: props.square,
+        [`btM_${props.mode}`]: props.mode,
+        [`rounded-${props.rounded}`]: props.rounded,
+        // [className[props.appearance!]]: props.appearance,
+        [className['focus']]: props.focus,
+        [className['active']]: props.active,
+        [className['hover']]: props.checkHoverParent,
+        [className['disabled']]: props.disabled,
+        [props.height]: !(/link/gi.test(props.mode || 'undefined')) && !!props.height,
+        [className['icon-none']]: props.iconNon,
+        [className['icon--disabled']]: props.disabled && !props.mode && (props.iconLeft || props.iconRight)
+    };
 });
 
 defineExpose({ button });
@@ -139,7 +135,7 @@ defineExpose({ button });
     --base-outline: 2px solid rgb(230, 211, 161);
 }
 
-.button > p[button-text] {
+.button>p[button-text] {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -151,18 +147,19 @@ defineExpose({ button });
 
 .button:not(.icon-none) svg {
     --icon-color: var(--stroke-color, #252525);
+    stroke-width: var(--stroke-width, 1.5px);
     transition: var(--transition, var(--transitions-sm));
 }
 
 // HOVER STATE
-*:hover > .button.hover:not(:is(.disabled, .active)),
+*:hover>.button.hover:not(:is(.disabled, .active)),
 .button:hover:not(:is(.disabled, .active)) {
     border: var(--border-hover, var(--border, none));
     background-color: var(--bg-color-hover);
     color: var(--color-hover, var(--color, #252525));
 }
 
-*:hover > .button.hover:not(:is(.disabled, .active, .icon-none)) svg,
+*:hover>.button.hover:not(:is(.disabled, .active, .icon-none)) svg,
 .button:hover:not(:is(.disabled, .active, .icon-none)) svg {
     --icon-color: var(--stroke-hover, var(--stroke-color, #252525));
 }

@@ -1,25 +1,25 @@
 
-import { default as base } from "./base";
-import { default as inputValid } from "./inputValid";
-import { default as notificationsMessage } from "./notifications/message";
-import { default as notificationsServerMessage } from "./notifications/server_message";
-import { default as button } from "./component/button";
-import { default as select } from "./component/select";
-import { default as confirm } from "./component/confirm";
-import { default as empty } from "./component/empty";
-import { default as footer } from "./component/footer";
-import { default as header } from "./component/header";
-import { default as input } from "./component/input";
-import { default as modal } from "./component/modal";
-import { default as search } from "./component/search";
-import { default as pageAdd } from "./page/add";
-import { default as pageCatalog } from "./page/catalog";
-import { default as pageCatalogId } from "./page/catalogId";
-import { default as pageContact } from "./page/contact";
-import { default as pageMain } from "./page/main";
-import { default as pageUserMain } from "./page/user/main";
-import { default as pageAdminTooltip } from "./page/admin/tooltip";
-import { default as pageMeta } from "./page/meta";
+import base from "./base";
+import inputValid from "./inputValid";
+import notificationsMessage from "./notifications/message";
+import notificationsServerMessage from "./notifications/server_message";
+import button from "./component/button";
+import select from "./component/select";
+import confirm from "./component/confirm";
+import empty from "./component/empty";
+import footer from "./component/footer";
+import header from "./component/header";
+import input from "./component/input";
+import modal from "./component/modal";
+import search from "./component/search";
+import pageAdd from "./page/add";
+import pageCatalog from "./page/catalog";
+import pageCatalogId from "./page/catalogId";
+import pageContact from "./page/contact";
+import pageMain from "./page/main";
+import pageUserMain from "./page/user/main";
+import pageAdminTooltip from "./page/admin/tooltip";
+import pageMeta from "./page/meta";
 
 export default {
     ...base,

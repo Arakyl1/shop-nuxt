@@ -1,0 +1,44 @@
+
+/* Scrollbar Style */
+.scrollbar {
+  transition: all cubic-bezier(0.333, 0.5, 0.65, 1) 0.6s;
+  -webkit-touch-callout: none;
+}
+
+.scrollbar.ver {
+  overflow: hidden scroll;
+}
+
+.scrollbar.hor {
+  overflow: scroll hidden;
+}
+
+/* // @-moz-document url-prefix() {
+//     .scrollbar-v1{
+//         padding-right: 6px;
+//     }
+// } */
+@supports (scrollbar-width: auto) {
+  .scrollbar {
+    /* scrollbar-width: thin; */
+    scrollbar-color: var(--scrollbar-color);
+  }
+}
+
+@supports selector(::-webkit-scrollbar) {
+  .scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    border: 2px solid transparent;
+    background-color: var(--scrollbar-color);
+  }
+}
+
+*.Expand_Container_2 {
+  width: calc(100% + 2rem);
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}

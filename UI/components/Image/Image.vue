@@ -6,7 +6,7 @@
                 :alt="props?.alt || 'image'"
                 :class="[$style.Image, { [props.customClass!]: props.customClass }]"
                 @error="onError"
-            />
+            >
         </ClientOnly>
     </picture>
 </template>
@@ -15,7 +15,7 @@
 import { computed, ref, useCssModule } from '#imports';
 import { ClientOnly } from "#components";
 
-import { type CSS_BORDER_RADIUS } from '../../type/index';
+import type { CSS_BORDER_RADIUS } from '../../type/index';
 
 export interface Props {
     src?: string;

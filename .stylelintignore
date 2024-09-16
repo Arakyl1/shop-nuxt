@@ -1,0 +1,4 @@
+.nuxt/*
+.output/*
+.playground/*
+node_modules/*

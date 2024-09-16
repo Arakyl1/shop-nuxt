@@ -2,7 +2,7 @@
     <div class="scrollbar" :class="direction">
         <slot name="container">
             <div :class="$style.Scroll_Wrapper">
-                <slot> </slot>
+                <slot/>
             </div>
         </slot>
     </div>

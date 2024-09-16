@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div/>
     <!-- <Panel :mode="'primary'" class="align-center">
         <Card
         :container="'3xl'"
@@ -43,7 +43,6 @@
 // import Group from "@/components/UI/Group/Group.vue";
 // import Input from "@/components/UI/Input/Input.vue";
 // import Password from "@/components/UI/Input/Password.vue";
-// import Button from "@/components/UI/Button/Button.vue";
 // import Card from "@/components/UI/Card/Card.vue";
 import { resetForm, searchInvalidElemInForm, searchMissingParamsInFormDataURl, getFormDataURL } from "@/utils/formHelpers";
 // import { hasProperty } from "@/utils/other";

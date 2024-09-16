@@ -1,4 +1,4 @@
-import { appendResponseHeader, H3Event } from 'h3'
+import { appendResponseHeader, type H3Event } from 'h3'
 
 type gg = Parameters<typeof $fetch.raw>
 export const fetchWithCookie = async<T extends unknown>(_event: H3Event, url: string, request: gg['1'] = {} as gg[1]): Promise<T> => {

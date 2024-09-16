@@ -1,6 +1,6 @@
 <template>
     <div role="progressbar" :class="[$style.Progress]" :aria-valuenow="value" :aria-valuemin="min" :aria-valuemax="max">
-        <div :class="[{ [$style[mode]]: mode }, $style.Progress_value]" :style="{ width: getWidthForProgress(value) + 'px' }"></div>
+        <div :class="[{ [$style[mode]]: mode }, $style.Progress_value]" :style="{ width: getWidthForProgress(value) + 'px' }"/>
     </div>
 </template>
 

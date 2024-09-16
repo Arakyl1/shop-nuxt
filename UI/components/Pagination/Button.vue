@@ -1,5 +1,5 @@
 <template>
-    <Button
+    <UButton
         :aria-label="page['aria-label']"
         :aria-current="page.isCurrent"
         :disabled="(disabled || page.disabled) && page.isCurrent"
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Props as ButtonProps, default as Button } from '../Button/Button.vue';
+import { type Props as ButtonProps, default as UButton } from '../Button/Button.vue';
 // props.page interface Page {
 //     number: number,                  - номер старницы,
 //     isCurrent: boolean,              - текушая ли страница

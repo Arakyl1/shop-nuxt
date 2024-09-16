@@ -93,7 +93,6 @@ import Switch from "@/components/UI/Switch/Switch.vue";
 import CheckBox from "@/components/UI/CheckBox/Checkbox.vue";
 import Group from "@/components/UI/Group/Group.vue";
 import GroupItem from "@/components/UI/Group/GroupItem.vue";
-import Button from "@/components/UI/Button/Button.vue";
 import Tooltip from "@/components/UI/Tooltip/Tooltip.vue";
 import Accordion from "@/components/UI/Accordion/Accordion.vue";
 import Radio from "@/components/UI/Radio/Radio.vue";

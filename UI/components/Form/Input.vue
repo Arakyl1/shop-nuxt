@@ -13,11 +13,13 @@
             @focus="onFocus"
             @input="onInput"
             @change="onInput"
-        />
+        >
 
-        <i v-if="icon?.icon" :class="[iconClickable ? 'pointer' : '', $style.icon]" @click="onIconClick">
-            <Icon v-bind="icon" aria-hidden="true" />
-        </i>
+        <slot name="right-content">
+            <i v-if="icon?.icon" :class="[iconClickable ? 'pointer' : '', $style.icon]" @click="onIconClick">
+                <Icon v-bind="icon" aria-hidden="true" />
+            </i>
+        </slot>
         <Paragraph
             v-if="span && !icon && ['number', 'text'].includes(type)"
             :class="$style.icon"
@@ -138,7 +140,7 @@ function onBlur(e) {
     onInput(e);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 function onIconClick(event: PointerEvent) {
     if (!props.iconClickable) return;
     emit('icon-click', event);

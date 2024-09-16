@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag" ref="flex" :class="rootClass"><slot></slot></component>
+    <component :is="tag" ref="flex" :class="rootClass" class="flex"><slot/></component>
 </template>
 
 <script setup lang="ts">
@@ -15,14 +15,13 @@ export interface Props {
     widthFull?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), { tag: 'div', align: 'center', widthFull: true });
+const props = withDefaults(defineProps<Props>(), { tag: 'div', align: 'center', widthFull: true, direction: undefined, justify: undefined });
 const flex = ref<HTMLElement | null>(null);
 
 const rootClass = computed(() => {
     return {
-        ['flex']: true,
-        [`flex-${props.direction}`]: props.direction,
-        [`align-${props.align}`]: props.align,
+        [`flex-${props.direction}` as CSS_FLEX_DIRECTION]: props.direction,
+        [`items-${props.align}`]: props.align,
         [`justify-${props.justify}`]: props.justify,
         ['w-full']: props.widthFull
     };

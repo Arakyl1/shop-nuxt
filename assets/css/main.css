@@ -1,3 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* @tailwind base; */
+/* @tailwind components;
+@tailwind utilities; */
+
+.decor-line{
+    width: 100%;
+    border-bottom: 1px solid #C9C9C9;
+}

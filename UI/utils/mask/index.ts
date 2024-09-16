@@ -41,12 +41,13 @@ export function onTelephoneMask() {
     };
 }
 
-export function onDateMask(mask: KeyDate, updateValue?: (...arg: any[]) => unknown) {
+export function onDateMask(mask: KeyDate, updateValue?: (...arg: unknown[]) => unknown) {
     const event = new Event('change');
     return function ({ target }: Event) {
         if (target instanceof HTMLInputElement) {
             target.value = formatDate(target.value, mask);
             target.dispatchEvent(event);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             updateValue && updateValue(target.value);
         }
     };

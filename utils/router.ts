@@ -1,86 +1,86 @@
 export const ROOTER = {
-    1: { title: 'Все товары', href: '/catalog' },
-    2: { title: 'Акции', href: '/catalog' },
-    3: { title: 'Доставка и Оплата', href: '/delivery' },
-    4: { title: 'Контакты', href: '/contact' },
-    5: { title: 'Производители', href: '/catalog' },
-    6: { title: 'Подарочные сертификаты', href: '/delivery' },
-    7: { title: 'Партнерская программа', href: '/contact' },
+    allProducts: { id: 'allProducts', title: 'Все товары', href: '/catalog' },
+    stocks: { id: 'stocks', title: 'Акции', href: '/catalog' },
+    deliveryAndPayment: { id: 'deliveryAndPayment', title: 'Доставка и Оплата', href: '/delivery' },
+    contacts: { id: 'contacts', title: 'Контакты', href: '/contact' },
+    manufacturers: { id: 'manufacturers', title: 'Производители', href: '/catalog' },
+    giftCertificates: { id: 'giftCertificates', title: 'Подарочные сертификаты', href: '/delivery' },
+    affiliateProgram: { id: 'affiliateProgram', title: 'Партнерская программа', href: '/contact' },
     
-    8: { title: 'Просмотренные', href: '/user' },
-    9: { title: 'История заказов', href: '/user' },
-    10: { title: 'Избранное', href: '/user/favorites' },
-    11: { title: 'Рассылка', href: '/' },
-    12: { title: 'Корзина', href: '/user/basket' },
+    viewed: { id: 'viewed', title: 'Просмотренные', href: '/user' },
+    orderHistory: { id: 'orderHistory', title: 'История заказов', href: '/user' },
+    favourites: { id: 'favourites', title: 'Избранное', href: '/user/favorites' },
+    mailing: { id: 'mailing', title: 'Рассылка', href: '/' },
+    basket: { id: 'basket', title: 'Корзина', href: '/user/basket' },
     
     
-    13: { title: 'Лист ожилания', href: '/user' },
-    14: { title: 'Списки сравнения', href: '/user' },
-    15: { title: 'Личные данные', href: '/user/main' },
-    16: { title: 'Заказы', href: '/user' },
-    17: { title: 'Возврат товара', href: '/user' },
-    18: { title: 'Бонусная программа', href: '/user' },
-    19: { title: 'Уведомления', href: '/user' },
-    20: { title: 'Отзывы', href: '/user/reviews' },
-    21: { title: 'Вопросы', href: '/user' },
-    22: { title: 'Админ', href: '/admin' },
-    23: { title: 'Создать товар', href: '/admin/create_product' },
-    24: { title: 'Управление подсказками', href: '/admin/tooltip' },
-    25: { title: 'Создать подсказку', href: '/admin/tooltip/create' },
+    waitingList: { id: 'waitingList', title: 'Лист ожидания', href: '/user' },
+    comparisonLists: { id: 'comparisonLists', title: 'Списки сравнения', href: '/user' },
+    personalData: { id: 'personalData', title: 'Личные данные', href: '/user/main' },
+    orders: { id: 'orders', title: 'Заказы', href: '/user' },
+    returnProduct: { id: 'returnProduct', title: 'Возврат товара', href: '/user' },
+    bonusProgram: { id: 'bonusProgram', title: 'Бонусная программа', href: '/user' },
+    notifications: { id: 'notifications', title: 'Уведомления', href: '/user' },
+    reviews: { id: 'reviews', title: 'Отзывы', href: '/user/reviews' },
+    questions: { id: 'questions', title: 'Вопросы', href: '/user' },
+    admin: { id: 'admin', title: 'Админ', href: '/admin' },
+    createProduct: { id: 'createProduct', title: 'Создать товар', href: '/admin/create_product' },
+    managingHints: { id: 'managingHints', title: 'Управление подсказками', href: '/admin/tooltip' },
+    createHints: { id: 'createHints', title: 'Создать подсказку', href: '/admin/tooltip/create' },
 }
 
 export const FOOTER_ROUTER = [
     {
         title: 'Информация',
         links: [
-            ROOTER[3],
-            ROOTER[4],
-            ROOTER[5],
-            ROOTER[6],
-            ROOTER[7],
-            ROOTER[2]
+            ROOTER['deliveryAndPayment'],
+            ROOTER['contacts'],
+            ROOTER['manufacturers'],
+            ROOTER['giftCertificates'],
+            ROOTER['affiliateProgram'],
+            ROOTER['stocks']
         ]
     },
     {
         title: 'Служба поддержки',
         links: [
-            ROOTER[17],
-            ROOTER[22],
+            ROOTER['returnProduct'],
+            ROOTER['admin'],
         ]
     },
     {
         title: 'Личный кабинет',
         links: [
-            ROOTER[15],
-            ROOTER[9],
-            ROOTER[10],
-            ROOTER[11],
+            ROOTER['personalData'],
+            ROOTER['orderHistory'],
+            ROOTER['favourites'],
+            ROOTER['mailing'],
         ]
     },
 ]
 
 export const HEADER_ROUTER = [
-    ROOTER[3],
-    ROOTER[4],
+    ROOTER['deliveryAndPayment'],
+    ROOTER['contacts'],
 ]
 
 export const MODAL_MENU_USER = [
-    [ROOTER[15],ROOTER[12]],
-    [ROOTER[9],ROOTER[8],ROOTER[20],ROOTER[21]],
-    [ROOTER[16],ROOTER[18],ROOTER[14], ROOTER[13]],
+    [ROOTER['personalData'],ROOTER['basket']],
+    [ROOTER['orderHistory'],ROOTER['viewed'],ROOTER['reviews'],ROOTER['questions']],
+    [ROOTER['orders'],ROOTER['bonusProgram'],ROOTER['comparisonLists'], ROOTER['waitingList']],
 ]
 
 
 export const PAGE_USER = [
-    ROOTER[15],ROOTER[16],ROOTER[19],ROOTER[18],
-    ROOTER[20],ROOTER[21],ROOTER[14],
+    ROOTER['personalData'],ROOTER['orders'],ROOTER['notifications'],ROOTER['bonusProgram'],
+    ROOTER['reviews'],ROOTER['questions'],ROOTER['comparisonLists'],
 ]
 
 
 export const PAGE_ADMIN = [
-    ROOTER[22],ROOTER[23],ROOTER[24],
+    ROOTER['admin'],ROOTER['createProduct'],ROOTER['managingHints'],
 ]
 
 export const PAGE_ADMIN_TOOLTIP = [
-    ROOTER[25]
+    ROOTER['createHints']
 ]

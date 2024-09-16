@@ -6,7 +6,7 @@
                 <span v-if="required" class="color-error-500">*</span>
             </Paragraph>
         </slot>
-        <slot v-bind="{ typeValid, massage }"></slot>
+        <slot v-bind="{ typeValid, massage }"/>
 
         <slot name="footer" v-bind="{ typeValid, massage }">
             <Paragraph

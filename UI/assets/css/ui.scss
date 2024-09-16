@@ -1,24 +1,24 @@
-// Button mode variant !!!Prefix "btM_"
-// Список всех доступных переменых для цветовой настройки кнопки
-// --bg-color - задний фон в обычном состояние
-// --color - цвет текста в обычном состояние
-// --stroke-color - цвет заливки или обводки иконки в обычном состояние
-// --bg-color-hover - задний фон в hover состояние
-// --color-hover - цвет текста в hover состояние
-// --stroke-hover - цвет заливки или обводки иконки в hover состояние
-// --bg-color-active - задний фон в active состояние
-// --color-active - цвет текста в active состояние
-// --stroke-active - цвет заливки или обводки иконки в active состояние
-// --bg-color-disabled - задний фон в disabled состояние
-// --color-disabled - цвет текста в disabled состояние
-// --stroke-disabled - цвет заливки или обводки иконки в disabled состояние
-// --icon-bg-color-disabled - задний фон в disabled состояние(эт если в кнопке есть только иконка)
-// --icon-stroke-disabled - цвет заливки или обводки иконки в disabled состояние(эт если в кнопке есть только иконка)
-// --outline - настройка outline кнопки в состояние :focus-visible
-// --transition - настройка transition кнопки и иконки
+ /* Button mode variant !!!Prefix "btM_"
+ Список всех доступных переменых для цветовой настройки кнопки
+ --bg-color - задний фон в обычном состояние
+ --color - цвет текста в обычном состояние
+ --stroke-color - цвет заливки или обводки иконки в обычном состояние
+ --bg-color-hover - задний фон в hover состояние
+ --color-hover - цвет текста в hover состояние
+ --stroke-hover - цвет заливки или обводки иконки в hover состояние
+ --bg-color-active - задний фон в active состояние
+ --color-active - цвет текста в active состояние
+ --stroke-active - цвет заливки или обводки иконки в active состояние
+ --bg-color-disabled - задний фон в disabled состояние
+ --color-disabled - цвет текста в disabled состояние
+ --stroke-disabled - цвет заливки или обводки иконки в disabled состояние
+ --icon-bg-color-disabled - задний фон в disabled состояние(эт если в кнопке есть только иконка)
+ --icon-stroke-disabled - цвет заливки или обводки иконки в disabled состояние(эт если в кнопке есть только иконка)
+ --outline - настройка outline кнопки в состояние :focus-visible
+ --transition - настройка transition кнопки и иконки */
 
 
-// button link 
+/* button link  */
 .btM_link {
     --bg-color: none;
     --color: var(--black-500);
@@ -27,7 +27,15 @@
     --color-hover: var(--blue-500)
 }
 
-// button none
+.btM_link-white {
+    --bg-color: none;
+    --color: var(--white);
+    --fill-color: var(--wthie);
+    --bg-color-hover: none;
+    --color-hover: var(--blue-500)
+}
+
+/* button none */
 .btM_none {
     --bg-color: none;
     --color: var(--black-700);
@@ -37,7 +45,7 @@
     --outline: none
 }
 
-// кнопка с обводкой
+/* кнопка с обводкой */
 .btM_outline {
     border: 1px solid var(--gray-500);
     border-radius: var(--rounded-sm);
@@ -45,7 +53,7 @@
     --fill-color: var(--gray-700);
 }
 
-// button primary
+/* button primary */
 .btM_primary {
     box-shadow: 0px 0px 15px -2px var(--gray-500);
     --bg-color: var(--white);
@@ -60,6 +68,7 @@
 .btM_black {
     --bg-color: var(--black-700);
     --bg-color-hover: var(--black-100);
+    --stroke-color: var(--white);
 }
 
 .btM_white {
@@ -87,11 +96,14 @@
 .btM_red {
     --bg-color: var(--red-500);
     --bg-color-hover: var(--red-300);
+    --stroke-color: var(--white);
 }
 
 .btM_yellow {
+    --color: var(--white);
     --bg-color: var(--yellow-500);
     --bg-color-hover: var(--yellow-300);
+    --stroke-color: var(--white);
 }
 
 .btM_green {
@@ -100,13 +112,15 @@
 }
 
 .btM_white-icon {
-    --fill-color: var(--white);
-    --fill-hover: var(--yellow-100);
+    --color: var(--white);
+    --stroke-color: var(--white);
+    --color-hover: var(--yellow-100);
+    --stroke-hover: var(--yellow-100);
 }
 
 .btM_black-icon {
-    --fill-color: var(--black-300);
-    --fill-hover: var(--blue-500);
+    --stroke-color: var(--black-300);
+    --stroke-hover: var(--blue-500);
 }
 
 .btM_gray-icon {
@@ -127,17 +141,26 @@
     --stroke-active: var(--red-500);
 }
 .btM_yellow-icon {
-    --fill-color: var(--yellow-500);
-    --fill-hover: var(--blue-300);
+    --stroke-color: var(--yellow-500);
+    --stroke-hover: var(--blue-300);
 }
 
 .btM_green-icon {
-    --fill-color: var(--green-500);
-    --fill-hover: var(--green-300);
+    --stroke-color: var(--green-500);
+    --stroke-hover: var(--green-300);
+}
+
+.btM_Wh-lint {
+    --bg-color: none;
+    --color: var(--white);
+    --stroke-color: var(--white);
+    --stroke-hover: var(--white);
+    --bg-color-hover: none;
+    --color-hover: var(--white)
 }
 
 
-// Input mode variant !!!Prefix "InpM_"
+ /* Input mode variant !!!Prefix "InpM_" */
 /* Список всех доступных переменых для цветовой настройки input 
 --bg-color - задний фон в обычном состояние
 --padding - величина полей
@@ -199,7 +222,7 @@
 }
 
 
-// container for CardGrigScroll, !!!Prefix "GS_"
+/* container for CardGrigScroll, !!!Prefix "GS_" */
 
 .GS_xs {
     grid-auto-columns: calc(100%);
@@ -283,7 +306,7 @@
     }
 }
 
-// Component Container, !!!Prefix "Co_
+/* Component Container, !!!Prefix "Co_ */
 .Co_xs {
     padding: 9px 8px;
 }
@@ -296,7 +319,7 @@
     padding: 1.5rem;
 }
 
-// Component Panel, !!!Prefix "Pa_
+/* Component Panel, !!!Prefix "Pa_ */
 .Pa_primary {
     display: flex;
     flex-direction: column;
@@ -322,7 +345,7 @@
     }  
 }
 
-// Component Card, !!!Prefix "Ca_"
+/* Component Card, !!!Prefix "Ca_" */
 .Ca_white {
     background-color: var(--white);
 }
@@ -349,7 +372,7 @@
     background-color: var(--blue-30);
 }
 
-// Component Container Grid, !!!Prefix "CoG_
+/* Component Container Grid, !!!Prefix "CoG_ */
 .CoG_lg {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -358,7 +381,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-// Component Dropdown, !!!Prefix "DrM_
+/* Component Dropdown, !!!Prefix "DrM_ */
 .drM_primary {
     box-shadow: var(--box-shadow-md);
 }
@@ -367,22 +390,22 @@
     transform: translateY(calc(100% + 0.5rem));
 }
 
-// Component Select, !!!Prefix "SelM_
-// .SelM_primary {}
+/* Component Select, !!!Prefix "SelM_ */
+/* .SelM_primary {} */
 
-// Component Mask mode, !!!Prefix "MaM_
-// --bg-color-mask - цвет фона маски
+/* Component Mask mode, !!!Prefix "MaM_ */
+/* --bg-color-mask - цвет фона маски */
 .MaM_dark {
-    --bg-color-mask: var(--black-100);
+    --bg-color-mask: var(--black-50);
 }
 
-// Component Progress mode, !!!Prefix "ProM_
+/* Component Progress mode, !!!Prefix "ProM_ */
 .ProM_black {
     border-radius: 999px;
     background-color: var(--blue-500);
 }
 
-// Component Radio primary mode, !!!Prefix "RadPrM_
+/* Component Radio primary mode, !!!Prefix "RadPrM_ */
 
 .RadPrM_blue {
     --default-border: 1px solid var(--gray-300);
@@ -401,13 +424,13 @@
     --check-checked-disabled-border: 4px solid var(--gray-300);
 }
 
-// Component Radio secondary mode, !!!Prefix "RadSecM_
+/* Component Radio secondary mode, !!!Prefix "RadSecM_ */
 
 .RadSecM_blue {
     --svg-checked-stroke: var(--blue-500);
 }
 
-// Component Skeleton mode, !!!Prefix "SkeM_
+/* Component Skeleton mode, !!!Prefix "SkeM_ */
 .SkeM_gray {
     background-image: linear-gradient(var(--lin-grad-loader--deg, 135deg), var(--white), var(--gray-200), var(--white), var(--gray-200));
     background-size: 400% 400%;

@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div/>
     <!-- <form ref="form" class="w-2/4">
         <Group class="gap-6 w-full">
             <Title :tag="'h3'" :text="common.TITLE"/>

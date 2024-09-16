@@ -2,7 +2,8 @@
 <template>
     <Dropdown v-bind="{ triggers, position, mode: dropdownMode }" :class="[$style.Select, { [`SelM_${mode}`]: mode }]">
         <template #trigger="{ isActive, onClick, close, onFocus }">
-            <Input data-trigger
+            <Input
+data-trigger
                 class="text-sm h-8"
                 :model-value="selectActiveOption?.name"
                 :icon="{ icon: isActive ? defaultAttrforUI.selectTriggerIcon : defaultAttrforUI.selectTriggerIconActive, size: '24_24' }"
@@ -48,10 +49,10 @@ import Card from '../Block/Card.vue';
 import Radio from './Radio.vue';
 import type { Props as RadioProps } from './Radio.vue';
 import Input from './Input.vue';
-import type { InputProps } from '../../type/index';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { InputProps , defaultAttrforUI, type SelectMode } from '../../type/index';
+ 
 import { nextTick, ref, useForm } from '#imports';
-import { defaultAttrforUI, type SelectMode } from '../../type/index';
+
 
 export interface Props extends Pick<PropsDropdown, 'triggers' | 'position'>, Pick<RadioProps, 'labelOpt'> {
     data: Array<{ id: number | string; name: string | number }>;
@@ -70,7 +71,7 @@ const emit = defineEmits(['upadate:active-option']);
 const { addToWatchEventRestore } = useForm();
 const selectActiveOption = ref<Props['data'][0] | null>(props.defaultValue ? props.data?.[0] : null);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 function onChange(closeSelect: () => any) {
     return function ({ target }: Event) {
         if (!(target instanceof HTMLElement)) return;

@@ -1,9 +1,11 @@
 import { Prisma, } from "@prisma/client";
 import prisma from "@/server/db";
-import { storageCategorData } from "~~/type/intex";
+import type { storageCategorData } from "~~/type/intex";
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AttributeKey: Array<keyof Prisma.AttributeWhereInput> = ['children', 'id', 'item', 'name', 'parent', 'type', 'value']
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type WhereIntFilterKey = (keyof Prisma.IntFilter)
 
 function initFindParams<T extends { [k: string]: unknown }>(data: T) {
@@ -34,7 +36,7 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event)
 
     const getStorageKey = Object.entries(query).map(_ => _.join(':')).join('/')
-    let storageData: storageCategorData | null = await useStorage().getItem(getStorageKey)
+    const storageData: storageCategorData | null = await useStorage().getItem(getStorageKey)
 
     try {
         if (storageData) {

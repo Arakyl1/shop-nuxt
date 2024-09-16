@@ -1,5 +1,7 @@
+import { isServer } from "#imports";
 export default () => {
-    const copy = async (key: any) => {
+    if (isServer()) return;
+    const copy = async (key: string) => {
         const permissionToUseClipboard = await navigator.permissions.query({ name: "clipboard-write" })
         if (permissionToUseClipboard.state === "granted" || permissionToUseClipboard.state === "prompt") {
             navigator.clipboard.writeText(key)

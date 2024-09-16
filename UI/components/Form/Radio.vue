@@ -19,7 +19,7 @@
                 :class="$style.input"
                 v-bind="{ ...inputAttr }"
                 hidden
-            />
+            >
             <div :class="$style.check">
                 <Icon v-if="mode === 'secondary'" :icon="'Check-primary'" :size="'16_16'" class="stroke-1\5" />
             </div>

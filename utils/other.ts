@@ -1,7 +1,6 @@
-import { Prisma } from "@prisma/client";
-import { CookieKey, Enumerable, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
-import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
-import { RouteMeta } from "vue-router";
+import type { Prisma } from "@prisma/client";
+import type { CookieKey, Enumerable, KeyAsyncData, NAMEAPP, ProductCardBase } from "~~/type/intex";
+// import type { Props as StatusProps } from "@/components/UI/Status/Status.vue";
 
 
 type sizeI = 28|48|56|60|64|72|80|92|96|240|320|480
@@ -114,7 +113,7 @@ export const getLanguageUser = (locale: string) => locale.split(',').map(_ => _.
 
 export function getStatus(data:ProductCardBase | null) {
     if (!data) return null
-    let status: StatusProps['status'] | undefined
+    let status: 'discount' | 'news' | undefined
 
 
     switch (true) {
@@ -132,8 +131,8 @@ export function getStatus(data:ProductCardBase | null) {
 
 export const getKeyCookie = (k: CookieKey) => k
 
-export const isClient = () => process.client
-export const isServer = () => process.server
+export const isClient = () => import.meta.client
+export const isServer = () => import.meta.server
 
 export function hasProperty<T extends { [k: PropertyKey]: any }>(odj: T, key: Enumerable<string>): boolean {
     const listKey = Object.keys(odj)

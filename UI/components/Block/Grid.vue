@@ -1,6 +1,6 @@
 <template>
     <component :is="tag" ref="grid" :class="rootClass">
-        <slot></slot>
+        <slot/>
     </component>
 </template>
 
@@ -16,7 +16,7 @@ export interface Props {
     container?: ContainerGrid | 'n';
 }
 
-const props = withDefaults(defineProps<Props>(), { tag: 'div', align: 'center', container: 'lg' });
+const props = withDefaults(defineProps<Props>(), { tag: 'div', align: 'center', container: 'lg', justify: undefined });
 const grid = ref<HTMLElement | null>(null);
 const className = useCssModule();
 

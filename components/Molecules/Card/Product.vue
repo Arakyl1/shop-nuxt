@@ -3,13 +3,14 @@
                     class=""
                     data-left /> -->
 <template>
-    <UITBlockFlex :tag="'article'" class="h-full">
-        <UITBlockFlex :direction="'column'" class="w-full h-full gap-4">
-            <div class="w-full aspect-ratio rounded-xl relative animate-loader-data "
+    <UITBlockFlex :tag="'article'" class="h-full" :width-full="false">
+        <UITBlockFlex :direction="'col'" class="h-full gap-4">
+            <div
+class="w-full aspect-square rounded-xl relative animate-loader-data "
                 :class="[!content ? 'liner__gradient-loader' : 'bg-gray-100']"
                 :style="{ '--lin-grad-loader--deg': '90deg' }">
                 <template v-if="content">
-                    <div :class="className['button-like']">
+                    <div :class="$style['button-like']">
                         <slot name="bt-favorite" v-bind="{ content }">
                             <ClientOnly>
                                 <ButtonLike
@@ -18,9 +19,10 @@
                             </ClientOnly>
                         </slot>
                     </div>
-                    <div :class="className['image']" class="p-6 /md:p-8">
+                    <div :class="$style.image" class="p-6 md:p-8">
                         <UITBlockFlex :tag="'picture'" class="h-full w-full" :justify="'center'">
-                            <img :src="content.image.length ?
+                            <img
+:src="content.image.length ?
                                 changeValueImageSize(content.image[0].link, {
                                     'heigth': 'h_240',
                                     'bgrem': 'co_white,e_make_transparent:1'
@@ -31,27 +33,31 @@
 
                 </template>
             </div>
-            <UITBlockFlex :direction="'column'" class="grow gap-2">
+            <UITBlockFlex :direction="'col'" class="grow gap-2">
                 <div v-if="content" class="grow w-full">
-                    <UITButton :tag="'nuxt-link'"
+                    <UITButton
+:tag="'nuxt-link'"
                     :to="`/catalog/${content.id}`"
                     :mode="'link'"
-                    :class="[$style['button-link'], 'line-clamp-1']"
-                    class="/xl:text-md"
+                    :class="[$style['button-link']]"
+                    class="xl:text-lg"
                     :target="!isProductCardPage($route) ? '_blank' : '_self'"
                     rel="noopener">
-                        <UITParagraphText :tag="'span'" class="color-inherit">{{ content.name }}</UITParagraphText>
-                        <UITParagraphText :tag="'span'" :color="'gray-300'">{{ content.art }}</UITParagraphText>
+                        <p>
+                            <UITParagraphText :tag="'span'" class="!text-[inherit] mr-2">{{ content.name }}</UITParagraphText>
+                            <UITParagraphText :tag="'span'" :color="'gray-300'">{{ content.art }}</UITParagraphText>
+                        </p>
                     </UITButton>
                 </div>
-                 <UITBlockFlex v-else :class="className['skeleton-elem']" :direction="'column'" class="gap-2">
+                 <UITBlockFlex v-else :class="$style['skeleton-elem']" :direction="'col'" class="gap-2">
                     <UITSkeleton tag="p" :loader="!Boolean(content)" />
                     <UITSkeleton tag="p" :loader="!Boolean(content)" />
                  </UITBlockFlex>
 
                 <UITBlockFlex :justify="'between'" class="gap-4">
-                    <UITSkeleton v-if="!content"
-                        :class="className['skeleton-elem-secondary']" 
+                    <UITSkeleton
+v-if="!content"
+                        :class="$style['skeleton-elem-secondary']" 
                         tag="p" :animated="true"
                         :loader="!Boolean(content)" />
                     <!-- <ProductPrice v-else
@@ -60,33 +66,30 @@
                         :discount="content.discount > 0" /> -->
                     <UITButton
                     :mode="'gray-icon'"
-                    :icon-left="{ icon: 'static', size: '24_24' }"/>
+                    :icon-left="{ icon: 'BarChart', size: '28_28' }"/>
                 </UITBlockFlex>
             </UITBlockFlex>
             <slot name="bt-basket" v-bind="{ content, add }">
-                <UITButton v-if="content && !isNumber(content)"
-                :icon-left="{ icon: 'basket', size: viewport.isGreaterOrEquals('lg') ? '25_25' : '20_20', type: 'monocolor' }"
+                <UITButton
+v-if="content && !isNumber(content)"
+                :icon-left="{ icon: 'basket', size: viewport.isGreaterOrEquals('lg') ? '22_22' : '18_18' }"
                 :text="t('BASE_BUTTON.BASKET_ADD')"
                 :mode="'blue'"
                 :height="'h-10'"
                 :disabled="content.quantity === 0"
-                @click.stop="add({ 'card_id': content.id, count: 1 })"
-                class="justify-center p-2 w-full  text-sm md:text-md md:h-12"/>
+                class="justify-center p-2 w-full text-md md:text-md md:h-12"
+                @click.stop="add({ 'card_id': content.id, count: 1 })"/>
             </slot> 
         </UITBlockFlex>
     </UITBlockFlex>
 </template>
 <script setup lang="ts">
-import { UITBlockFlex, UITBlockCard, UITButton, UITSkeleton, UITParagraphText } from '#components';
-import { ProductCardBase } from "~~/type/intex";
+import { UITBlockFlex, UITButton, UITSkeleton, UITParagraphText } from '#components';
+import type { ProductCardBase } from "~~/type/intex";
 import { t } from "#imports";
 import ButtonLike from "@/components/Atom/Button/Like.vue";
-// import Button from "components/UI/Button/index.vue";
-// import Flex from "@/components/UI/Flex/Flex.vue";
-import ProductPrice from "@/components/Templates/Product/Price.vue";
-// import Skeleton from "@/components/UI/Skeleton/Skeleton.vue";
-import { default as Status } from "@/components/UI/Status/Status.vue";
-// import ButtonLike from "@/components/Templates/Button/ButtonLike.vue";
+// import { default as Status } from "@/components/UI/Status/Status.vue";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { getStatus } from '@/utils/other';
 import { isProductCardPage } from "@/utils/routerHelper";
 
@@ -96,7 +99,6 @@ const props = withDefaults(defineProps<{
 }>(), { data: null })
 
 const viewport = useViewport()
-const className = useCssModule()
 const { add } = useBasket()
 const { toggle, checkAvailabilityItemInFavorites } = useFavorite()
 

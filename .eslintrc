@@ -1,0 +1,80 @@
+{
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module"
+    },
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "@nuxt/eslint-config",
+        "plugin:vue/vue3-recommended",
+        "eslint:recommended",
+        "prettier"
+    ],
+    "plugins": ["simple-import-sort", "import", "prettier"],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js"],
+                "paths": ["./src"]
+            }
+        }
+    },
+    "rules": {
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error",
+        "import/first": "error",
+        "import/newline-after-import": "error",
+        "import/no-duplicates": "error",
+        "prettier/prettier": "error",
+        "vue/require-default-prop": "off",
+        "vue/multi-word-component-names": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "eslint-plugin-vue/html-self-closing": "off",
+        "vue/order-in-components": [
+            "error",
+            {
+                "order": [
+                    // props, components, mixins, data, methods, created, mounted, computed, watch.
+                    "el",
+                    "name",
+                    "key",
+                    "parent",
+                    "functional",
+                    ["delimiters", "comments"],
+                    ["components", "directives", "filters"],
+                    "extends",
+                    "mixins",
+                    ["provide", "inject"],
+                    "ROUTER_GUARDS",
+                    "layout",
+                    "middleware",
+                    "validate",
+                    "scrollToTop",
+                    "transition",
+                    "loading",
+                    "inheritAttrs",
+                    "model",
+                    ["props", "propsData"],
+                    "emits",
+                    "setup",
+                    "asyncData",
+                    "data",
+                    "fetch",
+                    "head",
+                    "computed",
+                    "watch",
+                    "watchQuery",
+                    "LIFECYCLE_HOOKS",
+                    "methods",
+                    ["template", "render"],
+                    "renderError"
+                ]
+            }
+        ]
+    }
+}

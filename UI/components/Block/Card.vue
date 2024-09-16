@@ -1,11 +1,11 @@
 <template>
     <Container ref="card" :class="rootClass" :container="container" :tag="tag" data-card>
-        <slot></slot>
+        <slot/>
     </Container>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useCssModule } from 'vue';
+import { computed, ref } from 'vue';
 
 import type { Props as ContainerProps } from './Container.vue';
 import type { CardMode, CSS_BORDER_RADIUS } from "../../type/index";
@@ -17,8 +17,6 @@ export interface Props extends Pick<ContainerProps, 'container' | 'tag'> {
 }
 
 const props = defineProps<Props>();
-
-const className = useCssModule();
 const card = ref<HTMLElement | null>(null);
 
 const rootClass = computed(() => {

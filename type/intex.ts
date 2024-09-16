@@ -1,6 +1,7 @@
-import { Attribute, Prisma, Role, User } from "@prisma/client";
+import type { Attribute} from "@prisma/client";
+import { Prisma, Role, User } from "@prisma/client";
 import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
-import { DefaultArgs } from "@prisma/client/runtime/library";
+import type { DefaultArgs } from "@prisma/client/runtime/library";
 // export * from "./UI"
 export * from "../UI/type/index"
 // import { UserBuyer } from "server/api/auth/user.get";
@@ -25,12 +26,12 @@ export type NumericRange<
     NumericRange<START, END, [...ARR, 1], ARR[START] extends undefined ? ACC : ACC | ARR['length']>
 
 export type Enumerable<T> = T | Array<T>;
-export type checkArray<T> = T extends any[] ? T[number] : T;
-export type anyFunction = (...arg: any[]) => any;
+export type checkArray<T> = T extends unknown[] ? T[number] : T;
+export type anyFunction = (...arg: unknown[]) => unknown;
 
 export type RecordOption<T extends PropertyKey, U> = { [K in T]: U }
-export type Cached<T extends (...args: any) => any> = ReturnType<T> extends Promise<infer Y> ? Y : ReturnType<T>
-export type KeysMatchingWrite<T extends { [K: PropertyKey]: any }, V> = {
+export type Cached<T extends (...args: unknown) => unknown> = ReturnType<T> extends Promise<infer Y> ? Y : ReturnType<T>
+export type KeysMatchingWrite<T extends { [K: PropertyKey]: unknown }, V> = {
     [K in keyof T]-?: [V] extends [T[K]] ? K : never
 }[keyof T]
 
@@ -354,17 +355,12 @@ export interface UserCreateCommit {
 }
 
 type UserLocationDateKey = 'ip' | 'city' | 'region' | 'country' | 'loc' | 'org' | 'postal' | 'timezone'
-export interface UserLocationDate extends Record<UserLocationDateKey, string> { }
+export type UserLocationDate = Record<UserLocationDateKey, string>
 
 
 
 // SERVER_RESPONSE_CONTENT_KEY
 export type SERVER_RESPONSE_CONTENT_KEY = keyof typeof Common['SERVER_RESPONSE_CONTENT']
-
-
-
-export type ICON_ID_NAME = 'add-list' |'add-plus'|'arrow-right'|'calendar'|'icon-plus'|'arrow-bold'|'basket'|'checkbox-1'|'close'|'delete'|'dot-flashing'|'edit'|'filter'|'like'|'menu'|'other'|'reload'|'share'|'star'|'static'|'user'|'user-outline'|'arrow'|'hide'|'loader'|'loader-circles'|'magnifier'|'magnifier-minus'|'view'
-
 
 
 

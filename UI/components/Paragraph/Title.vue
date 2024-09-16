@@ -2,16 +2,16 @@
     <component :is="tag" :class="rootClass">
         <span v-if="afterContent" :class="[afterContentClass]">{{ afterContent }}</span>
         <span v-else-if="$slots.afterContent" :class="[afterContentClass]">
-            <slot name="after-content"></slot>
+            <slot name="after-content"/>
         </span>
         <span v-if="text">{{ text }}</span>
         <span v-else-if="$slots.default">
-            <slot name="default"></slot>
+            <slot name="default"/>
         </span>
 
         <span v-if="beforeContent" :class="[beforeContentClass]">{{ beforeContent }}</span>
         <span v-else-if="$slots.beforeContent" :class="[beforeContentClass]">
-            <slot name="before-content"></slot>
+            <slot name="before-content"/>
         </span>
     </component>
 </template>

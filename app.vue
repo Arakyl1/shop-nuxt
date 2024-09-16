@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <UITBlockScroll data-scroll-body class="app-body">
+    <template #container>
     <!-- <UITBlockContainer :container="'sm'">
       <p>sdfsdf</p>
       <UITButton :mode="'blue'" :text="'sdfdf'" :icon-left="{ icon: 'arrow-bold', size: '28_28' }" />
@@ -15,28 +16,30 @@
       <UITFormSelect :data="[{ 'id': 1, name: '1' },{ 'id': 2, name: '2' } ,{ 'id': 3, name: '3' }]" :input-name="'test'" class="test-select" />
     </UITBlockContainer> -->
     
-     <!-- <header>
+     <header>
       <Header class="/md:block none" />
-      <HeaderMobile class="/md:hidden" />
-    </header>-->
-    <main class="container mx-auto">
+      <!-- <HeaderMobile class="/md:hidden" /> -->
+    </header>
+    <main class="container mx-auto" :class="$style.page">
       <!-- <Transition name="path" mode="out-in">
         <MoleculesOtherPath v-if="route.path !== '/'" />
       </Transition>  -->
       <NuxtPage/>
     </main>
-    <!-- <Footer />
-    <ClientOnly>
+     <Footer />
+    <!--<ClientOnly>
       <Alert/>
       <ModalRoot/>
-    </ClientOnly> 
-     <ContentIcon hidden="true" class="none"/> -->
-  </div>
+    </ClientOnly>  -->
+  </template>
+  </UITBlockScroll>
 </template>
 
 <script setup lang="ts">
+import { UITBlockScroll } from "#components";
 import type { CategorDataItem } from "@/type/intex";
-import { UITButton, UITBlockContainer, UITFormSelect, UITAnimationLoader, UITFormRadio, UITFormAccordion } from "#components";
+import Footer from "@/components/Templates/Footer/Footer.vue";
+import Header from "@/components/Templates/Header/Header.vue";
 // import { Button } from "#components";
 // import Footer from "@/components/Templates/Footer/Footer.vue";
 // import Header from "@/components/Templates/Header/Header.vue";
@@ -78,21 +81,17 @@ onMounted(() => console.log('App mounted'))
 // password !YBmGCx4kawQYRF
 </script>
 
-<style lang="css" >
+<style lang="css">
 @import './assets/css/main.css';
 
-/* // .path-enter-active {
-//   transition: all 0.3s ease-in-out;
-// }
+.app-body {
+  height: 100vh;
+  overflow: hidden;
+}
+</style>
 
-// .path-leave-active {
-//   transition: all 0;
-// }
-
-
-// .path-enter-from,
-// .path-leave-to {
-//   transform: translateX(30px);
-//   opacity: 0;
-// } */
+<style lang="css" module>
+.page {
+  min-height: 75vh;
+}
 </style>

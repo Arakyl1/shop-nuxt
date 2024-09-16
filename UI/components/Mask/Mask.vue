@@ -1,6 +1,6 @@
 <template>
     <div :class="rootClass" @click.stop="fun(false)">
-        <slot></slot>
+        <slot/>
     </div>
 </template>
 
@@ -11,19 +11,19 @@ import type { MaskMode } from '../../type/index';
 export interface Props {
     // при включеном параметре состояние :hover будет срабатывать при наведениие на родителя
     parentHover?: boolean;
-    appearance?: MaskMode;
+    mode?: MaskMode;
     active?: boolean;
     position?: 'fixed' | 'relative';
     animation?: 'scale';
     hideScroll?: boolean;
     openDelay?: number;
     closeDelay?: number;
-    fun?: (...arg: any[]) => any;
+    fun?: (...arg: unknown[]) => unknown;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     parentHover: false,
-    appearance: 'dark',
+    mode: 'dark',
     position: 'fixed',
     animation: 'scale',
     hideScroll: true,
@@ -35,7 +35,7 @@ const className = useCssModule();
 
 const rootClass = computed(() => {
     return {
-        [className[props.appearance]]: props.appearance,
+        [`MaM_${props.mode}`]: props.mode,
         [className['active']]: props.active,
         [className['hover']]: props.parentHover,
         [className[props.position]]: props.position,
@@ -47,8 +47,10 @@ const rootClass = computed(() => {
 function addClassForBody(type: boolean) {
     setTimeout(
         () => {
-            const elem = document.querySelector(['data-scroll-body']);
-            if (!elem) return;
+            let elem = document.querySelector(['data-scroll-body']);
+            if (!elem) {
+                elem = document.body;
+            };
             elem.style.overflowY = type ? 'hidden' : 'auto';
         },
         type ? props.openDelay : props.closeDelay

@@ -1,6 +1,6 @@
 <template>
     <div :class="[$style.root, $style[mode], $style[`flex-direction-${direction}`]]" data-checkbox>
-        <input ref="checkbox" type="checkbox" :checked="Boolean(checked)" :class="$style.input" v-bind="{ ...inputAttr }" hidden />
+        <input ref="checkbox" type="checkbox" :checked="Boolean(checked)" :class="$style.input" v-bind="{ ...inputAttr }" hidden >
         <div :class="rootClass" :tabindex="inputAttr?.disabled ? -1 : 1" @click.stop="onClick" @keyup.stop.enter="checkbox?.click()">
             <UIVIcon v-bind="{ ...icon }" :class="$style.svg" />
         </div>

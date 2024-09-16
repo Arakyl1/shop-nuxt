@@ -6,7 +6,6 @@
     v-bind="{ ...props }"/>
 </template>
 <script setup lang="ts">
-// import { default as Button, type Props as ButtonProps } from "@/components/UI/Button/Button.vue";
 import { UITButton } from "#components";
 import { type Props as ButtonProps  } from "@/UI/components/Button/Button.vue";
 interface Props extends Omit<ButtonProps, 'square'|'iconLeft'> { }

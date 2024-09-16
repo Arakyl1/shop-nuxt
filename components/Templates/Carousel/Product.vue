@@ -2,15 +2,16 @@
     <div v-if="!pending && data">
         <UITBlockGridScroll :data="data">
             <template #header="{ prev, next, listValueScroll }">
-                <UITBlockFlex :direction="'column'" :class="className['header']">
+                <UITBlockFlex :direction="'col'" class="gap-4 mb-6 lg:gap-6 lg:mb-8">
                     <UITBlockFlex :justify="'between'" class="w-full">
                         <UITParagraphTitle>
-                            <slot v-if="$slots.title" name="title"></slot>
+                            <slot v-if="$slots.title" name="title"/>
                             <template v-else-if="title">{{ title }}</template>
                         </UITParagraphTitle>
                         <!-- <UITParagraphTitle  :text=""/> -->
-                        <UITBlockFlex class="gap-2 /lg:gap-3 /xl:gap-4" :width-full="false">
-                            <AtomButtonArrow class="-scale-100"
+                        <UITBlockFlex class="gap-2 lg:gap-3 xl:gap-4" :width-full="false">
+                            <AtomButtonArrow
+class="-scale-100"
                             :disabled="listValueScroll ? listValueScroll.current === 0 : false"
                             @click="prev"/>
                             <AtomButtonArrow 
@@ -18,7 +19,7 @@
                             @click="next"/>
                         </UITBlockFlex>
                     </UITBlockFlex>
-                    <div class="decor-line"></div>
+                    <div class="decor-line"/>
                 </UITBlockFlex>
             </template>
             <template #default="{ elem }">
@@ -28,19 +29,16 @@
     </div>
 </template>
 <script setup lang="ts">
-import { UITBlockGridScroll, UITBlockFlex, UITBlockCard, UITParagraphTitle } from '#components';
+import { UITBlockGridScroll, UITBlockFlex, UITParagraphTitle } from '#components';
 import AtomButtonArrow from "@/components/Atom/Button/Arrow.vue";
 import ProductCard from "@/components/Molecules/Card/Product.vue";
-import { isServer } from "@/utils/other";
-import { ProductCardFull } from '@/type/intex';
+import type { ProductCardFull } from '@/type/intex';
 
 
 const props = defineProps<{
-    params: { [key: string]: any },
+    params: { [key: string]: unknown },
     title?: string
 }>()
-const className = useCssModule()
-
 
 const data = ref<null | ProductCardFull>()
 const pending = ref<boolean>(false)
@@ -52,7 +50,7 @@ onBeforeMount(async() => {
         server: true,
         retry: 2,
         default: () => null,
-        onRequest({ response }) {
+        onRequest() {
             pending.value = true
         },
         onResponse({ response }) {
@@ -65,17 +63,3 @@ onBeforeMount(async() => {
 })
 
 </script>
-
-<style lang="css" module>
-.header {
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-@media screen and (max-width: 1024px) {
-    .header {
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-    }
-}
-</style>

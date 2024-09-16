@@ -27,7 +27,7 @@ const rootClass = computed(() => {
 }
 
 .button use {
-    fill: var(--transparent);
+    fill: none;
     stroke-width: 1.5px;
     transition: 0s;
 } 
