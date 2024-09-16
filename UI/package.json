@@ -17,6 +17,7 @@
   "dependencies": {
     "@nuxtjs/svg-sprite": "^1.0.2",
     "@popperjs/core": "^2.11.8",
+    "@nuxtjs/tailwindcss": "^6.12.1",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "chokidar": "^3.6.0",
     "normalize.css": "^8.0.1",
@@ -28,7 +29,6 @@
     "v-calendar": "^3.1.2"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.1",
     "@types/fs-extra": "^11.0.4",
     "autoprefixer": "^10.4.20",
     "fs-extra": "^11.2.0",
