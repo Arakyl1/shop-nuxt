@@ -7,8 +7,9 @@ export default defineNuxtConfig({
   // },
   extends: [['./UI', { install: true }]],
 
+
   modules: [
-    ...(isDevelopment ? ['@nuxt/eslint'] : []),
+    () =>  isDevelopment ? '@nuxt/eslint' : '',
     '@nuxt/content',
     // '@nuxtjs/web-vitals',
     // "nuxt-vercel-analytics",

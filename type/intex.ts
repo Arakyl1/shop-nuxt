@@ -1,6 +1,6 @@
 import type { Attribute} from "@prisma/client";
 import { Prisma, Role, User } from "@prisma/client";
-import type { MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
+// import type { MarkdownParsedContent } from 
 import type { DefaultArgs } from "@prisma/client/runtime/library";
 // export * from "./UI"
 export * from "../UI/type/index"
@@ -218,10 +218,10 @@ export type FilterData = Array<HH>
 
 
 // INTERFACE
-export interface LisLink extends MarkdownParsedContent {
-    name: string,
-    href: string
-}
+// export interface LisLink extends MarkdownParsedContent {
+//     name: string,
+//     href: string
+// }
 
 
 export type SVG_ELEMENTS = 'path' | 'line' | 'circle'
