@@ -47,13 +47,12 @@ await useFetch('/api/attridute/get', {
 })
 
 
-
 useHead({
   titleTemplate: () => pageTitle.value,
 })
 
 onBeforeMount(() => initAuth())
-onMounted(() => console.log('App mounted'))
+onMounted(() => console.log('App mounted full'))
 
 
 // user data
